@@ -1,0 +1,98 @@
+<ion-row class="position-relative" id="contact-notes-container">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'new_image' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+</ion-row>
+
+<ion-row>
+
+  <mat-card class="w-100" *ngIf="originName != ''">
+    <ion-row class="my-3">
+      <ion-row class="justify-content-between" *ngIf="!titleEdit">
+        <span>
+          {{newFile?.name}}
+        </span>
+
+        <h4 class="m-0 p-0">
+          <i class="fa fa-pencil-square cursor-point mx-3" (click)="titleEdit = !titleEdit"></i>
+        </h4>
+      </ion-row>
+      <ion-row *ngIf="titleEdit" class="justify-content-between">
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="8">
+          <ion-row>
+            <mat-form-field class="">
+              <input matInput type="text" [(ngModel)]="newFile.name" placeholder="{{ 'title' | translate }}" required
+                name="subject" />
+
+              <mat-error>
+                {{'title_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="4">
+          <ion-row class="align-items-center h-100 justify-content-end">
+            <h4 class="m-0 p-0">
+              <i class="fa fa-floppy-o cursor-point mx-3" (click)="changeFileName()">
+              </i>
+              <i class="fa fa-times-circle cursor-point mx-3" (click)="cancelChange()">
+              </i>
+            </h4>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+    <ion-row class="message-image justify-content-center align-items-center">
+      <img mat-card-image [src]="newFile?.content" [alt]="list?.name">
+    </ion-row>
+    <mat-card-actions>
+      <ion-row class="jqx-button-row justify-content-end">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton [theme]="globService.themeColor" [disabled]="newFile?.name == ''" (onClick)="uploadImage()"
+              class="jqx-button-theme">
+              {{ 'upload' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton [theme]="globService.themeColor" (onClick)="cancelImage()" class="jqx-button-theme">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </mat-card-actions>
+  </mat-card>
+
+  <ion-row class="align-items-center" *ngIf="originName == ''">
+
+    <ion-row>
+      <span class="choose-file" (click)="openFile()">
+        {{'choose_file' | translate}}
+      </span>
+
+      <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" class="d-none" />
+    </ion-row>
+
+    <ion-row class="jqx-button-row justify-content-end my-3 py-3">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+            {{ 'back' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

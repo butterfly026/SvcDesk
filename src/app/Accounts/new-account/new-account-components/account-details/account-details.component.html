@@ -1,0 +1,197 @@
+<ion-row>
+  <ion-row>
+    <form [formGroup]="detailForm" (ngSubmit)="submitDetailForm()" class="w-100" novalidate>
+      <ion-row class="{{isAuthorized ? 'justify-content-center': ''}}">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'account_type' | translate }}" name="AccountType"
+                formControlName="AccountType">
+                <mat-option *ngFor="let list of typeList; let i = index" value="{{list.id}}">
+                  {{list.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'account_type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6" *ngIf="isAuthorized">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'sub_type' | translate }}" name="SubType" formControlName="SubType">
+                <mat-option *ngFor="let list of subTypeList; let i = index" value="{{list.Id}}">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="isAuthorized">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'business_unit' | translate }}" name="BusinessUnit"
+                formControlName="BusinessUnit">
+                <mat-option *ngFor="let list of bsnsUnitList; let i = index" value="{{list.id}}">
+                  {{list.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'billing_unit_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="justify-content-center">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="isAuthorized">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="AccountId" type="text" name="AccountId" readonly="{{isIdReadOnly}}"
+                placeholder="{{ 'account_id' | translate }}" />
+              <mat-error>
+                {{ 'account_id_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="isAuthorized">
+          <ion-row *ngIf="f.AccountType.value == 'person'">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'title' | translate }}" name="Title" formControlName="Title">
+                <mat-option *ngFor="let list of titleList; let i = index" value="{{list.id}}">
+                  {{list.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+          <ion-row *ngIf="f.AccountType.value == 'corporation'">
+            <app-validation-input 
+              class="w-100"
+              [inputFormControl]="detailForm.get('Name')"
+              validationCode="CorporationName"
+              placeHolder="{{ 'name' | translate }}"
+              type="text"
+              requiredErrorMessage="{{ 'name_required' | translate }}">
+            </app-validation-input>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row class="justify-content-left" *ngIf="isAuthorized">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row *ngIf="f.AccountType.value == 'person'">
+            <app-validation-input 
+              class="w-100"
+              [inputFormControl]="detailForm.get('FirstName')"
+              validationCode="PersonFirstName"
+              placeHolder="{{ 'first_name' | translate }}"
+              type="text"
+              requiredErrorMessage="{{ 'first_name_required' | translate }}">
+            </app-validation-input>
+          </ion-row>
+          <ion-row *ngIf="f.AccountType.value == 'corporation'">
+            <app-validation-input 
+              class="w-100"
+              [inputFormControl]="detailForm.get('CorporationNumber')"
+              validationCode="CorporationNumber"
+              placeHolder="{{ 'corporation_number' | translate }}"
+              type="text">
+            </app-validation-input>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="f.AccountType.value == 'person'">
+          <ion-row>
+            <app-validation-input 
+              class="w-100"
+              [inputFormControl]="detailForm.get('FamilyName')"
+              validationCode="PersonName"
+              placeHolder="{{ 'family_name' | translate }}"
+              type="text"
+              requiredErrorMessage="{{ 'family_name_required' | translate }}">
+            </app-validation-input>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="isAvailable('EnquiryPassword')">
+          <ion-row>
+            <app-validation-input 
+                class="w-100"
+                [inputFormControl]="detailForm.get('EnquiryPassword')"
+                validationCode="EnquiryPassword"
+                placeHolder="{{ 'enquiry_password' | translate }}"
+                type="text">
+              </app-validation-input>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="isAvailable('Status')">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'status' | translate }}" name="Status" formControlName="Status">
+                <mat-option *ngFor="let list of statusList; let i = index" value="{{list.id}}">
+                  {{list.status}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'status_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Key" type="text" name="Key" placeholder="{{ 'key' | translate }}" />
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let list of AccountDetailOptions; let i = index;">
+        <ion-row class="justify-content-center"
+          *ngIf="isAuthorized && f.AccountType.value && list.data.Enabled && ['Emails', 'Aliases', 'ContactPhones', 'Addresses'].indexOf(list.elementName) != -1">
+          <mat-expansion-panel  class="w-100" [expanded]="false" [hideToggle]="true" >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <strong *ngIf="list.elementName == 'Emails'">{{'emails' | translate}}</strong>
+                <strong *ngIf="list.elementName == 'Aliases'">{{'aliases' | translate}}</strong>
+                <strong *ngIf="list.elementName == 'ContactPhones'">{{'contact_phones' | translate}}</strong>
+                <strong *ngIf="list.elementName == 'Addresses'">{{'addresses' | translate}}</strong>                
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ion-row>
+
+              <app-account-emails class="w-100" (AccountEmailsComponent)="processComponents($event, 'Emails')"
+                *ngIf="list.elementName == 'Emails'" [ContactCode] = "ContactCode"></app-account-emails>
+
+              <app-account-names #accountNames class="w-100" [NameAccountType]="f.AccountType.value"
+                *ngIf="list.elementName == 'Aliases'"
+                (AccountNamesComponent)="processComponents($event, 'Names')"></app-account-names>
+
+              <app-account-phone class="w-100" *ngIf="list.elementName == 'ContactPhones'"
+                (AccountPhoneComponent)="processComponents($event, 'ContactPhones')" [ContactCode]="ContactCode"></app-account-phone>
+
+              <app-account-address class="w-100" *ngIf="list.elementName == 'Addresses'" [AccountType]="f.AccountType.value"
+                (AccountAddressComponent)="processComponents($event, 'Addresses')"></app-account-address>
+            </ion-row>
+          </mat-expansion-panel>
+
+        </ion-row>
+      </ion-row>
+
+      <button class="submitButton" id="accountDetailsSubmit"></button>
+    </form>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,406 @@
+<ion-header [mode]="'ios'">
+
+    <ion-row class="header1-row" color="secondary">
+
+        <ion-col size="2">
+
+            <ion-row class="full-height">
+                <ion-icon [name]="'menu'" class="header-icon">
+                </ion-icon>
+            </ion-row>
+
+        </ion-col>
+
+        <ion-col size="8">
+
+            <ion-row class="full-height">
+                <span class="header-title">
+                  {{ 'sales_lead' | translate }}
+                </span>
+
+            </ion-row>
+
+        </ion-col>
+
+    </ion-row>
+
+    <app-header [pageName]="pageTitle"></app-header>
+
+</ion-header>
+
+<ion-content [class.sales_lead]="true" padding (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+    <form [formGroup]="leadForm" class="full-width" novalidate>
+
+        <ion-row class="margin-auto">
+
+            <mat-accordion>
+
+                <mat-expansion-panel [expanded]="'personal_detail' === panelValue">
+
+                    <mat-expansion-panel-header>
+
+                        <mat-panel-title>
+                            {{'personal_detail' | translate}}
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+                    <ion-row>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'source'" [required]="true" type="text"
+                                       [placeholder]="'source' | translate" aria-label="Source" matInput
+                                       [matAutocomplete]="autoSourceCombo">
+                                <mat-autocomplete [autoActiveFirstOption] #autoSourceCombo="matAutocomplete">
+                                    <mat-option *ngFor="let option of sourceFilteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="leadForm.controls['source'].hasError('required')"> {{
+                                    'source_is_required' | translate }}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'intro_details'" matInput
+                                       [placeholder]="'intro_detail' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'status'" [required]="true" type="text"
+                                       [placeholder]="'status' | translate" aria-label="Status" matInput
+                                       [matAutocomplete]="autoStatusCombo">
+                                <mat-autocomplete [autoActiveFirstOption] #autoStatusCombo="matAutocomplete">
+                                    <mat-option *ngFor="let option of statusFilteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="leadForm.controls['status'].hasError('required')"> {{
+                                    'status_is_required' | translate }}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <mat-select [placeholder]="'type' | translate" [formControlName]="'type'"
+                                            [required]="true">
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let typOpt of ['Type 1', 'Type 2', 'Type 3']" [value]="typOpt">
+                                        {{typOpt}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="leadForm.controls['type'].hasError('required')">{{'type_is_required' |
+                                    translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <mat-select [placeholder]="'title' | translate" [formControlName]="'title'"
+                                            [required]="true">
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let opt of ['Mr.', 'Mrs.', 'Dr.']" [value]="opt">
+                                        {{opt}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="leadForm.controls['title'].hasError('required')">{{'title_is_required'
+                                    | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'first_name'" matInput
+                                       [placeholder]="'first_name' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'last_name'" matInput [placeholder]="'last_name' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="3" [sizeMd]="3">
+
+                            <mat-form-field>
+                                <input [formControlName]="'company'" matInput [placeholder]="'company' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col [sizeLg]="12" [sizeMd]="12">
+                            <mat-form-field class="example-full-width">
+                                <textarea [formControlName]="'details'" matInput
+                                          [placeholder]="'details' | translate"></textarea>
+                            </mat-form-field>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+
+                        <ion-col [sizeMd]="6" [sizeLg]="6">
+                            <mat-form-field>
+                                <input [readonly]="true" [required]="true" [formControlName]="'fu_date'" matInput
+                                       [matDatepicker]="fuDatePick" [placeholder]="'fu_date' | translate">
+                                <mat-datepicker-toggle matSuffix [for]="fuDatePick"></mat-datepicker-toggle>
+                                <mat-datepicker [touchUi]="true" #fuDatePick></mat-datepicker>
+                                <mat-error *ngIf="leadForm.controls['fu_date'].hasError('required')">
+                                    {{'fuDate_is_required' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+                        </ion-col>
+
+                        <ion-col [sizeMd]="6" [sizeLg]="6">
+                            <section class="checkbox-section">
+                                <mat-checkbox [formControlName]="'do_not_contact'">{{'do_not_contact' | translate}}
+                                </mat-checkbox>
+                            </section>
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'mobile'" matInput [placeholder]="'mobile' | translate">
+                                <mat-error *ngIf="leadForm.controls['mobile'].hasError('pattern')">
+                                    {{'invalid_number' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'home_contact'" matInput
+                                       [placeholder]="'home_contact' | translate">
+                                <mat-error *ngIf="leadForm.controls['home_contact'].hasError('pattern')">
+                                    {{'invalid_number' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'work_contact'" matInput
+                                       [placeholder]="'work_contact' | translate">
+                                <mat-error *ngIf="leadForm.controls['work_contact'].hasError('pattern')">
+                                    {{'invalid_number' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'email'" matInput [placeholder]="'primary_email' | translate">
+                                <mat-error *ngIf="leadForm.controls['email'].hasError('email')">{{'valid_email_address'
+                                    | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <section class="checkbox-section">
+                                <mat-checkbox [formControlName]="'email_opt_out'">{{'email_opt_out' | translate}}
+                                </mat-checkbox>
+                            </section>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <section class="checkbox-section">
+                                <mat-checkbox [formControlName]="'email_invalid'">{{'email_invalid_label' |
+                                    translate}}
+                                </mat-checkbox>
+                            </section>
+
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'address1'" matInput [placeholder]="'address' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'address2'" matInput [placeholder]="''">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'suburb'" matInput [placeholder]="'suburb' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'city'" matInput [placeholder]="'city' | translate">
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <input [formControlName]="'postcode'" matInput [placeholder]="'postcode' | translate">
+                                <mat-error *ngIf="leadForm.controls['postcode'].hasError('pattern')">
+                                    {{'valid_pin_code' | translate}}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                        <ion-col [sizeLg]="4" [sizeMd]="4">
+
+                            <mat-form-field>
+                                <mat-select [placeholder]="'state' | translate" [formControlName]="'state'">
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let stateOpt of ['State One', 'State Two', 'State Three']"
+                                                [value]="stateOpt">
+                                        {{stateOpt}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </ion-col>
+
+                    </ion-row>
+
+                </mat-expansion-panel>
+
+                <mat-expansion-panel [expanded]="'more' === panelValue">
+
+                    <mat-expansion-panel-header>
+
+                        <mat-panel-title>
+                            {{'more' | translate}}
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+                    <p>This is the primary content of the panel.</p>
+
+                </mat-expansion-panel>
+
+                <mat-expansion-panel [expanded]="'activity' === panelValue">
+
+                    <mat-expansion-panel-header>
+
+                        <mat-panel-title>
+                            {{'activities' | translate}}
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+                    <p>This is the primary content of the panel.</p>
+
+                </mat-expansion-panel>
+
+                <mat-expansion-panel [expanded]="'assignment' === panelValue">
+
+                    <mat-expansion-panel-header>
+
+                        <mat-panel-title>
+                            {{'assignments' | translate}}
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+                    <p>This is the primary content of the panel.</p>
+
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </ion-row>
+
+
+        <ion-row class="jqx-button-row margin-auto">
+
+            <ion-col [size]="4">
+
+                <jqxButton [disabled]="!leadForm.valid" (click)="saveSalesLead()" [theme]="globService.themeColor"
+                           class="jqx-button-theme">
+                    {{ 'create' | translate }}
+                </jqxButton>
+
+            </ion-col>
+
+            <ion-col [size]="4">
+
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme">
+                    {{ 'delete' | translate }}
+                </jqxButton>
+
+            </ion-col>
+
+            <ion-col [size]="4">
+
+                <jqxButton (click)="navCtrl.back()" [theme]="globService.themeColor" class="jqx-button-theme">
+                    {{ 'cancel' | translate }}
+                </jqxButton>
+
+            </ion-col>
+
+        </ion-row>
+
+    </form>
+
+</ion-content>
+
+
+

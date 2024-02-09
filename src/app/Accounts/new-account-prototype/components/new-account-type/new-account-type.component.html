@@ -1,0 +1,12 @@
+<ion-row [formGroup]="formGroup">
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>Account Type</mat-label>
+      <mat-select formControlName="AccountType">
+        <mat-option *ngFor="let item of accountTypes" [value]="item.Value">
+          {{ item.Label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-col>
+</ion-row>

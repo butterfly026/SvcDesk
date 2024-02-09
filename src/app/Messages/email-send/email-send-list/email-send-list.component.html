@@ -1,0 +1,86 @@
+<ion-row class="position-relative" id="contact-notes-container">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'emails' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="my-2">
+      <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="switchEmailNew()"></i>
+    </ion-row>
+
+    <ion-row class="position-static contact-search">
+      <ion-searchbar mode="ios" class="ion-padding" [(ngModel)]="searchString" (keypress)="searchInputEvent($event)"
+        [placeholder]="'search' | translate">
+      </ion-searchbar>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" id="email-list-container">
+      <ion-row class="each-contact-note border-top ion-padding position-relative"
+        *ngFor="let list of showList; let i = index">
+        <ion-row>
+          <ion-row class="justify-content-end" [ngClass]="{'ion-padding-end': !list.stateArrow}">
+            <h6 class="my-auto ion-padding-end">
+              {{list.sent}}
+            </h6>
+            <ion-icon name="arrow-redo-outline" class="sent-icon my-auto" *ngIf="list.direction == 'Sent'"></ion-icon>
+            <ion-icon name="arrow-redo-outline" class="receive-icon my-auto" *ngIf="list.direction == 'Receive'">
+            </ion-icon>
+            <span class="my-auto d-flex" (mouseenter)="mouseEnterAttach(i)" (mouseleave)="moustLeaveAttach(i)">
+              <ion-icon name="attach-outline" class="my-auto"
+                *ngIf="list.attachements && list.attachements.length > 0 && list.attachements != 'null' && !list.attachState">
+              </ion-icon>
+              <ion-icon name="cloud-download-outline" class="my-auto"
+                *ngIf="list.attachements && list.attachements.length > 0 && list.attachements != 'null' && list.attachState">
+              </ion-icon>
+            </span>
+          </ion-row>
+        </ion-row>
+        <ion-row>
+          <ion-row>
+            <ion-row class="">
+              <h4 class="my-auto">
+                <span class="my-auto py-0">
+                  <span *ngFor="let reList of list.recipients; let j = index;">
+                    <b>{{reList.address}}<span *ngIf="j != list.recipients.length - 1">, </span>
+                    </b>
+                  </span>
+                </span>
+              </h4>
+            </ion-row>
+            <ion-row class="">
+              <ion-row>
+                <h6 class="my-auto" [innerHTML]="list.body">
+                </h6>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="loading-row" *ngIf="showLoading">
+      <mat-spinner class="margin-auto"></mat-spinner>
+    </ion-row>
+
+    <button class="opacityZero" id="loadMoreButton" (click)="checkLoadMore()">
+    </button>
+  </ion-row>
+</ion-row>
+
+<ion-row class="jqx-button-row mt-3">
+  <ion-row class="total-content2 mx-auto">
+    <ion-col size="4" class="ml-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

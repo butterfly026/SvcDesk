@@ -1,0 +1,27 @@
+<ion-row class="ion-justify-content-end">
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'Create' | translate" 
+    (click)="addNewSecurityQuestion()">
+    <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-row>
+<ion-row>
+  <form [formGroup]="formGroup" class="full-width">
+    <ng-container formArrayName="IdentificationQuestions">
+      <ion-row *ngFor="let subFormGroup of accountSecurityQuestionsFormControl.controls; let i = index">
+        <app-new-account-security-questions-element
+          class="w-100"
+          [formGroup]="subFormGroup"
+          [securityQuestions]="securityQuestions"
+          (onDeleteFormGroup)="deleteSecurityQuestion(i)">
+        </app-new-account-security-questions-element>
+      </ion-row>
+    </ng-container>
+
+    <ion-row class="mat-error" *ngIf="formGroup.controls.IdentificationQuestions.hasError('MandatodyValidation')">
+      {{ formGroup.controls.IdentificationQuestions.errors('MandatodyValidation') }}
+    </ion-row>
+  </form>
+</ion-row>

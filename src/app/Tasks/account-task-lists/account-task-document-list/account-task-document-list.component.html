@@ -1,0 +1,15 @@
+<ion-row>
+  <app-datatable class="w-100" 
+    [data]="documents" 
+    [totalCount]="totalCount" 
+    [columns]="columns"
+    [action]="dataTableAction" 
+    [permissions]="permissions"
+    [usePagination]="false"
+    [messageForRowDeletion]="deletionMsg"
+    (onCreate)="newDoc()"
+    (onDownload)="downloadDocument($event)"
+    (onDelete)="onDelete($event)"
+    (onFetchData)="fetchData($event)" >
+  </app-datatable>
+</ion-row>

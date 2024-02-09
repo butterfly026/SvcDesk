@@ -1,0 +1,17 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-task-priority-list class="w-100" [ContactCode]="ContactCode"
+    (TaskPriorityListComponent)="processComponent($event)">
+  </app-task-priority-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-task-priority-form class="w-100" [ContactCode]="ContactCode"
+    (TaskPriorityFormComponent)="processComponent($event)">
+  </app-task-priority-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-task-priority-form class="w-100" [Id]="ID" [ContactCode]="ContactCode"
+    (TaskPriorityFormComponent)="processComponent($event)">
+  </app-task-priority-form>
+</ion-row>

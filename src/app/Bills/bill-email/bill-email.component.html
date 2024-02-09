@@ -1,0 +1,86 @@
+<ion-row class="my-3 p-3 overflow-y-auto">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{'email' | translate}} [{{data.billNumber}}]
+      </strong>
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="emailGroup" class="full-width left-right-auto" (ngSubmit)="emailSend()" novalidate>
+
+    <ion-row class="username-row">
+      <mat-form-field class="w-100">
+
+        <mat-chip-list #chipListTo required>
+          <mat-chip *ngFor="let toItem of toList; let i = index" selected [removable]="removable"
+            (removed)="remove(i, 'to')" [color]="toItem.color">
+            {{toItem.email}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput #toInput placeholder="{{ 'to' | translate }}" formControlName="toInput"
+            [matAutocomplete]="autoTo" [matChipInputFor]="chipListTo"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event, 'to')"
+            name="toInput" (blur)="addOnBlurTo($event, 'to')">
+        </mat-chip-list>
+
+        <mat-autocomplete #autoTo="matAutocomplete" (optionSelected)="selected($event, 'to')">
+          <mat-option *ngFor="let list of filterToList; let i = index;" [value]="list.id">
+            {{list.email}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="chipStateTo == 'required' && f.toInput.touched">
+          {{ 'subject_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="chipStateTo == 'invalid' && f.toInput.touched">
+          {{ 'invalid_subject' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+
+    </ion-row>
+
+    <ion-row class="username-row">
+      <mat-form-field class="w-100">
+        <input matInput type="text" formControlName="subject" placeholder="{{ 'subject' | translate }}" required
+          name="subject">
+
+        <mat-error>
+          {{ 'subject_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row mt-4">
+      <jqxEditor #emailBody [width]="'100%'" [height]="200" [theme]="globService.themeColor">
+      </jqxEditor>
+
+    </ion-row>
+
+    <button mat-button id="submitButton">Submit</button>
+  </form>
+
+  <ion-row class="jqx-button-row my-3">
+    <ion-row class="">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!getFormValidate()"
+            (onClick)="triggerSubmit()">
+            {{ 'send_email' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

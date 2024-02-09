@@ -1,0 +1,170 @@
+<form [formGroup]="discountForm" class="w-100" (ngSubmit)="eventSubmit()">
+  <ion-row class="ion-justify-content-center">
+    <h3 class="m-auto">{{'DiscountUpdate' | translate}}: {{ data.eventInstance.Id }}</h3>
+  </ion-row>
+
+  <ion-card class="mt-5 mb-4">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'BasicInfo' | translate}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'Id' | translate}}</mat-label>
+            <input matInput formControlName="Id" />
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'Discount' | translate}}</mat-label>
+            <input matInput formControlName="Discount" />
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'DiscountDefinitionId' | translate}}</mat-label>
+            <input matInput formControlName="DiscountDefinitionId" />
+          </mat-form-field>
+        </ion-col>
+      
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'PreviousTo' | translate}}</mat-label>
+            <input matInput #PreviousTo [matDatepicker]="PreviousToPicker" (focus)="PreviousToPicker.open()" formControlName="PreviousTo" placeholder="{{ 'PreviousTo' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="PreviousToPicker"></mat-datepicker-toggle>
+            <mat-datepicker #PreviousToPicker (closed)="PreviousTo.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'AutoApply' | translate}}</mat-label>
+            <input matInput formControlName="AutoApply" />
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'PlanInstanceId' | translate}}</mat-label>
+            <input matInput formControlName="PlanInstanceId" />
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'Plan' | translate}}</mat-label>
+            <input matInput formControlName="Plan" />
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'PlanInstanceId' | translate}}</mat-label>
+            <input matInput formControlName="PlanInstanceId" />
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'AggregationId' | translate}}</mat-label>
+            <input matInput formControlName="AggregationId" />
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'ParentDiscountInstanceId' | translate}}</mat-label>
+            <input matInput formControlName="ParentDiscountInstanceId" />
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'CreatedBy' | translate}}</mat-label>
+            <input matInput #CreatedBy [matDatepicker]="CreatedByPicker" (focus)="CreatedByPicker.open()" formControlName="CreatedBy" placeholder="{{ 'CreatedBy' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="CreatedByPicker"></mat-datepicker-toggle>
+            <mat-datepicker #CreatedByPicker (closed)="CreatedBy.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'Created' | translate}}</mat-label>
+            <input matInput formControlName="Created" />
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'LastUpdated' | translate}}</mat-label>
+            <input matInput #LastUpdated [matDatepicker]="LastUpdatedPicker" (focus)="CreatedByPicker.open()" formControlName="LastUpdated" placeholder="{{ 'LastUpdated' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="LastUpdatedPicker"></mat-datepicker-toggle>
+            <mat-datepicker #LastUpdatedPicker (closed)="LastUpdated.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+        
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>{{'UpdatedBy' | translate}}</mat-label>
+            <input matInput formControlName="UpdatedBy" />
+          </mat-form-field>
+        </ion-col>
+    
+        
+        <ion-col [size]="6">
+          <mat-form-field  class="w-100">
+            <input matInput #fromInput [matDatepicker]="fromPicker" (focus)="fromPicker.open()" formControlName="From" placeholder="{{ 'From' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker (closed)="fromInput.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ion-col>     
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="mt-5 mb-4">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'To' | translate}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col [size]="6">
+          <mat-form-field  class="w-100">
+            <input matInput #toInput [matDatepicker]="toPicker" (focus)="toPicker.open()" formControlName="To" placeholder="{{ 'To' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker (closed)="toInput.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ion-col> 
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <button class="submitButton" id="submitButton"></button>
+</form>
+
+<ion-row class="my-3 jqx-button-row">
+  <ion-row class="total-content4 mx-auto">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" type="submit" [disabled]="discountForm.invalid" (onClick)="submitTrigger()" class="jqx-button-theme">
+          {{ 'Create' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" type="button" (onClick)="close()" class="jqx-button-theme">
+          {{ 'Close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,182 @@
+<ion-row class="plans-background">
+  <ion-row class="ion-margin-top">
+    <h2 class="margin-auto ion-text-center">
+      <strong>{{'t_m_p_t_k_u_w_you' | translate}}</strong>
+    </h2>
+  </ion-row>
+
+  <ion-row class="plans-page-description ion-margin-top ion-padding-top">
+    <h6 class="margin-auto ion-text-center">
+      {{'iotbilling_description' | translate}}
+    </h6>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col [sizeXl]="10" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12" class="left-right-auto">
+      <ion-row class="plans-list full-height">
+        <ion-col [sizeXl]="4" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12"
+          class="ion-margin-top left-right-auto" *ngFor="let list of plansList; let i = index;">
+          <ion-row class="full-height">
+            <mat-card class="margin-auto full-width">
+              <ion-row class="ion-padding-top plan-name">
+                <h3 class="margin-auto ion-text-center">
+                  <strong>{{list.Name}}</strong>
+                </h3>
+              </ion-row>
+
+              <ion-row class="ion-margin-top plan-price">
+                <h3 class="margin-auto ion-text-center">
+                  <strong>S{{list.Price}} / {{'month' | translate}}</strong>
+                </h3>
+              </ion-row>
+
+              <ion-row class="plan-description ion-padding-bottom">
+                <h6 class="margin-auto ion-text-center">
+                  {{list.Description}}
+                </h6>
+              </ion-row>
+
+              <ion-row class="plan-data">
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto">
+                      {{list.Data.Name}}
+                    </h4>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto margin-left-auto">
+                      <strong>{{list.Data.Value}}</strong>
+                    </h4>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="plan-data">
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <ion-row>
+                      <h4 class="top-bottom-auto">
+                        {{list.TalkTime.Name}}
+                      </h4>
+                      <h6 class="top-bottom-auto">
+                        ({{'outgoing_limit' | translate}})
+                      </h6>
+                    </ion-row>
+                    <ion-row>
+                      <h6 class="top-bottom-auto">
+                        {{'unlimited_incoming' | translate}}
+                      </h6>
+                    </ion-row>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto margin-left-auto">
+                      <strong>{{list.TalkTime.Value}}</strong>
+                    </h4>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="plan-data">
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <ion-row>
+                      <h4 class="top-bottom-auto">
+                        {{list.SMS.Name}}
+                      </h4>
+                      <h6 class="top-bottom-auto">
+                        ({{'outgoing_limit' | translate}})
+                      </h6>
+                    </ion-row>
+                    <ion-row>
+                      <h6 class="top-bottom-auto">
+                        {{'unlimited_incoming' | translate}}
+                      </h6>
+                    </ion-row>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto margin-left-auto">
+                      <strong>{{list.SMS.Value}}</strong>
+                    </h4>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="plan-data no-border">
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto">
+                      {{list.CallerId.Name}}
+                    </h4>
+                    <h6 class="top-bottom-auto">
+                      ({{'outgoing_limit' | translate}})
+                    </h6>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6" class="ion-padding-top ion-padding-bottom">
+                  <ion-row class="full-height">
+                    <h4 class="top-bottom-auto margin-left-auto">
+                      <strong>{{list.CallerId.Value}} /
+                        {{'month' | translate }}</strong>
+                    </h4>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="full-width-button">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="selectPlan(i)">
+                  {{ 'get_the_plan_now' | translate }}
+                </jqxButton>
+              </ion-row>
+
+            </mat-card>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{'r_s_c_and_d_c' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <ion-row>
+    <h6 class="margin-auto ion-text-center">
+      {{'w_f_a_l_time_only' | translate}}
+    </h6>
+  </ion-row>
+
+  <ion-row class="plan-border ion-padding-top margin-auto">
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{'roaming_service' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <ion-row class="ion-margin-bottom">
+    <h6 class="margin-auto ion-text-center">
+      {{'available_now_up' | translate}}
+    </h6>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top">
+    <h6 class="margin-auto ion-text-center">
+      {{'plan_bottom_description' | translate}}
+    </h6>
+  </ion-row>
+
+</ion-row>

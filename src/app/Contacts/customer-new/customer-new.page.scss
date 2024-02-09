@@ -1,0 +1,40 @@
+.group-row {
+    padding-left: 0px;
+
+    .receipt-border {
+        max-height: unset;
+    }
+}
+
+.plus-icon {
+    font-size: 35px;
+    color: white;
+}
+
+.trash-icon {
+    font-size: 30px;
+}
+
+.custom-table-body {
+
+    ion-col {
+        padding: 0px !important;
+
+        .custom-table-body-td {
+            padding: 3px;
+            cursor: pointer;
+        }
+    }
+
+    .detail-list {
+        .custom-table-body-td {
+            padding-left: 8px !important;
+        }
+    }
+}
+
+mat-card-header {
+    ion-col {
+        padding: 0px !important;
+    }
+}

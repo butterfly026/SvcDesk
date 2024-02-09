@@ -1,0 +1,23 @@
+[
+    {
+        "label": "Menu",
+        "items": [
+            {
+                "label": "Item 1.1",
+                "menuLink": "Menu/menu-grid"
+            },
+            {
+                "label": "Item 1.2",
+                "menuLink": "Menu/menu-grid"
+            }
+        ]
+    },
+    {
+        "label": "Collections",
+        "menuLink": "Administration/Collections/CollectionRunList"
+    },
+    {
+        "label": "Payment",
+        "menuLink": "Payment/customer-payment-method-list-uc-bus"
+    }
+]

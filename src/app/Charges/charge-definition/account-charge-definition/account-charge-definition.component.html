@@ -1,0 +1,16 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-charge-definition-list class="w-100" [ContactCode]="ContactCode"
+    (ChargeDefinitionListComponent)="processComponent($event)">
+  </app-charge-definition-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-charge-definition-form class="w-100" [ContactCode]="ContactCode"
+    (ChargeDefinitionFormComponent)="processComponent($event)">
+  </app-charge-definition-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-charge-definition-form class="w-100" [ChargeData]="chargeData" [ContactCode]="ContactCode"
+    (ChargeDefinitionFormComponent)="processComponent($event)"></app-charge-definition-form>
+</ion-row>

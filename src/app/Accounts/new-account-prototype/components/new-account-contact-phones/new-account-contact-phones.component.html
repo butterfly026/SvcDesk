@@ -1,0 +1,21 @@
+<ion-row class="ion-justify-content-end">
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'Create' | translate" 
+    (click)="addNewPhone()">
+    <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-row>
+<ion-row [formGroup]="formGroup">
+  <ng-container formArrayName="ContactPhones">
+    <ion-row [formGroup]="subFormGroup" *ngFor="let subFormGroup of accountPhonesFormControl.controls; let i = index">
+      <app-new-account-contact-phones-element
+        class="w-100"
+        [phoneTypeList]="phoneTypeList"
+        [formGroup]="subFormGroup"
+        (onDeleteFormGroup)="deletePhone(i)">
+      </app-new-account-contact-phones-element>
+    </ion-row>
+  </ng-container>
+</ion-row>

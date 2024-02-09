@@ -1,0 +1,436 @@
+<ion-row class="ion-margin-top" *ngIf="CreditHistoryState == ''">
+  <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-bottom">
+      <h4 class="margin-auto">
+        {{'credit_card_list' | translate}}
+      </h4>
+    </ion-row>
+    <ion-row class="margin-auto c-p-m-list-us-bus">
+      <table class="margin-auto">
+        <tr
+          class="custom-table-header jqx-widget-header jqx-grid-header jqx-widget-header-{{globService.themeColor}} jqx-grid-header-{{globService.themeColor}}">
+          <th
+            class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'credit_card' | translate}}
+          </th>
+          <th
+            class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'name_on_card' | translate }}
+          </th>
+          <th
+            class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'expires_on' | translate }}
+          </th>
+          <th>
+          </th>
+        </tr>
+        <tbody
+          class="custom-table-body jqx-grid-content jqx-widget-content jqx-grid-content-{{globService.themeColor}} jqx-widget-content-{{globService.themeColor}}">
+          <tr *ngFor="let list of methodList; let i = index" id="customeTableBody{{i}}" (mouseenter)="overTable(i)"
+            (mouseleave)="leaveTable(i)" (contextmenu)="contextMenuCredit()" (mousedown)="mousedownCredit($event, i)">
+            <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              <span class="vertical-center">
+                <img src="assets/imgs/payment/small_visa_icon.svg" class="top-bottom-auto"
+                  *ngIf="list.data.PaymentMethodCode == 'VI'" />
+                <img src="assets/imgs/payment/small_two_point.svg" class="top-bottom-auto"
+                  *ngIf="list.data.PaymentMethodCode == 'MC'" />
+                &nbsp;&nbsp;&nbsp;
+                <span class="top-bottom-auto">
+                  {{list.data.description}} {{ 'ending_in' | translate }} {{list.cardEnd}}
+                </span>
+              </span>
+            </td>
+            <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              {{ list.data.accountname }}
+            </td>
+            <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              {{ list.expireDate }}
+            </td>
+            <td class="custom-table-body-td jqx-item payment-method-toggle jqx-item-{{globService.themeColor}}">
+              <!-- <span (click)="editCard(i)" class="cursor-point">
+                {{ 'edit' | translate}}
+              </span> &nbsp;&nbsp; -->
+
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteCard(i, 'card')">
+                {{ 'delete' | translate }}
+              </jqxButton>
+
+              <!-- <span (click)="deleteCard(i)" class="cursor-point">
+                {{ 'delete' | translate }}
+              </span> -->
+              &nbsp;&nbsp;
+              <mat-slide-toggle color="success" [(ngModel)]="list.toggleValue" (change)="onChangeToggle(i)"
+                *ngIf="!list.toggleValue" class="payment-method-toggle-false">
+                {{ 'make_default' | translate }}
+              </mat-slide-toggle>
+              <mat-slide-toggle color="green" class="payment-method-toggle-true" [(ngModel)]="list.toggleValue"
+                [disabled]="list.toggleValue" *ngIf="list.toggleValue">
+                {{ 'default_payment_method' | translate }}
+              </mat-slide-toggle>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-row>
+
+    <ion-row class="total-content2 left-right-auto" *ngIf="addStep == ''">
+      <ion-row class="ion-margin-top ion-margin-bottom ion-padding-bottom">
+        <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNewTill()">
+                {{ 'add_till' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNew()">
+                {{ 'add' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+  <ion-row class="ion-margin-top ion-padding-top add-card total-content2 left-right-auto" *ngIf="addStep != ''">
+
+    <ion-row class="">
+      <ion-row>
+        <span>
+          {{ 'e_y_c_c_information' | translate }}<span  *ngIf="addStep != '3'"> {{ 'step' | translate }}</span>
+        </span>
+      
+      </ion-row>
+      <ion-row class="ion-margin-top" *ngIf="addStep == '1' ||  addStep == '3'">
+        <span>
+          <img src="assets/imgs/payment/small_visa_icon.svg" class="top-bottom-row" /> &nbsp;
+          <img src="assets/imgs/payment/small_two_point.svg" class="top-bottom-row" /> &nbsp;
+        </span>
+      </ion-row>
+    </ion-row>  
+    <ion-row class="ion-margin-top" *ngIf="addStep == '1'">   
+      <form [formGroup]="stepForm1" class="full-width" (ngSubmit)="completeStep1()" novalidate>
+        <ion-row class="username-row">
+          <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width top-bottom-auto">
+                <input matInput formControlName="cardNumber" type="text" required
+                  placeholder="{{ 'credit_card_number' | translate }}" name="cardNumber"
+                  [textMask]="{mask: maskCardNumber, guide: false}" />
+                <mat-error *ngIf="f.cardNumber.hasError('required')">
+                  <span>{{ 'credit_card_num_required' | translate }}</span>
+                </mat-error>
+                <mat-error
+                  *ngIf="(checkCardState || f.cardNumber.hasError('incorrect')) && !f.cardNumber.hasError('required')">
+                  {{ 'invalid_card_number' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width top-bottom-auto">
+                <input matInput formControlName="cardName" type="text" required #inputCardName
+                  placeholder="{{ 'cardholder_name' | translate }}" name="cardName" />
+                <mat-error>
+                  <span>{{ 'cardholder_name_required' | translate }}</span>
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>        
+          <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width top-bottom-auto">
+
+                    <mat-select formControlName="month" placeholder="{{ 'month' | translate }}" name="expireMonth"
+                      required>
+                      <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                        {{list}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      <span>{{ 'month_require' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width top-bottom-auto">
+                    <mat-select formControlName="year" (ngModelChange)="selectExpireYear()"
+                      placeholder="{{ 'year' | translate }}" name="expireYear" required>
+                      <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                        {{list}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      <span>{{ 'year_require' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <button mat-button id="submitButtonStep1" class="submitButton">Submit</button>
+        </ion-row>
+      </form>
+      <ion-row class="username-row">
+        <mat-checkbox [(ngModel)]="makeDefault">
+          {{ 'make_default' | translate }}
+        </mat-checkbox>
+      </ion-row>
+      <ion-row class=" ion-margin-top left-right-auto">
+        <ion-row>
+          <ion-row class="ion-margin-bottom ion-padding-bottom normal-button">
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!stepForm1.valid"
+                  (click)="continueStep1()">
+                  {{ 'continue' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelAddPayment()">
+                  {{ 'cancel' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-row>      
+   <ion-row class="ion-margin-top" *ngIf="addStep == '3'">
+    <app-till [ContactCode]="ContactCode" (tillCardIsClosed)="onTillClosed($event)"></app-till> 
+    </ion-row> 
+  </ion-row>
+</ion-row>
+<ion-row class="ion-margin-top" *ngIf="CreditHistoryState != ''">
+  <ion-row class="ion-margin-top" *ngIf="CreditHistoryState == 'statusHistory'">
+    <app-payment-status-history class="full-width" [StatusHistoryList]="SelectedStatusHistory"
+      (PaymentStatusHistoryComponent)="processCredit($event)">
+    </app-payment-status-history>
+  </ion-row>
+  <ion-row class="ion-margin-top" *ngIf="CreditHistoryState == 'deUsHistory'">
+    <app-payment-default-usage class="full-width" [DefaultUsageHistoryList]="SelectedUsageDefaultHistory"
+      (PaymentDefaultHistoryComponent)="processCredit($event)">
+    </app-payment-default-usage>
+  </ion-row>
+</ion-row>
+<ion-row class="ion-margin-top" *ngIf="BankHistoryState == ''">
+  <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-bottom">
+      <h4 class="margin-auto">
+        {{'bank_account_transfer' | translate}}
+      </h4>
+    </ion-row>
+    <ion-row class="margin-auto c-p-m-list-us-bus">
+      <table class="margin-auto">
+        <tr
+          class="custom-table-header2 jqx-widget-header jqx-grid-header jqx-widget-header-{{globService.themeColor}} jqx-grid-header-{{globService.themeColor}}">
+          <th
+            class="custom-table-header-th2 jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'account_name' | translate}}
+          </th>
+          <th
+            class="custom-table-header-th2 jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'b_s_b' | translate }}
+          </th>
+          <th
+            class="custom-table-header-th2 jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+            {{ 'account_number' | translate }}
+          </th>
+          <th>
+          </th>
+        </tr>
+        <tbody
+          class="custom-table-body2 jqx-grid-content jqx-widget-content jqx-grid-content-{{globService.themeColor}} jqx-widget-content-{{globService.themeColor}}">
+          <tr *ngFor="let list of bankList; let i = index" id="customeTableBodyBank{{i}}"
+            (mouseenter)="overTableBank(i)" (mouseleave)="leaveTableBank(i)" (contextmenu)="contextMenuBank()"
+            (mousedown)="mousedownBank($event, i)">
+            <td class="custom-table-body-td2 jqx-item jqx-item-{{globService.themeColor}}">
+              <span class="vertical-center">
+                <!-- <img src="assets/imgs/payment/small_visa_icon.svg" class="top-bottom-auto"
+                  *ngIf="list.data.PaymentMethodCode == 'VI'" />
+                <img src="assets/imgs/payment/small_two_point.svg" class="top-bottom-auto"
+                  *ngIf="list.data.PaymentMethodCode == 'MC'" />
+                &nbsp;&nbsp;&nbsp; -->
+                <span class="top-bottom-auto">
+                  {{list.data.accountname}}
+                </span>
+              </span>
+            </td>
+            <td class="custom-table-body-td2 jqx-item jqx-item-{{globService.themeColor}}">
+              {{ list.data.bsb }}
+            </td>
+            <td class="custom-table-body-td2 jqx-item jqx-item-{{globService.themeColor}}">
+              {{ list.data.accountnumber }}
+            </td>
+            <td class="custom-table-body-td2 jqx-item payment-method-toggle">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteCard(i, 'bank')">
+                {{ 'delete' | translate }}
+              </jqxButton>
+              &nbsp;&nbsp;
+              <mat-slide-toggle color="success" [(ngModel)]="list.toggleValue" (change)="onChangeToggleBank(i)"
+                *ngIf="!list.toggleValue" class="payment-method-toggle-false">
+                {{ 'make_default' | translate }}
+              </mat-slide-toggle>
+              <mat-slide-toggle color="green" class="payment-method-toggle-true" [(ngModel)]="list.toggleValue"
+                [disabled]="list.toggleValue" *ngIf="list.toggleValue">
+                {{ 'default_payment_method' | translate }}
+              </mat-slide-toggle>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-row>
+    <ion-row class="total-content2 left-right-auto" *ngIf="bankState == ''">
+      <ion-row class="ion-margin-top ion-margin-bottom ion-padding-bottom">
+        <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+          <ion-col size="2"></ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNewBank()">
+                {{ 'add' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top add-card total-content2 left-right-auto"
+    *ngIf="bankState == 'AddBank'">
+
+    <ion-row class="">
+      <ion-row>
+        <span>
+          {{ 'enter_your_information' | translate }}
+        </span>
+      </ion-row>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <form [formGroup]="BankForm" class="full-width" (ngSubmit)="submitBank()" novalidate>
+        <ion-row class="username-row">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput formControlName="DirectName" type="text" required
+                  placeholder="{{ 'account_name' | translate }}" name="DirectName" />
+
+                <mat-error>
+                  <span>{{ 'account_name_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput formControlName="DirectAccount" type="text" required
+                  placeholder="{{ 'account' | translate }}" name="DirectAccount" />
+
+                <mat-error>
+                  <span>{{ 'account_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput formControlName="DirectBSB" type="text" required placeholder="{{ 'b_s_b' | translate }}"
+                  name="DirectBSB" />
+
+                <mat-error>
+                  <span>{{ 'b_s_b_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+          <button mat-button id="submitButtonBank" class="submitButton">Submit</button>
+        </ion-row>
+      </form>
+
+      <ion-row class="username-row">
+        <mat-checkbox [(ngModel)]="makeDefault">
+          {{ 'make_default' | translate }}
+        </mat-checkbox>
+      </ion-row>
+
+      <ion-row class=" ion-margin-top left-right-auto">
+        <ion-row>
+
+          <ion-row class="ion-margin-bottom ion-padding-bottom normal-button">
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!BankForm.valid"
+                  (click)="submitTriggerBank()">
+                  {{ 'continue' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelAddBank()">
+                  {{ 'cancel' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+    </ion-row>
+
+  </ion-row>
+</ion-row>
+
+<ion-row class="ion-margin-top" *ngIf="BankHistoryState != ''">
+  <ion-row class="ion-margin-top" *ngIf="BankHistoryState == 'statusHistory'">
+    <app-payment-status-history class="full-width" [StatusHistoryList]="SelectedStatusHistory"
+      (PaymentStatusHistoryComponent)="processBank($event)">
+    </app-payment-status-history>
+  </ion-row>
+
+  <ion-row class="ion-margin-top" *ngIf="BankHistoryState == 'deUsHistory'">
+    <app-payment-default-usage class="full-width" [DefaultUsageHistoryList]="SelectedUsageDefaultHistory"
+      (PaymentDefaultHistoryComponent)="processBank($event)">
+    </app-payment-default-usage>
+  </ion-row>
+</ion-row>
+
+
+<jqxMenu #jqxContactPaymentCreditMenu [theme]="globService.themeColor" [mode]="'popup'" [autoOpenPopup]="false"
+  [width]="200" [source]="contextMenuCreditList" (onItemclick)="Itemclick($event)">
+</jqxMenu>

@@ -1,0 +1,105 @@
+<ion-row>
+  <ion-row class="total-content4 m-auto">
+    <form [formGroup]="updateCommissionPaymentForm" class="w-100" novalidate>
+
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+
+          <mat-form-field>
+            <input [formControlName]="'dealer_id'" matInput [readonly]="true" [placeholder]="'dealer_id' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <input [formControlName]="'dealer_name'" matInput [readonly]="true"
+              [placeholder]="'dealer_name' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+          <mat-form-field>
+            <input [required]="true" [readonly]="true" [formControlName]="'payment_date'" matInput
+              [matDatepicker]="paymentDatePick" [placeholder]="'payment_date' | translate">
+            <mat-datepicker-toggle matSuffix [for]="paymentDatePick"></mat-datepicker-toggle>
+            <mat-datepicker [touchUi]="true" #paymentDatePick></mat-datepicker>
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['payment_date'].hasError('required')">
+              {{'paymentDate_is_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+          <mat-form-field>
+            <input [required]="true" [formControlName]="'calculated_amount'" matInput
+              [placeholder]="'calculated_amount' | translate">
+
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['calculated_amount'].hasError('required')">
+              {{'calculatedAmount_is_required' | translate}}
+            </mat-error>
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['calculated_amount'].hasError('pattern')">
+              {{'invalid_number' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+          <mat-form-field>
+            <input [required]="true" [formControlName]="'amount_to_pay'" matInput
+              [placeholder]="'amount_to_pay' | translate">
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['amount_to_pay'].hasError('required')">
+              {{'amtToPay_is_required' | translate}}
+            </mat-error>
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['amount_to_pay'].hasError('pattern')">
+              {{'invalid_number' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+          <mat-form-field>
+            <input [required]="true" [formControlName]="'cheque_number'" matInput
+              [placeholder]="'cheque_number' | translate">
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['cheque_number'].hasError('required')">
+              {{'checkNumber_is_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+          <mat-form-field>
+            <textarea [required]="true" [formControlName]="'comment'" matInput
+              [placeholder]="'comment' | translate"></textarea>
+            <mat-error *ngIf="updateCommissionPaymentForm.controls['comment'].hasError('required')">
+              {{'commentis_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+      </ion-row>
+    </form>
+
+    <ion-row class="jqx-button-row">
+      <ion-row class="total-content4 mx-auto justify-content-center">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton [disabled]="!updateCommissionPaymentForm.valid" (click)="saveForm()"
+              [theme]="globService.themeColor" class="jqx-button-theme">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (onClick)="goBack()" [theme]="globService.themeColor" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

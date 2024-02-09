@@ -1,0 +1,9 @@
+<ion-row class="my-3 total-content4 mx-auto">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12" *ngFor="let general of data" [ngClass]="{'d-none': !general?.value}">
+        <ion-row class="box-shadow-item px-3 py-2">
+            <span>
+                {{general?.name | translate}} : {{general?.value}}
+            </span>
+        </ion-row>
+    </ion-col>
+</ion-row>

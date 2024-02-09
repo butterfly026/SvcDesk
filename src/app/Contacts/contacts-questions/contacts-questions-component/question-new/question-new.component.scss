@@ -1,0 +1,8 @@
+.question-action i{
+    cursor: pointer;
+}
+.text-disabled {
+    color: #aaa; /* or any other color that you want to use for disabled text */
+    pointer-events: none; /* optional: make the element unclickable and remove it from tab order */
+    opacity: 0.5; /* optional: make the element partially transparent */
+ }

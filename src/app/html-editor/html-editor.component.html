@@ -1,0 +1,40 @@
+<ion-row class="mx-auto">
+  <ion-row>
+    <ion-row>
+      <h2>HTML Editor</h2>
+    </ion-row>
+    <ion-row class="mx-auto">
+      <ckeditor class="w-100" [data]="templateContent" (change)="change($event)"></ckeditor>
+    </ion-row>
+  </ion-row>
+  <ion-row class="mt-3">
+    <ion-row>
+      <h2>HTML Result</h2>
+    </ion-row>
+    <ion-row>
+      <ion-row [innerHTML]="editorContent"></ion-row>
+    </ion-row>
+  </ion-row>
+
+
+  <ion-row class="jqx-button-row justify-content-end my-3">
+    <ion-row class="total-content4 mx-auto">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submit()">
+            {{ 'sumit' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="cancelForm()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,16 @@
+
+<form [formGroup]="searchOptionsForm" class="w-100" (ngSubmit)="searchSubmit()" novalidate>
+  <ion-row>
+    <ion-col>
+      <mat-checkbox class="example-margin" formControlName="SearchForAccounts">
+          {{'SearchForAccounts' | translate}}
+      </mat-checkbox>
+    </ion-col>
+    
+    <ion-col>
+      <mat-checkbox class="example-margin" formControlName="AutoOpenIfFindOne">
+          {{'AutomaticallyOpenIfOne' | translate}}
+      </mat-checkbox>
+    </ion-col>
+  </ion-row>
+</form>

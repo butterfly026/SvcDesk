@@ -1,0 +1,164 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="position-relative full-height" *ngIf="!switchPayment">
+    <ion-row class="total-content2 left-right-auto ion-padding">
+      <ion-row class="margin-auto">
+
+        <form [formGroup]="newRechargeForm" class="full-width" (ngSubmit)="newRecharge()" novalidate>
+          <ion-row class="username-row">
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+
+                    <mat-select formControlName="type" placeholder="{{ 'select_recharge' | translate }}" name="type"
+                      required>
+                      <mat-option *ngFor="let list of typeList; let i = index" (click)="rechargeItem(i)"
+                        value="{{list.CategoryId}}">
+                        {{list.Type}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'recharge_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="username-row recharge-simple-new">
+                  <span *ngIf="DefaultPriceIncTax!=''">
+                    {{ 'price' | translate}}: {{ DefaultPriceIncTaxStr}}
+                  </span>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+
+                    <mat-select formControlName="payCtrl" placeholder="{{ 'select_payment' | translate }}"
+                      name="selectPayment" required>
+                      <mat-option *ngFor="let list of paymentMethodList; let i = index" (click)="paymentItem(i)"
+                        value="{{list.data.PaymentMethodCode}}">
+                        {{list.method}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'payment_required' | translate }}
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="username-row recharge-simple-new">
+                  <span *ngIf="SurchargePrice!=''">
+                    {{ 'surcharge' | translate}}: {{ SurchargePriceStr}}
+                  </span>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="username-row recharge-simple-new ion-margin-top ion-padding-top">
+            <h4 *ngIf="totalAmount!=''" class="margin-auto">
+              <strong>{{ 'total' | translate}}</strong>: {{ totalAmountStr}}
+            </h4>
+          </ion-row>
+
+
+          <button mat-button id="submitButton">Submit</button>
+        </form>
+
+        <ion-row class="login-row page-bottom normal-button">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!buyState" (click)="submitTrigger()">
+                {{ 'buy' | translate }}
+              </jqxButton>
+
+              <!-- <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!newRechargeForm.valid"
+                (click)="submitTrigger()" *ngIf="paymentMethodList.length > 0">
+                {{ 'confirm' | translate }}
+              </jqxButton> -->
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="position-absolute full-height background-color1" id="creditConfirmModal" (click)="focusText()">
+      <ion-row class="confirm-modal margin-auto ion-padding position-relative">
+        <ion-row class="confirm-header ion-padding-bottom ion-padding-top">
+          <span class="margin-auto" *ngIf="enableCancel">
+            {{ 'c_c_t_in_progress' | translate}}
+          </span>
+          <span class="margin-auto" *ngIf="!enableCancel && !paymentFail">
+            {{ 'c_c_transaction_successful' | translate}}
+          </span>
+          <span class="margin-auto" *ngIf="!enableCancel && paymentFail">
+            {{ 'c_c_transaction_fail' | translate}}
+          </span>
+        </ion-row>
+
+        <ion-row class="confirm-loading ion-margin-top ion-margin-bottom" *ngIf="enableCancel">
+          <mat-spinner class="margin-auto"></mat-spinner>
+        </ion-row>
+
+        <ion-row class="confirm-body" *ngIf="!paymentFail">
+          <span class="margin-auto" *ngIf="enableCancel">
+            {{ 'c_c_t_description' | translate}}
+          </span>
+          <!-- <span class="margin-auto" *ngIf="!enableCancel">
+            {{ 'p_h_b_successful' | translate}}
+          </span> -->
+        </ion-row>
+
+        <input class="opacityZero position-absolute" id="creditConfirmModalSubmit" (keydown)="closeModal($event)" />
+
+        <ion-row class="confirm-close ion-margin-top normal-button" *ngIf="!enableCancel && paymentFail">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="closeConfirmModal()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="ion-margin-top" *ngIf="switchPayment">
+    <app-payment-component class="full-width" [ContactCode]="ContactCode"
+      (PaymentMethodComponent)="processPayment($event)">
+    </app-payment-component>
+  </ion-row>
+</ion-content>

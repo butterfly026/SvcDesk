@@ -1,0 +1,76 @@
+<ion-row class="customer-table-overflow-x" id="customer-detail-section-row">
+
+  <!-- <ion-row class="justify-content-end right-desk-close position-absolute customer-detail-menu">
+    <i class="fa fa-ellipsis-h cursor-point" [matMenuTriggerFor]="menu.childMenu"></i>
+
+    <app-menu-item #menu [items]="attributeMenuList?.menuitems"></app-menu-item>
+
+  </ion-row> -->
+
+  <table class="customer-detail">
+    <tbody
+      class="custom-table-body jqx-grid-content jqx-widget-content jqx-grid-content-{{globService.themeColor}} jqx-widget-content-{{globService.themeColor}}">
+      <tr *ngFor=" let detaiList of customerDetail; let i=index" class="ion-margin-top h-100"
+        [ngClass]="{'cursor-point' : detaiList?.available, 'cursor-default' : !detaiList?.available}"
+        (contextmenu)="contextmenuMenu()" (mousedown)="mousedown($event, i)" id="customeTableBody{{i}}"
+        (mouseenter)="overTable(i)" (mouseleave)="leaveTable(i)">
+        <td *ngIf="detaiList.data.displaygroup == 'BASIC'"
+          class="custom-table-body-td jqx-item custom-table-max-width-label jqx-item-{{globService.themeColor}}"
+          (click)="gotoDetail(i)">
+          <jqxTooltip [position]="'mouse'" [name]="'movieTooltip'"
+            [content]="detaiList.data.tooltip=='' ? detaiList.data.label : detaiList.data.label + ' : ' + detaiList.data.tooltip">
+            <span class="my-auto customer-detail-span" *ngIf="detaiList.data.label!=null">
+              <strong>{{detaiList.data.label}}</strong>
+            </span>
+          </jqxTooltip>
+        </td>
+        <td *ngIf="detaiList.data.displaygroup == 'BASIC'"
+          class="custom-table-body-td jqx-item custom-table-max-width jqx-item-{{globService.themeColor}}"
+          (click)="gotoDetail(i)">
+          <span class="my-auto customer-detail-span" id="valueOfCustomer{{detaiList.data.key}}{{i}}"
+            *ngIf="detaiList.data.value!=null">
+            <jqxTooltip [position]="'mouse'" [opacity]="getToolTip(i) == '' ? 0 : 0.9" [name]="'movieTooltip'"
+              class="full-width" [content]="getToolTip(i)">
+              <ng-container *ngIf="detaiList.data?.passVal">
+                {{detaiList.data.passVal}}
+              </ng-container>
+              <ng-container *ngIf="!detaiList.data?.passVal">
+                {{detaiList.data.value}}
+              </ng-container>
+            </jqxTooltip>
+          </span>
+        </td>
+
+        <td *ngIf="detaiList.data.displaygroup == 'ADVANCED' && AttributeMode == 'ServiceDesk'"
+          class="custom-table-body-td jqx-item custom-table-max-width-label jqx-item-{{globService.themeColor}}">
+          <jqxTooltip [position]="'mouse'" [name]="'movieTooltip'"
+            [content]="detaiList.data.tooltip=='' ? detaiList.data.label : detaiList.data.label + ' : ' + detaiList.data.tooltip">
+            <span class="my-auto customer-detail-span" *ngIf="detaiList.data.label!=null">
+              <strong>{{detaiList.data.label}}</strong>
+            </span>
+          </jqxTooltip>
+        </td>
+        <td *ngIf="detaiList.data.displaygroup == 'ADVANCED' && AttributeMode == 'ServiceDesk'"
+          class="custom-table-body-td jqx-item custom-table-max-width jqx-item-{{globService.themeColor}}">
+          <span class="my-auto customer-detail-span" *ngIf="detaiList.data.value!=null">
+            <jqxTooltip [position]="'mouse'" [opacity]="getToolTip(i) == '' ? 0 : 0.9" [name]="'movieTooltip'"
+              class="full-width" [content]="getToolTip(i)">
+              <ng-container *ngIf="detaiList.data?.passVal">
+                {{detaiList.data.passVal}}
+              </ng-container>
+              <ng-container *ngIf="!detaiList.data?.passVal">
+                {{detaiList.data.value}}
+              </ng-container>
+            </jqxTooltip>
+          </span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <jqxMenu #jqxCustomerDetailMenu [theme]="globService.themeColor" [mode]="'popup'" [autoOpenPopup]="false"
+    [width]="200" [source]="contextMenuList" (onItemclick)="Itemclick($event)">
+
+  </jqxMenu>
+</ion-row>

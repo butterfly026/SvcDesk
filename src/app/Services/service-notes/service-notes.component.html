@@ -1,0 +1,18 @@
+<ion-row class="mt-3 left-right-auto">
+  <app-datatable 
+    class="w-100"
+    [data]="dataSource" 
+    [totalCount]="totalCount"
+    [columns]="columns"
+    [action]="dataTableAction"
+    [csvFileName]="csvFileName"
+    [searchOptions]="searchOptions"
+    [permissions]="permissions"
+    [columnsUsedForWrap]="columnsUsedForWrap"
+    (onView)="goToNoteDetail($event)"
+    (onEdit)="editOne($event)"
+    (onDelete)="deleteSelectedOne($event)"
+    (onCreate)="addNew()"
+    (onFetchData)="fetchData($event)">
+  </app-datatable>
+</ion-row>

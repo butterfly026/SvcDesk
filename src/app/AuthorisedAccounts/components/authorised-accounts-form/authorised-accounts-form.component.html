@@ -1,0 +1,95 @@
+<ion-row class="mt-2">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'New'">
+      {{'authorised_account_new' | translate}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'Update'">
+      {{'authorised_account_update' | translate}} {{AuthorisedAccountData?.Id ? '[' + AuthorisedAccountData?.Id + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'View'">
+      {{'authorised_account' | translate}} {{AuthorisedAccountData?.Id ? '[' + AuthorisedAccountData?.Id + ']' : ''}}
+    </h3>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="formGroup" class="w-100">
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2 group-content address-spinner">
+            <mat-form-field class="example-full-width">
+
+              <input type="text" placeholder="{{'authorised_account_id'| translate}}" matInput formControlName="AccountId"
+                [matAutocomplete]="auto" required>
+
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+                <mat-option *ngFor="let option of filterAccountsList; let i = index" [value]="option.Id">
+                  {{option.Name}} [{{option.Id}}]
+                </mat-option>
+              </mat-autocomplete>
+              
+              <mat-error>
+                {{ 'authorised_account_id_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="From" formControlName="From" placeholder="{{ 'from' | translate }}"
+                (change)="onDateChange1($event)" (dateChange)="onDateChange2($event)" name="From">
+              <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+              <mat-datepicker #From></mat-datepicker>
+              <mat-error>
+                {{ 'from_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput [min]="minDate" [matDatepicker]="To" formControlName="To"
+                placeholder="{{ 'to' | translate }}" name="To" [matDatepickerFilter]="toDateFilter">
+              <mat-datepicker-toggle matSuffix [for]="To"></mat-datepicker-toggle>
+              <mat-datepicker #To></mat-datepicker>
+              <mat-error>
+                {{ 'to_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="my-1">
+
+      <ion-row class="mt-1 jqx-button-row justify-content-center">
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngIf="editMode != 'View'">
+          <ion-row>
+            <jqxButton (onClick)="saveAuthorisedAccount()" [theme]="globService.themeColor"
+              [disabled]="!formGroup?.valid" *ngIf="editMode == 'New'">
+              {{ 'create' | translate }}
+            </jqxButton>
+            <jqxButton (onClick)="saveAuthorisedAccount()" [theme]="globService.themeColor" [disabled]="!formGroup?.valid"
+              *ngIf="editMode == 'Update'">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,30 @@
+<ion-row class="ess-header-row">
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="6">
+    <ion-row class="full-height">
+      <img src="assets/SSImage/titlebar_logo.png" alt="" class="top-bottom-auto cursor-point" />
+    </ion-row>
+  </ion-col>
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="6">
+    <ion-row class="full-height">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="ss-menu-button cursor-point">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item disabled>
+          <span>{{CompanyName}} - {{AccountMode}} - {{ContactCode}}</span>
+        </button>
+        <button mat-menu-item (click)="pressMenu('changePassword')">
+          <span>{{changePassStr}}</span>
+        </button>
+        <button mat-menu-item (click)="pressMenu('accountAlert')">
+          <span>{{accountAlertStr}}</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <span>{{logoutStr}}</span>
+        </button>
+      </mat-menu>
+
+    </ion-row>
+  </ion-col>
+</ion-row>

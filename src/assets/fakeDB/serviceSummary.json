@@ -1,0 +1,58 @@
+[
+    {
+        "ServiceNumber": "0450523897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450523497",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450533897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450563897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0480523897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450023897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450525897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    },
+    {
+        "ServiceNumber": "0450523897",
+        "ChargeTaxEx": 1.15,
+        "ChargeTaxInc": 1.27,
+        "UsageTaxEx": 0,
+        "UsageTaxInc": 0
+    }
+]

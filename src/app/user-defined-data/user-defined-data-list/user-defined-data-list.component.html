@@ -1,0 +1,16 @@
+  <ion-row class="mx-auto">
+    <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [permissions]="permissions"
+        [usePagination]="false"
+        [csvFileName]="csvFileName"
+        (onCreate)="gotoNew()"
+        (onEdit)="updateData($event)"
+        (onDelete)="deleteData($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>

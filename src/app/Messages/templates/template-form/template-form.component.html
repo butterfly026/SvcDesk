@@ -1,0 +1,174 @@
+<ion-row class="">
+  <ion-row class="my-3">
+    <ion-row *ngIf="Id === ''">
+      <h3 class="p-0 m-auto">
+        {{'add_template' | translate}}
+      </h3>
+    </ion-row>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="templateForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Id" type="number" placeholder="{{ 'template_id' | translate }}" name="Id" min="0" max="1000" />
+              <mat-error *ngIf="f.Id.hasError('required')">
+                <span>{{ 'template_id_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Name" type="text" placeholder="{{ 'template_name' | translate }}" name="Name" required />
+              <mat-error>
+                <span>{{ 'template_name_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="DisplayOrder" type="number" min="0" max="1000"
+                placeholder="{{ 'display_order' | translate }}" name="DisplayOrder" required />
+              <mat-error *ngIf="f.DisplayOrder.hasError('required')">
+                <span>{{ 'display_order_required' | translate }}</span>
+              </mat-error>
+              <mat-error
+                *ngIf="!f.DisplayOrder.hasError('required') && (f.DisplayOrder.hasError('min') || f.DisplayOrder.hasError('max'))">
+                <span>{{ 'display_order_invalid' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Location" type="text" placeholder="{{ 'location' | translate }}" name="Location" />
+              <mat-error>
+                <span>{{ 'location_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="CategoryId" placeholder="{{ 'category' | translate }}" name="CategoryId">              
+                <mat-option *ngFor="let list of templateCategoryList; let i = index" value="{{list.categoryId}}">
+                  {{list.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                <span>{{ 'category_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Header" type="text" placeholder="{{ 'header' | translate }}" name="Header" />
+              <mat-error>
+                <span>{{ 'header_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <textarea matInput formControlName="Body" type="text" placeholder="{{ 'template_body' | translate }}" name="Body" min="0" max="1000" rows="5" cols="10"></textarea>
+              <mat-error *ngIf="f.Id.hasError('required')">
+                <span>{{ 'template_id_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center">
+            <ion-row>
+              <mat-slide-toggle [(ngModel)]="onOffStates.contacts" [ngModelOptions]="{standalone: true}" class="w-100" color="primary">
+                {{ 'enable_contacts' | translate }}
+              </mat-slide-toggle>
+            </ion-row>           
+          </ion-row>
+        </ion-col>  
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center">
+            <ion-row>
+              <mat-slide-toggle [(ngModel)]="onOffStates.services" [ngModelOptions]="{standalone: true}" class="w-100" color="primary">
+                {{ 'enable_services' | translate }}
+              </mat-slide-toggle>
+            </ion-row>           
+          </ion-row>
+        </ion-col>  
+      </ion-row>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <ion-row>
+            <mat-slide-toggle [(ngModel)]="onOffStates.print" [ngModelOptions]="{standalone: true}" class="w-100" color="primary">
+              {{ 'enable_print' | translate }}
+            </mat-slide-toggle>
+          </ion-row>           
+        </ion-row>
+      </ion-col>  
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <ion-row>
+            <mat-slide-toggle [(ngModel)]="onOffStates.email" [ngModelOptions]="{standalone: true}" class="w-100" color="primary">
+              {{ 'enable_email' | translate }}
+            </mat-slide-toggle>
+          </ion-row>           
+        </ion-row>
+      </ion-col>  
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <ion-row>
+            <mat-slide-toggle [(ngModel)]="onOffStates.sms" [ngModelOptions]="{standalone: true}" class="w-100" color="primary">
+              {{ 'enable_sms' | translate }}
+            </mat-slide-toggle>
+          </ion-row>           
+        </ion-row>
+      </ion-col>  
+      <button class="submitButton" id="templateFormSubmitButton"></button>
+    </form>
+    <ion-row class="my-3 pt-5 jqx-button-row">
+      <ion-row class="total-content4 mx-auto justify-content-end">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id === ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!chargeForm.valid">
+              {{ 'create' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id !== ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!chargeForm.valid">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

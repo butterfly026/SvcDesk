@@ -1,0 +1,35 @@
+<ion-row id="contact-email-history">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'contacts_aliases_history' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [csvFileName]="csvFileName"
+      [permissions]="permissions"
+      [usePagination]="false"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row class="mt-4 mb-2 left-right-auto jqx-button-row ion-justify-content-end" >
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

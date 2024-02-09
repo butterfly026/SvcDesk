@@ -1,0 +1,30 @@
+<ion-row class="mt-3" *ngIf="planMode=='planHistory'">
+  <app-account-plan-history 
+    class="w-100" 
+    [ContactCode]="ContactCode" 
+    (AccountPlanHistoryComponent)="planProcess($event)">
+  </app-account-plan-history>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="planMode=='planDetail'">
+  <app-account-plan-detail 
+    class="w-100"   
+    [PlanId]="planId" 
+    [ServiceReference]="ServiceReference" 
+    (AccountPlanDetailComponent)="planProcess($event)">
+  </app-account-plan-detail>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="planMode=='planUpdate'">
+  <app-account-plan-new 
+    class="w-100" 
+    (AccountPlanNewComponent)="planProcess($event)">
+  </app-account-plan-new>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="planMode=='planNew'">
+  <app-account-plan-new 
+    class="w-100" 
+    (AccountPlanNewComponent)="planProcess($event)">
+  </app-account-plan-new>
+</ion-row>

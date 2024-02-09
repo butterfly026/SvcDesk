@@ -1,0 +1,37 @@
+<ion-row class="ion-margin-top" class="ess-service-group">
+
+  <ion-row class="ion-margin-top left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+      <span class="margin-left-auto ion-text-end" (click)="exportData()">
+        {{'export_to_excel' | translate}}
+      </span>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #ServiceGroupListGrid [columnsautoresize]="true"
+      [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+      [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+
+  <ion-row class="ion-margin-top normal-button">
+    <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToAddService()">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!availDeleteState || groupList.length<1" class="jqx-button-theme"
+          (click)="removeService()">
+          {{ 'remove' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

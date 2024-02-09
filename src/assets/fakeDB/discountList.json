@@ -1,0 +1,52 @@
+[
+    {
+        "DiscountId": "123",
+        "Discount": "14% off New Charges",
+        "From": "03/06/2016",
+        "To": "Indefine",
+        "Source": "Manual",
+        "Package": "ACCT Package",
+        "Status": "Open",
+        "TerminalDiscount": "No"
+    },
+    {
+        "DiscountId": "120",
+        "Discount": "14% off New Charges",
+        "From": "03/06/2016",
+        "To": "Indefine",
+        "Source": "Manual",
+        "Package": "ACCT Package",
+        "Status": "Open",
+        "TerminalDiscount": "No"
+    },
+    {
+        "DiscountId": "121",
+        "Discount": "14% off New Charges",
+        "From": "03/06/2016",
+        "To": "Indefine",
+        "Source": "Manual",
+        "Package": "ACCT Package",
+        "Status": "Open",
+        "TerminalDiscount": "No"
+    },
+    {
+        "DiscountId": "122",
+        "Discount": "14% off New Charges",
+        "From": "03/06/2016",
+        "To": "Indefine",
+        "Source": "Manual",
+        "Package": "ACCT Package",
+        "Status": "Open",
+        "TerminalDiscount": "No"
+    },
+    {
+        "DiscountId": "125",
+        "Discount": "14% off New Charges",
+        "From": "03/06/2016",
+        "To": "Indefine",
+        "Source": "Manual",
+        "Package": "ACCT Package",
+        "Status": "Open",
+        "TerminalDiscount": "No"
+    }
+]

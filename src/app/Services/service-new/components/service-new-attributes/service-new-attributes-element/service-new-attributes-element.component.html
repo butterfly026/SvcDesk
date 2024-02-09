@@ -1,0 +1,77 @@
+<ion-row [formGroup]="formGroup" class="address-spinner">
+  <mat-form-field 
+    class="w-100" 
+    *ngIf="defaultTypeCtlrls.includes(formGroup.controls.DataType.value)">
+    
+    <mat-label>
+      {{ formGroup.get('Name').value }}
+    </mat-label>    
+
+    <ng-container [ngSwitch]="formGroup.controls.DataType.value">
+      <input 
+        matInput 
+        type="text" 
+        formControlName="Value"
+        *ngSwitchCase="'String'"/>
+
+      <input 
+        matInput 
+        formControlName="Value" 
+        type="number" 
+        pattern="[0-9]*" 
+        *ngSwitchCase="'Integer'"/>
+
+      <input 
+        matInput 
+        formControlName="Value"  
+        type="number" 
+        step="0.01" 
+        *ngSwitchCase="'Decimal'"/>
+      
+      <input 
+        matInput 
+        type="datetime-local" 
+        formControlName="Value" 
+        [value]="datePipe.transform(Value, 'dd/MM/yyyyTHH:mm')"
+        *ngSwitchCase="'DateTime'"/>
+
+      <input 
+        matInput 
+        currencyMask
+        type="text" 
+        formControlName="Value" 
+        maxlength="13" 
+        autocomplete="off"
+        [options]="globService.currencyOptions" 
+        *ngSwitchCase="'Currency'"/>
+
+      <ng-container *ngSwitchCase="'Date'">
+        <input matInput formControlName="Value" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </ng-container>
+
+      <input 
+        matInput 
+        formControlName="Value"
+        type="text"
+        *ngSwitchDefault/>
+    </ng-container>
+
+    <mat-error *ngIf="formGroup.controls.Value.getError('required')">
+      {{ formGroup.controls.Name.value }} {{ 'IsRequired' | translate }}
+    </mat-error>
+    <mat-error *ngIf="formGroup.controls.Value.getError('invalid')">
+      {{ formGroup.controls.Value.errors['invalid'] }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-checkbox 
+    formControlName="Value"
+    *ngIf="formGroup.controls.DataType.value === 'Boolean'">
+    {{ formGroup.get('Name').value }}
+  </mat-checkbox>
+  
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+</ion-row>

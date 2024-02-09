@@ -1,0 +1,8 @@
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 mx-auto">
+    <app-contacts-questions-component class="w-100" [ContactCode]="ContactCode"
+      (ContactsIdentificationComponent)="processContactsIdentification($event)">
+    </app-contacts-questions-component>
+  </ion-row>
+</ion-content>

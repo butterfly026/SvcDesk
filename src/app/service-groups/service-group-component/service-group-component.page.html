@@ -1,0 +1,12 @@
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top" *ngIf="ServiceId==''">
+    <app-account-service-groups class="full-width vodafon-font" [ContactCode]="ContactCode"
+      (AccountServiceControl)="getMyServiceState($event)">
+    </app-account-service-groups>
+  </ion-row>
+  <ion-row class="ion-margin-top ess-service-group total-content4 left-right-auto" *ngIf="ServiceId!=''">
+    <app-service-group class="full-width" ContactCode="{{ContactCode}}" [ServiceId]="ServiceId">
+    </app-service-group>
+  </ion-row>
+</ion-content>

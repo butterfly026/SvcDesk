@@ -1,0 +1,15 @@
+<ion-row class="mt-3" *ngIf="planMode=='planHistory'">
+  <app-service-plan-history [ServiceReference]="ServiceReference" class="w-100" (PlanHistoryComponent)="planProcess($event)">
+  </app-service-plan-history>
+</ion-row>
+<ion-row class="mt-3" *ngIf="planMode=='planDetail'">
+  <app-service-plan-detail [ServiceReference]="ServiceReference" [PlanId]="planId" class="w-100"
+    (PlanDetailComponent)="planProcess($event)"></app-service-plan-detail>
+</ion-row>
+<ion-row class="mt-3" *ngIf="planMode=='planUpdate'">
+  <app-service-plan-new class="w-100" [ServiceReferenceId]="ServiceReference" (PlanNewComponent)="planProcess($event)"></app-service-plan-new>
+</ion-row>
+<ion-row class="mt-3" *ngIf="planMode=='planNew'">
+  <app-service-plan-new  [ServiceReferenceId]="ServiceReference" class="w-100" (PlanNewComponent)="planProcess($event)">
+  </app-service-plan-new>
+</ion-row>

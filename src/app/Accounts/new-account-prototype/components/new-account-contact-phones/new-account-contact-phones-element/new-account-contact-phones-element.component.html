@@ -1,0 +1,59 @@
+<ion-row [formGroup]="formGroup">
+  <ion-col size="10">
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field>
+            <mat-label>{{ 'phone_type' | translate }}</mat-label>
+            <mat-select formControlName="PhoneTypes" multiple>
+              <mat-option *ngFor="let phoneType of phoneTypeList" [value]="phoneType.Code">
+                {{ phoneType.Name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="formGroup.get('PhoneTypes').hasError('required')">
+              {{ 'phone_type_required' | translate }}
+            </mat-error>
+                                  
+            <mat-error *ngIf="formGroup.get('PhoneTypes').hasError('MandatodyValidation')">
+              {{ formGroup.get('PhoneTypes').errors.MandatodyValidation }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="address-spinner">
+          <mat-form-field>
+            <mat-label>{{ 'phone_number' | translate }}</mat-label>
+            <input matInput formControlName="PhoneNumber" (change)="checkPhoneNumberFromBackend($event)"/>
+
+            <mat-error *ngIf="formGroup.get('PhoneNumber').hasError('required')">
+              {{ 'phone_number_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="formGroup.get('PhoneNumber').hasError('pattern')">
+              {{ 'invalid_phone_number' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="formGroup.get('PhoneNumber').hasError('BackendValidation')">
+              {{ formGroup.get('PhoneNumber').errors.BackendValidation }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+    <ion-row class="ion-align-items-center">
+      <button mat-icon-button type="button" (click)="deleteFormGroup()">
+        <ion-icon aria-hidden="true" name="trash-outline" size="medium"></ion-icon>
+      </button>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>

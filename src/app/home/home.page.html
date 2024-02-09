@@ -1,0 +1,53 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{ 'home' | translate }}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <app-header pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content">
+
+    <ion-row class="page-title1 ion-margin-bottom">
+      <span class="margin-auto ion-margin-bottom">
+        {{ 'home' | translate }}
+      </span>
+    </ion-row>
+
+    <ion-row class="ion-margin-top ion-margin-bottom">
+      <ion-row class="ion-margin-top ion-margin-bottom">
+        <button mat-button (click)="goToChangePassword()" class="left-right-auto button-style1">
+          {{ 'change_password' | translate }}
+        </button>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-bottom left-right-auto">
+        <button mat-button (click)="goToBusiness()" class="left-right-auto button-style1">
+          {{ 'business_unit_select' | translate }}
+        </button>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-bottom left-right-auto">
+        <button mat-button (click)="goToRole()" class="left-right-auto button-style1">
+          {{ 'role_select' | translate }}
+        </button>
+      </ion-row>
+      <ion-row class="ion-margin-top ion-margin-bottom left-right-auto">
+        <button mat-button (click)="goToCollectionRunList()" class="left-right-auto button-style1">
+          {{ 'debit_run_dashboard' | translate }}
+        </button>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-content>

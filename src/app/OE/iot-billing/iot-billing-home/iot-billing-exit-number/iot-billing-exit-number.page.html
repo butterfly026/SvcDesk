@@ -1,0 +1,198 @@
+<ion-row class="plan-now total-content2 left-right-auto">
+  <ion-row class="ion-margin-top ion-padding-top ion-margin-bottom">
+    <h2 class="margin-auto ion-text-center">
+      <strong>{{'t_m_p_t_k_u_w_you' | translate}}</strong>
+    </h2>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top">
+    <h2 class="margin-auto ion-text-center">
+      <strong>{{'keep_your_number' | translate}}</strong>
+    </h2>
+  </ion-row>
+
+  <ion-row class="form-row">
+    <form [formGroup]="groupForm" class="full-width" (ngSubmit)="submitExistingNumber()" novalidate>
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="{{'w_y_p_p_number' | translate}}" formControlName="Number" type="text"
+            name="Number" required />
+
+          <mat-error *ngIf="f.Number.hasError('required')">
+            {{'p_p_number_required' | translate}}
+          </mat-error>
+
+          <mat-error *ngIf="!f.Number.hasError('required') && f.Number.hasError('pattern')">
+            {{'p_p_number_invalid' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="{{'w_t_a_y_width' | translate}}" formControlName="Telco" required>
+            <mat-option *ngFor="let list of telcoList; let i = index" [value]="list.Id">
+              {{list.Text}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{'telco_type_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="{{'w_y_c_s_now' | translate}}" formControlName="Status" required>
+            <mat-option *ngFor="let list of statusList; let i = index" [value]="list.Id">
+              {{list.Text}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{'w_y_c_s_now_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-row>
+          <h6 class="top-bottom-auto ion-text-center">
+            {{'i_t_n_r_u_y_nric_fin' | translate}}
+          </h6>
+        </ion-row>
+        <ion-row>
+          <mat-radio-group [(ngModel)]="nricState" class="full-widtt" [ngModelOptions]="{standalone:true}"
+            (ngModelChange)="selectNricState()" class="display-flex">
+            <mat-radio-button value="Yes" class="ion-margin-end">
+              {{'yes' | translate}}
+            </mat-radio-button>
+            <mat-radio-button value="No" class="ion-margin-start">
+              {{'no' | translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="ion-margin-top" *ngIf="nricState=='No'">
+        <ion-row class="ion-margin-top">
+          <ion-row>
+            <h2 class="top-bottom-auto ion-text-center" color="medium">
+              {{'p_p_r_u_details_below' | translate}}
+            </h2>
+          </ion-row>
+          <ion-row>
+            <h6 class="top-bottom-auto ion-text-start">
+              {{'p_p_r_u_details_below_des1' | translate}}
+              <a>veerhunter127@gmail.com</a>
+              {{'p_p_r_u_details_below_des2' | translate}}
+              <a>FAQ</a>
+              {{'page' | translate}}
+            </h6>
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="FirstName" placeholder="{{'given_name_nric' | translate}}" required
+              type="text" name="FirstName" />
+
+            <mat-error>
+              {{'given_name_nric_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="FamilyName" type="text" placeholder="{{'family_name_nric' | translate}}"
+              required name="FamilyName" />
+
+            <mat-error>
+              {{'family_name_nric_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <mat-form-field class="full-width">
+            <mat-select formControlName="IDType" placeholder="{{'receiptence_type_of_id' | translate}}" required>
+              <mat-option *ngFor="let list of idTypeList" [value]="list.Id" (click)="selectIdType(list.Id)">
+                {{list.Text}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{'receiptence_type_of_id_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <mat-form-field class="full-width" *ngIf="idType=='NRIC'">
+            <input matInput formControlName="NRIC" type="text" placeholder="{{'nric_ex' | translate}}" required
+              name="NRIC" />
+
+            <mat-error *ngIf="f.NRIC.hasError('required')">
+              {{'nric_required' | translate}}
+            </mat-error>
+            <mat-error *ngIf="!f.NRIC.hasError('required') && f.NRIC.hasError('pattern')">
+              {{'nric_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="submitButton" *ngIf="idType=='NRIC' && checkValidNRIC()"></div>
+
+          <mat-form-field class="full-width" *ngIf="idType=='FIN'">
+            <input matInput formControlName="FIN" type="text" name="FIN" required placeholder="{{'fin_ex' | translate}}"
+              (ionChange)="getValidateFin()" />
+
+            <mat-error *ngIf="f.FIN.hasError('required')">
+              {{'fin_required' | translate}}
+            </mat-error>
+            <mat-error *ngIf="!f.FIN.hasError('required') && f.NRIC.hasError('pattern')">
+              {{'fin_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="submitButton" *ngIf="idType=='FIN' && checkValidFin()"></div>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="ContactNumber" type="text" placeholder="{{'contact_number' | translate}}"
+              name="ContactNumber" required />
+
+            <mat-error *ngIf="f.ContactNumber.hasError('required')">
+              {{'contact_number_required' | translate}}
+            </mat-error>
+            <mat-error *ngIf="!f.ContactNumber.hasError('required') && f.ContactNumber.hasError('pattern')">
+              {{'contact_number_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-row>
+
+      <button class="submitButton" id="exitNumberSubmit"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="normal-button ion-margin-bottom ion-padding-bottom">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (click)="goBack()" class="margin-auto">
+          {{'close' | translate}}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton class="margin-auto" [theme]="globService.themeColor" [disabled]="!groupForm.valid" (click)="submitTrigger()">
+          {{'remind_me' | translate}}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

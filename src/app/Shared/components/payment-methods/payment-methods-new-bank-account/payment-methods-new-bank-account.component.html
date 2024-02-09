@@ -1,0 +1,69 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="my-3">
+    <h4 class="m-auto p-0 text-center">
+      {{'new_bank_account' | translate}} 
+    </h4>
+  </ion-row>
+  <ion-row class="total-content2 mx-auto mt-5 flex-1">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="onSubmit()">
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="AccountName" type="text" [placeholder]="'account_name' | translate"/>
+
+              <mat-error>
+                <span>{{ 'account_name_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="AccountNumber" type="text" [placeholder]="'account' | translate"/>
+
+              <mat-error>
+                <span>{{ 'account_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="BSB" type="text" [placeholder]="'b_s_b' | translate"/>
+
+              <mat-error>
+                <span>{{ 'b_s_b_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-row class="payment-method-toggle my-2">
+          <mat-slide-toggle color="success" formControlName="Default" class="payment-method-toggle-false">
+            {{ 'make_default' | translate }}
+          </mat-slide-toggle>
+        </ion-row>
+      </ion-row>
+
+      <button class="submitButton" id="bankAccountFormSubmitButton"></button>
+    </form>
+  </ion-row>
+  <ion-row class="y-3 jqx-button-row justify-content-end">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+      <jqxButton [disabled]="!formGroup.valid" [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()">
+        {{ 'add' | translate }}
+      </jqxButton>
+    </ion-col>
+
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'cancel' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,110 @@
+<ion-row class="ion-margin-top ion-margin-bottom ion-padding" id="accountServiceAdd">
+
+  <ion-row>
+    <ion-row class="left-right-auto ion-margin-top" [ngStyle]="{'width':gridContentWidth}">
+      <ion-row>
+        <h5 class="margin-auto ion-text-center">
+          {{'available_services_for' | translate}} : {{ServiceGroupName}}
+        </h5>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width">
+
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+            placeholder="{{ 'start_date' | translate }}" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="export-data">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="left-right-auto ion-margin-top schedule-grid" [ngStyle]="{'width':gridContentWidth}">
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #ServiceAddGrid [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [source]="dataAdapter" [columns]="columns"
+        [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+
+        <!-- [editable]="true" [selectionmode]="'multiplecellsadvanced'"
+        (onCellvaluechanged)="cellChange($event)" -->
+      </jqxGrid>
+    </ion-row>
+  </ion-row>
+
+</ion-row>
+
+<ion-row *ngIf="groupList.length>0">
+  <ion-row class="total-content2 left-right-auto">
+    <ion-row class="ion-margin-top pagination-content">
+      <span class="pagination-span ion-text-center">
+        <span class="go-to-page">
+          {{ 'goto_page' | translate }}:
+          <input matInput type="number" min="1" max="{{maxPageRow}}" (keyup)="changePageNumber($event)"
+            [(ngModel)]="pageRowNumber" (focus)="focusChangePage()" (focusout)="focusOutChangePage()" />
+        </span>
+
+        <span class="show-rows">
+          {{ 'show_rows' | translate }}:
+          <mat-select [(ngModel)]="rowStep" name="rowStep" (ngModelChange)="changeRowStep()">
+            <mat-option *ngFor="let list of rowList" value="{{list}}">
+              {{list}}
+            </mat-option>
+          </mat-select>
+        </span>
+
+        <!-- <br> -->
+
+        <span class="pagination-row">
+          {{startIndex + 1}} - {{endIndex}} {{ 'of_word' | translate }} {{totalLength}} &nbsp;
+
+          <span color="secondary" *ngIf="startIndex < 1" class="margin-right-auto">
+            {{backSymbol}}
+          </span>
+          <span *ngIf="startIndex > 0" class="margin-right-auto" (click)="reduceList()">
+            {{backSymbol}}
+          </span> &nbsp;&nbsp;
+          <span color="secondary" *ngIf="endIndex >= totalLength" class="margin-left-auto top-bottom-auto"
+            (click)="increaseList()">
+            {{forwardSymbol}}
+          </span>
+          <span mode="ios" *ngIf="endIndex < totalLength" class="margin-left-auto top-bottom-auto"
+            (click)="increaseList()">
+            {{forwardSymbol}}
+          </span>
+
+        </span>
+
+      </span>
+
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="ion-margin-top ion-padding-top page-bottom normal-button total-content2 left-right-auto">
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+  </ion-col>
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+    <ion-row class="full-height">
+      <jqxButton [theme]="globService.themeColor" [disabled]="!availableAdd" class="jqx-button-theme" (click)="addNewService()">
+        {{ 'assign_service' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    <ion-row class="full-height">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<button class="submitButton" id="checkBox" (click)="checkedBox()"></button>

@@ -1,0 +1,20 @@
+.nav-back-label {
+    white-space: nowrap;
+    margin-left: 5px;
+}
+
+.mat-nav-list .mat-list-item {
+    border-radius: 32px;
+}
+
+// .mat-list-base .mat-list-item,
+// .mat-list-base .mat-list-option {
+//     height: 62px;
+// }
+.nav-menu-item .mat-list-item-content{
+    padding: 0 10px !important;
+}
+.active-link {
+    background-color: blue;
+    color: white;
+}

@@ -1,0 +1,16 @@
+export interface ContactSearch {
+    Type: string,
+    SubType: string,
+    BusinessUnitCode: string,
+    BusinessUnit: string,
+    Status: string,
+    StatusCode: string,
+    ContactCode: string,
+    Name: string,
+    DateOfBirth: string,
+    Addresses: string,
+    ContactPhones: string,
+    Services: string,
+    Emails: string,
+    Database: string,
+}

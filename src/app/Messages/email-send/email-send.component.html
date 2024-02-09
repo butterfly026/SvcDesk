@@ -1,0 +1,11 @@
+<ion-row *ngIf="pageState == 'new'">
+  <app-email-send-new class="total-content2 left-right-auto" [ContactCode]="ContactCode"
+    (EmailSendNewComponent)="processEmail($event)">
+  </app-email-send-new>
+</ion-row>
+
+<ion-row *ngIf="pageState == 'list'">
+  <app-email-send-list class="total-content4 mx-auto" [ContactCode]="ContactCode"
+    (EmailSendListComponent)="processEmail($event)">
+  </app-email-send-list>
+</ion-row>

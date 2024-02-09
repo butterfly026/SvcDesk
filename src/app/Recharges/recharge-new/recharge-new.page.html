@@ -1,0 +1,182 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon" >
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="full-height total-content">
+    <ion-row class="margin-auto">
+
+      <form [formGroup]="newRechargeForm" class="full-width" (ngSubmit)="newRecharge()" novalidate>
+        <ion-row class="username-row">
+          <mat-form-field class="example-full-width">
+
+            <mat-select formControlName="type" placeholder="{{ 'type' | translate }}" name="type" required>
+              <mat-option *ngFor="let list of typeList" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+
+            <!-- <input matInput type="text" formControlName="method" placeholder="{{ 'select' | translate }}" required
+              name="method"> -->
+            <mat-error>
+              {{ 'type_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="username-row">
+          <mat-form-field class="example-full-width">
+
+            <mat-select formControlName="voucher" placeholder="{{ 'voucher' | translate }}" name="voucher" required>
+              <mat-option *ngFor="let list of voucherList" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              <span>{{ 'voucher_required' | translate }}</span>
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="username-row">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput formControlName="amount" type="number" required placeholder="{{ 'amount' | translate }}"
+                  name="amount" />
+
+                <mat-error>
+                  <span>{{ 'amount_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput [matDatepicker]="picker" formControlName="start" placeholder="{{ 'date' | translate }}"
+                  [(ngModel)]="startDate" name="start" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+                <mat-error>
+                  <span>{{ 'start_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <button mat-button id="submitButton">Submit</button>
+      </form>
+
+      <ion-row>
+        <ion-row>
+          <span>
+            {{ 'expiry_date' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="ion-padding-start">
+          <!-- <section class="example-section">
+            <jqxRadioButton class="example-margin" #default [theme]="globService.themeColor">
+              {{ 'default_expiry_date' | translate }} (26/10/2019)
+            </jqxRadioButton>
+            <jqxRadioButton class="example-margin" #useThis [theme]="globService.themeColor">
+              {{ 'use_this' | translate }}
+            </jqxRadioButton>
+          </section> -->
+          <mat-radio-group class="ion-margin-top" [(ngModel)]="expireValue" (ngModelChange)="expireChange()">
+            <mat-radio-button class="full-width" value="default" checked>{{ 'default_expiry_date' | translate }}
+              (26/10/2019)
+            </mat-radio-button>
+            <mat-radio-button value="custom">{{ 'use_this' | translate }}: &nbsp;&nbsp;&nbsp;
+            </mat-radio-button>
+
+            <mat-form-field class="example-full-width expire-date" style="width:100px;">
+
+              <input matInput [matDatepicker]="pickerDate" [(ngModel)]="expireDate" name="expireDate"
+                [disabled]="!expireState">
+              <mat-datepicker-toggle matSuffix [for]="pickerDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerDate></mat-datepicker>
+
+            </mat-form-field>
+          </mat-radio-group>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="ion-padding-top">
+        <ion-row>
+          <span>
+            {{ 'pin' | translate }}
+          </span>
+        </ion-row>
+        <ion-row>
+
+          <mat-form-field class="example-full-width">
+
+            <input matInput type="text" [(ngModel)]="pinText" placeholder="{{ 'pin' | translate }}" name="pinText" />
+
+          </mat-form-field>
+
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-checkbox class="top-bottom-auto">{{ 'encrypted' | translate }}</mat-checkbox>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-checkbox class="top-bottom-auto">{{ 'masked' | translate }}</mat-checkbox>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!newRechargeForm.valid"
+              (click)="submitTrigger()">
+              {{ 'add' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+</ion-content>

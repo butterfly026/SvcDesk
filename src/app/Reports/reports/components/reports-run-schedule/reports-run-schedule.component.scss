@@ -1,0 +1,47 @@
+ul.month-calendar {
+    border: 1px dashed #CCCCCC;
+    padding: 0;
+    height: 250px;
+}
+
+ul.month-calendar li {
+    border: 1px dashed #CCCCCC;
+    height: 14.3%;
+    width: 20%;
+    list-style: none;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    line-height: 2.5em;
+    color: #555555;
+    user-select: none;
+}
+
+ul.month-calendar li.select-last-date {
+    width: 100%;
+    font-weight: bold;
+    font-size: smaller;
+}
+
+ul.month-calendar li:hover {
+    background-color: #666666;
+    color: #ffffff;
+}
+
+jqxListBox span.jqx-checkbox-check-checked {
+    background: none;
+}
+
+::ng-deep #list-box div {
+    border: none;
+}
+
+
+::ng-deep svg.mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+.custom-radio-group {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,111 @@
+<ion-row class="" *ngIf="emailState=='default'">
+  <ion-row class="ion-margin-top ion-padding-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'edit_email_address' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+  <ion-row class="ion-margin-top ion-justify-content-end">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'Create' | translate" 
+      (click)="addNewEmail()">
+      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'History' | translate" 
+      (click)="goToHistory()">
+      <ion-icon aria-hidden="true" name="timer-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <form [formGroup]="emailForm" (ngSubmit)="submitEmail()" class="full-width" novalidate>
+      <ion-row *ngFor="let list of currentEmailList; let i = index">
+        <ion-row>
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+            <ion-row class="full-height">
+
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                  placeholder="{{ 'email_type' | translate }}" required>
+                  <mat-option *ngFor="let emailList of availEmailList; let j = index" value="{{emailList.code}}"
+                    (click)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'TypeCtrl')" [disabled]="emailList?.available">
+                    {{ emailList.name | translate }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'email_type_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <input matInput formControlName="{{list.ValueCtrl}}" type="email"
+                  placeholder="{{ 'email' | translate }}" required
+                  (ngModelChange)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'ValueCtrl')" />
+
+                <mat-error *ngIf="form[list.ValueCtrl].hasError('required')">
+                  {{ 'email_is_required' | translate }}
+                </mat-error>
+
+                <mat-error *ngIf="!form[list.ValueCtrl].hasError('required') && form[list.ValueCtrl].hasError('email')">
+                  {{ 'email_invalid_label' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+            <ion-row class="full-height">
+              <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteEmail(i)"></ion-icon>
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+        <ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>
+
+      </ion-row>
+      <button id="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="login-row page-bottom jqx-button-row ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+          [disabled]="!emailForm.valid || !saveState">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>
+
+
+<ion-row class="ion-margin-top" *ngIf="emailState=='history'">
+  <app-contact-email-history [ContactCode]="ContactCode" class="full-width"
+    (ContactEmailHistoryComponent)="processHistory($event)">
+  </app-contact-email-history>
+</ion-row>

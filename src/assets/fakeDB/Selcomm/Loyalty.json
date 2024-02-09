@@ -1,0 +1,38 @@
+[
+    {
+        "Id": "Id 1",
+        "TranDate": "TranDate 1",
+        "ExpiryDate": "ExpiryDate 1",
+        "Status": "Status 1",
+        "Source": "Source 1",
+        "Type": "Credit",
+        "TotalPoints": "TotalPoints 1",
+        "EarntPoints": "EarntPoints 1",
+        "ConsumedPoints": "ConsumedPoints 1",
+        "UnusedPoints": "UnusedPoints 1"
+    },
+    {
+        "Id": "Id 2",
+        "TranDate": "TranDate 2",
+        "ExpiryDate": "ExpiryDate 2",
+        "Status": "Status 2",
+        "Source": "Source 2",
+        "Type": "Credit",
+        "TotalPoints": "TotalPoints 2",
+        "EarntPoints": "EarntPoints 2",
+        "ConsumedPoints": "ConsumedPoints 2",
+        "UnusedPoints": "UnusedPoints 2"
+    },
+    {
+        "Id": "Id 3",
+        "TranDate": "TranDate 3",
+        "ExpiryDate": "ExpiryDate 3",
+        "Status": "Status 3",
+        "Source": "Source 3",
+        "Type": "Debit",
+        "TotalPoints": "TotalPoints 3",
+        "EarntPoints": "EarntPoints 3",
+        "ConsumedPoints": "ConsumedPoints 3",
+        "UnusedPoints": "UnusedPoints 3"
+    }
+]

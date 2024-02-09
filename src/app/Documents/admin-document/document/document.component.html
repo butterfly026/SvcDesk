@@ -1,0 +1,378 @@
+<ion-row class="mt-5" *ngIf="docState != 'edit'">
+  <h3 class="mx-auto my-0 p-0">
+    {{ 'documents' | translate }}
+  </h3>
+</ion-row>
+
+<ion-row *ngIf="docState == 'view'">
+
+  <ion-row class="total-content4 mx-auto">
+    <ion-row class="service-list-search mt-3 justify-content-between align-items-center">
+      <i class="fa fa-plus-circle create-document" (click)="switchCreateDoc()"></i>
+      <ion-searchbar mode="ios" class="ion-padding-start ml-auto" (keypress)="searchInputEvent($event)"
+        [placeholder]="'search' | translate" [(ngModel)]="docsParam.SearchString">
+      </ion-searchbar>
+    </ion-row>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="mt-3 total-content4 mx-auto">
+      <ion-row class="box-shadow-item my-3 px-3 py-2" *ngFor="let list of documents; let i = index;"
+        (click)="goToDocDetail(i)">
+        <ion-row class="">
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'name' | translate}} : {{list.name}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'note' | translate}} : {{list.note}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'author' | translate}} : {{list.author}}
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row *ngIf="documents.length > 0">
+    <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber" [rowStep]="rowStep"
+      [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+    </app-paging-component>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="docState == 'edit' && currentDoc">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'document' | translate }} : [{{currentDoc.id}}]
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3 total-content4 mx-auto">
+    <form [formGroup]="docForm" novalidate class="w-100" (ngSubmit)="updateDocument()">
+      <ion-row class="">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="name" placeholder="{{ 'name' | translate }}" required
+                name="name">
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="author" placeholder="{{ 'author' | translate }}" required
+                name="author">
+
+              <mat-error>
+                {{ 'author_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="dateAuthor" formControlName="dateauthored"
+                placeholder="{{ 'author_date' | translate }}" name="dateauthored" required>
+
+              <mat-datepicker-toggle matSuffix [for]="dateAuthor"></mat-datepicker-toggle>
+              <mat-datepicker #dateAuthor></mat-datepicker>
+
+              <mat-error>
+                {{ 'author_date_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="editable" placeholder="{{ 'editable' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'editable_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="contacteditable" placeholder="{{ 'contact_editable' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'contact_editable_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="contactvisible" placeholder="{{ 'contact_visible' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'contact_visible_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100 textarea-field">
+              <textarea matInput formControlName="note" name="note" placeholder="{{'note'| translate}}">
+              </textarea>
+
+              <mat-error>
+                {{ 'note_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center" *ngIf="!currentDoc.mode">
+            <ion-row>
+              <ion-row>
+                <img [src]="'assets/imgs/document/' + getImageType(currentDoc.filetype)" class="document-file m-auto" />
+              </ion-row>
+              <ion-row class="align-items-center justify-content-center cursor-point" (click)="downloadDocument()">
+                <span class="mr-3">
+                  {{currentDoc.filename}}.{{currentDoc.filetype}}
+                </span>
+                <i class="fa fa-download"></i>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+          <ion-row class="h-100 align-items-center" *ngIf="currentDoc.mode">
+            <ion-row align-items-center>
+              <span class="choose-file" (click)="openFile()">
+                {{'choose_file' | translate}}
+              </span>
+
+              <span class="document-name my-auto pl-3">{{newFile.name}}</span>
+
+              <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" class="d-none" />
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="mt-5 jqx-button-row" *ngIf="!currentDoc.mode">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!currentDoc.editable"
+            (onClick)="switchEdit()">
+            {{ 'edit' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!currentDoc.editable"
+            (onClick)="deleteDocument()">
+            {{ 'delete' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="backMain()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="mt-5 jqx-button-row" *ngIf="currentDoc.mode">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitUpdate()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="switchEdit()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="docState == 'create'">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'create_document' | translate }}
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3 total-content4 mx-auto">
+    <form [formGroup]="docForm" novalidate class="w-100" (ngSubmit)="createDocument()">
+      <ion-row class="">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="name" placeholder="{{ 'name' | translate }}" required
+                name="name">
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="author" placeholder="{{ 'author' | translate }}" required
+                name="author">
+
+              <mat-error>
+                {{ 'author_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="dateAuthor" formControlName="dateauthored"
+                placeholder="{{ 'author_date' | translate }}" name="dateauthored" required>
+
+              <mat-datepicker-toggle matSuffix [for]="dateAuthor"></mat-datepicker-toggle>
+              <mat-datepicker #dateAuthor></mat-datepicker>
+
+              <mat-error>
+                {{ 'author_date_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="editable" placeholder="{{ 'editable' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'editable_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="contacteditable" placeholder="{{ 'contact_editable' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'contact_editable_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="contactvisible" placeholder="{{ 'contact_visible' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'contact_visible_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100 textarea-field">
+              <textarea matInput formControlName="note" name="note" placeholder="{{'note'| translate}}">
+              </textarea>
+
+              <mat-error>
+                {{ 'note_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center">
+            <ion-row align-items-center>
+              <span class="choose-file" (click)="openCreateFile()">
+                {{'choose_file' | translate}}
+              </span>
+              <span class="document-name my-auto pl-3">{{createDoc.name}}</span>
+
+              <input type="file" #createFile id="createFile" (change)="createFileEvent($event)" class="d-none" />
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="createDocumentButton"></button>
+    </form>
+
+    <ion-row class="mt-5 jqx-button-row">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitCreateDoc()">
+            {{ 'create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="switchCreateDoc()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

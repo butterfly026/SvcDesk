@@ -1,0 +1,101 @@
+[
+    {
+        "Id": 1001,
+        "Caption": "prototype",
+        "icon": "fa fa-cogs",
+        "Mode": "page",
+        "Color": "orange",
+        "Command": [
+            {
+                "Id": 1117,
+                "Caption": "configuration",
+                "icon": "fa fa-id-card",
+                "Mode": "page",
+                "Color": "#68436f",
+                "Command": [
+                    {
+                        "Id": 1117,
+                        "Caption": "email_configuration",
+                        "icon": "fa fa-id-card",
+                        "Mode": "page",
+                        "Color": "#3d70cc",
+                        "Command": "email-configuration"
+                    },
+                    {
+                        "Id": 1118,
+                        "Caption": "sms_configuration",
+                        "icon": "fa fa-id-card",
+                        "Mode": "page",
+                        "Color": "#68436f",
+                        "Command": "sms_configuration"
+                    },
+                    {
+                        "Id": 1118,
+                        "Caption": "service_provider_user_configuration",
+                        "icon": "fa fa-id-card",
+                        "Mode": "page",
+                        "Color": "#68436f",
+                        "Command": "service-provider-user-configuration"
+                    },
+                    {
+                        "Id": 1137,
+                        "Caption": "service_attributes",
+                        "icon": "fa fa-expand",
+                        "Mode": "page",
+                        "Color": "#551234",
+                        "Command": "service-attributes"
+                     }
+                ]
+            },
+            {
+                "Id": 1122,
+                "Caption": "terminations",
+                "icon": "fa fa-terminal",
+                "Mode": "page",
+                "Color": "#c19122",
+                "Command": [
+                    {
+                        "Id": 1125,
+                        "Caption": "termination_change_date",
+                        "icon": "fa fa-industry",
+                        "Mode": "page",
+                        "Color": "#a111cc",
+                        "Command": "termination-change-date"
+                    },
+                    {
+                        "Id": 1126,
+                        "Caption": "termination_receive",
+                        "icon": "fa fa-hourglass-half",
+                        "Mode": "page",
+                        "Color": "#a333cc",
+                        "Command": "termination-receive"
+                    },
+                    {
+                        "Id": 1126,
+                        "Caption": "termination_reverse",
+                        "icon": "fa fa-life-ring",
+                        "Mode": "page",
+                        "Color": "#6666cc",
+                        "Command": "termination-reverse"
+                    }
+                ]
+            },
+            {
+                "Id": 1137,
+                "Caption": "commissions",
+                "icon": "fa fa-expand",
+                "Mode": "page",
+                "Color": "#551234",
+                "Command": "commissions"
+            },
+            {
+                "Id": 1139,
+                "Caption": "html_editor",
+                "icon": "fa fa-expand",
+                "Mode": "page",
+                "Color": "#551234",
+                "Command": "html-editor"
+            }
+        ]
+    }
+]

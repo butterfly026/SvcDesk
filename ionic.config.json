@@ -1,0 +1,7 @@
+{
+  "name": "selcom-5-9",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

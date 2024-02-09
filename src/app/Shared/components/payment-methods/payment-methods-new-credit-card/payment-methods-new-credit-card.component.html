@@ -1,0 +1,139 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="my-3">
+    <h4 class="m-auto p-0 text-center">
+      {{'new_credit_card' | translate}} 
+    </h4>
+  </ion-row>
+  <ion-row class="total-content2 mx-auto mt-5 flex-1">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="onSubmit()">
+
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100 credit-card-number-field">
+
+              <input matInput formControlName="AccountNumber" type="text"
+                [textMask]="{mask: maskCardNumber, guide: false}" [placeholder]="'credit_card_num' | translate"/>
+
+              <mat-error *ngIf="formControls.AccountNumber.hasError('required')">
+                <span>{{ 'credit_card_num_required' | translate }}</span>
+              </mat-error>
+
+              <mat-error 
+                *ngIf="
+                  (formControls.AccountNumber.hasError('minLength') || formControls.AccountNumber.hasError('incorrect'))  && 
+                  !formControls.AccountNumber.hasError('required')
+                ">
+                {{ 'invalid_card_number' | translate }}
+              </mat-error>
+
+              <ng-container *ngFor="let item of imagesForPaymentMethod">
+                <img [src]="item.Src" class="my-auto" *ngIf="formControls.PayCode.value == item.PaymentMethodCode" />
+              </ng-container>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="AccountName" type="text" [placeholder]="'card_holder_name' | translate"/>
+
+              <mat-error>
+                {{ 'card_holder_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="ExpireMonth" [placeholder]="'month' | translate" >
+                <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'month_require' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="ExpireYear" [placeholder]="'year' | translate">
+                <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'year_require' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-row class="">
+          <ion-col size="12">
+            <ion-row class="h-100">
+
+              <mat-checkbox class="w-100" [(ngModel)]="showFutureDate" [ngModelOptions]="{standalone: true}" (ngModelChange)="updateFuterDate()">
+                {{'future_start_date' | translate}}
+              </mat-checkbox>
+
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="showFutureDate">
+          <ion-col size="12">
+            <ion-row>
+              <mat-form-field class="w-100">
+                <input matInput [matDatepicker]="futureDate" formControlName="FutureDate" [placeholder]="'start_date' | translate">
+                <mat-datepicker-toggle matSuffix [for]="futureDate"></mat-datepicker-toggle>
+                <mat-datepicker #futureDate></mat-datepicker>
+
+                <mat-error>
+                  <span>{{ 'future_start_date_required' | translate }}</span>
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="payment-method-toggle my-2">
+          <mat-slide-toggle color="success" formControlName="Default" class="payment-method-toggle-false">
+            {{ 'make_default' | translate }}
+          </mat-slide-toggle>
+        </ion-row>
+      </ion-row>
+
+      <button class="submitButton" id="creditCardFormSubmitButton"></button>
+    </form>
+  </ion-row>
+  <ion-row class="my-3 jqx-button-row justify-content-end">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+      <ion-row class="h-100">
+        <jqxButton [disabled]="!formGroup.valid" [theme]="globService.themeColor" class="jqx-button-theme"
+          (click)="submitTrigger()">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+
+  </ion-row>
+</ion-row>

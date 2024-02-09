@@ -1,0 +1,26 @@
+::ng-deep div.jqx-grid-pager {
+    display: none;
+}
+
+ion-row.pager ion-col {
+    text-align: center;
+}
+
+
+::ng-deep ul.schedule-days-date li {
+    padding: 0.5%;
+    border: 1px solid #CCC;
+    float: left;
+    list-style: none;
+    margin: 1%;
+    width: 22px;
+    text-align: center;
+    height: 20px;
+}
+
+::ng-deep span.month-days {
+    padding-left: 40px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    float: left;
+}

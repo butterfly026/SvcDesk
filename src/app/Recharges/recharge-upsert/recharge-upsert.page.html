@@ -1,0 +1,112 @@
+<ion-header [mode]="'ios'">
+
+    <ion-row class="header1-row" color="secondary">
+
+        <ion-col size="2">
+
+            <ion-row class="full-height">
+                <ion-icon (click)="navCtrl.back()" [name]="'arrow-back-outline'" class="header-icon"
+                    *ngIf="!globService.rtlMode">
+                </ion-icon>
+                <ion-icon (click)="navCtrl.back()" [name]="'arrow-forward-outline'" class="header-icon"
+                    *ngIf="globService.rtlMode">
+                </ion-icon>
+            </ion-row>
+
+        </ion-col>
+
+        <ion-col size="8">
+
+            <ion-row class="full-height">
+                <span class="header-title">
+                    {{ pageTitle| translate }}
+                </span>
+
+            </ion-row>
+
+        </ion-col>
+
+    </ion-row>
+
+    <app-header [pageName]="pageTitle | translate"></app-header>
+
+</ion-header>
+
+<ion-content [class.sales_lead]="true" padding (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+    <form [formGroup]="rechargeUpsertForm" class="full-width" [style.marginTop.%]="5" novalidate>
+
+        <ion-row>
+
+            <ion-col [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2" [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <input [required]="true" [formControlName]="'Id'" matInput [disableControl]="true"
+                        [placeholder]="'recharge_id' | translate">
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2" [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <textarea [required]="true" [formControlName]="'Description'" matInput
+                        [placeholder]="'description' | translate"></textarea>
+                    <mat-error *ngIf="rechargeUpsertForm.controls['Description'].hasError('required')">
+                        {{'recharge_description_is_required' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [hidden]="rechargeId == 'new'" [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2"
+                [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <input [required]="true" [disableControl]="true" [formControlName]="'CreatedBy'" matInput
+                        [placeholder]="'created_by' | translate">
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [hidden]="rechargeId == 'new'" [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2"
+                [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <input [required]="true" [disableControl]="true" [formControlName]="'CreatedDatetime'" matInput
+                        [placeholder]="'created_at' | translate">
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [hidden]="rechargeId == 'new'" [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2"
+                [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <input [required]="true" [disableControl]="true" [formControlName]="'UpdatedBy'" matInput
+                        [placeholder]="'updatedby' | translate">
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [hidden]="rechargeId == 'new'" [sizeMd]="8" [sizeLg]="8" [offsetLg]="2" [offsetMd]="2"
+                [sizeSm]="12" [sizeXs]="12">
+                <mat-form-field>
+                    <input [required]="true" [disableControl]="true" [formControlName]="'LastUpdatedDatetime'" matInput
+                        [placeholder]="'last_updated_at' | translate">
+                </mat-form-field>
+            </ion-col>
+
+
+        </ion-row>
+
+        <ion-row class="jqx-button-row margin-auto">
+
+            <ion-col [sizeMd]="4" [sizeLg]="4" [offsetLg]="2" [offsetMd]="2" [sizeSm]="6" [sizeXs]="6">
+                <jqxButton [disabled]="!rechargeUpsertForm.valid" (click)="saveForm()" [theme]="globService.themeColor"
+                    class="jqx-button-theme">
+                    {{ (rechargeId === 'new' ? 'save' : 'update') | translate }}
+                </jqxButton>
+            </ion-col>
+
+            <ion-col [sizeMd]="4" [sizeLg]="4" [sizeSm]="6" [sizeXs]="6">
+                <jqxButton (onClick)="navCtrl.back()" [theme]="globService.themeColor" class="jqx-button-theme">
+                    {{ 'close' | translate }}
+                </jqxButton>
+            </ion-col>
+
+        </ion-row>
+
+    </form>
+
+</ion-content>

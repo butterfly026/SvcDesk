@@ -1,0 +1,28 @@
+<ion-row id="service-cost-center-grid">
+    <ion-row class="mt-3 left-right-auto">
+        <app-datatable 
+            class="w-100"
+            [data]="dataSource" 
+            [totalCount]="totalCount"
+            [columns]="columns"
+            [action]="dataTableAction"
+            [permissions]="permissions"
+            [csvFileName]="csvFileName"
+            [allowDblClickRow]="true"
+            [searchOptions]="searchOptions"
+            (onDoublClickRow)="dblclickRow($event)"
+            (onFetchData)="fetchData($event)">
+        </app-datatable>
+    </ion-row>
+
+    <ion-row *ngIf="!!ServiceId">
+        <app-service-cost-service 
+            class="full-width" 
+            [ContactCode]="ContactCode" 
+            [ServiceId]="ServiceId"
+            [SearchString]="eventParam.SearchString"
+            (ServiceCostServiceComponent)="processServiceCostCenter($event)">
+        </app-service-cost-service>
+    </ion-row>
+
+</ion-row>

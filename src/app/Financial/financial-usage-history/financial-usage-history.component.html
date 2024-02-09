@@ -1,0 +1,188 @@
+<ion-row class="mt-3">
+  <ion-col [size]="12">
+
+    <mat-tab-group>
+
+      <mat-tab [label]="'general' | translate">
+
+        <ion-row id="usage-detail-grid">
+          <ion-row>
+
+            <ion-row class="mt-3">
+              <ion-row class="mx-auto export-data justify-content-end" [ngStyle]="{'width':gridContentWidth}">
+                <div class="d-flex align-items-center">
+                  <h5 class="m-0 mr-2 p-0">
+                    <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+                  </h5>
+                  <span class="margin-left-auto ion-text-end" (click)="exportData()">
+                    {{'export_to_excel' | translate}}
+                  </span>
+                </div>
+              </ion-row>
+            </ion-row>
+
+            <ion-col [size]="12">
+              <ion-row>
+                <jqxGrid id="jqxGridOption" #usageDetailGrid [theme]="globService.themeColor" [source]="dataAdapter"
+                  [columns]="columns" [autoheight]="true" [columnsresize]="true" [columnsautoresize]="true"
+                  [width]="setGridWidth()" (onRowselect)="selectedDealer = $event.args.row" [rtl]="globService.rtlMode">
+                </jqxGrid>
+              </ion-row>
+
+            </ion-col>
+
+          </ion-row>
+
+
+          <ion-row *ngIf="usageDetailList.length > 0">
+            <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber"
+              [rowStep]="rowStep" [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+            </app-paging-component>
+          </ion-row>
+        </ion-row>
+      </mat-tab>
+
+      <mat-tab [label]="'tariff' | translate">
+
+        <ion-row class="network_row">
+
+          <ion-col [size]="12">
+
+            <table class="table table-bordered">
+              <tbody>
+                <tr class="techSpecRow">
+                  <th [style.text-align]="'center'" colspan="2">{{'tariff_details' | translate}}</th>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'on_going_charges' | translate}}:</td>
+                  <td class="techSpecTD2">Free</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </ion-col>
+
+        </ion-row>
+
+      </mat-tab>
+
+      <mat-tab [label]="'network' | translate">
+
+        <ion-row class="network_row">
+
+          <ion-col [size]="12">
+
+            <table class="table table-bordered">
+              <tbody>
+                <tr class="techSpecRow">
+                  <th [style.text-align]="'center'" colspan="2">{{'network_details' | translate}}</th>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'file_number' | translate}}:</td>
+                  <td class="techSpecTD2">8129</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'record_number' | translate}}:</td>
+                  <td class="techSpecTD2">2992</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'customer_narr' | translate}}:</td>
+                  <td class="techSpecTD2"> Demo</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'file_type' | translate}}:</td>
+                  <td class="techSpecTD2"> POWERTLDAT</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'sequence' | translate}}:</td>
+                  <td class="techSpecTD2">998</td>
+                </tr>
+
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'file_status' | translate}}:</td>
+                  <td class="techSpecTD2">Processing Completed</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'file_name' | translate}}:</td>
+                  <td class="techSpecTD2">ACTIBL320060525</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'file_date' | translate}}:</td>
+                  <td class="techSpecTD2">29/05/2006</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'serviceid' | translate}}:</td>
+                  <td class="techSpecTD2"> 0</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'sub_account' | translate}}:</td>
+                  <td class="techSpecTD2"> ACTI6001</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'fnn' | translate}}:</td>
+                  <td class="techSpecTD2">998</td>
+                </tr>
+
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'exchange_id' | translate}}:</td>
+                  <td class="techSpecTD2">Processing Completed</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'product_id' | translate}}:</td>
+                  <td class="techSpecTD2">ACTIBL320060525</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'narrative' | translate}}:</td>
+                  <td class="techSpecTD2">29/05/2006</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'usage_cd' | translate}}:</td>
+                  <td class="techSpecTD2"> 0</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'usage_down' | translate}}:</td>
+                  <td class="techSpecTD2"> ACTI6001</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'usage_up' | translate}}:</td>
+                  <td class="techSpecTD2">998</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'tax_cd' | translate}}:</td>
+                  <td class="techSpecTD2"> ACTI6001</td>
+                </tr>
+                <tr class="techSpecRow">
+                  <td class="techSpecTD1">{{'timestamp' | translate}}:</td>
+                  <td class="techSpecTD2">29/05/2006</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </ion-col>
+
+        </ion-row>
+
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </ion-col>
+
+</ion-row>
+
+
+<ion-row class="total-content4 mx-auto">
+  <ion-row class="jqx-button-row">
+    <ion-col [size]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme">
+        {{ 'test' | translate }}
+      </jqxButton>
+    </ion-col>
+
+    <ion-col [size]="6">
+      <jqxButton (onClick)="goBack()" [theme]="globService.themeColor" class="jqx-button-theme">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

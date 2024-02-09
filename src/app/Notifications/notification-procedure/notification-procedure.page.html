@@ -1,0 +1,156 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto ion-margin-top" *ngIf="NotDetail!=null">
+    <ion-row class="ion-margin-top">
+      <form class="full-width" [formGroup]="notForm" (ngSubmit)="notSubmit()" novalidate>
+        <ion-row>
+          <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+            <ion-row class="full-height">
+
+              <section class="example-section full-width">
+                <mat-slide-toggle [(ngModel)]="openNotification" [ngModelOptions]="{standalone: true}"
+                  labelPosition="before" class="full-width" color="primary" (click)="updateNotificationStatus()"
+                  [disabled]="!enableDelete">
+                  {{ 'enable_notifications' | translate }}
+                </mat-slide-toggle>
+              </section>
+
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+            <ion-row class="full-height">
+
+              <mat-form-field class="example-full-width">
+
+                <mat-select formControlName="device" placeholder="{{ 'device' | translate }}" name="device" required>
+                  <mat-option *ngFor="let list of deviceList; let i = index" value="{{list.ServiceReference}}"
+                    (click)="selectDevice(i)">
+                    {{list.ServiceProviderId1}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'device_required' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+            <ion-row class="full-height">
+
+              <mat-form-field class="example-full-width">
+                <!-- <input matInput type="number" min="0" formControlName="proThre"
+                    placeholder="{{ 'procedure_threshold' | translate }}" required (ngModelChange)="checkSaveState()" /> -->
+
+
+                <mat-select formControlName="proThre" placeholder="{{ 'procedure_threshold' | translate }}"
+                  name="proThre" required>
+                  <mat-option *ngFor="let list of thresholdList; let i = index" value="{{list}}"
+                    (click)="checkSaveState()">
+                    {{list}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="f.proThre.hasError('required')">
+                  {{ 'procedure_threshold_required' | translate }}
+                </mat-error>
+
+                <mat-error *ngIf="!f.proThre.hasError('required') && f.proThre.hasError('min')">
+                  {{ 'invalid_procedure_threshold' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <!-- <ion-row class="ion-margin-top">
+          <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+            <ion-row class="full-height">
+
+              <mat-form-field class="example-full-width">
+                <input matInput type="email" formControlName="email" placeholder="{{ 'email' | translate }}"
+                  (ngModelChange)="checkSaveState()" required />
+
+                <mat-error *ngIf="f.email.hasError('required')">
+                  {{ 'email_is_required' | translate }}
+                </mat-error>
+
+                <mat-error *ngIf="!f.email.hasError('required') && f.email.hasError('email')">
+                  {{ 'email_invalid_label' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row> -->
+
+        <!-- <ion-row class="ion-margin-top">
+            <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+              <ion-row class="full-height">
+  
+                <mat-form-field class="example-full-width">
+                  <input matInput type="text" formControlName="mobile" placeholder="{{ 'mobile' | translate }}"
+                    (ngModelChange)="checkSaveState()" />
+  
+                  <mat-error *ngIf="f.mobile.hasError('required')">
+                    {{ 'mobile_required' | translate }}
+                  </mat-error>
+  
+                  <mat-error *ngIf="!f.mobile.hasError('required') && f.mobile.hasError('pattern')">
+                    {{ 'invalid_mobile' | translate }}
+                  </mat-error>
+  
+                </mat-form-field>
+              </ion-row>
+            </ion-col> -->
+        <!-- </ion-row> -->
+        <button id="submitButton"></button>
+      </form>
+
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+              [disabled]="!enableContact">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteNotification()"
+              [disabled]="!enableDelete">
+              {{ 'delete' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+
+    <!-- <ion-row class="ion-margin-top">
+        <app-notification-form [UserInfo]="NotDetail"></app-notification-form>
+      </ion-row> -->
+
+  </ion-row>
+</ion-content>

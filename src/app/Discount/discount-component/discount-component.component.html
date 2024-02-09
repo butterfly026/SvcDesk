@@ -1,0 +1,14 @@
+<ion-row *ngIf="discountMode === 'list'">
+  <app-discount-list class="w-100" [ServiceReferenceId]="ServiceReference"
+    (DiscountListComponent)="processDiscount($event)">
+  </app-discount-list>
+</ion-row>
+
+<ion-row *ngIf="discountMode === 'new'">
+  <app-discount-new class="w-100" (DiscountNewComponent)="processDiscount($event)"></app-discount-new>
+</ion-row>
+
+<ion-row *ngIf="discountMode === 'edit'">
+  <app-discount-edit class="w-100" (DiscountEditComponent)="processDiscount($event)" [discountId]="discountId">
+  </app-discount-edit>
+</ion-row>

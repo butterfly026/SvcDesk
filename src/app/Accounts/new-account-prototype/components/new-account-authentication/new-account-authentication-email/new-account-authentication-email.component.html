@@ -1,0 +1,24 @@
+<ion-row class="h-100">
+  <ion-row class="login-default-content address-spinner">
+    <mat-form-field class="w-100">
+      <input matInput type="text" [formControl]="emailFormControl" placeholder="{{ 'email' | translate }}" (focusout)="checkEmailStatus()">
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        {{ 'email_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('email')">
+        {{ 'email_invalid_label' | translate }}
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('invalid')">
+        {{ emailFormControl.errors.invalid }}
+      </mat-error>
+    </mat-form-field>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </ion-row>
+
+  <ion-row class="login-check-content align-items-center justify-content-center px-3">
+    <button type="button" mat-raised-button color="primary" class="exclusion-create w-100" (click)="checkEmailStatus()"
+      [disabled]="!emailFormControl.valid || this.isLoading">
+      {{ 'check' | translate}}
+    </button>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,159 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto ion-margin-top">
+
+    <ion-row class="margin-top-5vh left-right-auto">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span class=" margin-auto">
+            {{ 'service_group_id' | translate }}: <strong>{{serviceGroupId}}</strong>
+          </span>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span class="margin-auto">
+            {{ 'service_group_name' | translate }}: <strong>{{serviceGroupName}}</strong>
+          </span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <form [formGroup]="barForm" class="full-width" (ngSubmit)="UnBarSubmit()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="BarType" placeholder="{{ 'unbar_type' | translate }}" name="BarType"
+                required>
+                <mat-option *ngFor="let list of barTypeList; let i = index" value="{{list.Id}}"
+                  (click)="selectBarType(i)">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'unbar_type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="BarReason" placeholder="{{ 'unbar_reason' | translate }}" name="BarReason"
+                required>
+                <mat-option *ngFor="let list of barReasonList; let i = index" value="{{list.Id}}">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'unbar_reason_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-checkbox [(ngModel)]="unBarState" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="unBarStateChange()">
+              {{ 'automatically_rebar' | translate }}
+            </mat-checkbox>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="picker" formControlName="DateToBarService"
+                placeholder="{{ 'date_to_unbar_service' | translate }}" name="DateToBarService" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'date_to_unbar_service_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="pickerUnBar" formControlName="DateFromBarService"
+                placeholder="{{ 'automatically_rebar' | translate }}" name="DateFromBarService" required>
+              <mat-datepicker-toggle matSuffix [for]="pickerUnBar"></mat-datepicker-toggle>
+              <mat-datepicker #pickerUnBar></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'automatically_rebar_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width textarea-field">
+          <textarea matInput formControlName="note" name="note" placeholder="{{'notes_optional'| translate}}">
+          </textarea>
+        </mat-form-field>
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col size="4">
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!barForm.valid">
+            {{ 'unbar' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-content>

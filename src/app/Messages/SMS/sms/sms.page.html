@@ -1,0 +1,94 @@
+<ion-row class="ion-margin-top ion-padding-top ion-padding">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{ContactNumber}}: {{pageTitle}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="smsGroup" class="full-width left-right-auto" (ngSubmit)="smsSend()" novalidate>
+
+    <ion-row>
+      <ion-col [size]="12">
+        <mat-radio-group class="custom-radio-group" formControlName="phoneType"
+          (change)="selectPhoneType($event.value)">
+          <mat-radio-button [value]="'exist'">
+            {{'existing_number' | translate}}
+          </mat-radio-button>
+          <mat-radio-button [value]="'new'">
+            {{'new_number' | translate}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="username-row" *ngIf="phoneType == 'exist'">
+      <mat-form-field class="example-full-width">
+
+        <mat-select formControlName="phoneNumber" placeholder="{{ 'phone_number' | translate }}" name="phoneNumber"
+          required>
+          <mat-option *ngFor="let list of phoneList; let i = index" value="{{list.phonenumber}}">
+            {{list.phonenumber}}
+          </mat-option>
+        </mat-select>
+
+        <mat-error>
+          {{ 'phone_number_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+
+
+    </ion-row>
+
+    <ion-row class="username-row" *ngIf="phoneType == 'new'">
+      <mat-form-field class="example-full-width">
+        <input matInput type="tel" formControlName="phoneNumber" placeholder="{{ 'phone_number' | translate }}" required
+          name="phoneNumber">
+        <mat-error>
+          {{ 'phone_number_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row">
+      <mat-form-field class="example-full-width text-area">
+        <textarea matInput type="text" formControlName="smsBody" placeholder="{{ 'type_here' | translate }}" required
+          name="smsBody">
+        </textarea>
+
+        <mat-error>
+          {{ 'sms_is_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <!-- <button mat-button id="submitButton">Submit</button> -->
+  </form>
+
+  <ion-row class="login-row page-bottom normal-button">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-col size="2">
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!smsGroup.valid"
+            (click)="triggerSubmit()">
+            {{ 'send_sms' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (click)="componentValue.emit('close')" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

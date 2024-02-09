@@ -1,0 +1,7 @@
+<ion-row class="mt-3" *ngIf="ViewMode == 'List'">
+  <app-charge-list class="w-100" [ContactCode]="ContactCode" (ChargeList)="processCharge($event)"></app-charge-list>
+</ion-row>
+<ion-row class="mt-3" *ngIf="ViewMode == 'New'">
+  <app-charge-new class="w-100" [ContactCode]="ContactCode" (ChargeFormComponent)="processCharge($event)" [Type]="true">
+  </app-charge-new>
+</ion-row>

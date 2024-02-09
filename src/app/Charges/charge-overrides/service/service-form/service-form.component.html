@@ -1,0 +1,169 @@
+<ion-row class="mt-2">
+  <h3 class="p-0 m-auto text-center" *ngIf="EditMode == 'New'">
+    {{'new_override' | translate}}
+  </h3>
+  <h3 class="p-0 m-auto text-center" *ngIf="EditMode == 'View'">
+    {{'charge_override' | translate}} [ {{ChargeOverrideToUpdate.Id + ' - ' + ChargeOverrideToUpdate.ChargeOverrideDescription }}]
+  </h3>
+  <h3 class="p-0 m-auto text-center" *ngIf="EditMode == 'Update'">
+    {{'update_charge_override' | translate}} [ {{ChargeOverrideToUpdate.Id + ' - ' + ChargeOverrideToUpdate.ChargeOverrideDescription }}]
+  </h3>
+</ion-row>
+
+<ion-row class="mt-2">
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="groupForm" class="w-100" novalidate>
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="address-spinner">
+            <mat-form-field class="w-100">
+              <input type="text" [placeholder]="'charge' | translate" matInput formControlName="charge" [readonly]="EditMode == 'View'"              
+                (focusout)="focusOutField('charge')"
+                [matAutocomplete]="autoCharge" name="charge">
+
+              <mat-autocomplete #autoCharge="matAutocomplete" (optionSelected)="chargeSelected($event)">
+                <mat-option *ngFor="let charge of filteredCharges; let i = index;" [value]="charge.Id"
+                  class="autocomplete-detail">
+                  <span>{{charge.Name}}</span>
+                </mat-option>
+              </mat-autocomplete>
+
+              <button type="button" mat-button *ngIf="f.charge.value"  matSuffix mat-icon-button aria-label="Clear"
+                (click)="clearChargeSearch()">
+                <i class="fa fa-times"></i>
+              </button>
+
+              <mat-error>
+                {{'charge_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showChargeSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field>
+              <input matInput formControlName="overrideDescription" placeholder="{{'override_description' | translate}}" [readonly]="EditMode == 'View'"
+                name="overrideDescription">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field>
+              <input matInput formControlName="price" type="text" placeholder="{{ 'price' | translate }}" name="price" 
+                currencyMask [options]="globService.currencyOptions" maxlength="13" autocomplete="off" #costInput/>
+              <mat-error>
+                {{'price_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field>
+              <input type="text" matInput formControlName="markupRadio" placeholder="{{'markup_radio' | translate}}" [readonly]="EditMode == 'View'"
+                name="markupRadio" required>
+
+              <mat-error>
+                {{'markup_radio_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="d-flex">
+          <ion-row class="align-content-end mt-auto">
+            <mat-form-field class="w-100">
+              <input matInput [readonly]="true" formControlName="startDate" [matDatepicker]="picker" [readonly]="EditMode == 'View'"
+                [ngModel]="dateStart"
+                placeholder="{{'start_date' | translate}}">
+                
+              <mat-datepicker-toggle matSuffix [for]="picker">
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-error>
+                {{'start_date_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput [readonly]="true" formControlName="endDate" [matDatepicker]="endDate" [readonly]="EditMode == 'View'"
+                placeholder="{{'end_date' | translate}}">
+              <mat-datepicker-toggle matSuffix [for]="endDate">
+              </mat-datepicker-toggle>
+              <mat-datepicker #endDate></mat-datepicker>
+
+              <mat-error>
+                {{'end_date_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input type="text" placeholder="{{'plans' | translate}}" matInput [readonly]="EditMode == 'View'"
+              (focusout)="focusOutField('plan')"
+                formControlName="plan" [matAutocomplete]="autoPlan" name="plan">
+
+              <mat-autocomplete #autoPlan="matAutocomplete" (optionSelected)="planSelected($event)">
+                <mat-option *ngFor="let plan of filteredPlans; let i = index;" [value]="plan?.PlanId">
+                  <span>{{plan?.Plan}}</span>
+                </mat-option>
+              </mat-autocomplete>
+
+              <button type="button" mat-button *ngIf="f.plan.value"  matSuffix mat-icon-button aria-label="Clear"
+                (click)="clearPlanSearch()">
+                <i class="fa fa-times"></i>
+              </button>
+
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showPlanSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row *ngIf="currentPlan && currentPlan.Options">
+            <mat-form-field>
+              <mat-select formControlName="option" placeholder="{{'options' | translate}}" required [disabled]="EditMode == 'View'">
+                <mat-option *ngFor="let list of optionList; let i = index" [value]="list.id">
+                  {{list.value}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'options_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="jqx-button-row total-content4 mx-auto mb-5 mt-3 justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" [disabled]="!groupForm.valid" (onClick)="saveCharge()" *ngIf="EditMode != 'View'"
+        class="jqx-button-theme">
+        {{ 'save' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

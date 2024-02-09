@@ -1,0 +1,148 @@
+<ion-row style="padding: 15px;">
+  <ion-row class>
+    <h3 class="mx-auto my-0 p-0">{{ 'CostCenterDetails' | translate }}: {{data.costCenterData.Id}}</h3>
+  </ion-row>
+  <ion-row class="mt-1 total-content4 mx-auto" *ngIf="form">
+    <form [formGroup]="form" novalidate class="w-100">
+      <ion-row class>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="Name" type="text" placeholder="{{ 'name' | translate }}" name="name"
+                required>
+              <mat-error>
+                <span>{{ 'name_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="CustomerReference" type="text"
+                placeholder="{{ 'customer_reference' | translate }}" name="name">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.AdditionalInformation1 == true">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="AdditionalInformation1" type="text"
+                placeholder="{{ 'additional_information1' | translate }}" name="additionalInformation1">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.AdditionalInformation2 == true">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="AdditionalInformation2" type="text"
+                placeholder="{{ 'additional_information2' | translate }}" name="additionalInformation2">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.AdditionalInformation3 == true">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="AdditionalInformation3" type="text"
+                placeholder="{{ 'additional_information3' | translate }}" name="additionalInformation3">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}" name="status">
+                <mat-option *ngFor="let list of statusList; let i= index" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.Email == true">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="Email" type="text" placeholder="{{ 'email' | translate }}" name="email">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.EFXId == true">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="EFXId" type="text" placeholder="{{ 'efx_id' | translate }}" name="efxId">
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="configuration != null && configuration.GeneralLedgerAccountCode == true">
+          <ion-row>
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="GeneralLedgerAccountCode"
+                placeholder="{{'general_ledger_account_code' | translate}}" [matAutocomplete]="ledgerComplete"
+                name="GeneralLedgerAccountCode">
+
+              <mat-autocomplete #ledgerComplete="matAutocomplete" (optionSelected)="selectGLAccount($event)">
+                <mat-option *ngFor="let list of generalLedgerAccounts; let i= index;" [value]="list.id">
+                  {{list.id}}
+                </mat-option>
+              </mat-autocomplete>
+
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="AllocationType" placeholder="{{ 'allocation_type' | translate }}"
+                name="allocationtype">
+                <mat-option *ngFor="let list of allocationTypes; let i= index" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="configuration != null && configuration.AggregationPoint == true">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-checkbox class="example-margin" formControlName="AggregationPoint">
+            {{'aggregation_point' | translate}}
+          </mat-checkbox>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row class="jqx-button-row mt-2 ion-justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,183 @@
+<ion-row class="total-bulk ion-padding">
+
+  <ion-row class="total-content2 left-right-auto">
+    <ion-row class="ion-margin-top">
+      <form [formGroup]="searchForm" (ngSubmit)="searchItem()" class="full-width" novalidate>
+        <ion-row>
+          <ion-col [sizeXl]="9" [sizeLg]="9" [sizeMd]="9" [sizeSm]="9" [sizeXs]="12">
+            <ion-row class="full-height">
+              <ion-searchbar mode='ios' formControlName="searchCtrl" required name="searchCtrl" class="margin-auto"
+                [placeholder]="'search' | translate">
+              </ion-searchbar>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6" class="margin-auto">
+            <ion-row class="full-height normal-button">
+              <jqxButton [theme]="globService.themeColor" class="margin-left-auto" [disabled]="!searchForm.valid && !enableAddList">
+                {{ 'search' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="plan" placeholder="{{ 'plan' | translate }}" name="plan">
+                  <mat-option *ngFor="let list of planList" value="{{list.Id}}" (click)="enableSearchButton()">
+                    {{list.DisplayName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="status" placeholder="{{ 'status' | translate }}" name="status">
+                  <mat-option *ngFor="let list of statusList" value="{{list.Code}}" (click)="enableSearchButton()">
+                    {{list.Status}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="group" placeholder="{{ 'group' | translate }}" name="group">
+                  <mat-option *ngFor="let list of groupList" value="{{list.Id}}" (click)="enableSearchButton()">
+                    {{list.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="costCentre" placeholder="{{ 'cost_centre' | translate }}"
+                  name="costCentre">
+                  <mat-option *ngFor="let list of costCentreList" value="{{list.Id}}" (click)="enableSearchButton()">
+                    {{list.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+                <mat-select formControlName="serviceType" placeholder="{{ 'servicetype' | translate }}"
+                  name="serviceType">
+                  <mat-option *ngFor="let list of serviceTypeList" value="{{list.Code}}" (click)="enableSearchButton()">
+                    {{list.Name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-row>
+
+
+
+  </ion-row>
+
+  <ion-row class="add-to-alert ion-margin-top">
+    <ion-row class="left-right-auto ion-margin-top" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridBulkSSelection [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+  </ion-row>
+
+  <ion-row *ngIf="bulkList.length>0">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-row class="ion-margin-top pagination-content">
+        <span class="pagination-span ion-text-center">
+          <span class="go-to-page">
+            {{ 'goto_page' | translate }}:
+            <input matInput type="number" min="1" max="{{maxPageRow}}" (keyup)="changePageNumber($event)"
+              [(ngModel)]="pageRowNumber" (focus)="focusChangePage()" (focusout)="focusOutChangePage()" />
+          </span>
+
+          <span class="show-rows">
+            {{ 'show_rows' | translate }}:
+            <mat-select [(ngModel)]="rowStep" name="rowStep" (ngModelChange)="changeRowStep()">
+              <mat-option *ngFor="let list of rowList" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+          </span>
+
+          <!-- <br> -->
+
+          <span class="pagination-row">
+            {{startIndex + 1}} - {{endIndex}} {{ 'of_word' | translate }} {{totalLength}} &nbsp;
+
+            <span color="secondary" *ngIf="startIndex < 1" class="margin-right-auto">
+              {{backSymbol}}
+            </span>
+            <span *ngIf="startIndex > 0" class="margin-right-auto" (click)="reduceList()">
+              {{backSymbol}}
+            </span> &nbsp;&nbsp;
+            <span color="secondary" *ngIf="endIndex >= totalLength" class="margin-left-auto top-bottom-auto"
+              (click)="increaseList()">
+              {{forwardSymbol}}
+            </span>
+            <span mode="ios" *ngIf="endIndex < totalLength" class="margin-left-auto top-bottom-auto"
+              (click)="increaseList()">
+              {{forwardSymbol}}
+            </span>
+
+          </span>
+
+        </span>
+
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="login-row page-bottom normal-button total-content2 left-right-auto custom-jqxbutton">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteItem()"
+          [disabled]="!enableDeleteItem || bulkList.length<1">
+          {{ 'delete_from_list' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="clearList()" [disabled]="bulkList.length<1">
+          {{ 'clear_list' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

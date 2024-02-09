@@ -1,0 +1,1 @@
+export * from './financial-auto-allocate-all.model';

@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>{{errorData?.Title}}</h2>
+<mat-dialog-content style="white-space: pre-wrap">{{ errorData?.ErrorMessage }}</mat-dialog-content>
+<mat-dialog-actions class="justify-content-end">
+  <button mat-button color="primary" (click)="closeDialog('confirm')">{{errorData?.ButtonName}}</button>
+  <button mat-button color="primary" (click)="closeDialog('')" *ngIf="errorData?.ButtonOtherName">{{errorData?.ButtonOtherName}}</button>  
+</mat-dialog-actions>

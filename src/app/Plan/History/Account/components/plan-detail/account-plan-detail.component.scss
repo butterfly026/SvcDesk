@@ -1,0 +1,12 @@
+.plan-detail-modal {
+    .modal-wrapper {
+        max-width: 1200px;
+        max-height: 750px;
+        width: 100%;
+        height: 100%;
+
+        app-account-plan-detail {
+            overflow-y: auto;
+        }
+    }
+}

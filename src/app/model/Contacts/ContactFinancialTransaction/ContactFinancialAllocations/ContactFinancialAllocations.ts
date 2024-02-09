@@ -1,0 +1,21 @@
+export interface ContactFinancialAllocations {
+    assignmentDirection: number,
+    id: number,
+    number: string,
+    date: string,
+    openAmount: number,
+    allocatedAmount: number,
+    type: string,
+    status: string,
+    source: string,
+    category: string,
+    amount: number,
+    taxAmount: number,
+    otherReference: string,
+    typeCode: string,
+    billNumber: string,
+    createdBy: string,
+    created: string,
+    lastUpdated: string,
+    updatedBy: string
+}

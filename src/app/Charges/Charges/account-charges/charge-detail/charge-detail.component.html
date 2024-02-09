@@ -1,0 +1,196 @@
+<ion-row>
+  <ion-row>
+    <h3 class="p-0 m-auto">
+      {{'charge' | translate}} {{ title }}
+    </h3>
+  </ion-row>
+
+  <ion-row class="total-content2 mx-auto">
+
+    <form [formGroup]="chargeForm" class="full-width">
+      <ion-row class="group-content">
+        <ion-row class="group-body">
+          <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="Description" type="text"
+                  placeholder="{{ 'additional_description' | translate }}" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <ion-row class="mt-auto">
+                <mat-form-field>
+                  <input matInput type="datetime-local" formControlName="From"
+                    placeholder="{{ 'start_date' | translate }}" name="startDateTime" required>
+                </mat-form-field>
+              </ion-row>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+            *ngIf="chargeDetail?.Frequency != 'One-Off' || chargeDetail?.DisplayEndDate">
+            <ion-row>
+              <mat-form-field>
+                <input matInput type="datetime-local" formControlName="To"
+                  placeholder="{{ 'end_date' | translate }}" required>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="Price" type="text"
+                  placeholder="{{ 'unit_price' | translate }}" currencyMask
+                  [options]="globService.currencyOptions" required maxlength="13" autocomplete="off" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="Quantity" type="text"
+                  placeholder="{{ 'quantity' | translate }}" currencyMask [options]="quentityOptions" maxlength="6" autocomplete="off" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <mat-select formControlName="DiscountType" placeholder="{{ 'discount_type' | translate }}">
+                  <mat-option *ngFor="let list of discountTypeList; let i = index" value="{{list.id}}">
+                    {{list.name | translate}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+            *ngIf="f.DiscountType.value === 'Fixed'">
+            <ion-row>
+              <mat-form-field class="example-full-width fixed">
+                <input matInput formControlName="Quantity" type="text"
+                  placeholder="{{ 'fixed_discount' | translate }}" currencyMask
+                  [options]="globService.currencyOptions" required maxlength="13" autocomplete="off" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+            *ngIf="f.DiscountType.value === 'Percentage'">
+            <ion-row>
+              <mat-form-field class="example-full-width percentage">
+                <input matInput appPercentageMask formControlName="Quantity"
+                  placeholder="{{ 'percentage_discount_1' | translate }}"  required
+                  maxlength="13" autocomplete="off" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-content">
+        <ion-row class="group-body">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"></ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+                <span class="top-bottom-auto margin-left-auto">
+                  {{'total_charge'|translate}} {{totalCharge}}
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-content">
+        <ion-row class="group-title">
+          <span class="top-bottom-auto">
+            {{ 'Note' | translate }}
+          </span>
+        </ion-row>
+
+        <ion-row class="group-body">
+          <mat-form-field>
+            <textarea matInput formControlName="Note" name="Note"></textarea>
+          </mat-form-field>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="justify-content-end">
+        <button type="button" class="px-3" mat-raised-button color="primary" (click)="changeMoreState()"
+          *ngIf="!moreState">
+          {{'more' | translate}}
+        </button>
+        <button type="button" class="px-3" mat-raised-button color="primary" (click)="changeMoreState()"
+          *ngIf="moreState">
+          {{'less' | translate}}
+        </button>
+      </ion-row>
+
+      <ion-row class="group-content" *ngIf="moreState">
+        <ion-row class="group-body">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="Cost" type="text" placeholder="{{ 'cost' | translate }}" name="Cost"
+                  currencyMask [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                <mat-error *ngIf="f.Cost.hasError('invalid')">
+                  <span>
+                    {{'maximum' | translate }} {{totalCharge}}
+                  </span>
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="CustomerReference" type="text"
+                  placeholder="{{ 'customer_reference' | translate }}" name="CustomerReference" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="Reference" type="text" placeholder="{{ 'reference' | translate }}"
+                  name="Reference" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input matInput formControlName="OtherReference" type="text"
+                  placeholder="{{ 'other_reference' | translate }}" name="OtherReference" />
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </form>
+
+    <ion-row class="my-3 pt-5 jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+            {{ 'ok' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-row>

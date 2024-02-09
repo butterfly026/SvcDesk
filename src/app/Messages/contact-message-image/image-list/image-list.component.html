@@ -1,0 +1,43 @@
+<ion-row class="position-relative" id="contact-notes-container">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'images' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+</ion-row>
+
+<ion-row>
+  <ion-row class="my-2 justify-content-end">
+    <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="newImage()"></i>
+  </ion-row>
+
+
+
+  <ion-row class="border-top ion-padding position-relative cursor-point" *ngFor="let list of groupList; let i = index;"
+    (mouseenter)="overMessages(i)" (mouseleave)="leaveMessages(i)">
+
+    <mat-card class="w-100">
+      <mat-card-header>
+        <mat-card-title>{{list.name}}</mat-card-title>
+      </mat-card-header>
+      <ion-row class="message-image justify-content-center align-items-center">
+        <img mat-card-image [src]="list.image" [alt]="list.name">
+      </ion-row>
+      <mat-card-actions>
+        <ion-row class="jqx-button-row justify-content-end">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton [theme]="globService.themeColor" (onClick)="deleteMessageAlert(i)" class="jqx-button-theme">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </mat-card-actions>
+    </mat-card>
+  </ion-row>
+</ion-row>

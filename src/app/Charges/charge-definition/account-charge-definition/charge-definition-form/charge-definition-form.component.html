@@ -1,0 +1,318 @@
+<ion-row class="">
+
+  <ion-row class="my-3">
+    <ion-row *ngIf="!ChargeData">
+      <h3 class="p-0 m-auto">
+        {{'add_charge_definition' | translate}}
+      </h3>
+    </ion-row>
+  </ion-row>
+
+
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="chargeForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+
+
+      <mat-accordion [style.width.%]="100" [multi]="true">
+        <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+          <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+            <mat-panel-title>
+              <strong>{{'general' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ion-row>
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="Code" type="text" placeholder="{{ 'code' | translate }}"
+                      name="Code" required />
+
+                    <mat-error *ngIf="f.Code.hasError('required')">
+                      <span>{{ 'code_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="Description" type="text"
+                      placeholder="{{ 'description' | translate }}" name="Description" required />
+
+                    <mat-error *ngIf="f.Description.hasError('required')">
+                      <span>{{ 'description_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="ProductCode" type="text"
+                      placeholder="{{ 'product_code' | translate }}" name="ProductCode" />
+
+                    <mat-error *ngIf="f.ProductCode.hasError('required')">
+                      <span>{{ 'product_code_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="m-0 p-0">
+                <ion-row>
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row>
+                      <mat-form-field class="w-100">
+
+                        <input matInput formControlName="Unit" type="text" placeholder="{{ 'unit' | translate }}"
+                          name="Unit" />
+
+                        <mat-error>
+                          <span>{{ 'unit_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row>
+                      <mat-form-field class="w-100">
+
+                        <input matInput formControlName="DefaultPrice" type="text"
+                          placeholder="{{ 'default_price' | translate }}" name="DefaultPrice" currencyMask
+                          [options]="globService.currencyOptions" required maxlength="13" autocomplete="off" required />
+
+                        <mat-error>
+                          <span>{{ 'default_price_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <mat-select formControlName="Group" placeholder="{{ 'group' | translate }}" name="Group" required>
+                      <mat-option *ngFor="let list of groupList; let i = index" value="{{list.groupid}}">
+                        {{list.name | translate}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      <span>{{ 'group_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+
+                <ion-row class="address-spinner">
+                  <mat-form-field>
+
+                    <input matInput formControlName="GLAccount" placeholder="{{'gl_account' | translate}}"
+                      [matAutocomplete]="planComplete" name="GLAccount" />
+
+                    <mat-autocomplete #planComplete="matAutocomplete" (optionSelected)="selectGLAccount($event)">
+                      <mat-option *ngFor="let list of gLAList; let i = index;" [value]="list.id">
+                        {{list.name}}
+                      </mat-option>
+                    </mat-autocomplete>
+
+                    <mat-error>
+                      {{'gl_account_required' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <mat-select formControlName="PrintOnBill" placeholder="{{ 'print_on_bill' | translate }}"
+                      name="PrintOnBill" required>
+                      <mat-option *ngFor="let list of pOBList; let i = index" value="{{list.id}}">
+                        {{list.name | translate}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      <span>{{ 'print_on_bill_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+          <mat-expansion-panel-header #panelH2 (click)="panelH2._toggle()">
+            <mat-panel-title>
+              <strong>{{'charging_method' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="w-100">
+
+                  <mat-select formControlName="Frequency" placeholder="{{ 'frequency' | translate }}" name="Frequency"
+                    required>
+                    <mat-option *ngFor="let list of frequencyList; let i = index" value="{{list.id}}">
+                      {{list.name | translate}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    <span>{{ 'frequency_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="m-0 p-0">
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100 align-items-center">
+                    <mat-checkbox formControlName="Prorata">
+                      {{'prorata' | translate}}
+                    </mat-checkbox>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row>
+                    <mat-form-field class="w-100">
+
+                      <input matInput formControlName="AdvancePeriods" type="number"
+                        placeholder="{{ 'advance_periods' | translate }}" name="AdvancePeriods" required />
+
+                      <mat-error>
+                        <span>{{ 'advance_periods_required' | translate }}</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="w-100">
+
+                  <mat-select formControlName="Anniversary" placeholder="{{ 'anniversary' | translate }}"
+                    name="Anniversary" required>
+                    <mat-option *ngFor="let list of anniversaryList; let i = index" value="{{list.id}}">
+                      {{list.name | translate}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    <span>{{ 'anniversary_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+          <mat-expansion-panel-header #panelH3 (click)="panelH3._toggle()">
+            <mat-panel-title>
+              <strong>{{'billing_options' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="w-100">
+
+                  <mat-select formControlName="BillGroup" placeholder="{{ 'bill_group' | translate }}" name="BillGroup"
+                    required>
+                    <mat-option *ngFor="let list of billGroupList; let i = index" value="{{list.id}}">
+                      {{list.name | translate}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    <span>{{ 'bill_group_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox formControlName="Consolidate">
+                  {{'consolidate' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <button class="submitButton" id="accountChargeDefinitionSubmitButton"></button>
+    </form>
+
+    <ion-row class="mt-1">
+      <mat-accordion [style.width.%]="100" [multi]="true">
+        <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+          <mat-expansion-panel-header #panelH4 (click)="panelH4._toggle()">
+            <mat-panel-title>
+              <strong>{{'charge_usage' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ion-row>
+            <app-charge-usage [ChargeDefinitionData]="ChargeData" [UsageData]="UsageData" class="w-100"
+              (ChargeUsageComponent)="processComponent($event)">
+            </app-charge-usage>
+          </ion-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ion-row>
+
+    <ion-row class="my-3 pt-5 jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="!ChargeData">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+            [disabled]="!chargeForm.valid">
+            {{ 'create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="ChargeData">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+            [disabled]="!chargeForm.valid">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

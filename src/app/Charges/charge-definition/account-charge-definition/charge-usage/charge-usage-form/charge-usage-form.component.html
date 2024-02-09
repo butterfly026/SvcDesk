@@ -1,0 +1,259 @@
+<ion-row class="p-3">
+  <ion-row *ngIf="ChargeData">
+    <h3 class="p-0 m-auto">
+      {{'update_usage' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row *ngIf="!ChargeData">
+    <h3 class="p-0 m-auto">
+      {{'new_usage_rules' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row>
+    <form [formGroup]="chargeForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+      <ion-row>
+
+        <ion-row class="justify-content-center">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field class="w-100">
+
+                <mat-select formControlName="ServiceType" placeholder="{{ 'service_type' | translate }}"
+                  name="ServiceType">
+                  <mat-option *ngFor="let list of serviceTypeList; let i = index" value="{{list.id}}">
+                    {{list.name | translate}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  <span>{{ 'service_type_required' | translate }}</span>
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <mat-accordion [style.width.%]="100" [multi]="true">
+          <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+            <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+              <mat-panel-title>
+                <strong>{{'default_ex_tax_2' | translate}}</strong>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ion-row>
+              <ion-row>
+                <!-- <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100 align-items-center">
+                    <mat-checkbox formControlName="DefaultValueCheck">
+                      {{'default_value' | translate}}
+                    </mat-checkbox>
+                  </ion-row>
+                </ion-col> -->
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row>
+                    <mat-form-field class="w-100">
+
+                      <input matInput formControlName="DefaultValue" type="text"
+                        placeholder="{{ 'default_ex_tax_2' | translate }}" name="DefaultValue" required currencyMask
+                        [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                      <mat-error>
+                        <span>{{ 'default_ex_tax_2_required' | translate }}</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+            <mat-expansion-panel-header #panelH2 (click)="panelH2._toggle()">
+              <mat-panel-title>
+                <strong>{{'acceptable_range_tax' | translate}}</strong>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="LowerLimit" type="text"
+                      placeholder="{{ 'lower_limit' | translate }}" currencyMask [options]="lowLimitCurrencyOption"
+                      name="LowerLimit" required autocomplete="off" />
+
+                    <mat-error>
+                      <span>{{ 'lower_limit_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="UpperLimit" type="text"
+                      placeholder="{{ 'upper_limit' | translate }}" currencyMask [options]="globService.currencyOptions"
+                      name="UpperLimit" maxlength="13" required autocomplete="off" />
+
+                    <mat-error>
+                      <span>{{ 'upper_limit_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+            <mat-expansion-panel-header #panelH3 (click)="panelH3._toggle()">
+              <mat-panel-title>
+                <strong>{{'warnning_range_tax' | translate}}</strong>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 align-items-center">
+                  <mat-checkbox formControlName="WarnBelowCheck">
+                    {{'warn_if_below' | translate}}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="WarnBelow" type="text"
+                      placeholder="{{ 'warnning_below' | translate }}" name="WarnBelow" required currencyMask
+                      [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                    <mat-error>
+                      <span>{{ 'warnning_below_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 align-items-center">
+                  <mat-checkbox formControlName="WarnAboveCheck">
+                    {{'warn_if_above' | translate}}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row>
+                  <mat-form-field class="w-100">
+
+                    <input matInput formControlName="WarnAbove" type="text"
+                      placeholder="{{ 'warning_above' | translate }}" name="WarnAbove" required currencyMask
+                      [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                    <mat-error>
+                      <span>{{ 'warning_above_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+            <mat-expansion-panel-header #panelH4 (click)="panelH4._toggle()">
+              <mat-panel-title>
+                <strong>{{'effecte_date' | translate}}</strong>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ion-row>
+              <ion-row>
+                <mat-form-field class="w-100">
+
+                  <input matInput [matDatepicker]="fromDate" formControlName="From"
+                    placeholder="{{ 'from' | translate }}" name="fromDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                  <mat-datepicker #fromDate></mat-datepicker>
+
+                  <mat-error>
+                    <span>{{ 'date_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+              <ion-row>
+                <mat-radio-group class="w-100" formControlName="dateCheck">
+                  <ion-row class="align-items-center justify-content-between">
+                    <mat-radio-button value="to">
+                      {{'to' | translate}}
+                    </mat-radio-button>
+                    <mat-form-field class="w-auto">
+
+                      <input matInput [matDatepicker]="toDate" formControlName="To" placeholder="{{ 'to' | translate }}"
+                        name="To">
+                      <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                      <mat-datepicker #toDate></mat-datepicker>
+
+                      <mat-error>
+                        <span>{{ 'date_required' | translate }}</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+
+                  <ion-row class="align-items-center">
+                    <mat-radio-button value="onGoing">
+                      {{'on_going' | translate}}
+                    </mat-radio-button>
+                  </ion-row>
+                </mat-radio-group>
+              </ion-row>
+            </ion-row>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ion-row>
+
+      <button class="submitButton" id="chargeUsageFormSubmitButton"></button>
+    </form>
+
+    <ion-row class="my-3 jqx-button-row">
+      <ion-row class="justify-content-end">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="!ChargeData">
+          <ion-row class="full-height">
+            <jqxButton [disabled]="!chargeForm.valid" [theme]="globService.themeColor" (onClick)="submitForm()"
+              class="jqx-button-theme">
+              {{ 'add' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="ChargeData">
+          <ion-row class="full-height">
+            <jqxButton [disabled]="!chargeForm.valid" [theme]="globService.themeColor" (onClick)="submitForm()"
+              class="jqx-button-theme">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+</ion-row>

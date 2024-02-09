@@ -1,0 +1,46 @@
+<ion-row class="ion-margin-top">
+
+  <ion-row class="ion-margin-top">
+    <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="">
+        <ion-row>
+          <app-proudct class="full-width" (ProductComponent)="productHome($event)">
+          </app-proudct>
+        </ion-row>
+        <ion-row class="ion-margin-top">
+          <app-contact class="full-width" (OrderEntryContact)="processContact($event)"></app-contact>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="">
+
+        <ion-row class="ss-component-title ion-margin-bottom">
+          <span class="top-bottom-auto margin-right-auto">
+            {{'order_no' | translate}}: 10004209
+          </span>
+        </ion-row>
+        <ion-row class="ion-margin-top normal-button">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <jqxButton class="margin-auto" [theme]="globService.themeColor" [disabled]="!clearState" (click)="clearCart()">
+                {{'clear_cart' | translate}}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <jqxButton class="margin-auto" [theme]="globService.themeColor" (click)="cancelOrder()">
+                {{'cancel_order' | translate}}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

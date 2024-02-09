@@ -1,0 +1,28 @@
+<ion-row id="service-sites-grid">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [permissions]="permissions"
+        [csvFileName]="csvFileName"
+        [allowDblClickRow]="true"
+        [searchOptions]="searchOptions"
+        (onDoublClickRow)="dblclickRow($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="!!SiteId">
+    <app-service-sites-service 
+      class="w-100" 
+      [ContactCode]="ContactCode" 
+      [SiteId]="SiteId" 
+      [SearchString]="eventParam.SearchString"
+      [SitesSubject]="SitesSubject" 
+      (ServiceSitesServiceComponent)="processSites($event)">
+    </app-service-sites-service>
+  </ion-row>
+</ion-row>

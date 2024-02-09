@@ -1,0 +1,22 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row>
+    <ion-row class="left-right-auto">
+
+      <jqxExpander id="jqx-expander" [theme]="globService.themeColor" [width]="'100%'" [height]="setHeightExpander()"
+        [showArrow]="false" [toggleMode]="'none'">
+        <ion-row>
+        </ion-row>
+        <ion-row id="treeview-content" [style.height]="treeViewContentHeight">
+          <jqxTree id="no-border" #AccountHierarchyTree [theme]="globService.themeColor" [width]="'calc(100% - 2px)'"
+            [height]="'auto'" [source]="treeData" [allowDrag]="false" (onItemClick)="Select($event)">
+          </jqxTree>
+        </ion-row>
+
+      </jqxExpander>
+    </ion-row>
+  </ion-row>
+</ion-content>

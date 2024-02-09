@@ -1,0 +1,71 @@
+<ion-row class="top-content">
+  <ion-row>
+    <ion-row class="my-3">
+      <h3 class="p-0 m-auto text-center">
+        {{'previous_logins' | translate}}
+      </h3>
+    </ion-row>
+
+    <ion-row class="px-3">
+      <ion-row>
+        <table class="w-100" align="center">
+          <thead>
+            <tr>
+              <th>
+                {{'time' | translate}}
+              </th>
+              <th>
+                {{'status' | translate}}
+              </th>
+              <th>
+                {{'location' | translate}}
+              </th>
+              <th>
+                {{'action' | translate}}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let list of loginHistory?.items; let i = index;">
+              <td>
+                {{list.date}}
+              </td>
+              <td>
+                {{list.status}}
+              </td>
+              <td>
+                {{list.location}}
+              </td>
+              <td>
+                <ion-row class="justify-content-center align-items-center">
+                  <mat-checkbox [(ngModel)]="list.threat" (ngModelChange)="changeMarkState(i)">
+                    {{ 'mark_suspect' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+<ion-row>
+  <ion-row class="my-3 jqx-button-row justify-content-end">
+    <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+      <ion-row class="ml-3 h-100">
+        <mat-checkbox [checked]="isDontShowAgain" (change)="onChange($event)">
+          {{'dont_display_again'|translate}}
+        </mat-checkbox>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="closeModal()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,25 @@
+<div class="sidenav_container" [@onSideNavChange]="sideNavState ? 'open' : 'close'" [@onClickNavItem]="animationState">
+  <ion-row fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button (click)="onSinenavToggle()">
+      <mat-icon *ngIf="sideNavState" class="icon-40">arrow_left</mat-icon>
+      <mat-icon *ngIf="!sideNavState" class="icon-40">arrow_right</mat-icon>
+    </button>
+  </ion-row>
+  <ion-row fxLayout="column" fxLayoutGap="10px" style="height: 100%;">
+    <ion-row>
+      <mat-nav-list style="width: 100%;">
+
+        <ng-container *ngFor="let page of pages; let i = index;">
+          <a mat-list-item
+            [ngStyle]="{'color': curSelMenu == page.id ? 'white' : 'black', 'background': curSelMenu == page.id ? '#03528a' : 'transparent', 'display':'flex'}"
+            [matTooltip]="linkText ? '' : page.name | translate " *ngIf="page.enabled && (i == 0 || (i != 0 && isAccountTypeSelected))"
+            (click)="onSelectMenuItem(page.id)">
+            <mat-icon style="margin-left: -6px;">{{page?.icon}}</mat-icon>
+            <span [@animateText]="linkText ? 'show' : 'hide'">{{page?.name | translate}}</span>
+          </a>
+
+        </ng-container>
+      </mat-nav-list>
+    </ion-row>
+  </ion-row>
+</div>

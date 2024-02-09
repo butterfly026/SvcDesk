@@ -1,0 +1,65 @@
+<ion-row class="ion-padding">
+  <ion-row>
+    <h4 class="margin-auto ion-text-center">
+      {{ 'assign_service' | translate }}
+    </h4>
+  </ion-row>
+  <form class="full-width" [formGroup]="serviceForm" (ngSubmit)="submitForm()" novalidate>
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="example-full-width">
+
+            <mat-select formControlName="ServiceGroup" placeholder="{{ 'service_group' | translate }}"
+              name="ServiceGroup" required>
+              <mat-option *ngFor="let list of groupList" value="{{list.Id}}">
+                {{list.Name}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              {{ 'service_group_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="example-full-width">
+
+            <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="StartDate"
+              placeholder="{{ 'startdatetime' | translate }}" name="StartDate" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <mat-error>
+              <span>{{ 'start_date_time_required' | translate }}</span>
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <button id="submitButton"></button>
+  </form>
+
+  <ion-row class="ion-margin-top normal-button">
+    <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!serviceForm.valid" class="jqx-button-theme"
+          (click)="submitTrigger()">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

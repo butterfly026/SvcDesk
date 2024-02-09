@@ -1,0 +1,226 @@
+<form [formGroup]="eventForm">
+  <ion-row class="ion-justify-content-center">
+    <h3 class="m-auto">{{'EventDetails' | translate}}: {{ data.Id }}</h3>
+  </ion-row>
+  <ion-card class="mt-5 mb-4">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'BasicInfo' | translate}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-row >
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Id' | translate}}</mat-label>
+              <input matInput formControlName="Id" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Name' | translate}}</mat-label>
+              <input matInput formControlName="Name" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Reason' | translate}}</mat-label>
+              <input matInput formControlName="Reason" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Reference' | translate}}</mat-label>
+              <input matInput formControlName="Reference" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Alert' | translate}}</mat-label>
+              <input matInput formControlName="Alert"/>
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Priority' | translate}}</mat-label>
+              <input matInput formControlName="Priority" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col>
+            <mat-form-field>
+              <mat-label>{{'Note' | translate}}</mat-label>
+              <textarea matInput formControlName="Note"></textarea>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Schedule Info -->
+  <ion-card class="mb-4" *ngIf="showScheduleInfo()">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'ScheduleInfo' | translate}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-row>
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Due' | translate}}</mat-label>
+              <input matInput formControlName="Due" />
+            </mat-form-field>
+          </ion-col>
+        
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'ScheduleStatus' | translate}}</mat-label>
+              <input matInput formControlName="ScheduleStatus" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'StatusDatetime' | translate}}</mat-label>
+              <input matInput formControlName="StatusDateTime" />
+            </mat-form-field>
+          </ion-col>
+        
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'ScheduledBy' | translate}}</mat-label>
+              <input matInput formControlName="ScheduledBy" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'ScheduledTo' | translate}}</mat-label>
+              <input matInput formControlName="ScheduledTo" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'DepartmentScheduledTo' | translate}}</mat-label>
+              <input matInput formControlName="DepartmentScheduledTo" />
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Attributes -->
+  <ion-card class="mb-4" *ngIf="eventForm?.get('Attributes')?.value?.length > 0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'Attributes' | translate}}     
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row class="datatable-section">
+        <table mat-table [dataSource]="eventForm.get('Attributes')?.value">
+          <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef>{{'Id' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.Id}}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="DefinitionId">
+            <th mat-header-cell *matHeaderCellDef>{{'DefinitionId' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.DefinitionId}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef>{{'Name' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.Name}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="From">
+            <th mat-header-cell *matHeaderCellDef>{{'From' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.From}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="To">
+            <th mat-header-cell *matHeaderCellDef>{{'To' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.To}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Value">
+            <th mat-header-cell *matHeaderCellDef>{{'Value' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.Value}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="LastUpdated">
+            <th mat-header-cell *matHeaderCellDef>{{'LastUpdated' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.LastUpdated}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="UpdatedBy">
+            <th mat-header-cell *matHeaderCellDef>{{'UpdatedBy' | translate}}</th>,
+            <td mat-cell *matCellDef="let row">{{row.UpdatedBy}}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="attributeColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: attributeColumns"></tr>
+        </table>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Additional Info -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{'AdditionalInfo' | translate}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-row>
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'DefinitionId' | translate}}</mat-label>
+              <input matInput formControlName="DefinitionId" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Code' | translate}}</mat-label>
+              <input matInput formControlName="Code" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Type' | translate}}</mat-label>
+              <input matInput formControlName="Type" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'CreatedBy' | translate}}</mat-label>
+              <input matInput formControlName="CreatedBy" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Created' | translate}}</mat-label>
+              <input matInput formControlName="Created"/>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row class="ion-justify-content-center my-4">
+    <button mat-raised-button class="px-5 font-weight-bold" type="button" tabindex="-1" (click)="close()">{{'Close' | translate}}</button>
+  </ion-row>
+</form>

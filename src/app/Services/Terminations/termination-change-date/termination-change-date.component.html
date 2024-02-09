@@ -1,0 +1,75 @@
+<ion-row class="total-content2 left-right-auto">
+  <ion-row>
+    <form [formGroup]="changeForm" class="full-width" (ngSubmit)="SubmitTerminate()" novalidate>
+      <ion-row class="ion-margin-top">
+
+        <ion-row>
+          <span>
+            {{'current_termination_date' | translate}}
+          </span>
+        </ion-row>
+
+        <ion-row class="border-box">
+          <span class="ion-text-start">
+            {{currentDate}}
+          </span>
+        </ion-row>
+
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+
+        <ion-row>
+          <span>
+            {{'new_termination_date' | translate}}
+          </span>
+        </ion-row>
+
+        <ion-row class="border-box">
+          <ion-datetime min="2019" max="2050" display-format="YYYY-MM-DD hh:mm:ss A" formControlName="newDate" required
+            name="newDate">
+          </ion-datetime>
+        </ion-row>
+
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-checkbox [(ngModel)]="forwardState" [ngModelOptions]="{standalone: true}">
+          {{ 'forward_date_charges' | translate }}
+        </mat-checkbox>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width textarea-field">
+          <textarea matInput [(ngModel)]="noteData" placeholder="{{'enter_notes_optional'| translate}}"
+            [ngModelOptions]="{standalone: true}">
+            </textarea>
+        </mat-form-field>
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+  </ion-row>
+  <ion-row>
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col size="4">
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!changeForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

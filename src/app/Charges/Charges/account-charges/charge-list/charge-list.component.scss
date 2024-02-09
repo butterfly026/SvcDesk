@@ -1,0 +1,28 @@
+.charge-delete {
+    background-color: rgba(0, 0, 0, 0.3);
+    top: 0px;
+    left: 0px;
+
+    .charge-content {
+        width: 500px;
+        height: 300px;
+        background-color: white;
+
+        .charge-delete-header {
+            height: 50px;
+
+            span {
+                font-size: 20px;
+            }
+
+            ion-icon {
+                font-size: 25px;
+            }
+        }
+
+        .charge-delete-body {
+            padding: 10px;
+            height: 150px;
+        }
+    }
+}

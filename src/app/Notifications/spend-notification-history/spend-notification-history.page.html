@@ -1,0 +1,49 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row>
+
+    <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridNotHistory [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="total-content2 left-right-auto">
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-row>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" (click)="configration()" class="jqx-button-theme">
+                {{ 'configration' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" (click)="goBack()" class="jqx-button-theme">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-content>

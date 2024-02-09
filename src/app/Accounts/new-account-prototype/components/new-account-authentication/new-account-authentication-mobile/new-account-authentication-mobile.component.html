@@ -1,0 +1,24 @@
+<ion-row class="h-100">
+  <ion-row class="login-default-content address-spinner">
+    <mat-form-field class="w-100">
+      <input matInput type="text" [formControl]="mobileFormControl" placeholder="{{ 'mobile' | translate }}" (focusout)="checkMobilePhoneStatus()">
+      <mat-error *ngIf="mobileFormControl.hasError('required')">
+        {{ 'mobile_phone_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="mobileFormControl.hasError('pattern')">
+        {{ 'invalid_phone_number' | translate }}
+      </mat-error>
+      <mat-error *ngIf="mobileFormControl.hasError('invalid')">
+        {{ mobileFormControl.errors.invalid }}
+      </mat-error>
+    </mat-form-field>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </ion-row>
+  
+  <ion-row class="login-check-content align-items-center justify-content-center px-3">
+    <button type="button" mat-raised-button color="primary" class="exclusion-create w-100"
+      (click)="checkMobilePhoneStatus()" [disabled]="!mobileFormControl.valid || this.isLoading">
+      {{ 'check' | translate}}
+    </button>
+  </ion-row>
+</ion-row>

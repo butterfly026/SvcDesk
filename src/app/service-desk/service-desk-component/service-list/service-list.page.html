@@ -1,0 +1,18 @@
+<ion-row id="service-list-grid">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [allowDblClickRow]="true"
+      [searchOptions]="searchOptions"
+      (onDoublClickRow)="viewDetail($event)"
+      (onView)="viewDetail($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>

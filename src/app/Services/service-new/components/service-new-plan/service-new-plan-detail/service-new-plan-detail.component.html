@@ -1,0 +1,81 @@
+<ion-row class="p-3">
+  <ion-row class="position-relative" id="contact-notes-container">
+    <ion-row class="ion-margin-top">
+      <span class="margin-auto">
+        <h3>
+          <strong>
+            {{'PlanDetails' | translate}} : {{PlanId}}
+          </strong>
+        </h3>
+      </span>
+    </ion-row>
+  </ion-row>
+
+  <mat-tab-group 
+    class="left-right-auto full-width customer-tab"
+    animationDuration="500ms" 
+    [selectedIndex]="selectedIndex"
+    (selectedTabChange)="selectTabs($event)">
+
+    <mat-tab [label]="'general' | translate">
+      <app-service-general-plan 
+        class="w-100"
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 0">
+      </app-service-general-plan>
+    </mat-tab>
+
+    <mat-tab [label]="'options' | translate">
+      <app-service-plan-options 
+        class="w-100"  
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 1">
+      </app-service-plan-options>
+    </mat-tab>
+
+    <mat-tab [label]="'usage_rates' | translate">
+      <app-service-usage-rates 
+        class="w-100"
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 2">
+      </app-service-usage-rates>
+    </mat-tab>
+
+    <mat-tab [label]="'charges' | translate">
+      <app-service-plan-charges 
+        class="w-100"
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 3">
+      </app-service-plan-charges>
+    </mat-tab>
+
+    <mat-tab [label]="'discounts' | translate">
+      <app-service-discounts 
+        class="w-100"
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 4">
+      </app-service-discounts>
+    </mat-tab>
+
+    <mat-tab [label]="'attribute_charging' | translate">
+      <app-service-attribute-charging 
+        class="w-100"
+        [planDefinitions]="planDefinitions" 
+        *ngIf="selectedIndex == 5">
+      </app-service-attribute-charging>
+    </mat-tab>
+
+  </mat-tab-group>
+
+  <ion-row class="mt-5 jqx-button-row">
+    <ion-row class="mx-auto total-content4">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" class="ml-auto">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

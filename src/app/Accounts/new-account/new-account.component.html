@@ -1,0 +1,92 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #leftSidenav mode="side" opened class="fixed-sidenav">
+    <app-account-left-side-menu [pages]="menuList" [curSelMenu]="currentComponent"
+      [isAccountTypeSelected]="isAccountTypeSelected"
+      (AccountLeftSideMenuComponent)="processComponents($event, 'LeftNavMenu')"></app-account-left-side-menu>
+  </mat-sidenav>
+  <mat-sidenav-content [@onMainContentChange]="sideNavState ? 'open' : 'close'">
+
+    <ion-row class="main_content mt-3" style="padding-left: 10px; padding-right: 10px">
+      <ion-row>
+        <app-account-details class="w-100" (AccountDetailsComponent)="processComponents($event, 'Details')"
+              [ContactCode]="ContactCode"  (AccountDetailOptions)="accountDetailSubItems"></app-account-details>
+      </ion-row>
+      <ion-row *ngFor="let list of menuList; let i = index;">
+        <ion-row class="justify-content-center" *ngIf="isAccountTypeSelected && list.enabled && list.id != 'Details'">
+          <mat-expansion-panel class="w-100" [expanded]="false" [hideToggle]="true" [attr.expansionId]="list.id">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <strong>{{list.name | translate}}</strong>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ion-row class="justify-content-center">
+              <app-account-options class="w-100" (AccountOptionsComponent)="processComponents($event, 'Options')"
+                (CurrenciesList)="currenciesList" *ngIf="list.id === 'Options'">
+              </app-account-options>
+
+              <app-new-account-identification class="w-100" *ngIf="list.id === 'Identification'"
+                (AccountIdentificationComponent)="processComponents($event, 'Identification')">
+              </app-new-account-identification>
+
+              <app-account-attribute class="w-100" (AccountAttributeComponent)="processComponents($event, 'Attibutes')"
+                *ngIf="list.id === 'Attibutes'">
+              </app-account-attribute>
+
+              <app-new-account-plan class="w-100" (AccountPlanComponent)="processComponents($event, 'Plans')"
+                *ngIf="list.id === 'Plans'">
+              </app-new-account-plan>
+
+              <app-account-contract class="w-100" (AccountContractComponent)="processComponents($event, 'Contracts')"
+                *ngIf="list.id === 'Contracts'">
+              </app-account-contract>
+
+              <app-account-charge class="w-100" (AccountChargeComponent)="processComponents($event, 'Charges')"
+                *ngIf="list.id === 'Charges'">
+              </app-account-charge>
+
+              <app-account-document class="w-100" (AccountDocumentComponent)="processComponents($event, 'Documents')"
+                *ngIf="list.id === 'Documents'">
+              </app-account-document>
+
+              <app-account-service-groups class="w-100" *ngIf="list.id === 'ServiceGroups'"
+                (AccountServiceGroupsComponent)="processComponents($event, 'ServiceGroups')">
+              </app-account-service-groups>
+
+              <app-account-sites class="w-100" (AccountSitesComponent)="processComponents($event, 'Sites')"
+                *ngIf="list.id === 'Sites'">
+              </app-account-sites>
+
+              <app-account-new-cost-centers class="w-100"
+                (AccountNewCostCentersComponent)="processComponents($event, 'CostCenters')"
+                *ngIf="list.id === 'CostCenters'">
+              </app-account-new-cost-centers>
+
+              <app-account-payment class="w-100" *ngIf="list.id === 'PaymentMethods'"
+                (AccountPaymentComponent)="processComponents($event, 'PaymentMethods')">
+              </app-account-payment>
+
+
+              <app-account-authentication class="w-100" *ngIf="list.id === 'Authentication'"
+                (AccountAuthenticationComponent)="processComponents($event, 'Authentication')">
+              </app-account-authentication>
+
+              <app-account-contact class="w-100" *ngIf="list.id === 'RelatedContacts'"
+                (AccountContactComponent)="processComponents($event, 'RelatedContacts')">
+              </app-account-contact>
+
+
+            </ion-row>
+          </mat-expansion-panel>
+        </ion-row>
+      </ion-row>
+      
+    <ion-row class="my-3 jqx-button-row ion-justify-content-end" *ngIf="isAccountTypeSelected">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" (onClick)="saveNewAccount()" class="jqx-button-theme">
+          {{ 'Create' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+    </ion-row>
+  </mat-sidenav-content>
+</mat-sidenav-container>

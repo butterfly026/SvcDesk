@@ -1,0 +1,27 @@
+<ion-row class="ion-justify-content-end">
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'Create' | translate" 
+    (click)="addNewIdentificationDocument()">
+    <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-row>
+<ion-row>
+  <form [formGroup]="formGroup" class="full-width">
+    <ng-container formArrayName="IdentificationItem">
+      <ion-row *ngFor="let subFormGroup of accountIdentificationDocumentFormControl.controls; let i = index">
+        <app-new-account-identification-documents-element
+          class="w-100"
+          [formGroup]="subFormGroup"
+          [identificationTypes]="identificationTypes"
+          (onDeleteFormGroup)="deleteEmail(i)">
+        </app-new-account-identification-documents-element>
+      </ion-row>
+    </ng-container>
+
+    <ion-row class="mat-error" *ngIf="formGroup.controls.IdentificationItem.hasError('MandatodyValidation')">
+      {{ formGroup.controls.IdentificationItem.errors('MandatodyValidation') }}
+    </ion-row>
+  </form>
+</ion-row>

@@ -1,0 +1,116 @@
+<ion-row class="total-content2 left-right-auto ion-margin-top ion-padding-top">
+
+  <ion-row class="mt-3 mb-3">
+    <h3 class="text-center m-auto">
+      {{'update_service_group' | translate}}
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="groupForm" (ngSubmit)="groupUpdateSubnit()" class="full-width" novalidate>
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="Name" placeholder="{{ 'name' | translate }}" required name="Name">
+
+        <mat-error>
+          {{ 'name_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="Code" placeholder="{{ 'code' | translate }}" name="Code">
+
+        <mat-error>
+          {{ 'code_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+
+        <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}">
+          <mat-option *ngFor="let list of groupStatusList; let j = index" value="{{list.Id}}">
+            {{ list.Name | translate }}
+          </mat-option>
+        </mat-select>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="AdditionalInformation1"
+          placeholder="{{ 'additional_information1' | translate }}" name="AdditionalInformation1">
+
+        <mat-error>
+          {{ 'additional_information_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="AdditionalInformation2"
+          placeholder="{{ 'additional_information2' | translate }}" name="AdditionalInformation2">
+
+        <mat-error>
+          {{ 'additional_information_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="AdditionalInformation3"
+          placeholder="{{ 'additional_information3' | translate }}" name="AdditionalInformation3">
+
+        <mat-error>
+          {{ 'additional_information_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row>
+      <mat-form-field class="example-full-width">
+        <input matInput type="email" formControlName="Email" placeholder="{{ 'email' | translate }}" name="Email">
+        <mat-error *ngIf="f.Email.hasError('required')">
+          {{ 'email_is_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="!f.Email.hasError('required') && f.Email.hasError('email')">
+          {{ 'email_invalid_label' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <button id="submitButton"></button>
+  </form>
+
+  <ion-row class="ion-margin-top ion-padding-top page-bottom normal-button">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+          [disabled]="!groupForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

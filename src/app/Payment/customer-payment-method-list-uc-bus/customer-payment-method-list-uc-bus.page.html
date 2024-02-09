@@ -1,0 +1,31 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row>
+    <app-payment-component class="full-width" [ContactCode]="ContactCode"
+      (PaymentMethodComponent)="processPayment($event)">
+    </app-payment-component>
+  </ion-row>
+
+</ion-content>

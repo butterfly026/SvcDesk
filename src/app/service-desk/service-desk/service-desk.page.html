@@ -1,0 +1,453 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" debitRunId="{{pageId}}" pageName="{{pageTitle}}">
+  </app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollEnd)="scrollEventEnd($event)" (ionScroll)="scrollEvent($event)"
+  (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="mx-auto">
+    <mat-tab-group animationDuration="1000ms" class="left-right-auto w-100 customer-tab customer-care2-component"
+      (selectedTabChange)="selectTabs($event)" (focusChange)="focusChange($event)"
+      [selectedIndex]="selectedServiceDeskIndex">
+
+      <mat-tab class="font-bold">
+        <ion-row>
+          <ng-template mat-tab-label>
+            <span class="margin-auto ion-text-center custom-tab-header">
+              <strong>{{'search' | translate}}</strong>
+            </span>
+          </ng-template>
+        </ion-row>
+
+        <ion-row>
+          <ion-row class="" *ngIf="!advancedState">
+            <app-service-desk-search class="w-100" [InputSearch]="advancedSearchResult"
+              (ServiceDeskSearchComponent)="processCareSearch($event)">
+            </app-service-desk-search>
+          </ion-row>
+
+          <ion-row *ngIf="advancedState">
+
+            <app-advanced-search class="w-100" (setComponentValue)="advancedSearch($event)">
+            </app-advanced-search>
+          </ion-row>
+        </ion-row>
+      </mat-tab>
+
+
+      <mat-tab *ngFor="let list of tabList; let i = index" class="customer-tab-detail">
+        <ion-row>
+          <ng-template mat-tab-label>
+            <span class="custom-tab-header ion-padding-start ion-padding-end">
+              <strong>{{list.ContactCode | translate}}</strong>
+            </span>
+            <ion-icon name="close" (click)="closeTab(i)">
+            </ion-icon>
+          </ng-template>
+        </ion-row>
+
+        <ion-row>
+          <!-- <ion-row *ngIf="selectedServiceDeskIndex == i+1"> -->
+          <app-service-desk-service-group class="w-100" [ContactCode]="list.ContactCode" [ResultMenu]="list.Result"
+            (ServiceDeskServiceLevelTabComponent)="ProcessCustomer($event, i)">
+          </app-service-desk-service-group>
+        </ion-row>
+
+      </mat-tab>
+
+      <mat-tab class="customer-tab-detail ml-auto">
+        <ion-row>
+          <ng-template mat-tab-label>
+            <span class="custom-tab-header ion-padding-start ion-padding-end" id="customer-portal-tab">
+              <strong>{{'portal' | translate}}</strong>
+            </span>
+          </ng-template>
+        </ion-row>
+        <ion-row *ngIf="selectedServiceDeskIndex == tabList.length + 1">
+
+          <ion-row class="mt-3">
+            <span class="cursor-point portal-smooth-menu" (click)="processMenuBack(0, 'home')">
+              {{'home' | translate}}
+            </span>
+            <span *ngFor="let list of menuList?.dynamicStaticSubmenuHistory; let i = index;">
+              <span>
+                &nbsp;&nbsp;>>&nbsp;&nbsp;
+                <span class="cursor-point portal-smooth-menu" (click)="processMenuBack(i, 'static')">
+                  {{list.parent?.Caption | translate}}
+                </span>
+              </span>
+            </span>
+
+            <span *ngFor="let list of menuList?.dynamicSubmenuHistory; let i = index;">
+              <span>
+                &nbsp;&nbsp;>>&nbsp;&nbsp;
+                <span class="cursor-point portal-smooth-menu" (click)="processMenuBack(i, 'dynamic')">
+                  {{list.parent?.Caption | translate}}
+                </span>
+              </span>
+            </span>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'mainMenu'">
+            <app-portal-menu class="w-100 h-100" [currentMenu]="currentMenu"
+              (PortalMenuComponent)="processMenu($event)">
+            </app-portal-menu>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'change-password'">
+            <ion-row>
+              <app-change-password-component class="w-100" [ContactCode]="currentUser"
+                (ChangePasswordComponent)="processTab($event)">
+              </app-change-password-component>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'change-language'">
+            <ion-row>
+              <app-select-language class="w-100" [ComponentType]="'language'" (LanguageComponent)="processTab($event)">
+              </app-select-language>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/ChangeTheme'">
+            <ion-row>
+              <app-select-language class="w-100" [ComponentType]="'theme'" (LanguageComponent)="processTab($event)">
+              </app-select-language>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'reports'">
+            <app-report-list ContactCode="{{currentUser}}" class="w-100" (myServicesScroll)="processTab($event)">
+            </app-report-list>
+          </ion-row>
+
+          <!-- <ion-row *ngIf="portalMenuState == '/Accounts/New'">
+            <app-new-account class="w-100" ContactCode="{{currentUser}}" (NewAccountComponent)="processTab($event)"
+              (ScrollNewAccountComponent)="ProcessCustomer($event)">
+            </app-new-account>
+          </ion-row> -->
+          <ion-row *ngIf="portalMenuState == '/Accounts/New'">
+            <app-new-account-prototype class="w-100" ContactCode="{{currentUser}}" (NewAccountComponent)="processTab($event)"
+              (ScrollNewAccountComponent)="ProcessCustomer($event)">
+            </app-new-account-prototype>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'documents'">
+            <ion-row>
+              <app-admin-document class="w-100" [ContactCode]="currentUser" (AdminDocument)="processTab($event)">
+              </app-admin-document>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'contact-attributes'">
+            <app-contact-attribute class="w-100" [ContactCode]="currentUser" (ContactAttribute)="processTab($event)">
+            </app-contact-attribute>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'service-attributes'">
+            <app-service-attribute-config class="w-100" [ContactCode]="currentUser"
+              (ServiceAttribute)="processTab($event)">
+            </app-service-attribute-config>
+          </ion-row>
+
+
+          <ion-row *ngIf="portalMenuState == '/Configurations/Reports/FTP'">
+            <app-ftp-configuration class="w-100" [ContactCode]="currentUser"
+              (FtpConfigurationComponent)="processTab($event)">
+            </app-ftp-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Configurations/SMTP'">
+            <app-smpt-configuration class="w-100" [ContactCode]="currentUser"
+              (SmptConfigurationComponent)="processTab($event)">
+            </app-smpt-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Configurations/Address'">
+            <app-address-configuration class="w-100" [ContactCode]="currentUser"
+              (AddressConfigurationComponent)="processTab($event)">
+            </app-address-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Configurations/ChangePassword'">
+            <app-change-password class="w-100" [ContactCode]="currentUser"
+              (ChangePasswordComponent)="processTab($event)">
+            </app-change-password>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Configurations/PasswordConfigurations'">
+            <app-password class="w-100" [ContactCode]="currentUser" (PasswordComponent)="processTab($event)">
+            </app-password>
+          </ion-row>
+          <ion-row *ngIf="portalMenuState == '/Configurations/ResetPassword'">
+            <app-password-reset class="w-100" [ContactCode]="currentUser" (PasswordResetComponent)="processTab($event)">
+            </app-password-reset>
+          </ion-row>
+
+
+          <ion-row *ngIf="portalMenuState == '/Users/PartnerUsers'">
+            <app-partners class="w-100" [ContactCode]="currentUser" (UserComponent)="processTab($event)">
+            </app-partners>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Users/ServiceProviderUsers'">
+            <app-service-provider-user class="w-100" [ContactCode]="currentUser" (UserComponent)="processTab($event)">
+            </app-service-provider-user>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'plans'">
+            <app-account-plan class="w-100" (AccountPlanComponent)="processTab($event)">
+            </app-account-plan>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'termination-change-date'">
+            <app-termination-change-date class="w-100" (TerminationChangeDate)="processTab($event)">
+            </app-termination-change-date>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'termination-receive'">
+            <app-termination-receive class="w-100" (TerminationReceiveComponent)="processTab($event)">
+            </app-termination-receive>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'termination-reverse'">
+            <app-termination-reverse class="w-100" (TerminationReverseComponent)="processTab($event)">
+            </app-termination-reverse>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'account-charges'">
+            <app-charges class="w-100" [ContactCode]="currentUser" [ChargeType]="''"
+              (ChargesComponent)="processTab($event)">
+            </app-charges>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'service-charges'">
+            <app-service-charges class="w-100" [ContactCode]="currentUser" [ServiceReference]="'4189'" [ChargeType]="''"
+              (ChargesComponent)="processTab($event)">
+            </app-service-charges>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'bar'">
+            <app-bar class="w-100" (BarComponent)="processTab($event)">
+            </app-bar>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'unbar'">
+            <app-unbar class="w-100" (UnbarComponent)="processTab($event)">
+            </app-unbar>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'sms'">
+            <app-sms class="total-content4 mx-auto" [ContactNumber]="currentUser" pageTitle="{{'sms'|translate}}"
+              (setComponentValue)="processTab($event)">
+            </app-sms>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'sms-send'">
+            <app-sms-send class="total-content4 mx-auto" [ContactNumber]="currentUser"
+              (SMSSendComponent)="processTab($event)">
+            </app-sms-send>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'sms-list'">
+            <app-sms-list class="total-content4 mx-auto" [ContactCode]="currentUser"
+              (SMSListComponent)="processTab($event)">
+            </app-sms-list>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'financials'">
+            <app-financial-transaction-list [ContactNumber]="currentUser" [PagingParam]="pagingParam"
+              (setComponentValue)="financialTransaction($event)">
+            </app-financial-transaction-list>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'financial-credit-adjustment'">
+            <app-financial-credit-adjustment [ContactCode]="currentUser" class="w-100"
+              (FinancialCreditAdjustmentComponent)="financialTransaction($event)">
+            </app-financial-credit-adjustment>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'financial-debit-adjustment'">
+            <app-financial-debit-adjustment [ContactCode]="list.ContactCode" class="w-100"
+              (FinancialDebitAdjustmentComponent)="financialTransaction($event)">
+            </app-financial-debit-adjustment>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'financial-detail'">
+            <app-financial-transaction-detail class="w-100" [FinancialId]="financialId" [ContactCode]="currentUser"
+              (setComponentValue)="financialTransaction($event)">
+            </app-financial-transaction-detail>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'receipts'">
+            <app-receipt class="w-100" [ContactCode]="currentUser" (ReceiptNewComponent)="financialTransaction($event)">
+            </app-receipt>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'financial-invoice'">
+            <app-financial-invoice-form class="w-100" [ContactCode]="currentUser"
+              (FinancialInvoiceFormComponent)="financialTransaction($event)">
+            </app-financial-invoice-form>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'email'">
+            <app-email-send class="w-100" [ContactCode]="currentUser" (EmailSendComponent)="processTab($event)">
+            </app-email-send>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'service-events'">
+            <app-event-instance class="w-100" [ServiceReferenceId]="'04345345'" [ContactCode]="currentUser"
+              (EventInstanceComponent)="processTab($event)">
+            </app-event-instance>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'account-events'">
+            <app-event-instance class="w-100" [ContactCode]="currentUser" (EventInstanceComponent)="processTab($event)">
+            </app-event-instance>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'bill-email'">
+            <ion-row class="total-content2 mx-auto">
+              <app-bill-email class="w-100" [ContactCode]="currentUser" [BillId]="'69874'" [BillNumber]="'1069941'"
+                [EmailType]="'test-email'" (billPdfComponent)="processTab($event)">
+              </app-bill-email>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'bills'">
+            <app-bill-pdf-component class="w-100" [componentType]="'portal'" (billPdfComponent)="processTab($event)">
+            </app-bill-pdf-component>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Accounts/BillOptions'">
+            <app-bill-options class="w-100" (BillOptionsComponent)="processTab($event)">
+            </app-bill-options>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'email-configuration'">
+            <app-email-configuration class="w-100" [ContactCode]="currentUser"
+              (EmailConfigurationComponent)="processTab($event)">
+            </app-email-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'sms-configuration'">
+            <app-sms-configuration class="w-100" [ContactCode]="currentUser"
+              (EmailConfigurationComponent)="processTab($event)">
+            </app-sms-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == 'service-provider-user-configuration'">
+            <app-service-provider-user-configuration class="w-100" [ContactCode]="currentUser"
+              (ServiceProviderUserComponent)="processTab($event)">
+            </app-service-provider-user-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='message-image'">
+            <ion-row class="total-content4 mx-auto">
+              <app-contact-message-image class="w-100" [ContactCode]="currentUser" [ImageType]="'list'"
+                (ContactMessageComponent)="processTab($event)">
+              </app-contact-message-image>
+            </ion-row>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='account-onboarding'">
+            <app-account-onboarding class="w-100" [ContactCode]="currentUser">
+            </app-account-onboarding>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='account-onboarding-configuration'">
+            <app-account-onboarding-configuration class="w-100" [ContactCode]="currentUser">
+            </app-account-onboarding-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='commissions'">
+            <app-commission-management class="w-100" [ContactCode]="currentUser"
+              (CommissionManagementComponent)="processTab($event)">
+            </app-commission-management>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='/Charges/Configurations/Definitions'">
+            <app-account-charge-definition class="w-100" [ContactCode]="currentUser"
+              (AccountChargeDefinitionComponent)="processTab($event)">
+            </app-account-charge-definition>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='html-editor'">
+            <app-html-editor class="w-100" (HtmlEditorComponent)="processTab($event)">
+            </app-html-editor>
+          </ion-row>
+
+          <ion-row
+            *ngIf="portalMenuState=='account-charge-group' || portalMenuState == '/Charges/Configurations/Groups'">
+            <app-account-charge-group class="w-100" [ContactCode]="currentUser"
+              (AccountChargeGroupComponent)="processTab($event)">
+            </app-account-charge-group>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Charges/Configurations/DisplayGroups'">
+            <app-account-charge-display class="w-100" [ContactCode]="currentUser"
+              (AccountChargeGroupComponent)="processTab($event)">
+            </app-account-charge-display>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Tasks/Configurations/Groups'">
+            <app-account-task-group class="w-100" [ContactCode]="currentUser"
+              (AccountTaskGroupComponent)="processTab($event)">
+            </app-account-task-group>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Tasks/Configurations/Priorities'">
+            <app-account-task-priorities class="w-100" [ContactCode]="currentUser"
+              (AccountTaskPrioritiesComponent)="processTab($event)">
+            </app-account-task-priorities>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState == '/Tasks/Configurations/Resoutions'">
+            <app-task-configuration-resolutions class="w-100" [ContactCode]="currentUser"
+              (ResolutionsComponent)="processTab($event)">
+            </app-task-configuration-resolutions>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='/Services/Configurations/PlanChange'">
+            <app-service-plan-change-configuration class="w-100"
+              (PlanChangeConfigurationComponent)="processTab($event)">
+            </app-service-plan-change-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='/Services/Configurations/Terminations'">
+            <app-service-termination-configuration class="w-100"
+              (TerminationConfigurationComponent)="processTab($event)">
+            </app-service-termination-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='/Services/Configurations/Onboarding'">
+            <app-service-onboarding-configuration class="w-100"
+              (ServiceOnboardingConfigurationComponent)="processTab($event)">
+            </app-service-onboarding-configuration>
+          </ion-row>
+
+          <ion-row *ngIf="portalMenuState=='/Accounts/Configurations/Onboarding'">
+            <app-account-onboarding-configuration class="w-100"
+              (AccountOnboardingConfigurationComponent)="processTab($event)">
+            </app-account-onboarding-configuration>
+          </ion-row>
+        </ion-row>
+
+        <ion-row *ngIf="portalMenuState == '/Contracts'">
+          <app-contracts-lists class="w-100" (ContractsListsComponent)="processTab($event)">
+          </app-contracts-lists>
+        </ion-row>
+
+        <ion-row *ngIf="portalMenuState == '/Contracts/Penalties'">
+          <app-penalties-lists class="w-100" (PenaltiesListsComponent)="processTab($event)">
+          </app-penalties-lists>
+        </ion-row>
+      </mat-tab>
+
+
+
+    </mat-tab-group>
+  </ion-row>
+
+</ion-content>

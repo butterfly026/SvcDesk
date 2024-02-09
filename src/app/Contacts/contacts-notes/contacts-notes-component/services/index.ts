@@ -1,0 +1,1 @@
+export * from './contacts-notes.service';

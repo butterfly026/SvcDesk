@@ -1,0 +1,226 @@
+<ion-row class="my-3 p-3 overflow-y-auto">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        <!-- {{BillNumber}}:  -->
+        {{'email' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="emailGroup" class="full-width left-right-auto" (ngSubmit)="emailSend()" novalidate>
+
+    <ion-row class="username-row">
+      <mat-form-field class="w-100">
+
+        <mat-chip-list #chipListTo required>
+          <mat-chip *ngFor="let toItem of toList; let i = index" selected [removable]="removable"
+            (removed)="remove(i, 'to')" [color]="toItem.color">
+            {{toItem.email}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput #toInput placeholder="{{ 'to' | translate }}" formControlName="toInput"
+            [matAutocomplete]="autoTo" [matChipInputFor]="chipListTo"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event, 'to')"
+            name="toInput" (blur)="addOnBlurTo($event, 'to')">
+        </mat-chip-list>
+
+        <mat-autocomplete #autoTo="matAutocomplete" (optionSelected)="selected($event, 'to')">
+          <mat-option *ngFor="let list of filterToList; let i = index;" [value]="list.id">
+            {{list.email}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="chipStateTo == 'required' && f.toInput.touched">
+          {{ 'subject_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="chipStateTo == 'invalid' && f.toInput.touched">
+          {{ 'invalid_subject' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+
+    </ion-row>
+
+    <ion-row class="username-row" *ngIf="emailConfiguration?.cc">
+      <mat-form-field class="w-100">
+
+        <mat-chip-list #chipListCc>
+          <mat-chip *ngFor="let ccItem of ccList; let i = index" selected [removable]="removable"
+            (removed)="remove(i, 'cc')" [color]="ccItem.color">
+            {{ccItem.email}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input #ccInput placeholder="{{ 'cc' | translate }}" formControlName="ccInput" [matAutocomplete]="autoCC"
+            [matChipInputFor]="chipListCc" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event, 'cc')" name="ccInput" (blur)="addOnBlurTo($event, 'cc')">
+        </mat-chip-list>
+
+        <mat-autocomplete #autoCC="matAutocomplete" (optionSelected)="selected($event, 'cc')">
+          <mat-option *ngFor="let list of filterCcList; let i = index;" [value]="list.id">
+            {{list.email}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="chipStateCc == 'required' && f.ccInput.touched">
+          {{ 'subject_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="chipStateCc == 'invalid' && f.ccInput.touched">
+          {{ 'invalid_subject' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row" *ngIf="emailConfiguration?.bcc">
+      <mat-form-field class="w-100">
+
+        <mat-chip-list #chipListBcc>
+          <mat-chip *ngFor="let bccItem of bccList; let i = index" selected [removable]="removable"
+            (removed)="remove(i, 'bcc')" [color]="bccItem.color">
+            {{bccItem.email}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input #bccInput placeholder="{{ 'bcc' | translate }}" formControlName="bccInput" [matAutocomplete]="autoBCC"
+            [matChipInputFor]="chipListBcc" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event, 'bcc')" name="bccInput" (blur)="addOnBlurTo($event, 'bcc')">
+        </mat-chip-list>
+
+        <mat-autocomplete #autoBCC="matAutocomplete" (optionSelected)="selected($event, 'bcc')">
+          <mat-option *ngFor="let list of filterBccList; let i = index;" [value]="list.id">
+            {{list.email}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="chipStateBcc == 'required' && f.bccInput.touched">
+          {{ 'subject_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="chipStateBcc == 'invalid' && f.bccInput.touched">
+          {{ 'invalid_subject' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row">
+      <mat-form-field class="w-100">
+        <input matInput type="text" formControlName="subject" placeholder="{{ 'subject' | translate }}" required
+          name="subject">
+
+        <mat-error>
+          {{ 'subject_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row *ngIf="emailConfiguration?.templates">
+      <ion-row class="mt-2">
+        <mat-slide-toggle (change)="addTemplate($event)">
+          {{'add_template' | translate}}
+        </mat-slide-toggle>
+      </ion-row>
+
+      <ion-row class="username-row" *ngIf="templateState">
+        <mat-form-field class="w-100">
+
+          <mat-select formControlName="template" placeholder="{{ 'template' | translate }}" name="template">
+            <mat-option *ngFor="let list of templatelist; let i = index" value="{{list.value}}"
+              (click)="selectTemplate(i)">
+              {{list.name}}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="username-row mt-4">
+      <!-- <mat-form-field class="w-100 textarea-field">
+        <textarea matInput type="text" class="textarea-height-1" formControlName="body"
+          placeholder="{{ 'body' | translate }}" name="body">
+        </textarea>
+      </mat-form-field> -->
+      <jqxEditor #emailBody [width]="'100%'" [height]="200" [theme]="globService.themeColor">
+      </jqxEditor>
+
+    </ion-row>
+
+    <ion-row *ngIf="emailConfiguration?.externalattachments">
+      <ion-row class="username-row" *ngIf="EmailType != 'billEmail' || existDocList.length > 0">
+        <mat-form-field class="w-100">
+          <mat-select placeholder="{{ 'existing_doc' | translate }}" name="existingDocs" formControlName="existingDocs"
+            multiple>
+            <mat-option *ngFor="let list of existDocList" [value]="list.id">{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-row>
+    </ion-row>
+
+    <ion-row *ngIf="emailConfiguration?.attachments">
+      <ion-row class="username-row" *ngIf="EmailType != 'billEmail'">
+        <ion-row class="h-100 align-items-center">
+
+          <ion-row align-items-center class="justify-content-between">
+            <span class="document-name my-auto" *ngIf="createDoc.length > 0">
+              <span *ngFor="let list of createDoc; let i = index;">
+                {{list.name}}&nbsp;
+              </span>
+            </span>
+            <span class="document-name my-auto" *ngIf="createDoc.length == 0">
+              {{'choose_file' | translate}}
+            </span>
+            <button mat-raised-button color="primary" type="button" (click)="openCreateFile()">
+              ...
+            </button>
+
+            <input type="file" #createFile id="createFile" (change)="createFileEvent($event)" class="d-none" multiple />
+          </ion-row>
+
+          <!-- <input matInput type="text" formControlName="attachment" placeholder="{{ 'attachment' | translate }}" required
+            name="attachment"> -->
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="username-row mt-4" *ngIf="emailConfiguration?.duedate">
+      <mat-form-field class="w-100">
+        <input matInput [matDatepicker]="dueDate" formControlName="dueDate" [readonly]="true"
+          placeholder="{{ 'due_date' | translate }}" name="dueDate" [max]="maxDate" [min]="minDate">
+
+        <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+        <mat-datepicker #dueDate></mat-datepicker>
+
+        <mat-error>
+          {{ 'due_date_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <button mat-button id="submitButton">Submit</button>
+  </form>
+
+  <ion-row class="jqx-button-row my-3">
+    <ion-row class="">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!getFormValidate()"
+            (onClick)="triggerSubmit()">
+            {{ 'send_email' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

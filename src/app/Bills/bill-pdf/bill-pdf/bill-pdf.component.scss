@@ -1,0 +1,69 @@
+.log-img {
+    max-width: 200px;
+}
+
+
+.bill-border {
+    border: 2px solid black;
+}
+
+.bill-border-radius {
+    border-radius: 7px;
+}
+
+.table-fixed {
+    table-layout: fixed;
+
+    .bill-border {
+        padding: 7px 5px;
+    }
+}
+
+.des-max-length {
+    max-width: 420px;
+}
+
+.account-summary {
+    padding-bottom: 70px;
+}
+
+.scissor-row {
+    height: 20px;
+    border-bottom: 1px dashed;
+    margin-bottom: 20px;
+
+    .sccissor-icon {
+        top: 0;
+        right: 0;
+        height: 40px;
+
+        ion-icon {
+            font-size: 30px;
+            transform: rotateY(180deg);
+        }
+    }
+}
+
+.bill-background {
+    background: #a7a9ac;
+}
+
+.account-detail-content {
+    max-width: 430px;
+
+    .account-detail {
+        padding: 5px 10px;
+    }
+}
+
+.domain-part {
+    background: red;
+}
+
+.payment-logo {
+    max-width: 70px;
+}
+
+.payment-des {
+    max-width: calc(100% - 70px);
+}

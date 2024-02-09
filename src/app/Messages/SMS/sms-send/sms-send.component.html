@@ -1,0 +1,115 @@
+<ion-row class="ion-margin-top ion-padding-top ion-padding">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{ContactNumber}}: {{'sms_send' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="smsGroup" class="full-width left-right-auto" (ngSubmit)="smsSend()" novalidate>
+
+    <ion-row class="username-row">
+      <mat-form-field class="example-full-width">
+
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let list of seletedPhoneList" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(list)" required>
+            {{list}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput #phoneNumber formControlName="phoneNumber" [matAutocomplete]="auto"
+            [matChipInputFor]="chipList" type="tel" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)" placeholder="{{ 'phone_number' | translate }}">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let list of filteredPhone" [value]="list.msisdn">
+            {{list.msisdn}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error *ngIf="chipState == 'required' && f.phoneNumber.touched">
+          {{ 'phone_number_required' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row *ngIf="smsConfiguration?.templates">
+      <ion-row class="mt-2">
+        <mat-slide-toggle (change)="addTemplate($event)">
+          {{'add_template' | translate}}
+        </mat-slide-toggle>
+      </ion-row>
+
+      <ion-row class="username-row" *ngIf="templateState">
+        <mat-form-field class="example-full-width">
+
+          <mat-select formControlName="template" placeholder="{{ 'template' | translate }}" name="template" required>
+            <mat-option *ngFor="let list of templatelist; let i = index" value="{{list.value}}"
+              (click)="selectTemplate(i)">
+              {{list.name}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'template_required' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="username-row mt-4">
+      <mat-form-field class="example-full-width textarea-field">
+        <textarea matInput type="text" formControlName="smsBody" placeholder="{{ 'type_here' | translate }}" required
+          name="smsBody" [maxlength]="smsConfiguration?.maximummessagelength">
+        </textarea>
+
+        <mat-error>
+          {{ 'sms_is_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row mt-4" *ngIf="smsConfiguration?.duedate">
+      <mat-form-field class="w-100">
+        <input matInput [matDatepicker]="dueDate" formControlName="dueDate" [readonly]="true"
+          placeholder="{{ 'due_date' | translate }}" name="dueDate" [min]="minDate" [max]="maxDate">
+
+        <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+        <mat-datepicker #dueDate></mat-datepicker>
+
+        <mat-error>
+          {{ 'due_date_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <!-- <button mat-button id="submitButton">Submit</button> -->
+  </form>
+
+  <ion-row class="login-row page-bottom normal-button">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-col size="2">
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!smsGroup.valid"
+            (click)="triggerSubmit()">
+            {{ 'send_sms' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

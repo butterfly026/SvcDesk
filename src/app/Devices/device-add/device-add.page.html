@@ -1,0 +1,95 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto ion-margin-top ion-padding-top">
+    <form [formGroup]="deviceForm" (ngSubmit)="deviceAddSubmit()" class="full-width" novalidate>
+      <ion-row>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="ServiceProviderId1"
+            placeholder="{{ 'service_provider_id1' | translate }}" name="ServiceProviderId1">
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="ServiceProviderId2"
+            placeholder="{{ 'service_provider_id2' | translate }}" name="ServiceProviderId2">
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row>
+        <mat-form-field class="example-full-width">
+
+          <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}" name="Status" required>
+            <mat-option *ngFor="let list of statusList; let i = index" value="{{list.Id}}">
+              {{list.Name}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'status_required' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+
+      </ion-row>
+
+      <ion-row>
+        <mat-form-field class="example-full-width">
+
+          <mat-select formControlName="Type" placeholder="{{ 'type' | translate }}" name="Type" required>
+            <mat-option *ngFor="let list of typeList; let i = index" value="{{list.Id}}">
+              {{list.Name}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'type_required' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="Note" placeholder="{{ 'note' | translate }}" name="Note">
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="Password" placeholder="{{ 'password' | translate }}"
+            name="Password">
+
+        </mat-form-field>
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+
+    <ion-row class="ion-margin-top ion-padding-top page-bottom normal-button">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12"></ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!deviceForm.valid">
+            {{ 'create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-content>

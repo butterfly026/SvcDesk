@@ -1,0 +1,194 @@
+<ion-row>
+  <form [formGroup]="optionsForm" class="w-100" (ngSubmit)="submitOptionsForm()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <mat-select placeholder="{{ 'billing_cycle' | translate }}" name="BillingCycle"
+              formControlName="BillingCycle">
+              <mat-option *ngFor="let list of billCycleList; let i = index" value="{{list.id}}">
+                {{list.name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'billing_cycle_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <mat-select placeholder="{{ 'currency' | translate }}" name="Currency" formControlName="Currency">
+              <mat-option *ngFor="let list of _CurrenciesList; let i = index" value="{{list.id}}">
+                {{list.name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'currency_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <mat-select placeholder="{{ 'tax_rate' | translate }}" name="Taxrate" formControlName="Taxrate">
+              <mat-option *ngFor="let list of taxrateList; let i = index" value="{{list.id}}">
+                {{list.name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'tax_rate_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="Timezone"
+              placeholder="{{'time_zone' | translate}}" [matAutocomplete]="timezoneComplete"
+              name="Timezone">
+
+            <mat-autocomplete #timezoneComplete="matAutocomplete" (optionSelected)="selectTimeZone($event)">
+              <mat-option *ngFor="let list of timezoneList; let i= index;" [value]="list.name">
+                {{list.name}}
+              </mat-option>
+            </mat-autocomplete>
+
+          </mat-form-field>          
+          <mat-progress-bar mode="indeterminate" *ngIf="showTimeZoneSpinner"></mat-progress-bar>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="CreditLimit" type="text" name="CreditLimit"
+              placeholder="{{ 'credit_limit' | translate }}" />
+
+            <mat-error>
+              {{ 'credit_limit_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+
+            <mat-select placeholder="{{ 'credit_terms' | translate }}" name="CreditTerms" formControlName="CreditTerms">
+              <mat-option *ngFor="let list of credittermsList; let i = index" value="{{list.id}}">
+                {{list.name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'credit_terms_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+            <mat-select placeholder="{{ 'bill_format' | translate }}" name="BillFormat" formControlName="BillFormat">
+              <mat-option *ngFor="let list of billFormatList; let i = index" value="{{list.id}}">
+                {{list.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+            <mat-select placeholder="{{ 'credit_status' | translate }}" name="CreditStatus" formControlName="CreditStatus">
+              <mat-option *ngFor="let list of creditStatusList; let i = index" value="{{list.id}}">
+                {{list.status}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <mat-checkbox class="example-margin" formControlName="PaperBill" name="PaperBill">
+            {{'paper_bill' | translate}}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <mat-checkbox class="example-margin" formControlName="EmailBill" name="EmailBill">
+            {{'email_bill' | translate}}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+            <input matInput formControlName="ChannelPartner"
+              placeholder="{{'channel_partner' | translate}}" [matAutocomplete]="channelPartnerComplete"
+              name="ChannelPartner">
+
+            <mat-autocomplete #channelPartnerComplete="matAutocomplete" (optionSelected)="selectChannelPartner($event)">
+              <mat-option *ngFor="let list of channelPartnerList; let i= index;" [value]="list.name">
+                {{list.name}}
+              </mat-option>
+            </mat-autocomplete>
+
+            <button type="button" mat-button *ngIf="f.ChannelPartner.value" matSuffix mat-icon-button
+              aria-label="Clear" (click)="clearField('ChannelPartner')">
+              <i class="fa fa-times"></i>
+            </button>
+          </mat-form-field>          
+          <mat-progress-bar mode="indeterminate" *ngIf="showChannelSpinner"></mat-progress-bar>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <mat-form-field class="w-100">
+            <input matInput formControlName="SalesPerson"
+              placeholder="{{'sales_person' | translate}}" [matAutocomplete]="salesPersonComplete"
+              name="ChannelPartner">
+            <mat-autocomplete #salesPersonComplete="matAutocomplete" (optionSelected)="selectSalesPerson($event)">
+              <mat-option *ngFor="let list of salesPersonList; let i= index;" [value]="list.name">
+                {{list.name}}
+              </mat-option>
+            </mat-autocomplete>
+            
+            <button type="button" mat-button *ngIf="f.SalesPerson.value" matSuffix mat-icon-button
+              aria-label="Clear" (click)="clearField('SalesPerson')">
+              <i class="fa fa-times"></i>
+            </button>
+          </mat-form-field>          
+          <mat-progress-bar mode="indeterminate" *ngIf="showSalesSpinner"></mat-progress-bar>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <button class="submitButton" id="optionsSubmitButton"></button>
+  </form>
+
+</ion-row>

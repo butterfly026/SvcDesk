@@ -1,0 +1,201 @@
+<ion-header mode='ios'>
+  <app-header pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top total-content2 left-right-auto">
+    <form [formGroup]="RechargeForm" class="full-width" (ngSubmit)="RechargeSubmit()" novalidate>
+
+      <ion-row class="ion-margin-top">
+        <ion-col size="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="Device" placeholder="{{ 'device' | translate }}" name="Device" required>
+                <mat-option *ngFor="let list of deviceList; let i = index" value="{{list.ServiceReference}}"
+                  (click)="selectDevice(i)">
+                  {{list.ServiceProviderId1}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'device_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col size="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="RechargeType" placeholder="{{ 'recharge_type' | translate }}"
+                name="RechargeType" required>
+                <mat-option *ngFor="let list of typeList; let i = index" (click)="rechargeItem(i)"
+                  value="{{list.TypeId}}">
+                  {{list.Type}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'recharge_type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top" *ngIf="autoRechargeList.length > 0">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <input matInput formControlName="FromDateTime" placeholder="{{ 'start_date' | translate }}"
+                name="FromDateTime">
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <input matInput formControlName="ToDateTime" placeholder="{{ 'end_date' | translate }}" name="ToDateTime">
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col size="12">
+          <ion-row class="full-height">
+            <span class="top-bottom-auto">
+              {{ 'auto_purchase_type' | translate }}
+            </span>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12">
+          <ion-row class="full-height">
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="custom-radio-group full-width"
+              [(ngModel)]="purchaseType" [ngModelOptions]="{standalone: true}" (ngModelChange)="switchPurchaseType()">
+              <mat-radio-button class="custom-radio-button margin-auto" value="LowBalance">
+                {{ 'low_balance' | translate }}
+              </mat-radio-button>
+              <mat-radio-button class="custom-radio-button margin-auto" value="Scheduled">
+                {{ 'scheduled' | translate }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height" *ngIf="purchaseType == 'LowBalance'">
+            <mat-form-field class="example-full-width margin-auto">
+              <!-- <input matInput formControlName="LowBalanceThreshold" type="number" required
+                  placeholder="{{'low_balance_threshold' | translate}}" name="LowBalanceThreshold" /> -->
+
+              <mat-select formControlName="LowBalanceThreshold" placeholder="{{ 'low_balance_threshold' | translate }}"
+                name="LowBalanceThreshold" required>
+                <mat-option *ngFor="let list of thresholdList; let i = index" value="{{list}}"
+                  (click)="checkSaveState()">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'low_balance_threshold_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height" *ngIf="purchaseType == 'Scheduled'">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="DateOfMonth" placeholder="{{ 'day_of_month' | translate }}"
+                name="DateOfMonth" required>
+                <mat-option *ngFor="let list of monthList; let i = index" value="{{list}}" (click)="checkSaveState()">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'day_of_month_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <!-- <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="MaxNumberOfRecharge"
+                placeholder="{{ 'maximum_number_of_recharges' | translate }}" name="MaxNumberOfRecharge">
+                <mat-option *ngFor="let list of rechargeList; let i = index" value="{{list}}"
+                  (click)="checkSaveState()">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'maximum_number_of_recharges_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col> -->
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width textarea-field">
+          <textarea matInput formControlName="Note" maxlength="254" name="Note"
+            placeholder="{{'notes_optional'| translate}}" (ngModelChange)="checkSaveState()">
+            </textarea>
+        </mat-form-field>
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+    <ion-row class="ion-margin-top normal-button">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height" *ngIf="autoRechargeList.length > 0">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!availeSave" (click)="submitTrigger()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height" *ngIf="autoRechargeList.length > 0">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="autoRechargeList.length == 0"
+            (click)="deleteRecharge()">
+            {{ 'delete' | translate }}
+          </jqxButton>
+        </ion-row>
+        <ion-row class="full-height" *ngIf="autoRechargeList.length == 0">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!RechargeForm.valid"
+            (click)="submitTrigger()">
+            {{ 'add' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-content>

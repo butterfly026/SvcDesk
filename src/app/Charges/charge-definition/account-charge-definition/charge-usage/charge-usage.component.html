@@ -1,0 +1,43 @@
+<!-- <ion-row class="my-3 pt-3">
+  <ion-row *ngIf="componentType === 'list'">
+    <app-charge-usage-list class="w-100" (ChargeUsageListComponent)="processComponent($event)">
+
+    </app-charge-usage-list>
+  </ion-row>
+
+  <ion-row *ngIf="componentType === 'add'">
+    <app-charge-usage-form class="w-100" (ChargeDefinitionFormComponent)="processComponent($event)">
+
+    </app-charge-usage-form>
+  </ion-row>
+
+  <ion-row *ngIf="componentType === 'update'">
+    <app-charge-usage-form class="w-100" [ChargeData]="usageData"
+      (ChargeDefinitionFormComponent)="processComponent($event)">
+
+    </app-charge-usage-form>
+  </ion-row>
+</ion-row> -->
+
+<ion-row class="">
+  <ion-row [ngClass]="{'d-none': componentType !== 'list'}">
+    <app-charge-usage-list class="w-100" [ListType]="listType" [ChargeData]="chargeData" [UsageData]="UsageData"
+      [ChargeDefinitionData]="ChargeDefinitionData" (ChargeUsageListComponent)="processComponent($event)">
+
+    </app-charge-usage-list>
+  </ion-row>
+
+  <ion-row [ngClass]="{'d-none': componentType !== 'add'}">
+    <app-charge-usage-form [currentList]="currentList" class="w-100"
+      (ChargeDefinitionFormComponent)="processComponent($event)">
+
+    </app-charge-usage-form>
+  </ion-row>
+
+  <ion-row [ngClass]="{'d-none': componentType !== 'update'}">
+    <app-charge-usage-form [currentList]="currentList" class="w-100" [ChargeData]="usageData"
+      (ChargeDefinitionFormComponent)="processComponent($event)">
+
+    </app-charge-usage-form>
+  </ion-row>
+</ion-row>

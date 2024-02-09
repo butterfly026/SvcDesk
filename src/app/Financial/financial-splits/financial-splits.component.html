@@ -1,0 +1,16 @@
+<ion-row id="splits-grid">
+  <ion-row class="group-row margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+      <span class="margin-left-auto ion-text-end" (click)="exportData()">
+        {{'export_to_excel' | translate}}
+      </span>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #splitsGrid [columnsautoresize]="true" [columnsresize]="true"
+      [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter" [columns]="columns"
+      [sortable]="true" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+</ion-row>

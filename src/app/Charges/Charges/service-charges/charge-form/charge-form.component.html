@@ -1,0 +1,337 @@
+<ion-row>
+
+  <ion-row>
+    <h3 class="p-0 m-auto" *ngIf="ChargeType == 'update' && !ReadOnly">
+      {{'update_charge' | translate}} {{ Title }}
+    </h3>
+    <h3 class="p-0 m-auto" *ngIf="ChargeId == '' && !ReadOnly">
+      {{'new_charge' | translate}}{{ ServiceId ? '[' + ServiceId + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto" *ngIf="ReadOnly">
+      {{'charge' | translate}} {{ Title }}
+    </h3>
+  </ion-row>
+
+  <ion-row class="total-content2 mx-auto">
+
+    <form [formGroup]="chargeForm" class="full-width" (ngSubmit)="submitForm()" novalidate>
+
+      <ion-row class="group-content address-spinner" *ngIf="ChargeType != 'update'">
+        <mat-form-field class="example-full-width">
+
+          <input type="text" placeholder="{{'charge'| translate}}" matInput formControlName="charge"
+            [matAutocomplete]="auto">
+
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+            <mat-option *ngFor="let option of filterChargeList; let i = index" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+
+          <mat-error *ngIf="f.charge.hasError('required')">
+            {{ 'charge_required' | translate }}
+          </mat-error>
+
+          <mat-error *ngIf="!f.charge.hasError('required') && f.charge.hasError('invalid')">
+            {{ 'charge_type_invalid' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+      </ion-row>
+
+      <ion-row *ngIf="currentCharge || ChargeType == 'update'">
+
+        <ion-row class="group-content">
+          <ion-row class="group-body">
+            <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="addDescription" id="addDescription" type="text" #addDescription [readonly]="ReadOnly"
+                    placeholder="{{ 'additional_description' | translate }}" name="addDescription" />
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <ion-row class="mt-auto">
+                  <mat-form-field class="example-full-width">
+
+                    <input matInput type="datetime-local" formControlName="startDateTime" [readonly]="ReadOnly"
+                      placeholder="{{ 'start_date' | translate }}" name="startDateTime" required>
+
+                    <!-- <input matInput [ngxMatDatetimePicker]="picker" formControlName="startDateTime" [readonly]="true"
+                      placeholder="{{ 'start_date' | translate }}" name="startDateTime" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker [enableMeridian]="true"></ngx-mat-datetime-picker> -->
+
+                    <mat-error>
+                      <span>{{ 'start_date_required' | translate }}</span>
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+              *ngIf="chargeDetail?.frequency != 'One-Off' || chargeUpdate?.displayenddate">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+
+                  <input matInput type="datetime-local" formControlName="endDateTime" [readonly]="ReadOnly"
+                    placeholder="{{ 'end_date' | translate }}" name="endDateTime" required>
+
+                  <!-- <input matInput [ngxMatDatetimePicker]="pickerEndDate" formControlName="endDateTime" [readonly]="true"
+                    placeholder="{{ 'end_date' | translate }}" name="endDateTime" required>
+                  <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker #pickerEndDate [enableMeridian]="true"></ngx-mat-datetime-picker> -->
+
+                  <mat-error>
+                    <span>{{ 'end_date_required' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+
+                  <input matInput formControlName="retailUnitPrice" type="text" (keyup)="getTotalCharge()"
+                    placeholder="{{ 'unit_price' | translate }}" name="retailUnitPrice" currencyMask [readonly]="ReadOnly"
+                    [options]="globService.currencyOptions" required maxlength="13" autocomplete="off" />
+
+                  <mat-error *ngIf="f.retailUnitPrice.hasError('required')">
+                    <span>{{ 'unit_price_required' | translate }}</span>
+                  </mat-error>
+
+                  <mat-error *ngIf="!f.retailUnitPrice.hasError('required') && f.retailUnitPrice.hasError('invalid')">
+                    <span>
+                      {{ 'minimum' | translate }} {{priceLimit?.minimum}} - {{'maximum' | translate }}
+                      {{priceLimit?.maximum}}
+                    </span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+
+                  <input matInput formControlName="retailQuantity" type="text" (keyup)="getTotalCharge()" [readonly]="ReadOnly"
+                    placeholder="{{ 'quantity' | translate }}" currencyMask [options]="quentityOptions"
+                    name="retailQuantity" required maxlength="6" autocomplete="off" />
+
+                  <mat-error>
+                    <span>{{ 'quantity_required' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+
+                  <mat-select formControlName="discountType" placeholder="{{ 'discount_type' | translate }}" [disabled]="ReadOnly"
+                    name="discountType">
+                    <mat-option *ngFor="let list of discountTypeList; let i = index" value="{{list.id}}">
+                      {{list.name | translate}}
+                    </mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+              *ngIf="f.discountType.value === 'Fixed'">
+              <ion-row>
+                <mat-form-field class="example-full-width fixed">
+
+                  <input matInput formControlName="retailDiscount" type="text" (keyup)="getTotalCharge()" [readonly]="ReadOnly"
+                    placeholder="{{ 'fixed_discount' | translate }}" name="retailDiscount" currencyMask
+                    [options]="globService.currencyOptions" required maxlength="13" autocomplete="off" />
+
+                  <mat-error *ngIf="f.retailDiscount.hasError('required')">
+                    <span>{{ 'fixed_discount_required' | translate }}</span>
+                  </mat-error>
+
+                  <mat-error *ngIf="!f.retailDiscount.hasError('required') && f.retailDiscount.hasError('invalid')">
+                    <span>
+                      {{ 'minimum' | translate }} {{priceLimit?.minimum}} - {{'maximum' | translate }}
+                      {{chargeAmount}}
+                    </span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+              *ngIf="f.discountType.value === 'Percentage'">
+              <ion-row>
+                <mat-form-field class="example-full-width percentage">
+
+                  <input matInput appPercentageMask formControlName="retailDiscount" (keyup)="getTotalCharge()" [readonly]="ReadOnly"
+                    placeholder="{{ 'percentage_discount_1' | translate }}" name="retailDiscount" required
+                    maxlength="13" autocomplete="off" />
+
+                  <mat-error *ngIf="f.retailDiscount.hasError('required')">
+                    <span>{{ 'percentage_discount_required' | translate }}</span>
+                  </mat-error>
+
+                  <mat-error *ngIf="!f.retailDiscount.hasError('required') && f.retailDiscount.hasError('invalid')">
+                    <span>
+                      {{ 'minimum' | translate }} {{priceLimit?.minimum}} - {{'maximum' | translate }}
+                      {{chargeAmount}}
+                    </span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-content">
+          <ion-row class="group-body">
+
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"></ion-col>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <span class="top-bottom-auto margin-left-auto">
+                    {{'total_charge'|translate}} {{totalCharge | currencyForLocal}}
+                  </span>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-content">
+          <ion-row class="group-title">
+            <span class="top-bottom-auto">
+              {{ 'enter_notes_optional' | translate }}
+            </span>
+          </ion-row>
+
+          <ion-row class="group-body">
+            <mat-form-field >
+              <textarea matInput formControlName="note" name="note" [readonly]="ReadOnly">
+
+                </textarea>
+            </mat-form-field>
+          </ion-row>
+
+        </ion-row>
+
+        <ion-row class="justify-content-end">
+          <button type="button" class="px-3" mat-raised-button color="primary" (click)="changeMoreState()"
+            *ngIf="!moreState">
+            {{'more' | translate}}
+          </button>
+          <button type="button" class="px-3" mat-raised-button color="primary" (click)="changeMoreState()"
+            *ngIf="moreState">
+            {{'less' | translate}}
+          </button>
+        </ion-row>
+
+        <ion-row class="group-content" *ngIf="moreState">
+          <ion-row class="group-body">
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="Cost" type="text" placeholder="{{ 'cost' | translate }}" name="Cost" [readonly]="ReadOnly"
+                    currencyMask [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                  <mat-error *ngIf="f.Cost.hasError('invalid')">
+                    <span>
+                      {{'maximum' | translate }} {{totalCharge}}
+                    </span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="NumberOfInstances" currencyMask [options]="quentityOptions" [readonly]="ReadOnly"
+                    maxlength="2" placeholder="{{ 'number_of_instances' | translate }}" name="NumberOfInstances"
+                    autocomplete="off" />
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="CustomerReference" type="text" [readonly]="ReadOnly"
+                    placeholder="{{ 'customer_reference' | translate }}" name="CustomerReference" />
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="Reference" type="text" placeholder="{{ 'reference' | translate }}" [readonly]="ReadOnly"
+                    name="Reference" />
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <input matInput formControlName="OtherReference" type="text" [readonly]="ReadOnly"
+                    placeholder="{{ 'other_reference' | translate }}" name="OtherReference" />
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+      <button id="submitButton">button</button>
+    </form>
+
+
+
+    <ion-row class="my-3 pt-5 jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="ChargeType != 'update' && !ReadOnly">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+            [disabled]="!chargeForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12"
+        *ngIf="ChargeType == 'update' && (chargeUpdate?.editable && !chargeUpdate?.invoicedto) && !ReadOnly">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+            [disabled]="!chargeForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-row>

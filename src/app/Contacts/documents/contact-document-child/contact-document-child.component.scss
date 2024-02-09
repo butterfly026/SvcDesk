@@ -1,0 +1,9 @@
+.file-name {
+    border-bottom: 1px dotted gray;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.mat-input-element[type=date]::after, .mat-input-element[type=datetime]::after, .mat-input-element[type=datetime-local]::after, .mat-input-element[type=month]::after, .mat-input-element[type=week]::after, .mat-input-element[type=time]::after{
+    content: '';
+}

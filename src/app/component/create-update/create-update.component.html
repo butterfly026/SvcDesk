@@ -1,0 +1,64 @@
+<ion-row *ngIf="inputData">
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    <ion-row class="full-height">
+      <span class="top-bottom-auto">
+        <span class="ticket-list-detail-title">
+          {{'created' | translate}} :
+        </span>
+        <span class="ion-margin-start">
+          {{inputData.created}}
+        </span>
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    <ion-row class="full-height">
+      <span class="top-bottom-auto">
+        <span class="ticket-list-detail-title">
+          {{'created_by' | translate}} :
+        </span>
+        <span class="ion-margin-start">
+          {{inputData.createdBy}}
+        </span>
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    <ion-row class="full-height">
+      <span class="top-bottom-auto">
+        <span class="ticket-list-detail-title">
+          {{'updated' | translate}} :
+        </span>
+        <span class="ion-margin-start">
+          {{inputData.updated}}
+        </span>
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    <ion-row class="full-height">
+      <span class="top-bottom-auto">
+        <span class="ticket-list-detail-title">
+          {{'updatedby' | translate}} :
+        </span>
+        <span class="ion-margin-start">
+          {{inputData.updatedBy}}
+        </span>
+      </span>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<!-- <ion-row class="h-100" *ngIf="title && value">
+  <span class="top-bottom-auto">
+    <span class="ticket-list-detail-title">
+      {{title}} :
+    </span>
+    <span class="ion-margin-start">
+      {{value}}
+    </span>
+  </span>
+</ion-row> -->

@@ -1,0 +1,112 @@
+
+  <ion-row class="px-2">  
+    <ion-row class="total-content2 mx-auto mt-2">
+      <form [formGroup]="tillCardForm" novalidate>
+        <ion-row class="payment-row">
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="10">  
+                <span *ngIf="validCreditCard || cardLabel" class="mat-form-field-label-wrapper" [ngClass]="{'payment-input-label': validCreditCard, 'payment-input-label-error': !validCreditCard,'payment-input-label-focus':validCreditCard && cardFocused}"> {{ 'credit_card_num' | translate }}</span>                   
+                <div id="number_div"  class="payment-input"></div>
+               <mat-error *ngIf="creditCardRequired" class="payment-error">
+                  <span>{{ 'credit_card_num_required' | translate }}</span>
+                </mat-error>
+                <mat-error *ngIf="invalidCreditCard" class="payment-error">
+                  {{ 'invalid_card_number' | translate }}
+                </mat-error>                
+          </ion-col>
+          <ion-col [sizeXl]="1" [sizeLg]="1" [sizeMd]="1" [sizeSm]="1" [sizeXs]="2">          
+            <img src="assets/imgs/payment/small_visa_icon.svg" class="my-auto" *ngIf="payCode == 'VI'" />
+            <img src="assets/imgs/payment/small_two_point.svg" class="my-auto" *ngIf="payCode == 'MC'" />
+            <img src="assets/imgs/payment/small_amex.svg" class="my-auto" *ngIf="payCode == 'AM'" />
+            <img src="assets/imgs/payment/small_disc_ver.svg" class="my-auto" *ngIf="payCode == 'DC'" /> 
+      </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100" class="payment-row"> 
+              <span *ngIf="validCvv || cvvLabel" class="mat-form-field-label-wrapper payment-input-label" [ngClass]="{'payment-input-label': validCvv, 'payment-input-label-error': !validCvv,'payment-input-label-focus':validCvv && cvvFocused}"> {{ 'cvv' | translate }}</span>     
+                <div id="cvv_div" class="payment-input"></div>   
+                <mat-error *ngIf="cvvRequired" class="payment-error">
+                  <span>{{ 'cvv_required' | translate }}</span>
+                </mat-error>
+                <mat-error *ngIf="invalidCvv" class="payment-error">
+                  {{ 'invalid_cvv' | translate }}
+                </mat-error>
+            </ion-row>
+          </ion-col>
+     
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100"> 
+              <mat-form-field appearance="fill">
+                <mat-label>Expiry Month</mat-label>
+                <mat-select id="expiryMonth" placeholder="Expiry Month" formControlName="expiryMonth" autocomplete="expiryMonth">
+                  <mat-option *ngFor="let month of months" [value]="month.value">
+                    {{month.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error id="requiredMonthError" *ngIf="tillCardForm.controls['expiryMonth'].hasError('required')">
+                  Expirty Month is <strong>required</strong>
+                 </mat-error>
+              </mat-form-field>   
+            </ion-row>
+          </ion-col>
+       
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100"> 
+              <mat-form-field appearance="fill">
+                <mat-label>Expiry Year</mat-label>
+                <mat-select id="expiryYear" placeholder="Expiry Year" formControlName="expiryYear" autocomplete="expiryYear">
+                  <mat-option *ngFor="let year of years" [value]="year">
+                    {{year}}
+                  </mat-option>
+                </mat-select>
+                <mat-error id="requiredYearError" *ngIf="tillCardForm.controls['expiryYear'].hasError('required')">
+                  Expirty Year is <strong>required</strong>
+                 </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>       
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100"> 
+              <mat-form-field class="full-width">
+                <input id="cardHolderName" matInput placeholder="Card holder" formControlName="cardHolderName" autocomplete="cardHolderName" type="text">                 
+                <mat-error id="requiredCardHolderError" *ngIf="tillCardForm.controls['cardHolderName'].hasError('required')">
+                  Cardholder name is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>     
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <mat-form-field class="full-width">
+              <input id="email" matInput placeholder="Email" formControlName="email" autocomplete="email" type="email">
+              <mat-error id="invalidEmailError" *ngIf="tillCardForm.controls['email'].hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error id="requiredEmailError" *ngIf="tillCardForm.controls['email'].hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </ion-col>
+          <ion-row class="username-row">
+            <mat-checkbox [(ngModel)]="makeDefault" [ngModelOptions]="{standalone: true}">
+              {{ 'make_default' | translate }}
+            </mat-checkbox>
+          </ion-row>
+        </ion-row>   
+        <ion-row class="my-3 normal-button justify-content-end">
+          <ion-col [sizeXl]="6" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <jqxButton [disabled]="!tillCardForm.valid || !validCreditCard || !validCvv" [theme]="globService.themeColor" class="jqx-button-theme"
+              (click)="submitForm()">
+                {{ 'add_till' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>  
+          <ion-col [sizeXl]="6" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" type="button" (click)="onClose()">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>  
+        </ion-row>  
+      </form>      
+    </ion-row>   
+  </ion-row>

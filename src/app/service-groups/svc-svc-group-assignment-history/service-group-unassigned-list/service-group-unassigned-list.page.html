@@ -1,0 +1,70 @@
+<ion-row class="ion-margin-top">
+  <ion-row class="ion-margin-top left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row>
+      <span class="top-bottom-auto">
+        {{'previously_assigned_service' | translate}}
+      </span>
+    </ion-row>
+
+    <ion-row class="left-right-auto export-data ion-margin-top" [ngStyle]="{'width':setGridWidth()}">
+      <span class="margin-left-auto ion-text-end" (click)="exportData()">
+        {{'export_to_excel' | translate}}
+      </span>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #SvcSvcGroupUnAssignGrid [columnsautoresize]="true"
+      [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+      [columns]="columns" [sortable]="true" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+
+  <ion-row *ngIf="groupList.length>0">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-row class="ion-margin-top pagination-content">
+        <span class="pagination-span ion-text-center">
+          <span class="go-to-page">
+            {{ 'goto_page' | translate }}:
+            <input matInput type="number" min="1" max="{{maxPageRow}}" (keyup)="changePageNumber($event)"
+              [(ngModel)]="pageRowNumber" (focus)="focusChangePage()" (focusout)="focusOutChangePage()" />
+          </span>
+
+          <span class="show-rows">
+            {{ 'show_rows' | translate }}:
+            <mat-select [(ngModel)]="rowStep" name="rowStep" (ngModelChange)="changeRowStep()">
+              <mat-option *ngFor="let list of rowList" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+          </span>
+
+          <!-- <br> -->
+
+          <span class="pagination-row">
+            {{startIndex + 1}} - {{endIndex}} {{ 'of_word' | translate }} {{totalLength}} &nbsp;
+
+            <span color="secondary" *ngIf="startIndex < 1" class="margin-right-auto">
+              {{backSymbol}}
+            </span>
+            <span *ngIf="startIndex > 0" class="margin-right-auto" (click)="reduceList()">
+              {{backSymbol}}
+            </span> &nbsp;&nbsp;
+            <span color="secondary" *ngIf="endIndex >= totalLength" class="margin-left-auto top-bottom-auto"
+              (click)="increaseList()">
+              {{forwardSymbol}}
+            </span>
+            <span mode="ios" *ngIf="endIndex < totalLength" class="margin-left-auto top-bottom-auto"
+              (click)="increaseList()">
+              {{forwardSymbol}}
+            </span>
+
+          </span>
+
+        </span>
+
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,92 @@
+<ion-row id="commissions-detail-grid">
+
+  <ion-row *ngIf="showComponent === 'detail'">
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-row class="ion-margin-top left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+          <ion-row class="service-list-search mt-3 justify-content-between align-items-center export-data">
+            <ion-searchbar mode="ios" class="ion-padding-start ml-0" (keypress)="searchInputEvent($event)"
+              [placeholder]="'search' | translate" [(ngModel)]="pagingParam.SearchString">
+            </ion-searchbar>
+            <div class="d-flex align-items-center">
+              <h5 class="m-0 mr-2 p-0">
+                <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+              </h5>
+              <span class="margin-left-auto ion-text-end" (click)="exportData()">
+                {{'export_to_excel' | translate}}
+              </span>
+            </div>
+          </ion-row>
+
+          <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #commissionDetailGrid [columnsautoresize]="true"
+            [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+            [source]="dataAdapter" [columns]="columns" [sortable]="true" [rtl]="globService.rtlMode"
+            (onRowselect)="selectedDetail = $event.args.row">
+          </jqxGrid>
+
+        </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngIf="groupList.length > 0">
+      <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber"
+        [rowStep]="rowStep" [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+      </app-paging-component>
+    </ion-row>
+
+    <ion-row class="ion-margin-top page-bottom">
+
+      <ion-row class="ion-margin-top jqx-button-row total-content4 mx-auto justify-content-center">
+
+        <ion-col [sizeSm]="4" [sizeMd]="4" [sizeLg]="4" [sizeXs]="6">
+          <ion-row>
+            <jqxButton (onClick)="goToOtherPages('update')" [theme]="globService.themeColor"
+              [disabled]="!selectedDetail" class="jqx-button-theme">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+
+        </ion-col>
+
+        <ion-col [sizeXs]="6" [sizeSm]="4" [sizeMd]="4" [sizeLg]="4">
+
+          <ion-row>
+            <jqxButton (onClick)="goToOtherPages('transaction')" [disabled]="!selectedDetail"
+              [theme]="globService.themeColor" class="jqx-button-theme">
+              {{ 'transactions' | translate }}
+            </jqxButton>
+          </ion-row>
+
+        </ion-col>
+
+        <ion-col [sizeXs]="12" [sizeSm]="4" [sizeMd]="4" [sizeLg]="4">
+          <ion-row>
+            <jqxButton (click)="goToOtherPages('close')" [theme]="globService.themeColor" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+
+        </ion-col>
+
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+
+  <ion-row *ngIf="showComponent === 'update'">
+    <app-update-commission-payment class="w-100" [ContactCode]="ContactCode" [CommissionDetail]="CommissionDetail"
+      [CommissionDetailItem]="selectedDetail" (UpdateCommissionPaymentComponent)="processComponent($event)">
+    </app-update-commission-payment>
+  </ion-row>
+
+  <ion-row *ngIf="showComponent === 'transaction'">
+    <app-commission-paid-transaction class="w-100" [ContactCode]="ContactCode" [CommissionDetail]="CommissionDetail"
+      [CommissionDetailItem]="selectedDetail" (CommissionPaidTransactionComponent)="processComponent($event)">
+    </app-commission-paid-transaction>
+  </ion-row>
+
+</ion-row>

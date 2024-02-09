@@ -1,0 +1,35 @@
+[
+    {
+        "Discount": "10% off New Charges",
+        "Start": "1/01/2000",
+        "End": "1/01/9999",
+        "Package": "ACCT Package",
+        "Comment": "",
+        "DefaultAmount": "",
+        "TerminalDiscount": "No",
+        "UserEdit": "",
+        "EditCode": ""
+    },
+    {
+        "Discount": "10% off New Charges",
+        "Start": "1/01/2000",
+        "End": "1/01/9999",
+        "Package": "ACCT Package",
+        "Comment": "",
+        "DefaultAmount": "",
+        "TerminalDiscount": "No",
+        "UserEdit": "",
+        "EditCode": ""
+    },
+    {
+        "Discount": "10% off New Charges",
+        "Start": "1/01/2000",
+        "End": "1/01/9999",
+        "Package": "ACCT Package",
+        "Comment": "",
+        "DefaultAmount": "",
+        "TerminalDiscount": "No",
+        "UserEdit": "",
+        "EditCode": ""
+    }
+]

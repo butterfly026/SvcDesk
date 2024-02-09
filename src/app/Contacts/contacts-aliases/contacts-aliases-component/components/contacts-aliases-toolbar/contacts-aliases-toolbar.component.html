@@ -1,0 +1,19 @@
+<ion-row class="ion-justify-content-end">  
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'aliases_history' | translate" 
+    (click)="onAliasHistory()"
+    *ngIf="!hideAliasHistory">
+    <ion-icon aria-hidden="true" name="at-outline"></ion-icon>
+  </ion-fab-button>
+
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'names_history' | translate" 
+    (click)="onNamesHistory()"
+    *ngIf="!hideNamesHistory">
+    <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
+  </ion-fab-button>
+</ion-row>

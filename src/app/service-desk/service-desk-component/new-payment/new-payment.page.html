@@ -1,0 +1,119 @@
+<ion-row class="ion-margin-top ion-margin-bottom ion-padding-top">
+  <h3 class="margin-auto">
+    {{ 'new_payment_method' | translate }}
+  </h3>
+</ion-row>
+<ion-row class="total-content left-right-auto ion-margin-top">
+  <ion-row class="margin-auto">
+
+    <form [formGroup]="newPaymenrForm" class="full-width" (ngSubmit)="newPayment()" novalidate>
+      <ion-row class="username-row">
+        <mat-form-field class="example-full-width">
+
+          <mat-select formControlName="method" placeholder="{{ 'select' | translate }}" name="method" required>
+            <mat-option *ngFor="let list of methodList" value="{{list.type}}">
+              {{list.value}}
+            </mat-option>
+          </mat-select>
+
+          <!-- <input matInput type="text" formControlName="method" placeholder="{{ 'select' | translate }}" required
+              name="method"> -->
+          <mat-error>
+            {{ 'choose_type_of_payment' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="username-row">
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="name" type="text" required placeholder="{{ 'your_name' | translate }}"
+            name="name" />
+
+          <mat-error>
+            <span>{{ 'your_name_required' | translate }}</span>
+          </mat-error>
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="username-row">
+        <mat-form-field class="example-full-width">
+
+          <input matInput formControlName="cardNumber" type="text" required
+            placeholder="{{ '16_digit_credit_num' | translate }}" name="cardNumber" />
+
+          <mat-error *ngIf="f.cardNumber.hasError('required')">
+            <span>{{ 'credit_card_num_required' | translate }}</span>
+          </mat-error>
+
+          <mat-error *ngIf="f.cardNumber.hasError('pattern') && !f.cardNumber.hasError('required')">
+            {{ 'invalid_card_number' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+      </ion-row>
+
+
+      <ion-row class="username-row">
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="expireMonth" placeholder="{{ 'month' | translate }}" name="expireMonth"
+                required>
+                <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'month_require' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="expireYear" (ngModelChange)="selectExpireYear()"
+                placeholder="{{ 'year' | translate }}" name="expireYear" required>
+                <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'year_require' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button mat-button id="submitButton">Submit</button>
+    </form>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!newPaymenrForm.valid"
+            (click)="submitTrigger()">
+            {{ 'add' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-row>

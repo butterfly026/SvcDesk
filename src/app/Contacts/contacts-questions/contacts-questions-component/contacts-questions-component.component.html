@@ -1,0 +1,32 @@
+<ion-row class="justify-content-center align-items-center mb-3">
+  <h3 class="text-center">
+    {{'IdentificationInformation' | translate}}
+  </h3>
+</ion-row>
+
+<ion-row class="">
+  <app-question-list-table  class="w-100" [ContactCode]="ContactCode" *ngIf="questionPermissions.includes('')" [permissions]="questionPermissions">
+
+  </app-question-list-table>
+</ion-row>
+
+<!-- <ion-row class="">
+  <app-identification-new class="w-100" [ContactCode]="ContactCode" [permissions]="identPermissions"
+    *ngIf="identPermissions.includes('')"></app-identification-new>
+</ion-row> -->
+<ion-row class="mt-2">
+  <app-identification-list-table  class="w-100" [ContactCode]="ContactCode" *ngIf="identPermissions.includes('')" [permissions]="identPermissions">
+
+  </app-identification-list-table>
+</ion-row>
+
+
+<ion-row class="mt-5 jqx-button-row">
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+    <ion-row class="full-height">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+</ion-row>

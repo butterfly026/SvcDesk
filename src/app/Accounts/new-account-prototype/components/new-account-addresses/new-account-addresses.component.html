@@ -1,0 +1,28 @@
+<ion-row>
+  <ion-row class="ion-justify-content-end">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'Create' | translate" 
+      (click)="addNewAddress()">
+      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+
+  <ion-row>
+    <form [formGroup]="formGroup" class="w-100">
+      <ion-row formArrayName="Addresses">
+        <ng-container *ngFor="let subFormGroup of addressesFormControl.controls; let i = index;">
+          <app-new-account-addresses-element
+            class="w-100"
+            [formGroup]="subFormGroup"
+            [addressTypes]="addressTypes"
+            [countrys]="countrys"
+            [addressFormats]="addressFormats"
+            (onDeleteFormGroup)="deleteAddress(i)">
+          </app-new-account-addresses-element>
+        </ng-container>
+      </ion-row>
+    </form>
+  </ion-row>
+</ion-row>

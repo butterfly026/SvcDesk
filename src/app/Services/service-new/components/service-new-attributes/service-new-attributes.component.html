@@ -1,0 +1,14 @@
+<ion-row>
+  <form [formGroup]="formGroup" class="w-100">
+    <ion-row formArrayName="Attributes">
+      <ng-container *ngFor="let subFormGroup of serviceAttributeFormControl.controls">
+        <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" [formGroup]="subFormGroup">
+          <app-service-new-attributes-element 
+            [ServiceTypeId]="ServiceTypeId"
+            [formGroup]="subFormGroup">
+          </app-service-new-attributes-element>
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </form>
+</ion-row>

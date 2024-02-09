@@ -1,0 +1,46 @@
+<ion-row class="mx-auto total-content4">
+  <ion-row class="mt-3">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+      *ngFor="let list of HardwareList; let i = index;">
+      <ion-row class="box-shadow-item px-3 py-2">
+        <ion-row class="p-2">
+          <ion-row class="justify-content-between mt-2">
+            <h2 class="m-0 p-0">
+              {{list?.name}}
+            </h2>
+            <h1 class="m-0 p-0">
+              <i class="fa fa-info-circle text-success" aria-hidden="true"></i>
+            </h1>
+          </ion-row>
+
+          <table class="w-100 mt-2">
+            <tr *ngFor="let items of list | keyvalue">
+              <ng-container *ngIf="items.key != 'name' && items.key != 'id'">
+                <td>
+                  {{items.key | translate}}
+                </td>
+                <td *ngIf="items.key.includes('unit')">
+                  {{items.value}}
+                </td>
+                <td *ngIf="!items.key.includes('unit')">
+                  {{items.value}}
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+
+          <ion-row class="my-2 justify-content-end">
+            <h1 class="m-0 p-0">
+              <i class="fa fa-pencil-square text-warning mx-2" aria-hidden="true"></i>
+              <i class="fa fa-trash text-danger mx-2" aria-hidden="true"></i>
+            </h1>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="justify-content-center mt-3">
+    <i class="display-4 fa fa-plus-circle create-document"></i>
+  </ion-row>
+</ion-row>

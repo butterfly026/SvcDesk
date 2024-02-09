@@ -1,0 +1,108 @@
+<ion-row class="pt-2 mat-modal-body">
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{'email' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <ion-row class="flex-1">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="sendEmail()" *ngIf="formGroup">
+      <ion-row>
+        <ion-col size="12">
+          <app-chip-list-autocomplete
+            class="w-100"
+            fieldLabel="To"
+            errorMessage="ToRequired" 
+            [chipListAutoCompleteFormControl]="formGroup.get('TO')"
+            [orignalList]="emailList">
+          </app-chip-list-autocomplete>
+        </ion-col>
+    
+        <ion-col size="12" *ngIf="emailConfiguration?.CC">
+          <app-chip-list-autocomplete
+            class="w-100"
+            fieldLabel="CC"
+            errorMessage="CCRequired" 
+            [chipListAutoCompleteFormControl]="formGroup.get('CC')"
+            [orignalList]="emailList">
+          </app-chip-list-autocomplete>
+        </ion-col>
+    
+        <ion-col size="12" *ngIf="emailConfiguration?.BCC">
+          <app-chip-list-autocomplete
+            class="w-100"
+            fieldLabel="BCC"
+            errorMessage="BCCRequired" 
+            [chipListAutoCompleteFormControl]="formGroup.get('BCC')"
+            [orignalList]="emailList">
+          </app-chip-list-autocomplete>
+        </ion-col>
+    
+        <ion-col size="12">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="Subject" placeholder="{{ 'subject' | translate }}"
+              name="subject">
+    
+            <mat-error>
+              {{ 'subject_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+    
+        <ion-col size="12">
+          <jqxEditor #emailBody [width]="'100%'" [height]="200" [theme]="globService.themeColor">
+          </jqxEditor>
+        </ion-col>
+    
+        <ion-col size="12" *ngIf="emailConfiguration?.ExternalAttachments">
+          <ion-row>
+            <ion-col size="12" >
+              <mat-slide-toggle labelPosition="before" class="w-100" color="primary" 
+                name="loadDocs" (change)="changeExistingDocs($event)">
+                {{ 'existing_doc' | translate }}
+              </mat-slide-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="selectableExistingDocs">
+              <mat-form-field class="w-100">
+                <mat-select placeholder="{{ 'existing_doc' | translate }}" name="existingDocs" formControlName="existingDocs"
+                  multiple>
+                  <mat-option *ngFor="let list of existDocList" [value]="list.id">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+    
+        <ion-col size="12" *ngIf="emailConfiguration?.DueDate">
+          <mat-form-field class="w-100">
+            <input matInput type="datetime-local" formControlName="Due" [max]="maxDate" [min]="minDate"
+              placeholder="{{ 'due_date' | translate }}">
+    
+            <mat-error>
+              {{ 'due_date_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+  
+      <button mat-button id="submitButton">Submit</button>
+    </form>
+  </ion-row>
+
+  <ion-row class="jqx-button-row my-3 ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!formGroup.valid"
+        (onClick)="triggerSubmit()">
+        {{ 'send_email' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

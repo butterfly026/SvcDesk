@@ -1,0 +1,99 @@
+<ion-row class="loyalty-modal left-right-auto">
+
+  <ion-row class="loyalty-modal-tital">
+    <h3 class="margin-auto">
+      {{modalTitle}}
+    </h3>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-start ion-padding-end">
+    <form [formGroup]="loyaltyForm" class="full-width" (ngSubmit)="submitLoyaltyDetail()" novalidate>
+      <ion-row class="ion-margin-top">
+        <mat-form-field>
+          <input matInput type="number" formControlName="Total" name="Total" required
+            placeholder="{{'total' | translate}}" />
+
+          <mat-error>
+            {{'total_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="">
+            <mat-form-field>
+              <input matInput formControlName="TranDate" name="TranDate" required
+                placeholder="{{'transaction_date' | translate}}" [matDatepicker]="TranDate" />
+              <mat-datepicker-toggle matSuffix [for]="TranDate"></mat-datepicker-toggle>
+              <mat-datepicker #TranDate></mat-datepicker>
+
+              <mat-error>
+                {{'transaction_date_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="" *ngIf="data.LoyaltyType === 'Credit'">
+            <mat-form-field>
+              <input matInput formControlName="ExpDate" name="ExpDate" required placeholder="{{'exp_date' | translate}}"
+                [matDatepicker]="ExpDate" />
+              <mat-datepicker-toggle matSuffix [for]="ExpDate"></mat-datepicker-toggle>
+              <mat-datepicker #ExpDate></mat-datepicker>
+
+              <mat-error>
+                {{'exp_date_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field>
+          <mat-select matInput formControlName="Reason" required placeholder="{{'reason' | translate}}">
+            <mat-option *ngFor="let list of reasonType; let i = index" [value]="list.Id">
+              {{list.Text}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{'reason_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width text-area">
+
+          <textarea matInput formControlName="Description" placeholder="{{ 'description' | translate }}"
+            name="Description">
+            </textarea>
+
+        </mat-form-field>
+      </ion-row>
+
+      <button class="submitButton" id="loyaltyDetailSubmit"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-margin-bottom jqx-button-row ion-padding-start ion-padding-end">
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+        [disabled]="!loyaltyForm.valid">
+        {{ 'save' | translate }}
+      </jqxButton>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton (click)="closeModal()" [theme]="globService.themeColor" class="jqx-button-theme">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+
+  </ion-row>
+</ion-row>

@@ -1,0 +1,16 @@
+<ion-row class="mt-2" *ngIf="disputeState == 'list'">
+  <app-dispute-list class="w-100" [ContactCode]="ContactCode"
+    (DisputeListComponent)="processEvent($event)">
+  </app-dispute-list>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="disputeState == 'new'">
+  <app-dispute-form class="w-100" [ContactCode]="ContactCode" (DisputeFormComponent)="processEvent($event)">
+  </app-dispute-form>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="disputeState == 'detail'">
+  <app-dispute-form class="w-100" [DisputeID]="disputeId" [ContactCode]="ContactCode"
+    (DisputeFormComponent)="processEvent($event)">
+  </app-dispute-form>
+</ion-row>

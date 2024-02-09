@@ -1,0 +1,130 @@
+<ion-row class="mt-2">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'New'">
+      {{'extension_new' | translate}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'Update'">
+      {{'extension_update' | translate}} {{ExtensionId ? '[' + ExtensionId + ']' : ''}}
+    </h3>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="formGroup" class="w-100">
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" formControlName="Id" placeholder="{{ 'extension_id' | translate }}" name="Id"
+                maxlength="4" required>
+              <mat-error>
+                {{ 'extension_id_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" formControlName="Name" placeholder="{{ 'extension_name' | translate }}"
+                name="Name" required>
+              <mat-error>
+                {{ 'extension_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" formControlName="Discount" min="0"
+                placeholder="{{ 'extension_discount' | translate }}" name="Discount" required>
+              <mat-error>
+                {{ 'extension_discount_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" formControlName="Term" min="0" placeholder="{{ 'term' | translate }}"
+                name="Term" required>
+              <mat-error>
+                {{ 'term_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="number" formControlName="Commission"
+                placeholder="{{ 'extension_commission' | translate }}" name="Commission" required>
+              <mat-error>
+                {{ 'extension_commission_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="From" formControlName="From" placeholder="{{ 'from' | translate }}"
+                (change)="onDateChange1($event)" (dateChange)="onDateChange2($event)" name="From">
+              <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+              <mat-datepicker #From></mat-datepicker>
+              <mat-error>
+                {{ 'from_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput [min]="minDate" [matDatepicker]="To" formControlName="To"
+                placeholder="{{ 'to' | translate }}" name="To" [matDatepickerFilter]="toDateFilter">
+              <mat-datepicker-toggle matSuffix [for]="To"></mat-datepicker-toggle>
+              <mat-datepicker #To></mat-datepicker>
+              <mat-error>
+                {{ 'to_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+    <ion-row class="my-1">
+
+      <ion-row class="mt-1 jqx-button-row justify-content-center">
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngIf="editMode != 'View'">
+          <ion-row>
+            <jqxButton (onClick)="saveExtension()" [theme]="globService.themeColor" [disabled]="!formGroup?.valid"
+              *ngIf="editMode == 'New'">
+              {{ 'add' | translate }}
+            </jqxButton>
+            <jqxButton (onClick)="saveExtension()" [theme]="globService.themeColor" [disabled]="!formGroup?.valid"
+              *ngIf="editMode == 'Update'">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,100 @@
+<ion-row class="pt-2 mat-modal-body" *ngIf="formGroup">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center">
+      {{'MessageDetails' | translate}} [{{formGroup.get('Id').value}}]
+    </h3>
+  </ion-row>
+  <ion-row class="flex-1">
+    <form [formGroup]="formGroup">
+      <ion-row class="justify-content-between">
+        <ion-col size="12">
+          <mat-form-field>
+            <mat-label>
+              {{(formGroup.get('Direction').value == 'OUT' ? 'To' : 'From') | translate}}
+            </mat-label>
+            <input matInput formControlName="Addresses" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="12" *ngIf="formGroup.get('Subject').value">
+          <mat-form-field>
+            <mat-label>
+              {{'subject' | translate}}
+            </mat-label>
+            <input matInput formControlName="Subject" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'Type' | translate}}
+            </mat-label>
+            <input matInput formControlName="Type" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'Status' | translate}}
+            </mat-label>
+            <input matInput formControlName="Status" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'Created' | translate}}
+            </mat-label>
+            <input matInput formControlName="Created" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'CreatedBy' | translate}}
+            </mat-label>
+            <input matInput formControlName="CreatedBy" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'LastUpdated' | translate}}
+            </mat-label>
+            <input matInput formControlName="LastUpdated" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="6">
+          <mat-form-field>
+            <mat-label>
+              {{'UpdatedBy' | translate}}
+            </mat-label>
+            <input matInput formControlName="UpdatedBy" />
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="12" *ngIf="attachments.length > 0">
+          <mat-label class="disabled">
+            {{'Attachments' | translate}}
+          </mat-label>
+          <ion-row class="gap-5">
+            <a *ngFor="let item of attachments" class="attachment" (click)="downloadAttachment(item)">
+              {{item.Name}}
+            </a>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12">
+          <mat-label class="disabled">
+            {{'Message' | translate}}
+          </mat-label>
+          <p [innerHTML]="(formGroup.get('Body').value | formatString) | safeHtml:'html'"></p>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-row>
+  <ion-row class="mt-5 jqx-button-row ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

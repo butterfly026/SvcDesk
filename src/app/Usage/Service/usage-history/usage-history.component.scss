@@ -1,0 +1,15 @@
+ion-col {
+    text-align: center;
+  }
+  
+  .pagination-controls.goto-page,
+  .pagination-controls.row-list {
+    width: auto;
+  }
+  
+  ::ng-deep div.jqx-grid-pager {
+    display: none;
+  }
+  .mat-input-element[type=date]::after, .mat-input-element[type=datetime]::after, .mat-input-element[type=datetime-local]::after, .mat-input-element[type=month]::after, .mat-input-element[type=week]::after, .mat-input-element[type=time]::after{
+    content: '';
+}

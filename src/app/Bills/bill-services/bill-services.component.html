@@ -1,0 +1,13 @@
+<ion-row class="mt-3 left-right-auto">
+  <app-datatable 
+    class="w-100"
+    [data]="dataSource" 
+    [totalCount]="totalCount"
+    [columns]="columns"
+    [action]="dataTableAction"
+    [csvFileName]="csvFileName"
+    [searchOptions]="searchOptions"
+    [columnsUsedForCurrency]="columnsUsedForCurrency"
+    (onFetchData)="fetchData($event)">
+  </app-datatable>
+</ion-row>

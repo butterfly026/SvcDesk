@@ -1,0 +1,11 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto">
+    <app-contacts-address-component [ContactCode]="ContactCode" class="full-width"
+      (AddressManagementComponent)="processAddressManagement($event)">
+    </app-contacts-address-component>
+  </ion-row>
+</ion-content>

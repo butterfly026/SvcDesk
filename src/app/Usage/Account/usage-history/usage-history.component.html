@@ -1,0 +1,61 @@
+<ion-row *ngIf="!usageDetail">
+
+  <form [formGroup]="groupForm" class="w-100" *ngIf="ShowSearchOption">
+    <ion-row>
+      <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="12">
+        <ion-row class="service-list-search mt-3 justify-content-between align-items-center">
+          <mat-checkbox formControlName="Uninvoiced" name="Uninvoiced">
+            {{ 'uninvoiced' | translate }}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="6">
+        <ion-row>
+          <mat-form-field class="w-100">
+            <input matInput [matDatepicker]="From" formControlName="From" placeholder="{{ 'to' | translate }}" name="From"
+            (keydown)="onKeyDownFrom($event)"
+              (dateChange)="addEventTo('change', $event)" (dateInput)="addEventTo('input', $event)" >
+
+            <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+            <mat-datepicker #From></mat-datepicker>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="6">
+        <ion-row>
+          <mat-form-field class="w-100">            
+            <input matInput [matDatepicker]="To" formControlName="To" placeholder="{{ 'to' | translate }}" name="To"                          
+            (keydown)="onKeyDownTo($event)"
+              (dateChange)="addEventTo('change', $event)" (dateInput)="addEventTo('input', $event)" >
+
+            <mat-datepicker-toggle matSuffix [for]="To"></mat-datepicker-toggle>
+            <mat-datepicker #To></mat-datepicker>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <button class="submitButton" id="serviceAttributeSubmitButton"></button>
+  </form>
+  <ion-row>
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      (onView)="viewDetail($event)"
+      (onToggleSearchOptions)="showHideSearchOption($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+</ion-row>
+
+<ion-row *ngIf="usageDetail">
+  <app-usage-detail class="w-100" [usageDetail]="usageDetail" (UsageDetailComponent)="processUsageDetail($event)">
+
+  </app-usage-detail>
+</ion-row>

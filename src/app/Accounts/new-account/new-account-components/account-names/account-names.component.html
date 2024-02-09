@@ -1,0 +1,78 @@
+<ion-row class="" *ngIf="switchState=='default'">
+  
+  <ion-row class='justify-content-center'>
+    <ion-col  [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      
+    </ion-col>
+    <ion-col  [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="jqx-button-row justify-content-end">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="addNewGroup()">
+            + {{ 'add_alias' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="">
+    <form [formGroup]="groupForm" (ngSubmit)="submitGroup()" class="full-width" novalidate>
+
+      <ion-row *ngFor="let list of groupList; let i = index">
+        <ion-row>
+          <ion-row class="dynamic-list-form">
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+  
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                    placeholder="{{ 'alias_type' | translate }}" required>
+                    <mat-option *ngFor="let emailList of typeList; let j = index" value="{{emailList.Code}}"
+                      (click)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'TypeCtrl')">
+                      {{ emailList.Name | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'alias_type_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+  
+              </ion-row>
+            </ion-col>
+  
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+                <!-- <mat-form-field class="example-full-width">
+  
+                  <input matInput formControlName="{{list.ValueCtrl}}" type="text" placeholder="{{ 'alias' | translate }}"
+                    required (ngModelChange)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'ValueCtrl')" />
+  
+                  <mat-error>
+                    {{ 'alias_required' | translate }}
+                  </mat-error>
+  
+                </mat-form-field> -->
+
+                <app-validation-input 
+                  class="w-100"
+                  [inputFormControl]="groupForm.get(list.ValueCtrl)"
+                  validationCode="TradingName"
+                  placeHolder="{{ 'alias' | translate }}"
+                  type="text"
+                  requiredErrorMessage="{{ 'alias_required' | translate }}">
+                </app-validation-input>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="dynamic-list-delete justify-content-center align-items-center">
+            <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteGroup(i)"></ion-icon>
+          </ion-row>
+        </ion-row>
+
+      </ion-row>
+      <button id="submitButton"></button>
+    </form>
+  </ion-row>
+
+</ion-row>

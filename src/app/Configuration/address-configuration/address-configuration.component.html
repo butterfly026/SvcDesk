@@ -1,0 +1,127 @@
+<ion-row class="mt-3">
+
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center">
+      {{'address_configuration' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row class="total-content4 mx-auto">
+    <form class="w-100" [formGroup]="configurationForm" (ngSubmit)="updateConfiguration()" novalidate>
+      <ion-row class="mt-2">
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="defaultComponent" placeholder="{{ 'default_component' | translate }}"
+                name="defaultComponent" required>
+                <mat-option *ngFor="let list of componentLists; let i = index" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'default_component_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="defaultComponentLabel"
+                placeholder="{{ 'default_component_label' | translate }}" required name="defaultComponentLabel">
+
+              <mat-error>
+                <span>{{ 'default_component_label_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="alternateComponent" placeholder="{{ 'alternate_component' | translate }}"
+                name="alternateComponent" required>
+                <mat-option *ngFor="let list of componentLists; let i = index" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'alternate_component_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="alternateComponentLabel"
+                placeholder="{{ 'alternate_component_label' | translate }}" required name="alternateComponentLabel">
+
+              <mat-error>
+                <span>{{ 'alternate_component_label_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="extendedComponent" placeholder="{{ 'extended_component' | translate }}"
+                name="extendedComponent" required>
+                <mat-option *ngFor="let list of componentLists; let i = index" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'extended_component_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="extendedComponentLabel"
+                placeholder="{{ 'extended_component_label' | translate }}" name="extendedComponentLabel">
+
+              <mat-error>
+                <span>{{ 'extended_component_label_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="getUpdateAvailable()"
+            (onClick)="triggerSubmit()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="cancelForm()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

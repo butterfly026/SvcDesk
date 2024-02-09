@@ -1,0 +1,109 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'Novate' | translate}} - {{data.serviceReferenceId}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row class="ion-margin-top flex-1">
+    <form [formGroup]="formGroup" (ngSubmit)="submitForm()" class="full-width">
+            
+      <ion-row class="ion-align-items-baseline">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="address-spinner">
+            <mat-form-field>
+              <input matInput formControlName="Account" [placeholder]="'Account' | translate" [matAutocomplete]="accountComplete" />
+              <mat-autocomplete #accountComplete="matAutocomplete" (optionSelected)="selectNovationContact($event)">
+                <mat-option *ngFor="let list of novationContactList;" [value]="list.ContactCode">
+                  {{list.Name}} - {{list.ContactCode}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>
+                {{'account_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinnerForNovationContact"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="Scheduled" [placeholder]="'NovationDateTime' | translate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <mat-error>
+              <span>{{ 'NovationDateTimeRequired' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-baseline">
+        <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+          <ion-row class="address-spinner">
+            <mat-form-field>
+              <input matInput formControlName="Plan" [placeholder]="'plan' | translate" [matAutocomplete]="planComplete" />
+              <mat-autocomplete #planComplete="matAutocomplete" (optionSelected)="selectPlan($event)">
+                <mat-option *ngFor="let list of planList;" [value]="list.PlanId">
+                  {{list.Plan}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>
+                {{'plan_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinnerForPlan"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+          <mat-form-field>
+            <mat-select formControlName="PlanOptionId" [placeholder]="'options' | translate">
+              <mat-option *ngFor="let list of optionList" [value]="list.Id">
+                {{list.Name}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              {{'options_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+        <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="12">
+          <button 
+            mat-icon-button 
+            [matTooltip]="'View' | translate"               
+            (click)="showPlanDetail()"
+            *ngIf="!!currentPlan">
+            <ion-icon aria-hidden="true" name="eye-outline" size="small"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <mat-form-field>
+            <textarea matInput formControlName="Note" [placeholder]="'notes_optional'| translate"></textarea>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <button id="submitButton" class="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="jqx-button-row row mb-3 mt-4 pt-3 ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()" [disabled]="!formGroup.valid">
+        {{ 'save' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

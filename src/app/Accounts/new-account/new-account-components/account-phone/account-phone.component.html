@@ -1,0 +1,76 @@
+<ion-row>
+  <ion-row class="ion-justify-content-end">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'Create' | translate" 
+      (click)="addNewPhone()">
+      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+  <ion-row>
+    <form [formGroup]="formGroup" class="full-width" *ngIf="formGroup">
+      <ng-container formArrayName="AccountPhoneUsage">
+        <ion-row *ngFor="let contactAliaseFormGroup of accountPhonesFormControl.controls; let i = index">
+          <ion-row [formGroup]="contactAliaseFormGroup">
+            <ion-col size="10">
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field>
+                      <mat-select formControlName="PhoneTypes" [placeholder]="'phone_type' | translate" multiple>
+                        <mat-option *ngFor="let phoneType of phoneTypeList" [value]="phoneType.Code">
+                          {{ phoneType.Name }}
+                        </mat-option>
+                      </mat-select>
+
+                      <mat-error *ngIf="contactAliaseFormGroup.get('PhoneTypes').hasError('required')">
+                        {{ 'phone_type_required' | translate }}
+                      </mat-error>
+                                            
+                      <mat-error *ngIf="contactAliaseFormGroup.get('PhoneTypes').hasError('MandatodyValidation')">
+                        {{ contactAliaseFormGroup.get('PhoneTypes').errors.MandatodyValidation }}
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+      
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field>
+                      <input matInput formControlName="PhoneNumber" [placeholder]="'phone_number' | translate" (change)="checkPhoneNumberFromBackend($event, i)"/>
+      
+                      <mat-error *ngIf="contactAliaseFormGroup.get('PhoneNumber').hasError('required')">
+                        {{ 'phone_number_required' | translate }}
+                      </mat-error>
+      
+                      <mat-error *ngIf="contactAliaseFormGroup.get('PhoneNumber').hasError('pattern')">
+                        {{ 'invalid_phone_number' | translate }}
+                      </mat-error>
+
+                      <mat-error *ngIf="contactAliaseFormGroup.get('PhoneNumber').hasError('BackendValidation')">
+                        {{ contactAliaseFormGroup.get('PhoneNumber').errors.BackendValidation }}
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-progress-bar mode="indeterminate" *ngIf="indexOfFormGroupValidatingPhoneNumber === i"></mat-progress-bar>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="ion-align-items-center">
+                <button mat-icon-button type="button" (click)="deletePhone(i)">
+                  <ion-icon aria-hidden="true" name="trash-outline" size="medium"></ion-icon>
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>
+        </ion-row>
+      </ng-container>
+    </form>
+  </ion-row>
+</ion-row>

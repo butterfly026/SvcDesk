@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1001,
+    "Caption": "Recharge Status",
+    "ImageUrl": "assets/imgs/graph.png",
+    "Mode": "page",
+    "Tooltip": "Choose this to go to the Debit Run programs",
+    "Order": 1,
+    "ObjectId": 1001,
+    "MenuItemGroup": 2,
+    "Checked": false,
+    "Default": true,
+    "Color": "lightseagreen",
+    "Command": "Recharges/recharge-status-list"
+  }
+]

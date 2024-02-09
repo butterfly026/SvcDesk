@@ -1,0 +1,17 @@
+[
+    {
+        "key": "key 1",
+        "value": "value 1",
+        "category": "category 1"
+    },
+    {
+        "key": "key 2",
+        "value": "value 2",
+        "category": "category 2"
+    },
+    {
+        "key": "key 3",
+        "value": "value 3",
+        "category": "category 3"
+    }
+]

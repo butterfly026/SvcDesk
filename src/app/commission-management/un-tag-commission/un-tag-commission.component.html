@@ -1,0 +1,77 @@
+<ion-row>
+  <ion-row class="total-content4 m-auto">
+    <form [formGroup]="unTagCommissionForm" class="full-width" [style.marginTop.%]="20" novalidate>
+
+      <ion-row>
+
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-radio-group (change)="_dealerSelection($event.value)">
+              <mat-radio-button [checked]="dealerSelection === 'one_dealer'" [value]="'one_dealer'">
+                {{'this_dealer' | translate}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-radio-group (change)="_dealerSelection($event.value)">
+              <mat-radio-button [checked]="dealerSelection === 'all_dealer'" [value]="'all_dealer'">
+                {{'all_dealer' | translate}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </ion-row>
+        </ion-col>
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input [required]="true" [formControlName]="'dealer_id'" matInput
+                  [placeholder]="'dealer_id' | translate">
+                <mat-error *ngIf="unTagCommissionForm.controls['dealer_id'].hasError('required')">
+                  {{'dealerId_is_required' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <input [required]="true" [formControlName]="'dealer_name'" matInput
+                  [placeholder]="'dealer_name' | translate">
+                <mat-error *ngIf="unTagCommissionForm.controls['dealer_name'].hasError('required')">
+                  {{'dealerName_is_required' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+
+      </ion-row>
+    </form>
+
+    <ion-row class="jqx-button-row margin-auto">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <jqxButton [disabled]="!unTagCommissionForm.valid && dealerSelection === 'one_dealer'" (click)="saveForm()"
+            [theme]="globService.themeColor" class="jqx-button-theme">
+            {{ 'un_tag' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <jqxButton (onClick)="goBack()" [theme]="globService.themeColor" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+  </ion-row>
+</ion-row>

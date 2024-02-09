@@ -1,0 +1,76 @@
+<ion-row [hidden]="!invoiceDetailList.length">
+
+    <ion-col [sizeMd]="12" [sizeLg]="12">
+
+        <jqxTreeGrid #invoiceDetailGrid [theme]="globService.themeColor" [source]="dataAdapter" [columns]="_invoiceColumn"
+            [columnsResize]="true" [width]="'100%'" [pageSizeMode]="'root'" [pagerMode]="'advanced'" [pagerHeight]="0"
+            [pageable]="true" [pageSize]="rowToBeShow" (onPageChanged)="myGridOnPageChanged($event)"
+            (onPageSizeChanged)="myGridOnPageSizeChanged($event)">
+        </jqxTreeGrid>
+
+    </ion-col>
+
+</ion-row>
+
+
+<ion-row #pager>
+
+    <ion-col [sizeMd]="4" [sizeSm]="6" [sizeLg]="4">
+        <mat-form-field [ngStyle]="{width: '70px', textAlign: 'center'}">
+            <input matInput [(ngModel)]="pageRowNumber" type="number" [placeholder]="'goto_page' | translate" [min]="1"
+                [max]="pageRowNumberLimit" (ngModelChange)="invoiceDetailGrid.goToPage(pageRowNumber - 1)"
+                class="pagination-controls goto-page" />
+        </mat-form-field>
+    </ion-col>
+
+    <ion-col [sizeMd]="4" [sizeSm]="6" [sizeLg]="4">
+        <span class="show-rows">
+            <mat-form-field [ngStyle]="{width: '70px'}">
+                <mat-select (selectionChange)="getPageIndex()" [(ngModel)]="rowToBeShow"
+                    [placeholder]="'show_rows' | translate">
+                    <mat-option *ngFor="let list of rowList" [value]="list"> {{list}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </span>
+    </ion-col>
+
+    <ion-col [sizeLg]="4" [sizeSm]="12" [sizeMd]="4" [sizeXs]="12" [ngStyle]="{lineHeight: '43px'}">
+
+        {{startIndex}} - {{endIndex}} {{ 'of_word' | translate }} {{invoiceDetailList.length}} &nbsp;
+
+        <span color="secondary" *ngIf="startIndex <= 1" class="margin-right-auto"> ⮜ </span>
+        <span *ngIf="startIndex > 1" class="margin-right-auto" (click)="invoiceDetailGrid.goToPrevPage()"> ⮜ </span>
+        &nbsp;&nbsp;
+        <span color="secondary" *ngIf="endIndex >= invoiceDetailList.length" class="margin-left-auto top-bottom-auto"> ⮞
+        </span>
+        <span mode="ios" *ngIf="endIndex < invoiceDetailList.length" class="margin-left-auto top-bottom-auto"
+            (click)="invoiceDetailGrid.goToNextPage()"> ⮞ </span>
+
+    </ion-col>
+
+</ion-row>
+
+
+<ion-row class="ion-margin-top page-bottom">
+
+    <ion-row class="ion-margin-top jqx-button-row">
+
+        <ion-col [size]="6">
+
+            <jqxButton [theme]="globService.themeColor" (onClick)="getUsageHistory('usage_history')" class="jqx-button-theme">
+                {{ 'usage' | translate }}
+            </jqxButton>
+
+        </ion-col>
+
+        <ion-col [size]="6">
+
+            <jqxButton (onClick)="componentValue.emit('bill_history')" [theme]="globService.themeColor" class="jqx-button-theme">
+                {{ 'close' | translate }}
+            </jqxButton>
+
+        </ion-col>
+
+    </ion-row>
+
+</ion-row>

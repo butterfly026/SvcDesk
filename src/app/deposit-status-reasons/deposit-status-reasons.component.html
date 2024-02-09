@@ -1,0 +1,17 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-deposit-status-list class="w-100" [ContactCode]="ContactCode"
+    (DepositStatusListComponent)="processComponent($event)">
+  </app-deposit-status-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-deposit-status-form class="w-100" [ContactCode]="ContactCode"
+    (DepositStatusFormComponent)="processComponent($event)">
+  </app-deposit-status-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-deposit-status-form class="w-100" [Id]="ID" [ContactCode]="ContactCode"
+    (DepositStatusFormComponent)="processComponent($event)">
+  </app-deposit-status-form>
+</ion-row>

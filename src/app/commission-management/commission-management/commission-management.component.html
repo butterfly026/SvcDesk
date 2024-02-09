@@ -1,0 +1,21 @@
+<ion-row>
+  <app-commission-list class="w-100" [ContactCode]="ContactCode" *ngIf="currentComponent == 'list'"
+    (CommissionListComponent)="processComponent($event)">
+  </app-commission-list>
+
+  <app-commission-detail class="w-100" [ContactCode]="ContactCode" [CommissionDetail]="DetailData"
+    *ngIf="currentComponent == 'details'" (CommissionDetailComponent)="processDetail($event)">
+  </app-commission-detail>
+
+  <app-tag-commission class="w-100" *ngIf="currentComponent == 'tag'" [ContactCode]="ContactCode"
+    [CommissionDetail]="DetailData" (TagCommissionComponent)="processDetail($event)">
+  </app-tag-commission>
+
+  <app-un-tag-commission class="w-100" *ngIf="currentComponent == 'unTag'" [ContactCode]="ContactCode"
+    [CommissionDetail]="DetailData" (UnTagCommissionComponent)="processDetail($event)">
+  </app-un-tag-commission>
+
+  <app-pay-commission class="w-100" *ngIf="currentComponent == 'pay'" [ContactCode]="ContactCode"
+    [CommissionDetail]="DetailData" (PayCommissionComponent)="processDetail($event)">
+  </app-pay-commission>
+</ion-row>

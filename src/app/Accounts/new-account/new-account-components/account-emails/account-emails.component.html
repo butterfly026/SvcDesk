@@ -1,0 +1,71 @@
+<ion-row>
+  <ion-row class="ion-justify-content-end">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'Create' | translate" 
+      (click)="addNewEmail()">
+      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+  <ion-row>
+    <form [formGroup]="formGroup" class="full-width" *ngIf="formGroup">
+      <ng-container formArrayName="AccountEmailsUsage">
+        <ion-row *ngFor="let contactAliaseFormGroup of accountEmailsFormControl.controls; let i = index">
+          <ion-row [formGroup]="contactAliaseFormGroup">
+            <ion-col size="10">
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <mat-form-field>
+                    <mat-select formControlName="EmailTypes" [placeholder]="'email_type' | translate" multiple>
+                      <mat-option *ngFor="let emailType of emailTypeList" [value]="emailType.Code">
+                        {{ emailType.Name }}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngIf="contactAliaseFormGroup.get('EmailTypes').hasError('required')">
+                      {{ 'email_type_required' | translate }}
+                    </mat-error>
+                                          
+                    <mat-error *ngIf="contactAliaseFormGroup.get('EmailTypes').hasError('MandatodyValidation')">
+                      {{ contactAliaseFormGroup.get('EmailTypes').errors.MandatodyValidation }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-col>
+      
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field>
+                      <input matInput formControlName="EmailAddress" [placeholder]="'email' | translate"/>
+      
+                      <mat-error *ngIf="contactAliaseFormGroup.get('EmailAddress').hasError('required')">
+                        {{ 'email_is_required' | translate }}
+                      </mat-error>
+      
+                      <mat-error *ngIf="contactAliaseFormGroup.get('EmailAddress').hasError('email')">
+                        {{ 'email_invalid_label' | translate }}
+                      </mat-error>
+
+                    </mat-form-field>
+
+                    <mat-progress-bar mode="indeterminate" *ngIf="indexOfFormGroupValidatingEmailAddress === i"></mat-progress-bar>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="ion-align-items-center">
+                <button mat-icon-button type="button" (click)="deleteEmail(i)">
+                  <ion-icon aria-hidden="true" name="trash-outline" size="medium"></ion-icon>
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>
+        </ion-row>
+      </ng-container>
+    </form>
+  </ion-row>
+</ion-row>

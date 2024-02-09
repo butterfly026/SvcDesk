@@ -1,0 +1,178 @@
+<ion-row class="ion-padding">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="mx-auto p-0">
+      {{'add' | translate}} {{'document' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="mx-auto">
+      <ion-row class="full-height justify-content-center jqx-file-width">
+        <jqxFileUpload [width]="'100%'" [uploadUrl]="uploadUrl" [fileInputName]="'fileToUpload'"
+          (onSelect)="onSelect($event)" (onRemove)="onRemove($event)" [cancelTemplate]="'danger'"
+          [browseTemplate]="'success'" [uploadTemplate]="'primary'">
+        </jqxFileUpload>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="addForm" class="w-100 ion-margin-bottom" (ngSubmit)="addFormSubmit()" novalidate
+      *ngIf="docList.length>0">
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="title" type="text" name="title"
+                placeholder="{{ 'title' | translate }}" />
+              <mat-error>
+                {{ 'title_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="firstName" type="text" name="firstName"
+                placeholder="{{ 'first_name' | translate }}" required />
+
+              <mat-error>
+                {{ 'first_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="surName" type="text" name="surName"
+                placeholder="{{ 'surname' | translate }}" required />
+
+              <mat-error>
+                {{ 'surname_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="email" type="email" name="email" placeholder="{{ 'email' | translate }}"
+                required />
+
+              <mat-error *ngIf="f.email.hasError('required')">
+                {{ 'email_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.email.hasError('required') && f.email.hasError('email')">
+                {{ 'email_address_invalid' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="phone" type="text" name="phone" placeholder="{{ 'phone' | translate }}"
+                required />
+
+              <mat-error *ngIf="f.phone.hasError('required')">
+                {{ 'phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.phone.hasError('required') && f.phone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="roleSelect" type="text" name="roleSelect"
+                placeholder="{{ 'role_select' | translate }}" required />
+
+              <mat-error>
+                {{ 'role_select_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row *ngFor="let list of docList; let i = index">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="label{{i}}" type="text" name="label{{i}}"
+                placeholder="{{ 'label' | translate }}" />
+              <mat-error>
+                {{ 'label_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="name{{i}}" type="text" name="name{{i}}"
+                placeholder="{{ 'name' | translate }}" required />
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+
+              <!-- <mat-select formControlName="type{{i}}" placeholder="{{ 'type' | translate }}" name="type{{i}}" required>
+                <mat-option *ngFor="let list of typeList" value="{{list.Text}}">
+                  {{list.Value}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error> -->
+              <input matInput formControlName="type{{i}}" type="text" name="type{{i}}"
+                placeholder="{{ 'type' | translate }}" required />
+
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button id="submitButton" class="submitButton"></button>
+    </form>
+
+    <ion-row class="ion-margin-top ion-padding-top jqx-button-row">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="triggerSubmit()" [disabled]="!addForm.valid"
+          *ngIf="docList.length>0">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-col>
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="closeAdd()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

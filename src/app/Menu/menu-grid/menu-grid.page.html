@@ -1,0 +1,59 @@
+<ion-header [mode]="'ios'">
+
+    <ion-row class="header1-row" color="secondary">
+
+        <ion-col size="2">
+
+            <ion-row class="full-height">
+
+                <ion-icon [name]="menuTitle" class="header-icon">
+                </ion-icon>
+
+            </ion-row>
+
+        </ion-col>
+
+        <ion-col size="8">
+
+            <ion-row class="full-height">
+
+                <span class="header-title">
+                    {{menuTitle | translate}}
+                </span>
+
+            </ion-row>
+
+        </ion-col>
+
+    </ion-row>
+
+    <app-header [pageName]="menuTitle | translate"></app-header>
+
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+    <ion-grid class="ion-grid jqx-fill-state-normal-{{globService.themeColor}}" [class.ion-grid]="true">
+
+        <ion-row [class.ion-grid-row]="true">
+
+            <ion-col class="ion-grid-row-cols animated zoomIn" *ngFor="let menu of menuList" [sizeLg]="2" [sizeMd]="3"
+                [sizeXs]="6" [sizeSm]="4" (click)="navigateMenuItem(menu)">
+
+                <div [style.background-color]="menu.Color" class="tile">
+                    <ion-img [src]="menu.ImageURL"></ion-img>
+                    <ion-label>{{menu.Caption}}</ion-label>
+                </div>
+
+            </ion-col>
+
+        </ion-row>
+
+    </ion-grid>
+
+    <div *ngIf="navToMainMenu" (click)="renderMainMenu()" class="back-btn">
+        <ion-img [src]="'assets/imgs/back.png'"></ion-img>
+    </div>
+
+
+</ion-content>

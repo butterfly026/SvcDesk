@@ -1,0 +1,12 @@
+<ion-row class="position-relative">
+  <ion-row class="">
+    <app-service-charge-override-list class="w-100" [ServiceReference]="ServiceReference" *ngIf="ViewMode=='List'"
+      [PagingParam]="pagingParam" (ServiceListComponent)="processComponent($event)" [ServiceId]="ServiceId">
+    </app-service-charge-override-list>
+    <app-service-charge-override-form class="w-100" [ServiceReference]="ServiceReference" *ngIf="ViewMode=='New'"
+      (ServiceFormComponent)="processComponent($event)">
+    </app-service-charge-override-form>
+    
+  </ion-row>
+  
+</ion-row>

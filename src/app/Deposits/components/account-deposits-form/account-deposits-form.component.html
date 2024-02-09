@@ -1,0 +1,150 @@
+<ion-row class="mt-2">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'New'">
+      {{'deposit_new' | translate}} {{DepositData?.Id ? '[' + DepositData?.Id + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'Update'">
+      {{'deposit_update' | translate}} {{depositId ? '[' + depositId + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'View'">
+      {{'deposit' | translate}} {{depositId ? '[' + depositId + ']' : ''}}
+    </h3>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="saveDeposit()">
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="Type" placeholder="{{ 'select_type_deposit' | translate }}" required>
+                <mat-option *ngFor="let itemList of depositTypeList; let j = index" [value]="itemList">
+                  {{ itemList | translate}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Amount" currencyMask [options]="globService.currencyOptions"
+                required maxlength="13" autocomplete="off" placeholder="{{ 'deposit_amount' | translate }}"
+                name="Amount">
+
+              <mat-error>
+                {{ 'deposit_amount_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+
+              <input matInput [matDatepicker]="Date" (change)="onDateChange1($event)"
+                (dateChange)="onDateChange2($event)" formControlName="Date" placeholder="{{ 'date' | translate }}"
+                name="Date" [readonly]="editMode == 'View'">
+              <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
+              <mat-datepicker #Date></mat-datepicker>
+
+              <mat-error>
+                {{ 'date_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+
+        <ion-col [sizeXl]=" 6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+
+              <input matInput [matDatepicker]="ExpiryDate" [min]="minDate" formControlName="ExpiryDate"
+                placeholder="{{ 'expiry_date' | translate }}" name="Date" [readonly]="editMode == 'View'"
+                [matDatepickerFilter]="expiryDateFilter">
+              <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
+              <mat-datepicker #ExpiryDate></mat-datepicker>
+
+              <mat-error>
+                {{ 'expiry_date_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}" required>
+                <mat-option *ngFor="let itemList of depositStatusList; let j = index" [value]="itemList">
+                  {{ itemList | translate}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'status_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="StatusReasonId"
+                placeholder="{{ 'select_deposit_status_reason' | translate }}" required>
+                <mat-option *ngFor="let itemList of depositStatusReasonList; let j = index" [value]="itemList.Id">
+                  {{ itemList.Reason | translate}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'status_reason_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field class="w-100">
+            <textarea matInput formControlName="Note" name="Note" placeholder="{{'note'| translate}}"
+              [readonly]="editMode == 'View'">
+            </textarea>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+    <ion-row class="my-1">
+
+      <ion-row class="mt-1 jqx-button-row justify-content-center">
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngIf="editMode != 'View'">
+          <ion-row>
+            <jqxButton (onClick)="saveDeposit()" [theme]="globService.themeColor"
+              [disabled]="!formGroup?.valid || !isAmountValid" *ngIf="editMode == 'New'">
+              {{ 'create' | translate }}
+            </jqxButton>
+            <jqxButton (onClick)="saveDeposit()" [theme]="globService.themeColor" [disabled]="!formGroup?.valid"
+              *ngIf="editMode == 'Update'">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

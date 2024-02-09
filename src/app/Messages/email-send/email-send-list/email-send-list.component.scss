@@ -1,0 +1,17 @@
+.right-recipient {
+    width: 30px;
+}
+
+.left-recipient {
+    width: calc(100% - 30px);
+}
+
+.receive-icon {
+    transform: rotateZ(180deg);
+}
+
+.each-contact-note {
+    ion-icon {
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,19 @@
+.network_row {
+    padding: 1%;
+    height: 405px;
+  }
+  
+  
+  ion-row.pager ion-col {
+    text-align: center;
+  }
+  
+  .pagination-controls.goto-page,
+  .pagination-controls.row-list {
+    width: auto;
+  }
+  
+  ::ng-deep div.jqx-grid-pager {
+    display: none;
+  }
+  

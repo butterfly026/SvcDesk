@@ -1,0 +1,56 @@
+<ion-row class="ion-justify-content-center">
+  <ion-row class="total-content2" >
+    <ion-row class="receipt-detail">
+      <span class="margin-right-auto receipt-title">
+        {{ 'payment_method' | translate }}
+      </span>
+    </ion-row>
+  
+    <mat-tab-group animationDuration="500ms" class="w-100">
+      <mat-tab [label]="'credit_card' | translate">
+        <ion-row class="mt-3">
+          <ng-container *ngFor="let item of paymentMethods; let i = index;">
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="disabled ? selectedIndex === i : true">
+              <mat-card matRipple class="h-100 px-3 py-2 payment-method cursor-point" (click)="selectPayment(i)">
+                <ion-row class="justify-content-center mb-2 position-relative">
+                  <ng-container *ngFor="let image of imagesForPaymentMethod">
+                    <img [src]="image.Src" *ngIf="image.PaymentMethodCode === item.PaymentMethodCode" />
+                  </ng-container>
+                  <i class="fa fa-check-circle-o schedule-plan-checked" aria-hidden="true"
+                    *ngIf="selectedIndex === i"></i>
+                </ion-row>
+  
+                <ion-row>
+                  {{ 'credit_card' | translate }} : {{item.Description}} {{ 'ending_in' | translate }}
+                  {{item.AccountNumber | slice: '-4'}}
+                </ion-row>
+  
+                <ion-row>
+                  {{ 'name_on_card' | translate }} : {{ item.AccountName }}
+                </ion-row>
+  
+                <ion-row>
+                  {{ 'expires_on' | translate }} : {{ item.ExpiryDate }}
+                </ion-row>
+              </mat-card>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+      </mat-tab>
+    </mat-tab-group>
+
+    <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton justify-content-end">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="addNewCreditCard()">
+          {{ 'new_credit' | translate }}
+        </jqxButton>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="addNewBank()">
+          {{ 'new_bank' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

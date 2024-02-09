@@ -1,0 +1,15 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-task-group-list class="w-100" [ContactCode]="ContactCode" (TaskGroupListComponent)="processComponent($event)">
+  </app-task-group-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-task-group-form class="w-100" [ContactCode]="ContactCode" (TaskGroupFormComponent)="processComponent($event)">
+  </app-task-group-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-task-group-form class="w-100" [Id]="ID" [ContactCode]="ContactCode"
+    (TaskGroupFormComponent)="processComponent($event)">
+  </app-task-group-form>
+</ion-row>

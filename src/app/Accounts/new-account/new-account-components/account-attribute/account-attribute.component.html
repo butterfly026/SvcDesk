@@ -1,0 +1,53 @@
+<ion-row class="mt-2">
+  <ion-row class="justify-content-between mb-3 plus-icon-2">    
+    <h2 class="p-0 m-0">
+      <i class="fa fa-plus-circle text-success cursor-point" (click)="addNewAttribute()"></i>
+    </h2>
+  </ion-row>
+  <form [formGroup]="userForm" class="w-100 ion-margin-bottom" (ngSubmit)="userFormSubmit()" novalidate>
+    
+    <ion-row  *ngFor="let attr of groupList">
+      <ion-row class="dynamic-list-form">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+  
+              <mat-select placeholder="{{ 'user_defined' | translate }}" name="{{attr.DefinedCtrlName}}" required
+                formControlName="{{attr.DefinedCtrlName}}">
+                <mat-option *ngFor="let list of availableDefinedList; let i = index" value="{{list.id}}">
+                  {{list.name}}
+                </mat-option>
+              </mat-select>
+  
+              <mat-error>
+                {{ 'user_defined_required' | translate }}
+              </mat-error>
+  
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+  
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="{{attr.ValueCtrlName}}" type="text" name="{{attr.ValueCtrlName}}" placeholder="{{ 'value' | translate }}"
+                required />
+              <mat-error>
+                {{ 'value_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="dynamic-list-delete justify-content-center align-items-center">
+        <ion-icon name="trash" mode="md" class="trash-icon" (click)="deleteAttr(dataIdx)"></ion-icon>
+      </ion-row>
+      
+    </ion-row>
+
+    <button id="attributeSubmitButton" class="submitButton"></button>
+  </form>
+
+
+</ion-row>

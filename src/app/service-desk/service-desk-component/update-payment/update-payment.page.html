@@ -1,0 +1,97 @@
+<ion-row class="ion-padding">
+
+  <ion-row class="ion-margin-top ion-margin-bottom ion-padding-top">
+    <h3 class="margin-auto">
+      {{ 'update_payment' | translate }}
+    </h3>
+  </ion-row>
+
+  <ion-row class="total-content left-right-auto">
+    <ion-row class="margin-auto">
+
+      <form [formGroup]="updatePaymenrForm" class="full-width" (ngSubmit)="newPayment()" novalidate>
+
+        <ion-row class="username-row">
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="name" type="text" placeholder="{{ 'your_name' | translate }}"
+              name="name" />
+
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="username-row">
+          <mat-form-field class="example-full-width">
+
+            <input matInput formControlName="cardNumber" type="text"
+              placeholder="{{ '16_digit_credit_num' | translate }}" name="cardNumber" />
+
+
+          </mat-form-field>
+        </ion-row>
+
+
+        <ion-row class="username-row">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <mat-select formControlName="expireMonth" placeholder="{{ 'month' | translate }}" name="expireMonth"
+                  required>
+                  <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                    {{list}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  <span>{{ 'month_require' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <mat-form-field class="example-full-width">
+
+                <mat-select formControlName="expireYear" (ngModelChange)="selectExpireYear()"
+                  placeholder="{{ 'year' | translate }}" name="expireYear" required>
+                  <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                    {{list}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  <span>{{ 'year_require' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <button mat-button id="submitButton">Submit</button>
+      </form>
+
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!updatePaymenrForm.valid"
+              (click)="submitTrigger()">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,151 @@
+<ion-row class="mt-2">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'New'">
+      {{'installment_new' | translate}} {{InstallmentData?.Id ? '[' + InstallmentData?.Id + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'Update'">
+      {{'installment_update' | translate}} {{installmentId ? '[' + installmentId + ']' : ''}}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="editMode == 'View'">
+      {{'installment' | translate}} {{installmentId ? '[' + installmentId + ']' : ''}}
+    </h3>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="saveInstallment()">
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="InstallmentCycleType"
+                placeholder="{{ 'select_type_installment' | translate }}" required>
+                <mat-option *ngFor="let itemList of installmentTypeList; let j = index" [value]="itemList">
+                  {{ itemList | translate}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'installment_type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Amount" currencyMask [options]="globService.currencyOptions"
+                required maxlength="13" autocomplete="off" placeholder="{{ 'installment_amount' | translate }}"
+                name="Amount" required>
+
+              <mat-error>
+                {{ 'installment_amount_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="InstallmentDay" placeholder="{{ 'installment_day' | translate }}" required>
+                <mat-option *ngFor="let itemList of installmentDayList;  let j = index" [value]="itemList">
+                  {{ itemList }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'installment_day_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <input matInput [min]="minDate" [matDatepicker]="NextInstallmentDue" formControlName="NextInstallmentDue"
+                placeholder="{{ 'next_installment_due' | translate }}" name="NextInstallmentDue"
+                [readonly]="editMode == 'View'" [matDatepickerFilter]="nextInstallmentDueFilter">
+              <mat-datepicker-toggle matSuffix [for]="NextInstallmentDue"></mat-datepicker-toggle>
+              <mat-datepicker #NextInstallmentDue></mat-datepicker>
+              <mat-error>
+                {{ 'next_installment_due_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}" required>
+                <mat-option *ngFor="let itemList of installmentStatusList; let j = index" [value]="itemList">
+                  {{ itemList | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'status_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="mt-2">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="StatusReasonId"
+                placeholder="{{ 'select_installment_status_reason' | translate }}">
+                <mat-option *ngFor="let itemList of installmentStatusReasonList; let j = index" [value]="itemList.Id">
+                  {{ itemList.Reason | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12">
+          <mat-form-field class="w-100">
+            <textarea matInput formControlName="Note" placeholder="{{'note'| translate}}"
+              [readonly]="editMode == 'View'">
+            </textarea>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <app-payment-methods
+      class="w-100" 
+      [contactCode]="ContactCode"
+      [selectedPaymentMethodId]="formGroup.get('AccountPaymentMethodId').value" 
+      (onSelectPaymentMethod)="selectPaymentMethod($event)"
+      [disabled]="editMode === 'View'">
+    </app-payment-methods>
+
+    <ion-row class="my-1">
+
+      <ion-row class="mt-1 jqx-button-row justify-content-center">
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngIf="editMode != 'View'">
+          <ion-row>
+            <jqxButton (onClick)="saveInstallment()" [theme]="globService.themeColor"
+              [disabled]="!formGroup?.valid || !isAmountValid" *ngIf="editMode == 'New'">
+              {{ 'create' | translate }}
+            </jqxButton>
+            <jqxButton (onClick)="saveInstallment()" [theme]="globService.themeColor" [disabled]="!formGroup?.valid"
+              *ngIf="editMode == 'Update'">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

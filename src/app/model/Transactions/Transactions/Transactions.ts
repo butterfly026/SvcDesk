@@ -1,0 +1,31 @@
+import { TransactionComponent } from '../TransactionComponent/TransactionComponent';
+
+export interface Transactions {
+    Id: number,
+    ServiceNumber: string,
+    StartDateTime: string,
+    BParty: string,
+    BPartyDescription: string,
+    Duration: string,
+    UnitQuantity: string,
+    UnitOfMeasure: string,
+    Price: string,
+    Tax: string,
+    NonDiscountedPrice: string,
+    NonDiscountedTax: string,
+    Cost: string,
+    CostTax: string,
+    UsageGroup: string,
+    UsageGroupCode: string,
+    UsageGroupOrder: number,
+    RateBandDescription: string,
+    TariffCode: number,
+    Tariff: string,
+    Origin: string,
+    ThirdParty: string,
+    Band1RateUnit: string,
+    TaxFree: boolean,
+    ServiceNarrative: string,
+    ServiceReference: number,
+    TransactionComponents: TransactionComponent[]
+}

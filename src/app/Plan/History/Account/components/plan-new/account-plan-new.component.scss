@@ -1,0 +1,12 @@
+.vertical-align-content
+{
+     display: flex!important;
+     align-content: bottom!important;
+     align-items: bottom!important;
+}
+
+mat-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+}

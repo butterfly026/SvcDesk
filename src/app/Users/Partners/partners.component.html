@@ -1,0 +1,624 @@
+<ion-row *ngIf="groupState == 'view'">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'partner_user' | translate }}
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3">
+    <ion-row class="total-content4 mx-auto">
+      <ion-row class="service-list-search mt-3 justify-content-between align-items-center">
+        <i class="fa fa-plus-circle create-document" (click)="showCreate()"></i>
+        <ion-searchbar mode="ios" class="ion-padding-start ml-auto" (keypress)="searchInputEvent($event)"
+          [placeholder]="'search' | translate" [(ngModel)]="userParam.SearchString">
+        </ion-searchbar>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+  <ion-row>
+    <ion-row class="mt-3 total-content4 mx-auto">
+      <ion-row class="box-shadow-item my-3 px-3 py-2" *ngFor="let list of groupList; let i = index;"
+        (click)="goToGroupDetail(i)">
+        <ion-row class="">
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'name' | translate}} : {{list.name}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'email' | translate}} : {{list.email}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'role' | translate}} : {{list.role}}
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="groupList.length > 0">
+        <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber"
+          [rowStep]="rowStep" [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+        </app-paging-component>
+      </ion-row>
+
+      <ion-row class="mt-5 jqx-button-row">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="closeComponent()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+</ion-row>
+
+<ion-row *ngIf="groupState == 'edit' && currentGroup">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'partner_user' | translate }} : [{{currentGroup.id}}]
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3 total-content4 mx-auto">
+    <form [formGroup]="groupForm" novalidate class="w-100" (ngSubmit)="updateUser()">
+      <ion-row class="">
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="BusinessUnitCode"
+                placeholder="{{ 'business_unit_code' | translate }}" name="BusinessUnitCode">
+              <mat-error>
+                {{ 'business_unit_code_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Role" placeholder="{{ 'role' | translate }}" required
+                name="Role">
+
+              <mat-error>
+                {{ 'role_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Name" placeholder="{{ 'name' | translate }}" required
+                name="Name">
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="FirstName" placeholder="{{ 'first_name' | translate }}"
+                required name="FirstName">
+
+              <mat-error>
+                {{ 'first_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Title" placeholder="{{ 'title' | translate }}">
+                <mat-option *ngFor="let itemList of titleList; let j = index" [value]="itemList.id">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="DateOfBirth" formControlName="DateOfBirth"
+                placeholder="{{ 'd_o_b' | translate }}" name="DateOfBirth">
+
+              <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
+              <mat-datepicker #DateOfBirth></mat-datepicker>
+
+              <mat-error>
+                {{ 'd_o_b_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Gender" placeholder="{{ 'gender' | translate }}">
+                <mat-option *ngFor="let itemList of genderList; let j = index" [value]="itemList.id">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'gender_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Email" placeholder="{{ 'email' | translate }}" required
+                name="Email">
+
+              <mat-error *ngIf="f.Email.hasError('required')">
+                {{ 'email_required' | translate }}
+              </mat-error>
+
+              <mat-error *ngIf="!f.Email.hasError('required') && f.Email.hasError('email')">
+                {{ 'email_address_invalid' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="HomePhone" placeholder="{{ 'hone_phone' | translate }}"
+                name="HomePhone">
+
+              <mat-error *ngIf="f.HomePhone.hasError('required')">
+                {{ 'hone_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.HomePhone.hasError('required') && f.HomePhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="WorkPhone" placeholder="{{ 'work_phone' | translate }}"
+                name="WorkPhone">
+
+              <mat-error *ngIf="f.WorkPhone.hasError('required')">
+                {{ 'work_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.WorkPhone.hasError('required') && f.WorkPhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="MobilePhone" placeholder="{{ 'mobile_phone' | translate }}"
+                name="MobilePhone">
+
+              <mat-error *ngIf="f.MobilePhone.hasError('required')">
+                {{ 'mobile_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.MobilePhone.hasError('required') && f.MobilePhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Address1" placeholder="{{ 'address1' | translate }}"
+                name="Address1">
+
+              <mat-error>
+                {{ 'address_is_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Address2" placeholder="{{ 'address2' | translate }}"
+                name="Address2">
+
+              <mat-error>
+                {{ 'address_is_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Suburb" placeholder="{{ 'suburb' | translate }}"
+                name="Suburb">
+
+              <mat-error>
+                {{ 'suburb_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="City" placeholder="{{ 'city' | translate }}" name="City">
+
+              <mat-error>
+                {{ 'city_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="State" placeholder="{{ 'state' | translate }}" name="State">
+
+              <mat-error>
+                {{ 'state_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Postcode" placeholder="{{ 'postcode' | translate }}"
+                name="Postcode">
+
+              <mat-error>
+                {{ 'postcode_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="CountryCode" placeholder="{{ 'country_code' | translate }}"
+                name="CountryCode">
+
+              <mat-error>
+                {{ 'country_code_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="EmployeeReference"
+                placeholder="{{ 'employee_reference' | translate }}" name="EmployeeReference">
+
+              <mat-error>
+                {{ 'employee_reference_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="mt-5 jqx-button-row">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="updateSubmitTrigger()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="backMain()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="groupState == 'create'">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'create_channel_partner_user' | translate }}
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3 total-content4 mx-auto">
+    <form [formGroup]="groupForm" novalidate class="w-100" (ngSubmit)="createUser()">
+      <ion-row class="">
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="BusinessUnitCode"
+                placeholder="{{ 'business_unit_code' | translate }}" name="BusinessUnitCode">
+              <mat-error>
+                {{ 'business_unit_code_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Role" placeholder="{{ 'role' | translate }}" required
+                name="Role">
+
+              <mat-error>
+                {{ 'role_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Name" placeholder="{{ 'name' | translate }}" required
+                name="Name">
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="FirstName" placeholder="{{ 'first_name' | translate }}"
+                required name="FirstName">
+
+              <mat-error>
+                {{ 'first_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Title" placeholder="{{ 'title' | translate }}">
+                <mat-option *ngFor="let itemList of titleList; let j = index" [value]="itemList.id">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="DateOfBirth" formControlName="DateOfBirth"
+                placeholder="{{ 'd_o_b' | translate }}" name="DateOfBirth">
+
+              <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
+              <mat-datepicker #DateOfBirth></mat-datepicker>
+
+              <mat-error>
+                {{ 'd_o_b_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Gender" placeholder="{{ 'gender' | translate }}">
+                <mat-option *ngFor="let itemList of genderList; let j = index" [value]="itemList.id">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{ 'gender_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Email" placeholder="{{ 'email' | translate }}" required
+                name="Email">
+
+              <mat-error *ngIf="f.Email.hasError('required')">
+                {{ 'email_required' | translate }}
+              </mat-error>
+
+              <mat-error *ngIf="!f.Email.hasError('required') && f.Email.hasError('email')">
+                {{ 'email_address_invalid' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="HomePhone" placeholder="{{ 'hone_phone' | translate }}"
+                name="HomePhone">
+
+              <mat-error *ngIf="f.HomePhone.hasError('required')">
+                {{ 'hone_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.HomePhone.hasError('required') && f.HomePhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="WorkPhone" placeholder="{{ 'work_phone' | translate }}"
+                name="WorkPhone">
+
+              <mat-error *ngIf="f.WorkPhone.hasError('required')">
+                {{ 'work_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.WorkPhone.hasError('required') && f.WorkPhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="MobilePhone" placeholder="{{ 'mobile_phone' | translate }}"
+                name="MobilePhone">
+
+              <mat-error *ngIf="f.MobilePhone.hasError('required')">
+                {{ 'mobile_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.MobilePhone.hasError('required') && f.MobilePhone.hasError('pattern')">
+                {{ 'invalid_phone_number' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Address1" placeholder="{{ 'address1' | translate }}"
+                name="Address1">
+
+              <mat-error>
+                {{ 'address_is_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Address2" placeholder="{{ 'address2' | translate }}"
+                name="Address2">
+
+              <mat-error>
+                {{ 'address_is_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Suburb" placeholder="{{ 'suburb' | translate }}"
+                name="Suburb">
+
+              <mat-error>
+                {{ 'suburb_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="City" placeholder="{{ 'city' | translate }}" name="City">
+
+              <mat-error>
+                {{ 'city_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="State" placeholder="{{ 'state' | translate }}" name="State">
+
+              <mat-error>
+                {{ 'state_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Postcode" placeholder="{{ 'postcode' | translate }}"
+                name="Postcode">
+
+              <mat-error>
+                {{ 'postcode_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="CountryCode" placeholder="{{ 'country_code' | translate }}"
+                name="CountryCode">
+
+              <mat-error>
+                {{ 'country_code_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="EmployeeReference"
+                placeholder="{{ 'employee_reference' | translate }}" name="EmployeeReference">
+
+              <mat-error>
+                {{ 'employee_reference_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <button class="submitButton" id="create-submit"></button>
+    </form>
+
+    <ion-row class="mt-5 jqx-button-row">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="createSubmitTrigger()">
+            {{ 'create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="backMain()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

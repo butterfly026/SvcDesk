@@ -1,0 +1,15 @@
+<mat-menu #childMenu="matMenu" [overlapTrigger]="false">
+  <span *ngFor="let child of items; let i = index;">
+    <span *ngIf="child?.menuitems.length > 0">
+      <button mat-menu-item color="primary" [matMenuTriggerFor]="menu.childMenu">
+        <span>{{child?.caption}}</span>
+      </button>
+      <app-menu-item #menu [items]="child?.menuitems"></app-menu-item>
+    </span>
+    <span *ngIf="!child?.menuitems || child?.menuitems.length === 0">
+      <button mat-menu-item (click)="goToMenuDetail(i)">
+        <span>{{child?.caption}}</span>
+      </button>
+    </span>
+  </span>
+</mat-menu>

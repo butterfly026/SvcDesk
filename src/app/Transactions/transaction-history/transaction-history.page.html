@@ -1,0 +1,56 @@
+<ion-row class="ion-margin-top ion-margin-bottom" id="bill-history-content">
+
+  <ion-row>
+    <ion-row class="service-list-search mt-3 justify-content-between align-items-center">
+      <ion-searchbar mode="ios" class="ion-padding-start ml-auto" (keypress)="searchInputEvent($event)"
+        [placeholder]="'search' | translate" [(ngModel)]="pagingParam.SearchString">
+      </ion-searchbar>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data justify-content-end" [ngStyle]="{'width':setGridWidth()}">
+      <div class="d-flex align-items-center">
+        <h5 class="m-0 mr-2 p-0">
+          <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+        </h5>
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </div>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" #TransactionHistoryGrid [width]="setGridWidth()" [source]="dataAdapter"
+      [columns]="columns" [rowdetails]="true" [initrowdetails]="initRowDetails"
+      [rowdetailstemplate]="rowdetailstemplate" [columnsautoresize]="true" [columnsresize]="true" [theme]="globService.themeColor"
+      [columnsmenu]="false" [autoheight]="true" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+
+  <ion-row *ngIf="groupList.length>0">
+    <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber" [rowStep]="rowStep"
+      [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+    </app-paging-component>
+  </ion-row>
+
+</ion-row>
+
+<button class="submitButton" id="downloadButtonBill" (click)="downloadButtonBill()"></button>
+<button class="submitButton" id="clearSelectionChildGrid" (click)="clearSelectionChildGrid()"></button>
+
+
+
+<ion-row class="login-row page-bottom normal-button">
+  <ion-row>
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

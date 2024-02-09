@@ -1,0 +1,156 @@
+<ion-row class="mt-2">
+  <h3 class="p-0 m-auto text-center">
+    {{'usage_transaction_detail' | translate}}
+  </h3>
+  <ion-row class="my-3">
+    <mat-tab-group class="full-width service-tab" animationDuration="500ms" [selectedIndex]="selectedIndex" (selectedTabChange)="selectTabs($event)">
+
+      <mat-tab label="{{'Tariff'|translate}}">
+        <ion-row *ngIf="selectedIndex==0">
+          <app-datatable
+            class="w-100"
+            [data]="dataTariffSource"
+            [columns]="columns"
+            [action]="dataTableAction"
+            [columnsUsedForCurrency]="columnsUsedForCurrency"
+            [permissions]="permissions"
+            [usePagination]="false"
+            (onFetchData)="fetchTariffData()">
+          </app-datatable>
+        </ion-row>
+      </mat-tab>
+
+      <mat-tab label="{{'network'|translate}}">
+        <ion-row *ngIf="selectedIndex==1">
+          <form [formGroup]="formGroup" class="w-100">
+            <ion-row>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'id'| translate}}" matInput formControlName="Id">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'sequence'| translate}}" matInput formControlName="Sequence">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'customer_name'| translate}}" matInput formControlName="CustomerName">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'type'| translate}}" matInput formControlName="Type">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'status'| translate}}" matInput formControlName="Status">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'name'| translate}}" matInput formControlName="Name">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [matDatepicker]="Date" formControlName="Date"
+                      placeholder="{{ 'date' | translate }}" name="Date"
+                      >
+                    <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
+                    <mat-datepicker #Date></mat-datepicker>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'created_by'| translate}}" matInput formControlName="CreatedBy">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+      
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="w-100">
+                    <input matInput [matDatepicker]="Created" formControlName="Created"
+                      placeholder="{{ 'created' | translate }}" name="Created">
+                    <mat-datepicker-toggle matSuffix [for]="Created"></mat-datepicker-toggle>
+                    <mat-datepicker #Created></mat-datepicker>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="{{'updatedby'| translate}}" matInput formControlName="UpdatedBy">
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+      
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="w-100">
+                    <input matInput [matDatepicker]="LastUpdated" formControlName="LastUpdated"
+                      placeholder="{{ 'lastupdated' | translate }}" name="LastUpdated">
+                    <mat-datepicker-toggle matSuffix [for]="LastUpdated"></mat-datepicker-toggle>
+                    <mat-datepicker #LastUpdated></mat-datepicker>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+       
+              <ion-col size="12">
+                <ion-row class="mt-2">
+                  <app-datatable
+                    class="w-100"
+                    [data]="dataSourceFileData"
+                    [columns]="columnsSourceFileData"
+                    [action]="dataTableAction"
+                    [permissions]="permissions"
+                    [usePagination]="false"
+                    (onFetchData)="fetchNetworkData()">
+                  </app-datatable>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ion-row>
+      </mat-tab>
+    </mat-tab-group>
+  </ion-row>
+  <ion-row class="my-1">
+    <ion-row class="mt-1 jqx-button-row justify-content-center">
+      <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,141 @@
+<form [formGroup]="addressForm" novalidate class="w-100" (ngSubmit)="createAddress()">
+  <ion-row *ngIf="addressMode == 'normal'">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="Address1" placeholder="{{ 'address1' | translate }}"
+            name="Address1">
+
+          <mat-error>
+            {{ 'address_is_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="Address2" placeholder="{{ 'address2' | translate }}"
+            name="Address2">
+
+          <mat-error>
+            {{ 'address_is_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="Suburb" placeholder="{{ 'suburb' | translate }}" name="Suburb">
+
+          <mat-error>
+            {{ 'suburb_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="City" placeholder="{{ 'city' | translate }}" name="City">
+
+          <mat-error>
+            {{ 'city_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="State" placeholder="{{ 'state' | translate }}" name="State">
+
+          <mat-error>
+            {{ 'state_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="Postcode" placeholder="{{ 'postcode' | translate }}"
+            name="Postcode">
+
+          <mat-error>
+            {{ 'postcode_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+          <input matInput type="text" formControlName="CountryCode" placeholder="{{ 'country_code' | translate }}"
+            name="CountryCode">
+
+          <mat-error>
+            {{ 'country_code_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="addressMode == 'component'">
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height" *ngIf="typeList.length > 0">
+
+        <mat-form-field class="w-100">
+
+          <mat-select formControlName="addressType" id="addressType" placeholder="{{ 'address_type' | translate }}"
+            required>
+            <mat-option *ngFor="let typellist of typeList; let j = index" value="{{typellist.code}}">
+              {{ typellist.name | translate }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'address_type_requred' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+    </ion-col>
+
+    <ion-col size="12">
+      <ion-row class="address-spinner">
+        <mat-form-field class="w-100">
+          <input type="text" placeholder="{{'address' | translate}}" matInput formControlName="AutoCompleteAddress"
+            [matAutocomplete]="auto" name="address" required (keydown)="addresskeyDown()" (keyup)="addresKyeUp($event)"
+            (focusout)="focustOutAddress()">
+
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let address of addressLists; let i = index;" [value]="address.address">
+              {{address.address}}
+            </mat-option>
+          </mat-autocomplete>
+
+          <button type="button" mat-button *ngIf="showClear" matSuffix mat-icon-button aria-label="Clear"
+            (click)="clearSearch()">
+            <i class="fa fa-times"></i>
+          </button>
+
+          <mat-error>
+            {{'address_is_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+        <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+
+      </ion-row>
+    </ion-col>
+
+  </ion-row>
+  <button class="submitButton" id="submit-address"></button>
+</form>

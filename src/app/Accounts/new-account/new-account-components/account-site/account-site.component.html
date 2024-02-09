@@ -1,0 +1,55 @@
+<ion-row>
+
+  <ion-row class="ion-margin-top" *ngIf="groupList.length < 3">
+    <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewSiteForm()"></i>
+  </ion-row>
+
+  <form [formGroup]="siteForm" class="w-100" (ngSubmit)="submitSiteForm()" novalidate>
+    <ion-row *ngFor="let list of groupList">
+
+      <ion-row class="dynamic-list-form">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="{{list.TypeCtrl}}" placeholder="{{ 'type' | translate }}" required>
+                <mat-option *ngFor="let type of typeList; let j = index" value="{{type?.id}}">
+                  {{ type?.name }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="{{list.NameCtrl}}" type="text" placeholder="{{ 'name' | translate }}"
+                name="{{list.NameCtrl}}" />
+
+              <mat-error>
+                {{ 'name_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="dynamic-list-delete justify-content-center align-items-center">
+        <ion-icon name="trash" mode="md" class="trash-icon" (click)="removeSiteForm(list)"></ion-icon>
+      </ion-row>
+
+    </ion-row>
+
+    <button class="submitButton" id="siteSubmitButton"></button>
+  </form>
+
+
+</ion-row>

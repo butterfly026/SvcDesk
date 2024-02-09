@@ -1,0 +1,28 @@
+<ion-row id="service-status-grid">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [allowDblClickRow]="true"
+      [searchOptions]="searchOptions"
+      (onDoublClickRow)="dblclickRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="!!StatusId">
+    <app-service-status-service 
+      class="full-width" 
+      [ContactCode]="ContactCode" 
+      [StatusId]="StatusId"
+      [SearchString]="eventParam.SearchString"
+      (ServiceStatusServiceComponent)="processServiceStatus($event)">
+    </app-service-status-service>
+  </ion-row>
+
+</ion-row>

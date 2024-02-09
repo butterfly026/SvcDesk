@@ -1,0 +1,65 @@
+<ion-row class="total-content2 left-right-auto ion-margin-top">
+  <form [formGroup]="groupForm" class="full-width" (ngSubmit)="submitForm()" novalidate>
+    <ion-row class="ion-margin-top">
+      <mat-form-field>
+        <mat-select formControlName="Product" placeholder="{{ 'product' | translate }}" required>
+          <mat-option *ngFor="let list of productList" [value]="list">
+            {{list}}
+          </mat-option>
+        </mat-select>
+
+        <mat-error>
+          {{'product_required' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-form-field>
+        <input matInput type="number" min="0" formControlName="Price" name="Price" placeholder="{{'price'|translate}}"
+          required (ngModelChange)="calcTotal()" />
+
+        <mat-error>
+          {{'price_required' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-form-field>
+        <input matInput type="number" min="0" formControlName="Quantity" name="Quantity"
+          placeholder="{{'quantity'|translate}}" required (ngModelChange)="calcTotal()" />
+
+        <mat-error>
+          {{'quantity_required' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-form-field>
+        <input matInput type="number" formControlName="Total" name="Total" placeholder="{{'total'|translate}}" />
+      </mat-form-field>
+    </ion-row>
+
+    <button class="submitButton" id="productCategory"></button>
+  </form>
+
+  <ion-row class="ion-margin-top ion-margin-bottom normal-button">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="margin-auto" (click)="goBack()">
+          {{'cancel' | translate}}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!groupForm.valid" class="margin-auto" (click)="submitTrigger()">
+          {{'add_to_order' | translate}}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

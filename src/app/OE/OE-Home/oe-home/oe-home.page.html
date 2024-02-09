@@ -1,0 +1,53 @@
+<ion-header mode='ios'>
+  <app-oe-header AccountMode="{{UserName}}" ContactCode="{{ContactCode}}"></app-oe-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top" *ngIf="switchMode==''">
+    <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6" class="animated flipInY">
+      <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#d80073'"
+        (click)="goToProduct()">
+        <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/tag.png" />
+        <span class="position-absolute bottom-right text-white ion-padding-end">
+          {{'new_order' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6" class="animated flipInY">
+      <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#1ba1e2'"
+        (click)="goToOrderManagement()">
+        <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/list.png" />
+        <span class="position-absolute bottom-right text-white ion-padding-end">
+          {{'order_management' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6" class="animated flipInY">
+      <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#60a917'">
+        <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/dashboard.png" />
+        <span class="position-absolute bottom-right text-white ion-padding-end">
+          {{'service_qualification' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6" class="animated flipInY">
+      <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#1ba1e2'">
+        <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/user.png" />
+        <span class="position-absolute bottom-right text-white ion-padding-end">
+          {{'account' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top" *ngIf="switchMode!=''">
+    <app-home *ngIf="switchMode=='product'" class="full-width" (OrderEntryHome)="processOrderEntry($event)">
+    </app-home>
+    <app-order-management *ngIf="switchMode=='OrderManagement'" class="full-width" [ContactCode]="ContactCode"
+      (OrderManagementComponent)="processOrderEntry($event)">
+    </app-order-management>
+  </ion-row>
+</ion-content>

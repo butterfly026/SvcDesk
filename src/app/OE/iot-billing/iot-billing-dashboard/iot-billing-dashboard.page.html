@@ -1,0 +1,9 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" debitRunId="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="iotbilling-background" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row>
+    <app-iot-billing-home class="full-width" [ContactCode]="ContactCode"></app-iot-billing-home>
+  </ion-row>
+</ion-content>

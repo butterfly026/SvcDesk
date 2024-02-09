@@ -1,0 +1,486 @@
+<ion-row class="ion-margin-top">
+    <ion-col size="2">
+        <ion-row class="h-100 search-arrow-icon">
+            <i class="top-bottom-auto fa fa-arrow-left" (click)="backAdvancedSearch()" *ngIf="!globService.rtlMode"></i>
+            <i class="top-bottom-auto fa fa-arrow-right" (click)="backAdvancedSearch()" *ngIf="globService.rtlMode"></i>
+        </ion-row>
+    </ion-col>
+</ion-row>
+
+<ion-row class="total-content2 left-right-auto">
+    <ion-row class="">
+        <h3 class="margin-auto">
+            {{ 'advanced_search' | translate }}
+        </h3>
+    </ion-row>
+
+    <form [formGroup]="advancedForm" class="full-width ion-margin-top" (ngSubmit)="advanceSearchSubmit()" novalidate>
+        <ion-row class="username-row">
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ContactCode" type="text"
+                        placeholder="{{ 'contact_code' | translate }}" name="ContactCode" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'type' | translate }}" formControlName="SubTypeCode">
+                        <mat-option>
+                            --
+                        </mat-option>
+                        <mat-option *ngFor="let list of subTypes" [value]="list.id">
+                            {{list.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Name" type="text" placeholder="{{ 'name' | translate }}" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="FirstName" type="text" placeholder="{{ 'first_name' | translate }}"
+                        name="FirstName" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Alias" type="text" placeholder="{{ 'alias' | translate }}"
+                        name="Alias" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Key" type="text" placeholder="{{ 'key' | translate }}"
+                        name="Key" />
+
+                </mat-form-field>
+            </ion-col>
+
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'status' | translate }}" formControlName="ContactStatusCode">
+                        <mat-option> -- </mat-option>
+                        <mat-option *ngFor="let list of contactStatus;" [value]="list.id">{{list.name}}</mat-option>
+                        <!-- <mat-option [value]="'DE'">DE</mat-option>
+                        <mat-option [value]="'MY'">MY</mat-option> -->
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Email" type="email" placeholder="{{ 'email' | translate }}"
+                        name="Email" />
+
+                    <mat-error *ngIf="ff.Email.hasError('email') && !ff.Email.hasError('required')">
+                        {{ 'valid_email_address' | translate }}
+                    </mat-error>
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="CompanyId" type="text"
+                        placeholder="{{ 'c_o_b_number' | translate }}" name="CompanyId" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'corporate' | translate }}" formControlName="Corporate">
+                        <mat-option value="true">Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col> -->
+
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ContactStatusCode" type="text"
+                        placeholder="{{ 'contact_status_code' | translate }}" name="ContactStatusCode" />
+
+                </mat-form-field>
+            </ion-col> -->
+
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="TradeName" type="text" placeholder="{{ 'trade_name' | translate }}"
+                        name="TradeName" />
+
+                </mat-form-field>
+            </ion-col> -->
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput [matDatepicker]="picker" formControlName="DOB"
+                        placeholder="{{ 'd_o_b' | translate }}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+
+                <mat-form-field class="w-100">
+                    <input type="text" placeholder="{{'address_line' | translate}}" matInput formControlName="Address"
+                        name="Address">
+                </mat-form-field>
+
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Suburb" type="text" placeholder="{{ 'suburb' | translate }}"
+                        name="Suburb" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="State" type="text" placeholder="{{ 'state' | translate }}"
+                        name="State" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Postcode" type="text" placeholder="{{ 'postcode' | translate }}"
+                        name="Postcode" />
+
+                </mat-form-field>
+            </ion-col>
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ContactPhoneAreaCode" type="text"
+                        placeholder="{{ 'contact_phone_area_code' | translate }}" name="ContactPhoneAreaCode" />
+
+                </mat-form-field>
+            </ion-col> -->
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ContactPhone" type="text"
+                        placeholder="{{ 'contact_phone' | translate }}" name="ContactPhone" />
+
+                </mat-form-field>
+            </ion-col>
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="BillNumber" type="text"
+                        placeholder="{{ 'bill_number' | translate }}" name="BillNumber" />
+
+                </mat-form-field>
+            </ion-col> -->
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="BillNumber" type="text"
+                        placeholder="{{ 'bill_number' | translate }}" name="BillNumber" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="FinancialTransactionNumber" type="text"
+                        placeholder="{{ 'financial_number' | translate }}" name="FinancialTransactionNumber" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="ChequeNumber" type="text"
+                        placeholder="{{ 'cheque_number' | translate }}" name="ChequeNumber" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="OrderNumber" type="text"
+                        placeholder="{{ 'order_number' | translate }}" name="OrderNumber" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <!-- <input matInput formControlName="BusinessUnitCode" type="text"
+                        placeholder="{{ 'business_unit_code' | translate }}" name="BusinessUnitCode" /> -->
+
+                    <mat-select placeholder="{{ 'business_unit' | translate }}" formControlName="BusinessUnitCode">
+                        <mat-option> -- </mat-option>
+                        <mat-option [value]="list.id" *ngFor="let list of businessList; let i = index">
+                            {{list.name}}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'billing_cycle' | translate }}" formControlName="BillingCycleCode">
+                        <mat-option> -- </mat-option>
+                        <mat-option [value]="list.id" *ngFor="let list of billCylcle; let i = index">
+                            {{list.name}}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Service" type="text"
+                        placeholder="{{ 'servicenumber' | translate }}" name="Service" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ServiceName" type="text"
+                        placeholder="{{ 'service_label' | translate }}" name="ServiceName" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'service_types' | translate }}" formControlName="ServiceTypeCode">
+                        <mat-option> -- </mat-option>
+                        <mat-option *ngFor="let serviceCode of serviceTypes" [value]="serviceCode.id">
+                            {{serviceCode.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'plan' | translate }}" formControlName="PlanCode">
+                        <mat-option> -- </mat-option>
+                        <mat-option *ngFor="let plan of plansList" [value]="plan.id">{{plan.name}}</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="PlanName" type="text" placeholder="{{ 'plan_name' | translate }}"
+                        name="PlanName" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="SIM" type="text" placeholder="{{ 'sim' | translate }}"
+                        name="SIM" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="IEMI" type="text" placeholder="{{ 'iemi' | translate }}"
+                        name="IEMI" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="NetworkIdentifier" type="text"
+                        placeholder="{{ 'network_identifier' | translate }}" name="NetworkIdentifier" />
+
+                </mat-form-field>
+            </ion-col>
+            <!-- <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ServiceAttribute" type="text"
+                        placeholder="{{ 'service_attribute' | translate }}" name="ServiceAttribute" />
+
+                </mat-form-field>
+            </ion-col> -->
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="ServiceAttributeCode" type="text"
+                        placeholder="{{ 'service_attribute_code' | translate }}" name="ServiceAttributeCode" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+
+                    <input matInput formControlName="CostCentreCode" type="text"
+                        placeholder="{{ 'cost_centre_code' | translate }}" name="CostCentreCode" />
+
+                </mat-form-field>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="CostCentre" type="text"
+                        placeholder="{{ 'cost_centre' | translate }}" name="CostCentre" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="PaymentAccountNumber" type="text"
+                        placeholder="{{ 'payment_account_number' | translate }}" name="PaymentAccountNumber" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="PaymentAccountName" type="text"
+                        placeholder="{{ 'payment_account_name' | translate }}" name="PaymentAccountName" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="Dealer" type="text" placeholder="{{ 'dealer' | translate }}"
+                        name="Dealer" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <mat-select placeholder="{{ 'account_only' | translate }}" formControlName="AccountsOnly">
+                        <mat-option> -- </mat-option>
+                        <mat-option value="true">Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="DeclinedReceiptsDays" type="number" min="0"
+                        placeholder="{{ 'decline_receipt_days' | translate }}" name="DeclinedReceiptsDays" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="FailedEventsDays" type="text"
+                        placeholder="{{ 'failed_event_days' | translate }}" name="FailedEventsDays" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="OverdueEventsDays" type="text"
+                        placeholder="{{ 'overdue_event_days' | translate }}" name="OverdueEventsDays" />
+
+                </mat-form-field>
+            </ion-col>
+
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="CreatedDays" type="number" min="0"
+                        placeholder="{{ 'created_days' | translate }}" name="CreatedDays" />
+
+                </mat-form-field>
+            </ion-col>
+        </ion-row>
+
+        <button mat-button id="submitButtonAdvanced" class="submitButton">Submit</button>
+    </form>
+
+    <ion-row class="normal-button ion-margin-top ion-padding-top page-bottom">
+        <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="12" [sizeXs]="12"></ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" [disabled]="!advancedForm.valid" class="jqx-button-theme"
+                    (click)="clearAdvancedForm()">
+                    {{ 'clear' | translate }}
+                </jqxButton>
+            </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" [disabled]="!advancedForm.valid" class="jqx-button-theme"
+                    (click)="triggerAdvancedSearch()">
+                    {{ 'search' | translate }}
+                </jqxButton>
+            </ion-row>
+        </ion-col>
+    </ion-row>
+
+</ion-row>

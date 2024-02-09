@@ -1,0 +1,171 @@
+<ion-row>
+  <ion-row class="expantion-detail">
+    <ion-row>
+      <ion-row class="custom-scrollbar" id="serviceDeskSplitter1">
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+            <ion-row class="">
+              <ion-row class="ion-margin-top" id="customer-detail-section-container">
+                <app-customer-detail-section ContactCode="{{ContactCode}}" AttributeMode="ServiceDesk"
+                  [updatedEmail]="updatedEmail" [updatedPhone]="updatedPhone"
+                  [updateCustomerDetail]="updateCustomerDetail" class="w-100 ion-padding-end"
+                  (getCDLabel)="gotoDetail($event)">
+                </app-customer-detail-section>
+              </ion-row>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+
+            <ion-row class="justify-content-end right-desk-close ion-padding-top" *ngIf="componentType!=''">
+              <ion-fab-button 
+                size="small" 
+                color="light"
+                class="mat-modal-close-button"
+                [matTooltip]="'close' | translate" 
+                (click)="closeComponent()">
+                <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
+              </ion-fab-button>
+              <!-- <i class="fa fa-ellipsis-h cursor-point" aria-hidden="true" (click)="closeComponent()"></i> -->
+              
+            </ion-row>
+            <ion-row class="ion-margin-top" *ngIf="componentType==''">
+              <app-service-desk-service-tab ContactCode="{{ContactCode}}" class="w-100" id="customerServiceListTabId"
+                (getServiceDetailLavel)="getServiceDetail($event, i)">
+              </app-service-desk-service-tab>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Email'" id="customer-contact-email">
+              <!-- <app-email class="w-100" ContactNumber="{{ContactCode}}" pageTitle="{{'email'|translate}}"
+                DefaultEmail="{{componentValue}}" (setComponentValue)="callBillFunction($event, i)">
+              </app-email> -->
+              <app-contact-email-component ContactCode="{{ContactCode}}" class="w-100"
+                (ContactEmailComponent)="processContactEmail($event)">
+              </app-contact-email-component>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Address'" id="customer-contact-address">
+              <app-contacts-address-component class="w-100" ContactCode="{{ContactCode}}" [AddressType]="AddressType"
+                (AddressManagementComponent)="processContactAddress($event)">
+              </app-contacts-address-component>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Phones'" id="customer-contact-phone">
+              <app-contact-phone-component class="w-100" [ContactCode]="ContactCode"
+                (ContactPhoneComponent)="processContactPhone($event)">
+              </app-contact-phone-component>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Aliases'" id="customer-contact-alias">
+              <app-contacts-aliases-component [ContactCode]="ContactCode" class="w-100"
+                (ContactAliasesComponent)="processContactAliases($event)">
+              </app-contacts-aliases-component>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Activities'">
+              <app-activities class="w-100 h-100" [ContactCode]="ContactCode"
+                (ActivitiesComponent)="processContactActivities($event)">
+              </app-activities>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Notes'">
+              <app-contacts-notes-list class="w-100" [ContactCode]="ContactCode"
+                (ContactsNotesListComponent)="processContactNotes($event)">
+              </app-contacts-notes-list>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='ServiceNotes'">
+              <app-service-notes class="w-100" [ContactCode]="ContactCode" [ServiceReference]="Value"
+                (UsersGroupComponent)="processContactNotes($event)">
+              </app-service-notes>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='BillOptions'" id="bill-options">
+              <app-bill-options class="w-100" [ContactCode]="ContactCode"
+                (BillOptionsComponent)="processBillOptions($event)">
+              </app-bill-options>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='messages-contacts'"
+              id="messages-contacts">
+              <app-contact-message class="w-100" [ContactCode]="ContactCode" [MessageType]="'list'"
+                (ContactMessageComponent)="processMenuOptions($event)">
+              </app-contact-message>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='messages-image'" id="messages-image">
+              <app-contact-message-image class="w-100" [ContactCode]="ContactCode" [ImageType]="'list'"
+                (ContactMessageComponent)="processMenuOptions($event)">
+              </app-contact-message-image>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='user-defined-data'"
+              id="user-defined-data">
+              <app-user-defined-data class="w-100" [ContactCode]="ContactCode" [UserMode]="'list'"
+                (UserDefinedDataComponent)="processMenuOptions($event)">
+              </app-user-defined-data>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType=='Contacts-EnquiryPassword'"
+              id="Contacts-EnquiryPassword">
+              <app-contacts-enquiry-password class="w-100" [ContactCode]="ContactCode"
+                (EnquiryPassword)="processMenuOptions($event)">
+              </app-contacts-enquiry-password>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'AccountEventNew'" id="AccountEventNew">
+              <app-event-instance class="w-100" [ContactCode]="ContactCode" [Mode]="'new'"
+                (EventInstanceComponent)="processMenuOptions($event)">
+              </app-event-instance>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'Identifications'" id="Identifications">
+              <ion-row class="total-content2 mx-auto">
+                <app-contacts-questions-component class="w-100" [ContactCode]="ContactCode"
+                  (QuestionIdComponent)="processMenuOptions($event)">
+                </app-contacts-questions-component>
+              </ion-row>
+            </ion-row>
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'Authentication'" id="Authentication">
+              <app-authentication class="w-100" [ContactCode]="ContactCode" 
+                (AuthenticationComponent)="processMenuOptions($event)">
+              </app-authentication>
+            </ion-row>
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'RelatedContacts'" id="RelatedContacts">
+              <app-related-contacts class="w-100" [ContactCode]="ContactCode" 
+                (RelatedContactsComponent)="processMenuOptions($event)">
+              </app-related-contacts>
+            </ion-row>
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'RelatedContactsNew'" id="RelatedContactsNew">
+              <app-related-contacts-new class="w-100" [ContactCode]="ContactCode" 
+                (RelatedContactsNewComponent)="processMenuOptions($event)">
+              </app-related-contacts-new>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content"  *ngIf="componentType == 'AccountsPlanHistory'">
+              <app-account-plan class="w-100" [ContactCode]="ContactCode" (AccountPlanComponent)="processMenuOptions($event)">
+              </app-account-plan>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'AccountChargesNew'" id="AccountChargesNew">
+              <app-charges class="w-100" [ContactCode]="ContactCode" [ViewMode]="'New'" (ChargesComponent)="processMenuOptions($event)">
+              </app-charges>
+            </ion-row>
+
+            <ion-row class="service-desk-right-content" *ngIf="componentType == 'AccountOverridesNew'" id="AccountOverridesNew">
+              <app-account-charge-override class="w-100" [ContactCode]="ContactCode" [ViewMode]="'New'" (AccountChargeOverrideComponent)="processMenuOptions($event)">
+              </app-account-charge-override>
+            </ion-row>
+            
+            <ion-row class="service-desk-right-content" *ngIf="componentType.startsWith('AccountTaskNew')" id="AccountTaskNew">
+              <app-account-task-new class="w-100" [ContactCode]="ContactCode" [EditMode]="'New'" (AccountTaskNewComponent)="processMenuOptions($event)"
+                [CategoryId]="componentType.replace('AccountTaskNew', '')">
+              </app-account-task-new>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

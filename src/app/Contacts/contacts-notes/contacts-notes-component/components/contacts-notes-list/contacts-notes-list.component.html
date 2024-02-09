@@ -1,0 +1,30 @@
+<ion-row class="bottom-page position-relative" id="contact-notes-container">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3 class="m-0 p-0">
+        <strong>
+          {{'notes' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      [permissions]="permissions"
+      [columnsUsedForWrap]="columnsUsedForWrap"
+      (onView)="goToNoteDetail($event)"
+      (onEdit)="editOne($event)"
+      (onDelete)="deleteSelectedOne($event)"
+      (onCreate)="addNew()"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>

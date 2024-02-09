@@ -1,0 +1,9 @@
+
+<ion-row class="main_content ion-justify-content-center mt-3" style="padding-left: 10px; padding-right: 10px">
+  <app-service-type class="total-content4 w-100" 
+    [ContactCode]="ContactCode"
+    [CurMenu]="curMenu" 
+    (ServiceTypeComponent)="processSubCommands($event)"
+    (ScrollServiceNewComponent)="scrollToComponent($event)">
+  </app-service-type>
+</ion-row>

@@ -1,0 +1,13 @@
+{
+  "name": "Selcomm Sales Portal",
+  "short_name": "Sales Portal",
+  "start_url": "./index.html",
+  "scope": "*.*",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#3F51B5",
+  "description": "Manage Sales in the Selcomm platform",
+  "dir": "auto",
+  "lang": "en-US",
+  "orientation": "any"
+}

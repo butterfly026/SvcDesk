@@ -1,0 +1,32 @@
+[
+    {
+        "label": "40001003: Select Australia",
+        "expanded": true,
+        "items": [
+            {
+                "label": "40000095: Select Consultant Pty Ltd",
+                "expanded": true,
+                "items": [
+                    {
+                        "label": "40000122: Select Corp"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "label": "40001303: Select Australia",
+        "expanded": false,
+        "items": [
+            {
+                "label": "40040095: Select Consultant Pty Ltd",
+                "expanded": false,
+                "items": [
+                    {
+                        "label": "40500122: Select Corp"
+                    }
+                ]
+            }
+        ]
+    }
+]

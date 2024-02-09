@@ -1,0 +1,53 @@
+<ng-container *ngIf="isContextMenu; else isNotContextMenuTemp;">
+  <div class="context-menu mat-menu-panel" cdkMenu>
+    <div class="mat-menu-content">
+      <ng-container *ngFor="let item of actionButtons">
+        <button
+          class="mat-menu-item"
+          cdkMenuItem
+          [disabled]="!checkPermission(item.permissions)" 
+          (cdkMenuItemTriggered)="clickButton(item.actionName)"
+          *ngIf="actions.includes(item.actionName)">
+          {{item.toolTiop | translate}}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #isNotContextMenuTemp>
+  <ng-container *ngIf="actions.length <= countOfRowActionButtonsToShow; else elseTemp">
+    <ng-container *ngFor="let item of actionButtons">
+      <button 
+        mat-icon-button 
+        class="mat-mini-icon-button"
+        [matTooltip]="item.toolTiop | translate" 
+        [disabled]="!checkPermission(item.permissions)" 
+        (click)="clickButton(item.actionName)"
+        *ngIf="actions.includes(item.actionName)">
+        <ion-icon aria-hidden="true" [name]="item.icon" size="small"></ion-icon>
+      </button>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #elseTemp>
+  <button 
+    mat-icon-button 
+    class="mat-mini-icon-button" 
+    [matTooltip]="'Actions' | translate" 
+    [matMenuTriggerFor]="menu">
+    <ion-icon aria-hidden="true" name="settings-outline" size="small"></ion-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let item of actionButtons">
+      <button
+        mat-menu-item
+        [disabled]="!checkPermission(item.permissions)" 
+        (click)="clickButton(item.actionName)"
+        *ngIf="actions.includes(item.actionName)">
+        {{item.toolTiop | translate}}
+      </button>
+    </ng-container>
+  </mat-menu>  
+</ng-template>

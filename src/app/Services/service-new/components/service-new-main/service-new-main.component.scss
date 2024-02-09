@@ -1,0 +1,17 @@
+.main_content {
+  width: 100%;
+  min-height: calc(100vh - 100px);
+}
+
+.sidenav_container {
+  min-height: calc(100vh);
+}
+
+.fixed-sidenav {
+  position: fixed;
+  top: 210px;
+  left: 10px;
+  bottom: 25px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,91 @@
+<mat-stepper linear orientation="vertical" #stepper (selectionChange)="changeStep($event)">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select a service type</ng-template>
+      <ion-row>
+        <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+          <mat-form-field class="w-100">
+            <mat-select [placeholder]="'service_type' | translate" formControlName="ServiceTypeId">
+              <mat-option *ngFor="let list of serviceTypeList" [value]="list.Id">
+                {{list.Name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'service_type_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>              
+      </ion-row>
+      <ion-row class="ion-justify-content-end">
+        <button mat-button matStepperNext>Next</button>
+      </ion-row>        
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup" *ngIf="serviceConfiguration?.Porting?.Enabled">
+    <ng-template matStepLabel>Fill out porting info</ng-template>
+    <app-service-new-porting
+      class="w-100"
+      [formGroup]="secondFormGroup"
+      [ServiceTypeId]="this.firstFormGroup.get('ServiceTypeId').value"
+      (onUpdateServiceId)="updateServiceId($event)">
+    </app-service-new-porting>
+
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container> 
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup" *ngIf="!!serviceConfiguration">
+    <ng-template matStepLabel>Fill out main info</ng-template>
+    <app-service-new-plan 
+      class="w-100"
+      [isOpened]="currentStepIndex === 2"
+      [formGroup]="thirdFormGroup"
+      [serviceConfiguration]="serviceConfiguration" 
+      [ContactCode]="ContactCode"
+      [ServiceTypeId]="this.firstFormGroup.get('ServiceTypeId').value"
+      [isPorting]="this.secondFormGroup.get('isPorting').value">
+    </app-service-new-plan>
+
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="forthFormGroup" *ngIf="serviceConfiguration?.Attributes?.Enabled">
+    <ng-template matStepLabel>Fill out attributes</ng-template>
+    <app-service-new-attributes
+      class="w-100"
+      [formGroup]="forthFormGroup"
+      [ServiceTypeId]="this.firstFormGroup.get('ServiceTypeId').value">
+    </app-service-new-attributes>
+
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="fifthFormGroup" *ngIf="serviceConfiguration?.Attributes?.Enabled">
+    <ng-template matStepLabel>Fill out address info</ng-template>
+    <app-service-new-addresses 
+      class="w-100" 
+      [formGroup]="fifthFormGroup"
+      [ServiceTypeId]="this.firstFormGroup.get('ServiceTypeId').value">
+    </app-service-new-addresses>
+
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <strong>You are now done.</strong>
+
+    <ion-row class="ion-justify-content-end mt-5">
+      <button mat-button matStepperPrevious>Previous</button>
+      <button mat-button matStepperNext (click)="stepper.reset()">Create Another One</button>
+    </ion-row> 
+  </mat-step>
+</mat-stepper>
+
+<ng-template #matStepperButtons>
+  <ion-row class="ion-justify-content-end mt-5">
+    <button mat-button (click)="goToPriviousStage()">Previous</button>
+    <button mat-button (click)="goToNextStage()">Next</button>
+  </ion-row> 
+</ng-template>

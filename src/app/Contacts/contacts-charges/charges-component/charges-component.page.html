@@ -1,0 +1,110 @@
+<ion-row *ngIf="pageState == 'list'">
+  <ion-row class="position-relative" id="charge-list-grid">
+    <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridChargeList [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (onRowselect)="selectRow($event)" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+
+    <ion-row class="ion-margin-top page-bottom normal-button">
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (click)="goToNew()" class="jqx-button-theme">
+              {{ 'new' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="disableUpdate" (click)="goToUpdate()" class="jqx-button-theme">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="disableUpdate" (click)="delelteCharge()"
+              class="jqx-button-theme">
+              {{ 'delete' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (click)="goBack()" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row class="position-fixed full-height charge-delete" *ngIf="deleteStr=='delete'">
+      <ion-row class="charge-content margin-auto">
+        <ion-row class="charge-delete-header">
+          <ion-col size="1"></ion-col>
+          <ion-col size="10">
+            <ion-row class="full-height">
+              <span class="margin-auto ion-text-center">
+                {{ 'delete_charge' | translate }} [{{ 'contact' | translate }}: {{ContactCode}}]
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col size="1">
+            <ion-row class="full-height" (click)="cancelDelete()">
+              <ion-icon name="close" class="margin-auto cursor-point" (click)="cancelDelete()"></ion-icon>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="charge-delete-body">
+          <ion-row>
+            <span class="top-bottom-auto">
+              {{ 'are_you_sure_delete_charge' | translate }}
+            </span>
+          </ion-row>
+          <ion-row>
+            <textarea matInput [(ngModel)]="deleteMessage" class="textarea-boder"></textarea>
+          </ion-row>
+        </ion-row>
+        <ion-row class="charge-delete-footer normal-button">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" (click)="confirmDelete()" class="jqx-button-theme">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" (click)="cancelDelete()" class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="pageState == 'new'">
+  <app-charges-new class="w-100" [ContactCode]="ContactCode" (ChargesNewComponent)="processNewCharge($event)">
+  </app-charges-new>
+</ion-row>
+
+<ion-row *ngIf="pageState == 'update'">
+  <app-charges-update class="w-100" [ContactCode]="ContactCode" (ChargeUpdateComponent)="processUpdateCharge($event)">
+  </app-charges-update>
+</ion-row>

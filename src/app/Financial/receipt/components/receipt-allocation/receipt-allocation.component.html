@@ -1,0 +1,67 @@
+<ion-row class="justify-content-start">
+    <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+        <jqxCheckBox class="example-margin" [checked]="autoAllocation"
+          (onChange)="changeAllocation($event)" [theme]="globService.themeColor">
+          {{ 'auto_allocation' | translate }}
+        </jqxCheckBox>
+    </ion-col>
+</ion-row>
+
+<ng-container *ngIf="!autoAllocation">
+  <ion-row class="ion-padding-top ion-margin-top jqx-button-row">
+    <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+      <ion-row class="h-100">
+        <ion-row class="">
+          <span>
+            {{ 'total_amount_allocate' | translate }}: {{receiptAmount}}
+          </span>
+        </ion-row>
+  
+        <ion-row class="username-row">
+          <section class="example-section">
+            <jqxCheckBox class="example-margin" #sIZB [theme]="globService.themeColor"
+              (onChange)="changeZeroItem($event)">
+              {{ 'show_item_zero_balance' | translate }}
+            </jqxCheckBox>
+          </section>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  
+    <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+      <ion-row class="h-100">
+        <ion-row class="">
+          <span>
+            {{ 'remain_amount_allocate' | translate }}: {{remainAmount}}
+          </span>
+        </ion-row>
+  
+        <ion-row class="username-row">
+          <section class="example-section">
+            <jqxCheckBox class="example-margin" #bestMatch [theme]="globService.themeColor"
+              (onChange)="changeBestMatch($event)">
+              {{ 'best_match' | translate }}
+            </jqxCheckBox>
+          </section>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  
+  <app-datatable 
+    class="w-100"
+    [data]="dataSource" 
+    [totalCount]="totalCount"
+    [columns]="columns"
+    [columnsUsedForCurrency]="columnsUsedForCurrency"
+    [action]="dataTableAction"
+    [csvFileName]="csvFileName"
+    [permissions]="permissions"
+    [usePagination]="false"
+    [allowDblClickRow]="true"
+    (onEdit)="editOne($event)"
+    (onRowRefresh)="refreshRow($event)"
+    (onDoublClickRow)="onDoublClickRow($event)"
+    (onFetchData)="fetchData($event)">
+  </app-datatable>
+</ng-container>

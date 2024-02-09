@@ -1,0 +1,580 @@
+<ion-row class="ss-component-title">
+  <span class="top-bottom-auto margin-right-auto">
+    {{'contact' | translate}}
+  </span>
+</ion-row>
+
+<ion-row class="ion-margin-top ion-padding-top">
+  <mat-radio-group class="display-flex" [(ngModel)]="contactMode" (ngModelChange)="contactModeSwitch()">
+    <mat-radio-button class="ion-margin-end" value="Individual">
+      {{'individual' | translate}}
+    </mat-radio-button>
+    <mat-radio-button class="ion-margin-start" value="Business">
+      {{'business' | translate}}
+    </mat-radio-button>
+  </mat-radio-group>
+</ion-row>
+
+<ion-row class="ion-padding" *ngIf="contactMode=='Individual'">
+  <form [formGroup]="individualForm" class="full-width" novalidate>
+    <ion-row class="">
+      <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="3" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <mat-select formControlName="Title" placeholder="{{'title' | translate}}" required>
+              <mat-option *ngFor="let list of titleList" [value]="list.Id">
+                {{list.Value}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{'title_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12"></ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="FirstName" name="FirstName" placeholder="{{'first_name' | translate }}"
+              required />
+
+            <mat-error>
+              {{'first_name_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="LastName" name="LastName" placeholder="{{'last_name'| translate}}"
+              required />
+
+            <mat-error>
+              {{'last_name_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <mat-select formControlName="Gender" placeholder="{{'gender'| translate}}" required>
+              <mat-option *ngFor="let list of genderList" [value]="list.Id">
+                {{list.Value}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{'gender_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="dobPicker" formControlName="DOB" name="DOB" required
+              placeholder="{{'d_o_b' | translate}}" />
+
+            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dobPicker></mat-datepicker>
+
+            <mat-error>
+              {{'d_o_b_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="PhoneNumber" name="PhoneNumber" required
+              placeholder="{{'phone_number' | translate}}" />
+
+            <mat-error *ngIf="formIn.PhoneNumber.hasError('required')">
+              {{'phone_number_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formIn.PhoneNumber.hasError('required') && formIn.PhoneNumber.hasError('pattern')">
+              {{'phone_number_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="MobileNumber" name="MobileNumber" required
+              placeholder="{{'mobile_number' | translate}}" />
+
+            <mat-error *ngIf="formIn.MobileNumber.hasError('required')">
+              {{'mobile_number_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formIn.MobileNumber.hasError('required') && formIn.MobileNumber.hasError('pattern')">
+              {{'mobile_number_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Password" name="Password" type="password" required
+              placeholder="{{'password' | translate}}" />
+
+            <mat-error>
+              {{'password_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="ConfirmPassword" name="ConfirmPassword" type="password" required
+              placeholder="{{'confirm_password' | translate}}" />
+
+            <mat-error *ngIf="formIn.ConfirmPassword.hasError('required')">
+              {{'confirm_password_required' | translate}}
+            </mat-error>
+
+            <mat-error
+              *ngIf="!formIn.ConfirmPassword.hasError('required') && formIn.ConfirmPassword.hasError('mustMatch')">
+              {{'password_mismatch' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="EmailAddress" name="EmailAddress" type="email" required
+              placeholder="{{'email_address' | translate}}" />
+
+            <mat-error *ngIf="formIn.EmailAddress.hasError('required')">
+              {{'email_address_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formIn.EmailAddress.hasError('required') && formIn.EmailAddress.hasError('email')">
+              {{'email_address_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-row>
+        <h6 class="top-bottom-auto">
+          {{'h_w_y_l_t_r_bills' | translate}}
+        </h6>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-radio-group class="d-flex" [(ngModel)]="billType" [ngModelOptions]="{standalone:true}">
+          <mat-radio-button value="email" class="ion-margin-end">
+            {{'email' | translate}}
+          </mat-radio-button>
+          <mat-radio-button value="post" class="ion-margin-start">
+            {{'post' | translate}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </ion-row>
+      <ion-row *ngIf="billType == 'post'">
+        {{'a_a_c_w_b_p_f_p_b' | translate}}
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="StreetAddress" name="StreetAddress"
+              placeholder="{{'street_address' | translate}}" required />
+
+            <mat-error>
+              {{'street_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="resideIn" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeResideIn()">
+        {{'h_y_r_a_t_a_f_m_years' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!resideIn">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="PreStreetAddress" name="PreStreetAddress" required
+              placeholder="{{'previous_street_address' | translate}}" />
+
+            <mat-error>
+              {{'previous_street_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="billAddress" [ngModelOptions]="{standalone: true}" (ngModelChange)="billAddressIn()">
+        {{'u_s_a_a_b_address' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!billAddress">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="BillingAddress" name="BillingAddress" required
+              placeholder="{{'billing_address' | translate}}" />
+
+            <mat-error>
+              {{'billing_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="deliveryAddress" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="deliveryAddressIn()">
+        {{'u_s_a_a_b_address' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!deliveryAddress">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="DeliveryAddress" name="DeliveryAddress" required
+              placeholder="{{'delivery_address' | translate}}" />
+
+            <mat-error>
+              {{'delivery_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-row>
+
+<ion-row class="ion-padding" *ngIf="contactMode=='Business'">
+  <form [formGroup]="businessForm" class="full-width" novalidate>
+    <ion-row class="">
+      <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="3" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <mat-select formControlName="Title" placeholder="{{'title' | translate}}" required>
+              <mat-option *ngFor="let list of titleList" [value]="list.Id">
+                {{list.Value}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{'title_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12"></ion-col>
+
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="FirstName" name="FirstName" placeholder="{{'first_name' | translate }}"
+              required />
+
+            <mat-error>
+              {{'first_name_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="LastName" name="LastName" placeholder="{{'last_name'| translate}}"
+              required />
+
+            <mat-error>
+              {{'last_name_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Position" name="Position" placeholder="{{'position'| translate}}"
+              required />
+
+            <mat-error>
+              {{'position_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="BusinessName" name="BusinessName"
+              placeholder="{{'business_name'| translate}}" required />
+
+            <mat-error>
+              {{'business_name_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="TradingAs" name="TradingAs" placeholder="{{'trading_as'| translate}}"
+              required />
+
+            <mat-error>
+              {{'trading_as_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="ABN" name="ABN" placeholder="{{'abn'| translate}}" required />
+
+            <mat-error>
+              {{'abn_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="ACN" name="ACN" placeholder="{{'acn'| translate}}" required />
+
+            <mat-error>
+              {{'acn_is_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="PhoneNumber" name="PhoneNumber" required
+              placeholder="{{'phone_number' | translate}}" />
+
+            <mat-error *ngIf="formBu.PhoneNumber.hasError('required')">
+              {{'phone_number_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formBu.PhoneNumber.hasError('required') && formBu.PhoneNumber.hasError('pattern')">
+              {{'phone_number_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="MobileNumber" name="MobileNumber" required
+              placeholder="{{'mobile_number' | translate}}" />
+
+            <mat-error *ngIf="formBu.MobileNumber.hasError('required')">
+              {{'mobile_number_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formBu.MobileNumber.hasError('required') && formBu.MobileNumber.hasError('pattern')">
+              {{'mobile_number_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="Password" name="Password" type="password" required
+              placeholder="{{'password' | translate}}" />
+
+            <mat-error>
+              {{'password_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="ConfirmPassword" name="ConfirmPassword" type="password" required
+              placeholder="{{'confirm_password' | translate}}" />
+
+            <mat-error *ngIf="formBu.ConfirmPassword.hasError('required')">
+              {{'confirm_password_required' | translate}}
+            </mat-error>
+
+            <mat-error
+              *ngIf="!formBu.ConfirmPassword.hasError('required') && formBu.ConfirmPassword.hasError('mustMatch')">
+              {{'password_mismatch' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="EmailAddress" name="EmailAddress" type="email" required
+              placeholder="{{'email_address' | translate}}" />
+
+            <mat-error *ngIf="formBu.EmailAddress.hasError('required')">
+              {{'email_address_required' | translate}}
+            </mat-error>
+
+            <mat-error *ngIf="!formBu.EmailAddress.hasError('required') && formBu.EmailAddress.hasError('email')">
+              {{'email_address_invalid' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-row>
+        <h6 class="top-bottom-auto">
+          {{'h_w_y_l_t_r_bills' | translate}}
+        </h6>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-radio-group class="d-flex" [(ngModel)]="billTypeBus" [ngModelOptions]="{standalone:true}">
+          <mat-radio-button value="email" class="ion-margin-end">
+            {{'email' | translate}}
+          </mat-radio-button>
+          <mat-radio-button value="post" class="ion-margin-start">
+            {{'post' | translate}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </ion-row>
+      <ion-row *ngIf="billTypeBus == 'post'">
+        {{'a_a_c_w_b_p_f_p_b' | translate}}
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="StreetAddress" name="StreetAddress"
+              placeholder="{{'street_address' | translate}}" required />
+
+            <mat-error>
+              {{'street_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="resideBus" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeresideBus()">
+        {{'h_y_r_a_t_a_f_m_years' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!resideBus">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="PreStreetAddress" name="PreStreetAddress" required
+              placeholder="{{'previous_street_address' | translate}}" />
+
+            <mat-error>
+              {{'previous_street_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="billAddressBus" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="changeBillAddressBus()">
+        {{'u_s_a_a_b_address' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!billAddressBus">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="BillingAddress" name="BillingAddress" required
+              placeholder="{{'billing_address' | translate}}" />
+
+            <mat-error>
+              {{'billing_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-checkbox [(ngModel)]="deliveryAddressBus" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="changeDeliveryAddressBus()">
+        {{'u_s_a_a_b_address' | translate}}
+      </mat-checkbox>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="!deliveryAddressBus">
+      <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+        <ion-row class="full-height">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="DeliveryAddress" name="DeliveryAddress" required
+              placeholder="{{'delivery_address' | translate}}" />
+
+            <mat-error>
+              {{'delivery_address_required' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-row>

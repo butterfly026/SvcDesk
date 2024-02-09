@@ -1,0 +1,11 @@
+<ion-row>
+  <ion-row *ngIf="ImageType == 'list'">
+    <app-image-list class="w-100" [ContactCode]="ContactCode" (ImageListComponent)="processImage($event)">
+    </app-image-list>
+  </ion-row>
+
+  <ion-row *ngIf="ImageType == 'new'">
+    <app-image-form class="w-100" [ContactCode]="ContactCode" (ImageFormComponent)="processImage($event)">
+    </app-image-form>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,69 @@
+<ion-header [mode]="'ios'">
+
+    <ion-row class="header1-row" color="secondary">
+
+        <ion-col size="2">
+
+            <ion-row class="full-height">
+                <ion-icon [name]="'menu'" class="header-icon">
+                </ion-icon>
+            </ion-row>
+
+        </ion-col>
+
+        <ion-col size="8">
+
+            <ion-row class="full-height">
+
+                <span class="header-title">
+                    {{ 'available_report' | translate }}
+                </span>
+
+            </ion-row>
+
+        </ion-col>
+
+    </ion-row>
+
+    <app-header [pageName]="'available_report' | translate"></app-header>
+
+</ion-header>
+
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+    <ion-row>
+
+        <ion-col [offsetLg]="1" [offsetMd]="1" [sizeLg]="10" [sizeMd]="10" [sizeXs]="12" [sizeSm]="12">
+
+            <jqxGrid #availableReportGrid [theme]="globService.themeColor" [source]="dataAdapter" [columns]="columns"
+                [autoheight]="true" [columnsresize]="true" [columnsautoresize]="true" [width]="'100%'"
+                (onRowselect)="selectedAvailableReport = $event.args.row" [rtl]="globService.rtlMode">
+            </jqxGrid>
+
+        </ion-col>
+
+    </ion-row>
+
+    <ion-row class="jqx-button-row">
+
+        <ion-col [offsetLg]="2" [offsetMd]="2" [sizeXs]="6" [sizeSm]="6" [sizeLg]="4" [sizeMd]="4">
+
+            <jqxButton [theme]="globService.themeColor" [disabled]="!selectedAvailableReport"
+                (onClick)="selectReport(selectedAvailableReport)" class="jqx-button-theme">
+                {{ 'select' | translate }}
+            </jqxButton>
+
+        </ion-col>
+
+        <ion-col [sizeXs]="6" [sizeSm]="6" [sizeLg]="4" [sizeMd]="4">
+
+            <jqxButton [theme]="globService.themeColor" (onClick)="navCtrl.back()" class="jqx-button-theme">
+                {{ 'close' | translate }}
+            </jqxButton>
+
+        </ion-col>
+
+    </ion-row>
+
+</ion-content>

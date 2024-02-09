@@ -1,0 +1,237 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}" debitRunId="{{debitRunId}}"></app-header>
+</ion-header>
+
+<ion-content class="termination-service ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row *ngIf="!bulkState">
+    <ion-row class="total-content2 left-right-auto">
+      <form [formGroup]="terminateForm" class="full-width" (ngSubmit)="SubmitTerminate()" novalidate>
+        <ion-row class="group-row">
+          <ion-row class="group-title">
+            <span>
+              {{ 'general' | translate }}
+            </span>
+          </ion-row>
+          <ion-row class="receipt-border">
+            <ion-col size="6">
+              <ion-row class="full-height ion-padding">
+                <ion-row class="margin-bottom-auto">
+                  <ion-row class="ion-margin-top">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput [matDatepicker]="picker" formControlName="termDate"
+                        placeholder="{{ 'termination_date' | translate }}" name="termDate" required>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+
+                      <mat-error>
+                        <span>{{ 'termination_date_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                  <ion-row class="date-type ion-margin-top">
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                      [(ngModel)]="terminateType" [ngModelOptions]="{standalone: true}">
+                      <mat-radio-button class="example-radio-button" value="now">
+                        {{ 'now' | translate }}
+                      </mat-radio-button>
+                      <mat-radio-button class="example-radio-button ion-text-end" value="end_of_day">
+                        {{ 'end_of_day' | translate }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+                  <ion-row class="ion-margin-top">
+                    <!-- <ion-row>
+                          <span>
+                            {{ 'termination_reason' | translate }}
+                          </span>
+                        </ion-row>
+                        <ion-row class="termination-reason">
+                          <span class="full-width" *ngFor="let list of reasonList; let i = index" (click)="selectReason(i)">
+                            {{list.value}}
+                          </span>
+                        </ion-row> -->
+
+                    <mat-form-field class="example-full-width">
+
+                      <mat-select formControlName="termReason" placeholder="{{ 'termination_reason' | translate }}"
+                        name="termReason" required>
+                        <mat-option *ngFor="let list of reasonList; let i = index" value="{{list.text}}">
+                          {{list.value}}
+                        </mat-option>
+                      </mat-select>
+
+                      <mat-error>
+                        {{ 'termination_reason_required' | translate }}
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-row class="full-height ion-padding">
+                <ion-row class="ion-margin-top">
+                  <mat-form-field class="example-full-width textarea-field">
+                    <textarea matInput formControlName="note" name="note" placeholder="{{'notes_optional'| translate}}">
+                      </textarea>
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="ion-margin-top">
+                  <mat-checkbox [(ngModel)]="cNEvent" [ngModelOptions]="{standalone: true}">
+                    {{ 'close_network_event' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-checkbox [(ngModel)]="cAOEvents" [ngModelOptions]="{standalone: true}">
+                    {{ 'cancel_all_open_events' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-checkbox [(ngModel)]="cBFCharges" [ngModelOptions]="{standalone: true}">
+                    {{ 'credit_back_future_charges' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-checkbox [(ngModel)]="bFCImmediately" [ngModelOptions]="{standalone: true}">
+                    {{ 'bill_f_charges_immediately' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-checkbox [(ngModel)]="uFUsage" [ngModelOptions]="{standalone: true}">
+                    {{ 'unload_future_usage' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-row">
+          <ion-row class="group-title">
+            <span>
+              {{ 'payout_details' | translate }}
+            </span>
+          </ion-row>
+          <ion-row class="receipt-border ion-padding">
+            <ion-row class="margin-bottom-auto">
+              <ion-row class="ion-margin-top">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                  [(ngModel)]="payoutType" [ngModelOptions]="{standalone: true}">
+                  <mat-radio-button class="example-radio-button" value="currentPayment">
+                    {{ 'u_c_p_o_f_c_payout' | translate }}
+                  </mat-radio-button>
+                  <mat-radio-button class="example-radio-button" value="calPayment">
+                    {{ 'u_t_p_o_f_c_payout' | translate }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </ion-row>
+
+              <ion-row class="ion-margin-top">
+                <ion-row>
+                  <span>
+                    {{'cal_payout'|translate}}: {{calPrice}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <span>
+                    {{'note_service_c_has'|translate}} {{calPrice}}
+                    {{'of_unbilled_usage'|translate}}
+                  </span>
+                </ion-row>
+              </ion-row>
+              <ion-row>
+                <ion-col size="4" class="margin-left-auto">
+                  <ion-row class="full-height normal-button">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goDetail()">
+                      {{ 'detail' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-row">
+          <ion-row class="group-title">
+            <span>
+              {{ 'a_a_t_t_o_services' | translate }}:
+            </span>
+          </ion-row>
+          <ion-row class="receipt-border ion-padding">
+            <ion-row>
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-checkbox [(ngModel)]="all" [ngModelOptions]="{standalone: true}">
+                    {{ 'all' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-checkbox [(ngModel)]="children" [ngModelOptions]="{standalone: true}">
+                    {{ 'children' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-checkbox [(ngModel)]="sameServiceType" [ngModelOptions]="{standalone: true}">
+                    {{ 'same_service_type' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+              <ion-col size="6">
+                <ion-row class="full-height">
+                  <mat-checkbox [(ngModel)]="sibiling" [ngModelOptions]="{standalone: true}">
+                    {{ 'siblings' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+        <button id="submitButton"></button>
+      </form>
+
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-col size="4">
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+              [disabled]="!terminateForm.valid">
+              {{ 'disconnect' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-row>
+  </ion-row>
+
+  <app-bulk-change-service-selection *ngIf="bulkState" (setComponentValue)="cancelBulk($event)">
+  </app-bulk-change-service-selection>
+
+</ion-content>

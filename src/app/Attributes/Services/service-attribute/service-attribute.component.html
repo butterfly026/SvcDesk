@@ -1,0 +1,17 @@
+<ion-row *ngIf="attributeState === 'list'">
+  <app-service-attribute-list class="w-100" [ServiceReference]="ServiceReference" [ServiceId] = "ServiceId"
+    (ServiceAttributeListComponent)="processAttributes($event)">
+  </app-service-attribute-list>
+</ion-row>
+
+<ion-row *ngIf="attributeState === 'add'">
+  <app-service-attribute-form class="w-100" [ServiceReference]="ServiceReference"
+    (ServiceAttributeFormComponent)="processAttributes($event)">
+  </app-service-attribute-form>
+</ion-row>
+
+<ion-row *ngIf="attributeState === 'update'">
+  <app-service-attribute-form class="w-100" [UpdateData]="updateData" [ServiceReference]="ServiceReference"
+    (ServiceAttributeFormComponent)="processAttributes($event)">
+  </app-service-attribute-form>
+</ion-row>

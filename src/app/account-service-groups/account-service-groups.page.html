@@ -1,0 +1,30 @@
+<ion-row class="ion-margin-top">
+  <app-account-service-group-control [ContactCode]="ContactCode" class="full-width"
+    (AccountServiceGroupComponentValue)="getMyServiceState($event)" *ngIf="SGComponentValue == ''">
+  </app-account-service-group-control>
+
+  <app-account-services [ContactCode]="ContactCode" class="full-width"
+    (AccountServicesComponent)="getServicesEvent($event)" *ngIf="SGComponentValue == 'ServicesServiceGroup'"
+    [ServiceId]="ServiceId">
+  </app-account-services>
+
+  <app-account-service-group-add [ContactCode]="ContactCode" class="full-width"
+    (AccountServiceGroupAddComponent)="getAddRequest($event)" *ngIf="SGComponentValue == 'AddServiceGroup'">
+  </app-account-service-group-add>
+
+  <app-account-service-add class="full-width" (AccountAssignServiceAddComponent)="getServicesEvent($event)"
+    *ngIf="SGComponentValue == 'AssignServiceAdd'" [ServiceId]="ServiceId">
+  </app-account-service-add>
+
+  <app-account-service-group-update class="full-width" (AccountServiceGroupUpdate)="getServicesEvent($event)"
+    *ngIf="SGComponentValue == 'UpdateServiceGroup'" [ServiceId]="ServiceId">
+  </app-account-service-group-update>
+
+  <app-account-service-group-bar class="full-width" (AccountServiceGroupBar)="getServicesEvent($event)"
+    *ngIf="SGComponentValue == 'BarServiceGroup'" [ServiceGroupId]="ServiceId" [ServiceGroupName]="ServiceName">
+  </app-account-service-group-bar>
+
+  <app-account-service-group-unbar class="full-width" (AccountServiceGroupUnbar)="getServicesEvent($event)"
+    *ngIf="SGComponentValue == 'UnbarServiceGroup'" [ServiceGroupId]="ServiceId" [ServiceGroupName]="ServiceName">
+  </app-account-service-group-unbar>
+</ion-row>

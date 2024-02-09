@@ -1,0 +1,79 @@
+<ion-grid class="ion-grid" [class.ion-grid]="true">
+
+  <ion-row [class.ion-grid-row]="true" *ngIf="dynamicStaticSubMenuList.length == 0 && dynamicSubMenuList.length == 0">
+
+    <ion-col class="ion-grid-row-cols animated zoomIn" *ngFor="let menu of dynamicMenuList?.MenuItems" [sizeLg]="2"
+      [sizeMd]="3" [sizeXs]="6" [sizeSm]="4" (click)="navigateDynamicMenuItem(menu)">
+
+      <ion-row [style.background-color]="menu.Color" class="tile d-flex align-items-center justify-content-center">
+        <ion-row>
+          <ion-row>
+            <!-- <ion-img [src]="menu.ImageURL"></ion-img> -->
+            <i class="{{menu.ImageUrl}} menu-icon"></i>
+          </ion-row>
+          <ion-row class="d-flex align-items-center justify-content-center ion-padding-top">
+            <ion-label>{{menu.Caption | translate}}</ion-label>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+    </ion-col>
+
+    <ion-col class="ion-grid-row-cols animated zoomIn" *ngFor="let menu of menuList" [sizeLg]="2" [sizeMd]="3"
+      [sizeXs]="6" [sizeSm]="4" (click)="navigateMenuItem(menu)">
+
+      <ion-row [style.background-color]="menu.Color" class="tile d-flex align-items-center justify-content-center">
+        <ion-row>
+          <ion-row>
+            <!-- <ion-img [src]="menu.ImageURL"></ion-img> -->
+            <i class="{{menu.icon}} menu-icon"></i>
+          </ion-row>
+          <ion-row class="d-flex align-items-center justify-content-center ion-padding-top">
+            <ion-label>{{menu.Caption | translate}}</ion-label>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+
+  </ion-row>
+
+  <ion-row [class.ion-grid-row]="true" *ngIf="dynamicStaticSubMenuList.length > 0 || dynamicSubMenuList.length > 0">
+
+    <ion-col class="ion-grid-row-cols animated zoomIn" *ngFor="let menu of dynamicSubMenuList" [sizeLg]="2" [sizeMd]="3"
+      [sizeXs]="6" [sizeSm]="4" (click)="navigateDynamicMenuItem(menu)">
+
+      <ion-row [style.background-color]="menu.Color" class="tile d-flex align-items-center justify-content-center">
+        <ion-row>
+          <ion-row>
+            <!-- <ion-img [src]="menu.ImageURL"></ion-img> -->
+            <i class="{{menu.ImageUrl}} menu-icon"></i>
+          </ion-row>
+          <ion-row class="d-flex align-items-center justify-content-center ion-padding-top">
+            <ion-label>{{menu.Caption | translate}}</ion-label>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+    </ion-col>
+
+    <ion-col class="ion-grid-row-cols animated zoomIn" *ngFor="let menu of dynamicStaticSubMenuList" [sizeLg]="2"
+      [sizeMd]="3" [sizeXs]="6" [sizeSm]="4" (click)="navigateMenuItem(menu)">
+
+      <ion-row [style.background-color]="menu.Color" class="tile d-flex align-items-center justify-content-center">
+        <ion-row>
+          <ion-row>
+            <!-- <ion-img [src]="menu.ImageURL"></ion-img> -->
+            <i class="{{menu.icon}} menu-icon"></i>
+          </ion-row>
+          <ion-row class="d-flex align-items-center justify-content-center ion-padding-top">
+            <ion-label>{{menu.Caption | translate}}</ion-label>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+    </ion-col>
+
+  </ion-row>
+
+</ion-grid>

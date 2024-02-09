@@ -1,0 +1,412 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}" debitRunId="{{debitRunId}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto ion-margin-top" *ngIf="!showBarPart">
+
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span>
+            {{'unbar_type' | translate}} : <strong> {{barData.BarType | translate}} </strong>
+          </span>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span>
+            {{'unbar_reason' | translate}} : <strong> {{barData.BarReason | translate}} </strong>
+          </span>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span>
+            {{'unbar_date' | translate}} : <strong> {{barData.DateToBarService}} </strong>
+          </span>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <span>
+            {{'bar_date' | translate}} : <strong> {{barData.DateFromBarService}} </strong>
+          </span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <form [formGroup]="searchForm" (ngSubmit)="searchItem()" class="full-width" novalidate>
+
+      <ion-row>
+        <ion-col [sizeXl]="9" [sizeLg]="9" [sizeMd]="9" [sizeSm]="9" [sizeXs]="12">
+          <ion-row class="full-height">
+            <ion-searchbar mode='ios' formControlName="searchCtrl" required name="searchCtrl" class="margin-auto"
+              [placeholder]="'search' | translate">
+            </ion-searchbar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="3" [sizeXs]="6" class="margin-auto">
+          <ion-row class="full-height normal-button">
+            <jqxButton [theme]="globService.themeColor" class="margin-left-auto" [disabled]="!searchForm.valid || !enableAddList">
+              {{ 'search' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="plan" placeholder="{{ 'plan' | translate }}" name="plan">
+                <mat-option *ngFor="let list of planList" value="{{list.Id}}" (click)="enableSearchButton()">
+                  {{list.DisplayName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="status" placeholder="{{ 'status' | translate }}" name="status">
+                <mat-option *ngFor="let list of statusList" value="{{list.Code}}" (click)="enableSearchButton()">
+                  {{list.Status}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="group" placeholder="{{ 'group' | translate }}" name="group">
+                <mat-option *ngFor="let list of groupList" value="{{list.Id}}" (click)="enableSearchButton()">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="costCentre" placeholder="{{ 'cost_centre' | translate }}" name="costCentre">
+                <mat-option *ngFor="let list of costCentreList" value="{{list.Id}}" (click)="enableSearchButton()">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+              <mat-select formControlName="serviceType" placeholder="{{ 'servicetype' | translate }}"
+                name="serviceType">
+                <mat-option *ngFor="let list of serviceTypeList" value="{{list.Code}}" (click)="enableSearchButton()">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+
+    <ion-row class="add-to-alert ion-margin-top">
+      <ion-row class="left-right-auto ion-margin-top" [ngStyle]="{'width':gridContentWidth}">
+
+        <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+          <span class="margin-left-auto ion-text-end" (click)="exportData()">
+            {{'export_to_excel' | translate}}
+          </span>
+        </ion-row>
+
+        <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridBulkServiceUnbar [columnsautoresize]="true"
+          [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+          [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+        </jqxGrid>
+
+      </ion-row>
+    </ion-row>
+
+    <ion-row *ngIf="bulkList.length>0">
+      <ion-row class="total-content2 left-right-auto">
+        <ion-row class="ion-margin-top pagination-content">
+          <span class="pagination-span ion-text-center">
+            <span class="go-to-page">
+              {{ 'goto_page' | translate }}:
+              <input matInput type="number" min="1" max="{{maxPageRow}}" (keyup)="changePageNumber($event)"
+                [(ngModel)]="pageRowNumber" (focus)="focusChangePage()" (focusout)="focusOutChangePage()" />
+            </span>
+
+            <span class="show-rows">
+              {{ 'show_rows' | translate }}:
+              <mat-select [(ngModel)]="rowStep" name="rowStep" (ngModelChange)="changeRowStep()">
+                <mat-option *ngFor="let list of rowList" value="{{list}}">
+                  {{list}}
+                </mat-option>
+              </mat-select>
+            </span>
+
+            <!-- <br> -->
+
+            <span class="pagination-row">
+              {{startIndex + 1}} - {{endIndex}} {{ 'of_word' | translate }} {{totalLength}} &nbsp;
+
+              <span color="secondary" *ngIf="startIndex < 1" class="margin-right-auto">
+                {{backSymbol}}
+              </span>
+              <span *ngIf="startIndex > 0" class="margin-right-auto" (click)="reduceList()">
+                {{backSymbol}}
+              </span> &nbsp;&nbsp;
+              <span color="secondary" *ngIf="endIndex >= totalLength" class="margin-left-auto top-bottom-auto"
+                (click)="increaseList()">
+                {{forwardSymbol}}
+              </span>
+              <span mode="ios" *ngIf="endIndex < totalLength" class="margin-left-auto top-bottom-auto"
+                (click)="increaseList()">
+                {{forwardSymbol}}
+              </span>
+
+            </span>
+
+          </span>
+
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <ion-row
+      class="ion-margin-top ion-padding-top page-bottom normal-button total-content3 left-right-auto custom-jqxbutton">
+      <!-- <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="enableBar()"
+            [disabled]="!enableDeleteItem || bulkList.length<1">
+            {{ 'unbar' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col> -->
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteItem()"
+            [disabled]="!enableDeleteItem || bulkList.length<1">
+            {{ 'delete_from_list' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="clearList()" [disabled]="bulkList.length<1">
+            {{ 'clear_list' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelBulk()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="total-content2 left-right-auto ion-margin-top" *ngIf="showBarPart">
+    <form [formGroup]="unBarForm" class="full-width" (ngSubmit)="unBarSubmit()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="BarType" placeholder="{{ 'unbar_type' | translate }}" name="BarType">
+                <mat-option *ngFor="let list of barTypeList; let i = index" value="{{list.text}}"
+                  (click)="enableSearchButton()">
+                  {{list.value}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'unbar_type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="BarReason" placeholder="{{ 'unbar_reason' | translate }}" name="BarReason">
+                <mat-option *ngFor="let list of barReasonList; let i = index" value="{{list.text}}"
+                  (click)="enableSearchButton()">
+                  {{list.value}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'unbar_reason_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-checkbox [(ngModel)]="unBarState" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="unBarStateChange()">
+              {{ 'automatically_rebar' | translate }}
+            </mat-checkbox>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="picker" formControlName="DateToBarService"
+                (ngModelChange)="enableSearchButton()" placeholder="{{ 'date_to_unbar_service' | translate }}"
+                name="DateToBarService">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'date_to_unbar_service_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="pickerUnBar" formControlName="DateFromBarService"
+                (ngModelChange)="enableSearchButton()" placeholder="{{ 'automatically_rebar' | translate }}"
+                name="DateFromBarService">
+              <mat-datepicker-toggle matSuffix [for]="pickerUnBar"></mat-datepicker-toggle>
+              <mat-datepicker #pickerUnBar></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'automatically_rebar_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-form-field class="example-full-width textarea-field">
+          <textarea matInput formControlName="note" name="note" placeholder="{{'notes_optional'| translate}}">
+            </textarea>
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row class="group-row" *ngIf="configState">
+        <ion-row class="group-title">
+          <span>
+            {{ 'a_a_t_t_o_services' | translate }}:
+          </span>
+        </ion-row>
+        <ion-row class="receipt-border ion-padding">
+          <ion-row>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="all" [ngModelOptions]="{standalone: true}">
+                  {{ 'all' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="children" [ngModelOptions]="{standalone: true}">
+                  {{ 'children' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="sameServiceType" [ngModelOptions]="{standalone: true}">
+                  {{ 'same_service_type' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="sibiling" [ngModelOptions]="{standalone: true}">
+                  {{ 'siblings' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <mat-checkbox [(ngModel)]="cNEvent" [ngModelOptions]="{standalone: true}">
+          {{ 'close_network_event' | translate }}
+        </mat-checkbox>
+      </ion-row>
+
+      <button id="submitButton"></button>
+
+    </form>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!unBarForm.valid">
+            {{ 'unbar' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-content>

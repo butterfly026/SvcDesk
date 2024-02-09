@@ -1,0 +1,178 @@
+<ion-row class="ion-justify-content-end ion-align-items-center mb-2 gap-5" *ngIf="showToolbar()">
+  <ion-col class="service-list-search" *ngIf="searchOptions.includes('Text')">
+    <ion-searchbar 
+      mode="ios" 
+      class="ion-padding-start ml-auto" 
+      (keypress)="searchInputEvent($event)"
+      [placeholder]="'Search' | translate" 
+      [(ngModel)]="queryParam.SearchString" 
+      (ionClear)="cancelSearch()">
+    </ion-searchbar>
+  </ion-col>
+
+  <ion-col size="auto">
+    <ion-row>
+      <app-datatable-toolbar 
+        [showSearchOptions]="showSearchOptions" 
+        [actions]="action.toolBar ?? []"
+        [permissions]="permissions ?? []"
+        [countOfToolBarActionButtonsToShow]="countOfToolBarActionButtonsToShow"
+        (onEvent)="onToolBarEvent($event)"
+        (onToggleSearchOptions)="toggleSearchOptions($event)">
+      </app-datatable-toolbar>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row class="datatable-section">
+  <table 
+    mat-table 
+    matSort 
+    class="w-100" 
+    [dataSource]="dataSource" 
+    [multiTemplateDataRows]="subTableColumns?.length > 0" 
+    [class.row-action-table]="tableColumns.includes('Action')">
+    
+    <ng-container 
+      *ngFor="let column of tableColumns" 
+      [matColumnDef]="column" 
+      [stickyEnd]="column === 'Action' || column === 'Expand'">
+      
+      <ng-container *ngIf="column === 'Expand'; else notExpandColumnTemp;">
+        <th mat-header-cell *matHeaderCellDef disabled class="to-be-removed"></th>
+        <td mat-cell *matCellDef="let row" class="to-be-removed">
+          <button mat-icon-button (click)="toggleExpandSubTable($event, row)">
+            <ion-icon *ngIf="expandedRow !== row" aria-hidden="true" name="chevron-down-outline" size="small"></ion-icon>
+            <ion-icon *ngIf="expandedRow === row" aria-hidden="true" name="chevron-up-outline" size="small"></ion-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-template #notExpandColumnTemp>
+        <th
+          *matHeaderCellDef 
+          mat-header-cell 
+          [class.to-be-removed]="column === 'Action'"
+          [mat-sort-header]="column === 'Action' ? null : column" 
+          [disabled]="column === 'Action' ? true : false">
+          {{column | translate}}
+        </th>
+        <td 
+          mat-cell 
+          *matCellDef="let row" 
+          [ngClass]="{
+            'to-be-removed': column === 'Action',
+            'note': columnsUsedForWrap.includes(column), 
+            'text-right': columnsUsedForCurrency.includes(column) || isNumber(row[column])
+          }">
+          <ng-container *ngIf="columnsUsedForWrap.includes(column); else elseSecondTemp">
+            <span [innerHTML]="(row[column] | formatString) | safeHtml:'html'"></span>
+          </ng-container>
+          <ng-template #elseSecondTemp>
+            <ng-container *ngIf="columnsUsedForDecimal.includes(column); else elseThirdTemp">
+              {{ row[column] | number:'1.2-5' }}
+            </ng-container>
+          </ng-template>
+          <ng-template #elseThirdTemp>
+            <ng-container *ngTemplateOutlet="noNoteColumnTemp; context:{row, column}"></ng-container>
+          </ng-template>
+        </td>
+      </ng-template>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let row" [attr.colspan]="tableColumns.length" class="sub-table-detail to-be-removed">
+        <div [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'">
+          <app-datatable 
+            class="w-100"
+            [data]="row[propertyNameToShowInSubTable]" 
+            [columns]="subTableColumns"
+            [action]="subTableAction"
+            [permissions]="subTablePermissions"
+            [usePagination]="false"
+            [columnsUsedForCurrency]="subTableColumnsUsedForCurrency"
+            [columnsUsedForWrap]="subTableColumnsUsedForWrap"
+            [columnsUsedForDecimal]="subTableColumnsUsedForDecimal"
+            [columnsUsedForDate]="subTableColumnsUsedForDate"
+            (onView)="onRowEventForSubTable('Details', $event)">
+          </app-datatable>
+        </div>
+      </td>
+    </ng-container>
+ 
+    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+    <tr 
+      mat-row 
+      *matRowDef="let row; columns: tableColumns" 
+      [cdkContextMenuTriggerFor]="contextMenuTemp" 
+      [class.cursor-point]="allowDblClickRow" 
+      (dblclick)="dblclick(row)">
+
+      <ng-template #contextMenuTemp>
+        <app-datatable-row-action
+          [actions]="action.row"
+          [isContextMenu]="true"
+          [permissions]="permissions"
+          [revokedRowActionPermissions]="row['RevokedRowActionPermissions'] ?? []"
+          (onEvent)="onRowEvent($event, row)"
+          *ngIf="action.row.length > 0">
+        </app-datatable-row-action>         
+      </ng-template>
+    </tr>
+
+    <ng-container *ngIf="subTableColumns?.length > 0">
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="sub-table-row"></tr>
+    </ng-container>
+
+    <tr *matNoDataRow>
+      <td [colSpan]="tableColumns.length" class="text-center">
+        <ng-container *ngIf="queryParam.SearchString; else elseTemplate">
+          {{ 'NoDataMathcingWith' | translate }} "{{ queryParam.SearchString }}"
+        </ng-container>
+        <ng-template #elseTemplate>
+          {{ 'NoData' | translate }}
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</ion-row>
+
+<ion-row class="gap-5" *ngIf="usePagination">
+  <ion-row class="mat-paginator d-flex flex-1 ion-align-items-center ion-justify-content-end">
+    <ion-label class="mat-paginator-page-size-label">{{'CurrentPage' | translate}}: </ion-label>
+    <ion-input fill="solid" type="number" class="mat-paginator-page-size-input" [(ngModel)]="currentPage" (keypress)="changeCurrentPage($event)"></ion-input>
+  </ion-row>
+  <mat-paginator [pageSizeOptions]="pageSizeOptions" [length]="totalCount" showFirstLastButtons></mat-paginator>
+</ion-row>
+
+<!-- Templates -->
+<ng-template #defaultColumnTemp let-row="row" let-column="column">
+  {{
+    columnsUsedForCurrency.includes(column) 
+      ? (row[column] | currencyForLocal) 
+      : (row[column] | stringOrDate: columnsUsedForDate.includes(column) ? 'DD/MM/YYYY' : 'YYYY-MM-DD hh:mm:ss') 
+  }}
+</ng-template>
+
+<ng-template #actionColumnTemp let-row="row" let-column="column">
+  <ion-row class="ion-nowrap">
+    <app-datatable-row-action
+      [actions]="action.row"
+      [permissions]="permissions"
+      [revokedRowActionPermissions]="row['RevokedRowActionPermissions'] ?? []"
+      [countOfRowActionButtonsToShow]="countOfRowActionButtonsToShow"
+      (onEvent)="onRowEvent($event, row)">
+    </app-datatable-row-action>          
+  </ion-row>
+</ng-template>
+
+<ng-template #noNoteColumnTemp let-row="row" let-column="column">
+  <ngcontainer [ngSwitch]="column">
+    <ng-container *ngSwitchCase="'Action'">
+      <ng-container *ngTemplateOutlet="actionColumnTemp; context:{row, column}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <ng-container *ngTemplateOutlet="defaultColumnTemp; context:{row, column}"></ng-container>
+    </ng-container>
+  </ngcontainer>      
+</ng-template>

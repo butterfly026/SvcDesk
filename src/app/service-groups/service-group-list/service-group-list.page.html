@@ -1,0 +1,21 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="ion-magin-top">
+    <app-account-service-groups [ContactCode]="ContactCode" class="full-width vodafon-font">
+    </app-account-service-groups>
+  </ion-row>
+
+  <ion-row class="page-bottom normal-button total-content2 left-right-auto">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

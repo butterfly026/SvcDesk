@@ -1,0 +1,69 @@
+<ion-row class="pt-2 mat-modal-body">
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{'sms' | translate}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <ion-row class="flex-1">
+    <form [formGroup]="formGroup" class="w-100" (ngSubmit)="sendSMS()">
+      <ion-row class="username-row">
+        <app-chip-list-autocomplete
+          class="w-100"
+          fieldLabel="To"
+          errorMessage="NumberRequired" 
+          [chipListAutoCompleteFormControl]="formGroup.get('Addresses')"
+          [orignalList]="smsList">
+        </app-chip-list-autocomplete>
+      </ion-row>
+  
+      <ion-row class="username-row mt-4">
+        <mat-form-field class="w-100">
+          <textarea 
+            matInput 
+            formControlName="Message" 
+            placeholder="{{ 'message' | translate }}">
+          </textarea>
+  
+          <mat-error>
+            {{ 'message_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+  
+      <ion-row class="username-row mt-4">
+        <mat-form-field class="w-100">
+          <input 
+            matInput 
+            type="datetime-local" 
+            formControlName="Due" 
+            [max]="maxDate" 
+            [min]="minDate"
+            placeholder="{{ 'due_date' | translate }}" />
+  
+          <mat-error>
+            {{ 'due_date_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+  
+      <button mat-button id="submitButton">Submit</button>
+    </form>
+  </ion-row>
+
+  <ion-row class="jqx-button-row mt-5 ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" tabindex="-1" [disabled]="!formGroup.valid"
+        (onClick)="triggerSubmit()">
+        {{ 'send_sms' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

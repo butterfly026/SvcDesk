@@ -1,0 +1,38 @@
+
+<ion-row class="mat-modal-body">
+  <ion-row class="mt-1 mb-5">
+    <h3 class="p-0 my-0 mx-auto">
+      <b>{{ 'parameters' | translate }} : [{{data?.data.Id}} : {{data?.data.Name}}]</b>
+    </h3>
+  </ion-row>
+
+  <ion-row class="param-detail flex-1">
+    <ion-row> 
+      <ion-row *ngFor="let list of data?.data.Parameters">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <h5 class="m-0 p-0">
+              <b>{{ 'name' | translate }}</b> : {{list.Name}}
+            </h5>
+          </ion-row>
+        </ion-col>
+  
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <h5 class="m-0 p-0">
+              <b>{{ 'value' | translate }}</b> : {{list.Value}}
+            </h5>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="jqx-button-row mb-3 mt-2 pt-3 ion-justify-content-end">
+    <ion-col size="4">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

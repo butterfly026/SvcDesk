@@ -1,0 +1,172 @@
+<ion-row>
+  <ion-row class="group-row left-right-auto" *ngIf="financialTransactionDetail">
+    <ion-row class="group-title">
+      <span class="m-auto text-center">
+        <b>
+          {{financialTransactionDetail.Type}}
+        </b>
+      </span>
+    </ion-row>
+    <ion-row class="group-detail">
+
+      <ion-row class="ion-padding-start left-right-auto">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'number' | translate }}: {{financialTransactionDetail.Number}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'amount' | translate }}: {{getCurrencyConfiguration(financialTransactionDetail.Amount)}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'tax_amount' | translate }}: {{getCurrencyConfiguration(financialTransactionDetail.TaxAmount)}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'open_amount' | translate }}: {{getCurrencyConfiguration(financialTransactionDetail.OpenAmount)}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'date' | translate }}: {{financialTransactionDetail.Date}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'due_date' | translate }}: {{financialTransactionDetail.DueDate}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'category' | translate }}: {{financialTransactionDetail.Category}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'status' | translate }}: {{financialTransactionDetail.Status}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'source' | translate }}: {{financialTransactionDetail.Source}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'reason' | translate }}: {{financialTransactionDetail.Reason}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'reference' | translate }}: {{financialTransactionDetail.OtherReference}}
+          </span>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+          <span>
+            {{ 'bill_number' | translate }}: {{financialTransactionDetail.BillNumber}}
+          </span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-padding-start mx-auto">
+        <app-create-update class="w-100" [inputData]="createUpdateData">
+        </app-create-update>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row class="my-3">
+      <mat-tab-group 
+        animationDuration="1000ms" 
+        class="left-right-auto w-100 customer-tab customer-care2-component"
+        [selectedIndex]="selectedServiceDeskIndex"
+        (selectedTabChange)="selectTabs($event)">
+        <ng-container *ngFor="let item of availableTabList">
+          <mat-tab  [label]="'note' | translate" *ngIf="item.tabLabel === 'note'">
+            <ion-row *ngIf="currentTabLabel === item.tabLabel">
+            </ion-row>
+          </mat-tab>
+  
+          <mat-tab [label]="'charges' | translate" *ngIf="item.tabLabel === 'charges'">
+            <app-financial-charges 
+              class="w-100" 
+              [ContactCode]="ContactCode" 
+              [FinancialId]="FinancialId"
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-charges>
+          </mat-tab>
+  
+          <mat-tab [label]="'usage' | translate" *ngIf="item.tabLabel === 'usage'">
+            <app-financial-usage 
+              class="w-100" 
+              [FinancialId]="FinancialId"
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-usage>
+          </mat-tab>
+  
+          <mat-tab [label]="'service_summary' | translate" *ngIf="item.tabLabel === 'service_summary'">
+            <app-financial-service-summary 
+              class="w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-service-summary>
+          </mat-tab>
+  
+          <mat-tab [label]="'product' | translate" *ngIf="item.tabLabel === 'product'">
+            <app-financial-product 
+              class=" w-100" 
+              [FinancialId]="FinancialId" 
+              [ContactCode]="ContactCode" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-product>
+          </mat-tab>
+  
+          <mat-tab [label]="'allocations' | translate" *ngIf="item.tabLabel === 'allocations'">
+            <app-financial-allocations 
+              class=" w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-allocations>
+          </mat-tab>
+  
+          <mat-tab [label]="'distributions' | translate" *ngIf="item.tabLabel === 'distributions'">
+            <app-financial-distributions 
+              class="w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-distributions>
+          </mat-tab>
+  
+          <mat-tab [label]="'events' | translate" *ngIf="item.tabLabel === 'events'">
+            <app-financial-events 
+              class="w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-events>
+          </mat-tab>
+  
+          <mat-tab [label]="'pay_request' | translate" *ngIf="item.tabLabel === 'pay_request'">
+            <app-financial-pay-requests 
+              class="w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-pay-requests>
+          </mat-tab>
+  
+          <mat-tab [label]="'external_transactions' | translate" *ngIf="item.tabLabel === 'external_transactions'">
+            <app-financial-external-transactions 
+              class="w-100" 
+              [FinancialId]="FinancialId" 
+              *ngIf="currentTabLabel === item.tabLabel">
+            </app-financial-external-transactions>
+          </mat-tab>
+        </ng-container>
+        
+      </mat-tab-group>
+    </ion-row>
+  </ion-row>
+</ion-row>

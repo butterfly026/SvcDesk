@@ -1,0 +1,30 @@
+<ion-row class="">
+
+  <ion-row *ngIf="docState == 'own_list'">
+    <app-documents-own-list class="w-100" [viewType]="viewType" [currentService]="currentService"
+      (docOwnComponent)="processDocuments($event)" (currentType)="getCurrentUserType($event)">
+    </app-documents-own-list>
+  </ion-row>
+
+  <ion-row *ngIf="docState == 'public_list'">
+    <app-documents-public-list class="w-100" [viewType]="viewType" [currentService]="currentService"
+      (docPublicComponent)="processDocuments($event)" (currentType)="getCurrentUserType($event)">
+    </app-documents-public-list>
+  </ion-row>
+
+  <ion-row *ngIf="docState == 'add'">
+    <app-documents-add class="w-100" (docAddComponent)="processDocuments($event)">
+    </app-documents-add>
+  </ion-row>
+
+</ion-row>
+
+<ion-row class="mt-5 jqx-button-row total-content4 mx-auto" *ngIf="showClose">
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+    <ion-row class="full-height">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+</ion-row>

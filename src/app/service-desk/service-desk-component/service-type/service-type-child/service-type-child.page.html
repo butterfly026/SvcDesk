@@ -1,0 +1,16 @@
+<ion-row id="service-list-type-child-grid" class="ion-margin-top">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      (viewDetail)="viewDetail($event)"
+      (fetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>

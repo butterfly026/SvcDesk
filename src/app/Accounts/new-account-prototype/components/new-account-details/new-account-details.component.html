@@ -1,0 +1,119 @@
+<ion-row [formGroup]="formGroup">
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>{{ 'account_id' | translate }}</mat-label>
+      <input matInput formControlName="Id" type="text"/>
+      <mat-error>
+        {{ 'account_id_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>{{ 'business_unit' | translate }}</mat-label>
+      <mat-select formControlName="BusinessUnitCode">
+        <mat-option *ngFor="let item of businessUnits;" [value]="item.Id">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{ 'billing_unit_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration?.Details.Status.Enabled">
+    <mat-form-field>
+      <mat-label>{{ 'status' | translate }}</mat-label>
+      <mat-select formControlName="StatusId">
+        <mat-option *ngFor="let list of accountStatuses" [value]="list.Id">
+          {{list.Status}}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{ 'status_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+  
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration?.Details.Key.Enabled">
+    <mat-form-field>
+      <mat-label>{{ 'key' | translate }}</mat-label>
+      <input matInput formControlName="Key" type="text"/>
+    </mat-form-field>
+  </ion-col>
+
+  <!-- For Corporation -->
+  <ng-container *ngIf="accountType === 'corporation'">
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration?.Details.SubType.Enabled">
+      <mat-form-field>
+        <mat-label>{{ 'sub_type' | translate }}</mat-label>
+        <mat-select formControlName="SubTypeId">
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration?.Details.Aliases.Enabled">
+      <mat-form-field>
+        <mat-label>{{ 'name' | translate }}</mat-label>
+        <input matInput formControlName="Name" type="text"/>
+        <mat-error>
+          {{ 'account_id_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-col>
+  </ng-container>
+
+  <!-- For Person -->
+  <ng-container *ngIf="accountType === 'person' && accountConfiguration?.Details.Aliases.Enabled">
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+      <mat-form-field>
+        <mat-label>{{ 'gender' | translate }}</mat-label>
+        <mat-select formControlName="Gender">
+          <mat-option *ngFor="let item of genderListForPerson" [value]="item.Id">
+            {{item.Name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+      <mat-form-field>
+        <mat-label>{{ 'Title' | translate }}</mat-label>
+        <mat-select formControlName="Title">
+          <mat-option *ngFor="let item of titleListForPerson" [value]="item.Id">
+            {{item.Name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+      <mat-form-field>
+        <mat-label>{{ 'FirstName' | translate }}</mat-label>
+        <input matInput formControlName="FirstName">
+      </mat-form-field>
+    </ion-col>
+
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+      <mat-form-field>
+        <mat-label>{{ 'TradingName' | translate }}</mat-label>
+        <input matInput formControlName="TradingName">
+      </mat-form-field>
+    </ion-col>
+  
+    <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'd_o_b' | translate }}</mat-label>
+        <input matInput [matDatepicker]="DateOfBirth" formControlName="DateOfBirth">
+  
+        <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
+        <mat-datepicker #DateOfBirth></mat-datepicker>
+  
+        <mat-error>
+          {{ 'd_o_b_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-col>
+  </ng-container>
+</ion-row>

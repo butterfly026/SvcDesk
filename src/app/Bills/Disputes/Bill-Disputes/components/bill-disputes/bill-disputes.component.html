@@ -1,0 +1,16 @@
+<ion-row class="mt-2" *ngIf="disputeState === 'list'">
+  <app-bill-list [billId]="billId" class="w-100" [ContactCode]="ContactCode" [PagingParam]="pagingParam" [billNumber]="billNumber"
+    (BillListComponent)="processEvent($event)">
+  </app-bill-list>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="disputeState === 'new'">
+  <app-bill-form [billId]="billId" class="w-100" [ContactCode]="ContactCode" (BillFormComponent)="processEvent($event)">
+  </app-bill-form>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="disputeState === 'detail'">
+  <app-bill-form [billId]="billId" class="w-100" [DisputeID]="disputeId" [ContactCode]="ContactCode"
+    (BillFormComponent)="processEvent($event)">
+  </app-bill-form>
+</ion-row>

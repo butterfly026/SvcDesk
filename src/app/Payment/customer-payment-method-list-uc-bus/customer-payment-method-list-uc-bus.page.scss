@@ -1,0 +1,38 @@
+.c-p-m-list-us-bus {
+    overflow-x: auto;
+
+    img {
+        width: 40px;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+        min-width: 900px
+    }
+
+    tbody {
+        min-width: 900px;
+    }
+
+    th {
+        // border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        // background-color: #e6e6e6;
+    }
+
+    td {
+        padding: 8px;
+        // background-color: #e9f3fd;
+    }
+}
+
+.add-card {
+
+    img {
+        width: 50px;
+    }
+}

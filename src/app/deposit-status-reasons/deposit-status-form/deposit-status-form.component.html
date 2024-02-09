@@ -1,0 +1,66 @@
+<ion-row class="">
+
+  <ion-row class="my-3">
+    <ion-row *ngIf="Id === ''">
+      <h3 class="p-0 m-auto">
+        {{'add_deposit_status_response' | translate}}
+      </h3>
+    </ion-row>
+    <ion-row *ngIf="Id !== ''">
+      <h3 class="p-0 m-auto">
+        {{'update_deposit_status_response' | translate}}
+      </h3>
+    </ion-row>
+  </ion-row>
+
+
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="depositStatusForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Reason" type="text" placeholder="{{ 'reason' | translate }}"
+                name="Reason" required />
+
+              <mat-error>
+                <span>{{ 'reason_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button class="submitButton" id="accountTaskGroupFormSubmitButton"></button>
+    </form>
+
+    <ion-row class="my-3 pt-5 jqx-button-row">
+      <ion-row class="total-content4 mx-auto justify-content-end">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id === ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!depositStatusForm.valid">
+              {{ 'create' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id !== ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!depositStatusForm.valid">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

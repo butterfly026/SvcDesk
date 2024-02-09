@@ -1,0 +1,18 @@
+<ion-row class="">
+  <app-service-attribute-configuration class="w-100" [ContactCode]="ContactCode"
+    (ServiceAttributeComponent)="processComponent($event)">
+  </app-service-attribute-configuration>
+</ion-row>
+
+<ion-row class="">
+</ion-row>
+
+<ion-row class="mt-5 jqx-button-row total-content4 mx-auto" *ngIf="showClose">
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+    <ion-row class="h-100">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+</ion-row>

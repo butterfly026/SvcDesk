@@ -1,0 +1,17 @@
+export interface NotificationHistoryItem {
+    Id: string,
+    BillPeriod: string,
+    CreatedDate: string,
+    DiscountId: string,
+    DiscountNarrative: string,
+    AlertType: string,
+    AlertLevel: string,
+    UsageLevel: string,
+    UsageAmount: string,
+    BundleAmount: string,
+    Narrative: string,
+    Created: string,
+    CreatedBy: string,
+    LastUpdated: string,
+    UpdatedBy: string,
+}

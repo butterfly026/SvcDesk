@@ -1,0 +1,205 @@
+<ion-row class="total-content2 left-right-auto">
+
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'contacts_configuration' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row class="margin-auto">
+    <form [formGroup]="groupForm" class="full-width" (ngSubmit)="configurationSubmit()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="label" type="text" placeholder="{{ 'label' | translate }}" required
+                name="label">
+              <mat-error>
+                {{ 'label_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="menuId" type="text" placeholder="{{ 'menu_id' | translate }}" required
+                name="menuId">
+              <mat-error>
+                {{ 'menu_id_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="dataType" type="text" placeholder="{{ 'data_type' | translate }}"
+                required name="dataType">
+              <mat-error>
+                {{ 'data_type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="iconURL" type="text" placeholder="{{ 'icon_url' | translate }}" required
+                name="iconURL">
+              <mat-error>
+                {{ 'icon_url_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="tooltip" type="text" placeholder="{{ 'tooltip' | translate }}" required
+                name="tooltip">
+              <mat-error>
+                {{ 'tooltip_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="display" type="text" placeholder="{{ 'display' | translate }}" required
+                name="display">
+              <mat-error>
+                {{ 'display_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="displayOrder" type="text" placeholder="{{ 'display_order' | translate }}"
+                required name="displayOrder">
+              <mat-error>
+                {{ 'display_order_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="displayBold" type="text" placeholder="{{ 'display_bold' | translate }}"
+                required name="displayBold">
+              <mat-error>
+                {{ 'display_bold_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="displayColor" type="text" placeholder="{{ 'display_color' | translate }}"
+                required name="displayColor">
+              <mat-error>
+                {{ 'display_color_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="displayGroup" type="text" placeholder="{{ 'display_group' | translate }}"
+                required name="displayGroup">
+              <mat-error>
+                {{ 'display_group_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="navigationPath" type="text"
+                placeholder="{{ 'navigation_path' | translate }}" required name="navigationPath">
+              <mat-error>
+                {{ 'navigation_path_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="editType" type="text" placeholder="{{ 'edit_type' | translate }}"
+                required name="editType">
+              <mat-error>
+                {{ 'edit_type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="apiURL" type="text" placeholder="{{ 'APIURL' | translate }}" required
+                name="apiURL">
+              <mat-error>
+                {{ 'api_url_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="attributeType" type="text"
+                placeholder="{{ 'attribute_type' | translate }}" required name="attributeType">
+              <mat-error>
+                {{ 'attribute_type_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="username-row">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="objectId" type="text" placeholder="{{ 'object_id' | translate }}"
+                required name="objectId">
+              <mat-error>
+                {{ 'object_id_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button mat-button id="submitConfigurationButton" class="submitButton">Submit</button>
+    </form>
+
+    <ion-row class="ion-margin-top normal-button">
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!groupForm.valid"
+            (click)="triggerSubmit()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

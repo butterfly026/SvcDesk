@@ -1,0 +1,49 @@
+<ion-row>
+  <form [formGroup]="groupForm" class="w-100" *ngIf="ShowSearchOption">
+    <ion-row>
+      <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="12">
+        <ion-row class="service-list-search mt-3 justify-content-between align-items-center">
+          <mat-checkbox formControlName="Account" name="Account">
+            {{ 'account' | translate }}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <button class="submitButton" id="serviceAttributeSubmitButton"></button>
+  </form>
+  <ion-row class="left-right-auto">
+    <app-datatable class="w-100"
+      [data]="dataSource"
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [subTableColumns]="subTableColumns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [messageForRowDeletion]="deletionMsg"
+      [searchOptions]="searchOptions"
+      [columnsUsedForCurrency]="columnsUsedForCurrency"
+      [columnsUsedForDate]="columnsUsedForDate"
+      [pageSizeOptions]="tblPageSizeOptions"
+      [propertyNameToShowInSubTable]="propertyNameToShowInSubTable"
+      (onToggleSearchOptions)="showHideSearchOption($event)"
+      (onCreate)="addNew()"
+      (onView)="viewDetail($event)"
+      (onEdit)="editOne($event)"
+      (onDelete)="deleteItem($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>
+
+<ion-row class="page-bottom normal-button">
+  <ion-row class="total-content2 left-right-auto justify-content-center">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

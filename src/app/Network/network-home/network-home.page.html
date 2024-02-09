@@ -1,0 +1,10 @@
+<ion-header mode='ios'>
+  <app-header pageName="{{'network' | translate}}"></app-header>
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top">
+    <app-network class="full-width" [ContactCode]="ContactCode" (NetworkComponent)="processNetwork($event)">
+    </app-network>
+  </ion-row>
+</ion-content>

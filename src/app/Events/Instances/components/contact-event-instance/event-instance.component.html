@@ -1,0 +1,16 @@
+<ion-row class="mt-2" *ngIf="Mode == 'list'">
+  <app-event-list 
+    class="w-100" 
+    [ContactCode]="ContactCode" 
+    [Refresh]="Refresh" 
+    (contactEventInstancesList)="processEvent($event)">
+  </app-event-list>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="Mode == 'new'">
+  <app-event-new 
+    class="w-100" 
+    [ContactCode]="ContactCode" 
+    (eventInstanceCreate)="processEvent($event)">
+  </app-event-new>
+</ion-row>

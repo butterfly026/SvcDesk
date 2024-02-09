@@ -1,0 +1,403 @@
+
+<ion-row>
+  <ion-row class="margin-auto margin-top-5vh c-p-m-list-us-bus">
+    <table class="margin-auto">
+      <tr
+        class="custom-table-header jqx-widget-header jqx-grid-header jqx-widget-header-{{globService.themeColor}} jqx-grid-header-{{globService.themeColor}}">
+        <th
+          class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+          {{ 'credit_card' | translate}}
+        </th>
+        <th
+          class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+          {{ 'name_on_card' | translate }}
+        </th>
+        <th
+          class="custom-table-header-th jqx-grid-column-header jqx-widget-header jqx-grid-column-header-{{globService.themeColor}} jqx-widget-header-{{globService.themeColor}}">
+          {{ 'expires_on' | translate }}
+        </th>
+        <th>
+        </th>
+      </tr>
+      <tbody
+        class="custom-table-body jqx-grid-content jqx-widget-content jqx-grid-content-{{globService.themeColor}} jqx-widget-content-{{globService.themeColor}}">
+        <tr *ngFor="let list of methodList; let i = index" id="customeTableBody{{i}}" (mouseenter)="overTable(i)"
+          (mouseleave)="leaveTable(i)">
+          <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+            <span class="vertical-center">
+              <img src="assets/imgs/payment/small_visa_icon.svg" class="top-bottom-auto"
+                *ngIf="list.data.PaymentMethodCode == 'VI'" />
+              <img src="assets/imgs/payment/small_two_point.svg" class="top-bottom-auto"
+                *ngIf="list.data.PaymentMethodCode == 'MC'" />
+              &nbsp;&nbsp;&nbsp;
+              <span class="top-bottom-auto">
+                {{list.data.Description}} {{ 'ending_in' | translate }} {{list.cardEnd}}
+              </span>
+            </span>
+          </td>
+          <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+            {{ list.data.AccountName }}
+          </td>
+          <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+            {{ list.expireDate }}
+          </td>
+          <td class="custom-table-body-td jqx-item payment-method-toggle jqx-item-{{globService.themeColor}}">
+            <!-- <span (click)="editCard(i)" class="cursor-point">
+                  {{ 'edit' | translate}}
+                </span> &nbsp;&nbsp; -->
+
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteCard(i)">
+              {{ 'delete' | translate }}
+            </jqxButton>
+
+            <!-- <span (click)="deleteCard(i)" class="cursor-point">
+                  {{ 'delete' | translate }}
+                </span> -->
+            &nbsp;&nbsp;
+            <mat-slide-toggle color="success" [(ngModel)]="list.toggleValue" (change)="onChangeToggle(i)"
+              *ngIf="!list.toggleValue" class="payment-method-toggle-false">
+              {{ 'make_default' | translate }}
+            </mat-slide-toggle>
+            <mat-slide-toggle color="green" class="payment-method-toggle-true" [(ngModel)]="list.toggleValue"
+              [disabled]="list.toggleValue" *ngIf="list.toggleValue">
+              {{ 'default_payment_method' | translate }}
+            </mat-slide-toggle>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-row>
+
+  <ion-row class="total-content2 left-right-auto" *ngIf="addStep == ''">
+    <ion-row class="ion-margin-top page-bottom">
+      <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+        <ion-col size="2"></ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNew()">
+              {{ 'add' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="ion-margin-top ion-padding-top add-card total-content2 left-right-auto" *ngIf="addStep != ''">
+
+  <ion-row class="">
+    <ion-row>
+      <span>
+        {{ 'e_y_c_c_information' | translate }} {{ 'step' | translate }} {{addStep}}
+      </span>
+    </ion-row>
+    <ion-row class="ion-margin-top" *ngIf="addStep == '1'">
+      <span>
+        <img src="assets/imgs/payment/small_visa_icon.svg" class="top-bottom-row" /> &nbsp;
+        <img src="assets/imgs/payment/small_two_point.svg" class="top-bottom-row" /> &nbsp;
+      </span>
+    </ion-row>
+  </ion-row>
+  <ion-row class="ion-margin-top" *ngIf="addStep == '1'">
+    <form [formGroup]="stepForm1" class="full-width" (ngSubmit)="completeStep1()" novalidate>
+      <ion-row class="username-row">
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="cardNumber" type="text" required
+                placeholder="{{ 'credit_card_number' | translate }}" name="cardNumber"
+                (keyup)="cardNumberKeydown($event, inputCardName)" [textMask]="{mask: maskCardNumber, guide: false}" />
+
+
+              <mat-error *ngIf="f.cardNumber.hasError('required')">
+                <span>{{ 'credit_card_num_required' | translate }}</span>
+              </mat-error>
+
+              <mat-error
+                *ngIf="(checkCardState || f.cardNumber.hasError('pattern')) && !f.cardNumber.hasError('required')">
+                {{ 'invalid_card_number' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="cardName" type="text" required #inputCardName
+                placeholder="{{ 'cardholder_name' | translate }}" name="cardName" />
+
+              <mat-error>
+                <span>{{ 'cardholder_name_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <!-- <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+              <ion-row class="full-height">
+                <mat-form-field class="example-full-width top-bottom-auto">
+                  <input matInput formControlName="cvv" type="text" required placeholder="{{ 'cvv' | translate }}"
+                    name="cvv" (keyup)="cvvKeydown($event)" />
+  
+                  <mat-error *ngIf="f.cvv.hasError('required')">
+                    <span>{{ 'cvv_required' | translate }}</span>
+                  </mat-error>
+  
+                </mat-form-field>
+              </ion-row>
+            </ion-col> -->
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-form-field class="example-full-width top-bottom-auto">
+
+                  <mat-select formControlName="month" placeholder="{{ 'month' | translate }}" name="expireMonth"
+                    required>
+                    <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                      {{list}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    <span>{{ 'month_require' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <mat-form-field class="example-full-width top-bottom-auto">
+
+                  <mat-select formControlName="year" (ngModelChange)="selectExpireYear()"
+                    placeholder="{{ 'year' | translate }}" name="expireYear" required>
+                    <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                      {{list}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    <span>{{ 'year_require' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+        </ion-col>
+        <button mat-button id="submitButtonStep1" class="submitButton">Submit</button>
+      </ion-row>
+    </form>
+
+    <ion-row class="username-row">
+      <mat-checkbox [(ngModel)]="makeDefault">
+        {{ 'make_default' | translate }}
+      </mat-checkbox>
+    </ion-row>
+    <ion-row class=" ion-margin-top left-right-auto">
+      <ion-row>
+
+        <ion-row class="page-bottom normal-button">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!stepForm1.valid"
+                (click)="continueStep1()">
+                {{ 'continue' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelAddPayment()">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+
+  <ion-row class="ion-margin-top total-content2 left-right-auto" *ngIf="addStep == '2'">
+
+    <ion-row class="username-row">
+      <mat-checkbox [(ngModel)]="useContactAddress">
+        {{ 'use_contact_address' | translate }}
+      </mat-checkbox>
+    </ion-row>
+
+    <form [formGroup]="stepForm2" class="full-width" (ngSubmit)="completeStep2()" novalidate>
+      <ion-row class="username-row">
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="firstName" type="text" required
+                placeholder="{{ 'first_name' | translate }}" name="firstName" />
+
+              <mat-error>
+                <span>{{ 'first_name_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="companyName" type="text" required
+                placeholder="{{ 'company_name' | translate }}" name="companyName" />
+
+              <mat-error>
+                <span>{{ 'company_name_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="addressLine1" type="text" required
+                placeholder="{{ 'address_line1' | translate }}" name="addressLine1" />
+
+              <mat-error>
+                <span>{{ 'address_line_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+
+              <input matInput formControlName="addressLine2" type="text" placeholder="{{ 'address_line2' | translate }}"
+                name="addressLine2" />
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="city" type="text" required placeholder="{{ 'city' | translate }}"
+                name="city" />
+
+              <mat-error>
+                <span>{{ 'city_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="state" type="text" required
+                placeholder="{{ 'state_province_region' | translate }}" name="state" />
+
+              <mat-error>
+                <span>{{ 'state_province_region_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="postCode" type="text" required
+                placeholder="{{ 'postal_code' | translate }}" name="postCode" />
+
+              <mat-error>
+                <span>{{ 'postal_code_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+
+              <mat-select formControlName="country" placeholder="{{ 'country' | translate }}" name="country" required>
+                <mat-option *ngFor="let list of countryList" value="{{list.Code}}">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'country_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width top-bottom-auto">
+              <input matInput formControlName="phoneNumber" type="text" required
+                placeholder="{{ 'phone_number' | translate }}" name="phoneNumber" />
+
+              <mat-error>
+                <span>{{ 'phone_number_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <button mat-button id="submitButtonStep2" class="submitButton">Submit</button>
+      </ion-row>
+    </form>
+
+    <ion-row class=" ion-margin-top left-right-auto">
+
+      <ion-row>
+
+        <ion-row class="page-bottom normal-button">
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!stepForm2.valid"
+                (click)="continueStep2()">
+                {{ 'continue' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="backAddCard()">
+                {{ 'back' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+
+</ion-row>

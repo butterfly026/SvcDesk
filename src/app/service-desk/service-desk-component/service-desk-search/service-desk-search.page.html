@@ -1,0 +1,145 @@
+<ion-row class="ion-margin-top" *ngIf="showSearchOptionsDiv">
+  <app-service-desk-search-options (ServiceDeskSearchOptionsComponent)="processSearchOptions($event)"
+    [SearchForAccounts]="optionSearchForAccounts" [AutoOpenIfFindOne]="optionAutoOpenIfFindOne">
+
+  </app-service-desk-search-options>
+</ion-row>
+<ion-row class="ion-margin-top">
+  <ion-row class="service-desk-search-input">
+    <ion-row class="full-height">
+      <form [formGroup]="searchForm" class="w-100" (ngSubmit)="searchSubmit()" novalidate>
+        <mat-form-field class="w-100">
+          <input type="text" [placeholder]="'type_contact_or_name' | translate" matInput formControlName="searchCtrl"
+            [matAutocomplete]="auto" name="searchCtrl">
+
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchSubmit()">
+            <mat-option *ngFor="let option of filteredOptions; let i = index;" [value]="option"
+              class="autocomplete-detail">
+              <span>{{option}}</span>
+              <i class="fa fa-times my-auto cursor-point" (click)="removeSearch(i, $event)"></i>
+            </mat-option>
+          </mat-autocomplete>
+
+          <button type="button" mat-button *ngIf="f.searchCtrl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="clearSearch()">
+            <i class="fa fa-times"></i>
+          </button>
+          <mat-error>
+            {{'address_is_required' | translate}}
+          </mat-error>
+        </mat-form-field>
+
+      </form>
+    </ion-row>
+  </ion-row>
+  <ion-row class="service-desk-advanced-search">
+    <ion-fab-button 
+        size="small" 
+        [color]="searchOptionsExpanded ? 'medium' : 'light'"
+        [matTooltip]="'SearchOption' | translate"  
+        *ngIf="showSearchOptions"
+        (click)="toggleSearchOptions()" >
+        <ion-icon name="options-outline" ></ion-icon>
+      </ion-fab-button>
+    <ion-fab-button 
+      size="small" 
+      color="light" 
+      [matTooltip]="'Search' | translate" 
+      *ngIf="showAdvanced"
+      (click)="switchContactSearch()">
+      <ion-icon aria-hidden="true" name="search"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+</ion-row>
+
+<ion-row class="ion-margin-top">
+
+  <ion-row>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="12" [sizeXs]="12" [sizeSm]="12">
+      <ion-row class="">
+        <ion-row class="contact-list">
+          <ion-row *ngFor="let list of searchResult; let i = index" class="">
+            <ion-row class="contact-name" (mouseenter)="openExpantion(i)" (mouseleave)="callapsExpantion(i)">
+              <span (click)="addTabs(i)" class="d-flex position-relative custom-abbreviation contact-code-title">
+                <span class="service-desk-contact">
+                  {{list.ContactSearch.contactcode}}&nbsp;
+                </span>
+                <span>
+                  : {{list.ContactSearch.name}}&nbsp;&nbsp;
+                  {{list.ContactSearch.status}}
+                </span>
+                <ion-row class="position-absolute contact-underline"></ion-row>
+              </span>
+            </ion-row>
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="12" [sizeXs]="12" [sizeSm]="12">
+      <ion-row>
+        <ion-row *ngFor="let list of searchResult; let i = index" [ngClass]="{'submitButton':!list.expanded}">
+          <ion-row class="ion-margin-top ion-margin-bottom">
+            <span class="account-detail">
+              {{ 'account_number' | translate }}: {{list.ContactSearch.contactcode}}
+            </span>
+          </ion-row>
+          <ion-row class="contact-detail">
+            <ion-row>
+              <ion-row *ngIf="list.ContactSearch.dateofbirth != '' && list.ContactSearch.dateofbirth != null">
+                <span class="rtl-right">
+                  {{ 'd_o_b' | translate }}:&nbsp;{{ list.ContactSearch.dateofbirth}}
+                </span>
+              </ion-row>
+              <ion-row [ngClass]="{'ion-margin-top':list.ContactSearch.dateofbirth!=''}">
+                <span *ngFor="let address of list.ContactSearch.addresses" class="full-width rtl-right">
+                  {{address.type}} : {{address.address}}
+                </span>
+              </ion-row>
+              <ion-row class="ion-margin-top">
+                <span *ngFor="let emails of list.ContactSearch.emails" class="full-width rtl-right">
+                  {{emails.email}}
+                </span>
+              </ion-row>
+              <ion-row class="ion-margin-top">
+                <span *ngFor="let contactphones of list.ContactSearch.contactphones" class="full-width rtl-right">
+                  {{contactphones.type}} : {{contactphones.number}}
+                </span>
+              </ion-row>
+              <ion-row class="ion-margin-top">
+                <span *ngFor="let service of list.ContactSearch.servicetypes" class="rtl-right">
+                  {{service.type}} : {{service.count}}
+                  &nbsp; &nbsp;
+                </span>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="contact-list">
+    <ion-row class="contact-pagenation" *ngIf="pageList.length > 0">
+      <span class="margin-auto">
+        <span (click)="previousPageStep()" *ngIf="enableNext > 10 && !globService.rtlMode">
+          {{backSymbol}}
+        </span>
+        <span (click)="previousPageStep()" *ngIf="enableNext > 10 && globService.rtlMode">
+          {{forwardSymbol}}
+        </span>
+        <span *ngFor="let list of pageList" class="page-detail" (click)="selectPage(list)"
+          [ngClass]="{'page-selected':list==pageNumber, 'page-unselect':list!=pageNumber}">
+          {{list}}
+        </span>
+        <span (click)="nextPageStep()" *ngIf="enableNext > 10 && !globService.rtlMode">
+          {{forwardSymbol}}
+        </span>
+        <span (click)="nextPageStep()" *ngIf="enableNext > 10 && globService.rtlMode">
+          {{backSymbol}}
+        </span>
+      </span>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

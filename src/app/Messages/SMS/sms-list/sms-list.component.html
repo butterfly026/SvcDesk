@@ -1,0 +1,86 @@
+<ion-row class="position-relative" id="contact-notes-container">
+  <ion-row class="ion-margin-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'sms' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="my-2">
+      <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="switchSMSSend()"></i>
+    </ion-row>
+
+    <ion-row class="position-static contact-search">
+      <ion-searchbar mode="ios" class="ion-padding" [(ngModel)]="searchString" (keypress)="searchInputEvent($event)"
+        [placeholder]="'search' | translate">
+      </ion-searchbar>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" id="sms-list-container">
+      <ion-row class="each-contact-note border-top ion-padding position-relative"
+        *ngFor="let list of showList; let i = index">
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height">
+              <h4 class="my-auto">
+                <strong>
+                  {{list.sender}}
+                </strong>
+                <span class="my-auto py-0 pl-2" *ngIf="list.direction == 'Sent'">
+                  {{list.direction}} {{'sms' | translate}} {{'to' | translate}} {{list.recipient}}
+                </span>
+                <span class="my-auto py-0 pl-2" *ngIf="list.direction == 'Received'">
+                  {{list.direction}} {{'sms' | translate}} {{'from' | translate}} {{list.recipient}}
+                </span>
+              </h4>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="full-height" [ngClass]="{'ion-padding-end': !list.stateArrow}">
+              <h6 class="my-auto margin-left-auto ion-padding-end">
+                {{list.sent}}
+              </h6>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-row class="full-height">
+              <!-- <ion-row>
+                <h6 class="p-0 my-auto mx-0">
+                  {{list.template}}
+                </h6>
+              </ion-row> -->
+              <ion-row>
+                <h6 class="my-auto" [innerHTML]="list.text">
+                </h6>
+              </ion-row>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="loading-row" *ngIf="showLoading">
+      <mat-spinner class="margin-auto"></mat-spinner>
+    </ion-row>
+
+    <button class="opacityZero" id="loadMoreButton" (click)="checkLoadMore()">
+    </button>
+  </ion-row>
+</ion-row>
+
+<ion-row class="jqx-button-row mt-3">
+  <ion-row class="total-content2 mx-auto">
+    <ion-col size="4" class="ml-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

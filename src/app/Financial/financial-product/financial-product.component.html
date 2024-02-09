@@ -1,0 +1,16 @@
+<ion-row class="mt-3" *ngIf="productMode == 'list'">
+  <app-product-list class="w-100" [FinancialId]="FinancialId"
+    (ProductListComponent)="processProduct($event)">
+  </app-product-list>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="productMode == 'create'">
+  <app-product-new class="w-100" [ContactCode]="ContactCode" (ChargeFormComponent)="processProduct($event)">
+  </app-product-new>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="productMode == 'update'">
+  <app-product-new class="w-100" [ProductId]="ProductId" [ContactCode]="ContactCode"
+    (ChargeFormComponent)="processProduct($event)">
+  </app-product-new>
+</ion-row>

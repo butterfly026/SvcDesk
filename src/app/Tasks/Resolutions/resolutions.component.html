@@ -1,0 +1,17 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-task-resolution-list class="w-100" [ContactCode]="ContactCode"
+    (ResolutionListComponent)="processComponent($event)">
+  </app-task-resolution-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-task-resolution-form class="w-100" [ContactCode]="ContactCode"
+    (ResolutionFormComponent)="processComponent($event)">
+  </app-task-resolution-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-task-resolution-form class="w-100" [Id]="ID" [ContactCode]="ContactCode"
+    (ResolutionFormComponent)="processComponent($event)">
+  </app-task-resolution-form>
+</ion-row>

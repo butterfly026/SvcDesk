@@ -1,0 +1,18 @@
+<ion-row class="my-3 px-1">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12" *ngFor="let options of data">
+        <ion-row class="box-shadow-item2 px-3 py-2">
+            <table class="w-100">
+                <tbody>
+                    <tr *ngFor="let list of options" [ngClass]="{'d-none': !list?.value}">
+                        <td>
+                            {{list?.name | translate}}
+                        </td>
+                        <td>
+                            {{list?.value}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ion-row>
+    </ion-col>
+</ion-row>

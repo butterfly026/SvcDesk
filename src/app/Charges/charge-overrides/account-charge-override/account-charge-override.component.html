@@ -1,0 +1,11 @@
+<ion-row class="position-relative">
+  <ion-row class="">
+    <app-account-charge-override-list class="w-100" [ContactCode]="ContactCode" *ngIf="ViewMode=='List'"
+      (AccountListComponent)="processComponent($event)">
+    </app-account-charge-override-list>
+
+    <app-account-charge-override-form class="w-100" [ContactCode]="ContactCode" *ngIf="ViewMode=='New'"
+      (AccountChargeOverrideFormComponent)="processComponent($event)">
+    </app-account-charge-override-form>
+  </ion-row>
+</ion-row>

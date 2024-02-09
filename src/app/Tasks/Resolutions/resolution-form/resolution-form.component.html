@@ -1,0 +1,97 @@
+<ion-row class="">
+
+  <ion-row class="my-3">
+    <ion-row *ngIf="Id === ''">
+      <h3 class="p-0 m-auto">
+        {{'add_task_resolution' | translate}}
+      </h3>
+    </ion-row>
+  </ion-row>
+
+
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="taskResolutionForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Name" type="text" placeholder="{{ 'name' | translate }}" name="Name"
+                required />
+
+              <mat-error>
+                <span>{{ 'name_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="DisplayOrder" type="number" min="0" max="1000"
+                placeholder="{{ 'display_order' | translate }}" name="DisplayOrder" required />
+
+              <mat-error *ngIf="f.DisplayOrder.hasError('required')">
+                <span>{{ 'display_order_required' | translate }}</span>
+              </mat-error>
+
+              <mat-error
+                *ngIf="!f.DisplayOrder.hasError('required') && (f.DisplayOrder.hasError('min') || f.DisplayOrder.hasError('max'))">
+                <span>{{ 'display_order_invalid' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Active" placeholder="{{ 'active' | translate }}" name="Active">
+                <mat-option [value]="true">
+                  {{'yes' | translate}}
+                </mat-option>
+                <mat-option [value]="false">
+                  {{'no' | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'active_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button class="submitButton" id="accountTaskResolutionFormSubmitButton"></button>
+    </form>
+
+    <ion-row class="my-3 pt-5 jqx-button-row">
+      <ion-row class="total-content4 mx-auto justify-content-end">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id === ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!taskResolutionForm.valid">
+              {{ 'create' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12" *ngIf="Id !== ''">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!taskResolutionForm.valid">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

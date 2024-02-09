@@ -1,0 +1,1419 @@
+<ion-row class="total-content2 mx-auto mt-2 pb-5">
+
+  <ion-row class="mt-3">
+    <h2 class="m-auto p-0 text-center">
+      {{'bill_options' | translate}}
+    </h2>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <form class="w-100" [formGroup]="billForm" (ngSubmit)="billOptionSubmit()" novalidate>
+      <ion-row>
+        <ion-row>
+          <h3 class="m-auto p-0 text-center">
+            {{'general' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+
+              <mat-form-field class="w-100">
+
+                <mat-select formControlName="billFormart" placeholder="{{ 'bill_format' | translate }}"
+                  name="billFormart" [required]="BillData?.BLFM?.mandatory">
+                  <mat-option *ngFor="let list of billFormatsAvailable; let i = index" value="{{list.id}}">
+                    {{list.name}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'bill_format_required' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <button type="button" mat-raised-button color="primary" (click)="updateBillFormat()"
+                class="m-auto exclusion-create w-100" [disabled]="!getUpdateAvailable('billFormart')">
+                {{ 'update' | translate }}
+              </button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="mt-2 px-2">
+                <section class="example-section w-100 d-flex">
+                  <mat-slide-toggle labelPosition="before" class="w-100" color="primary" formControlName="provBill"
+                    name="provBill">
+                    {{ 'provide_paper_bill' | translate }}
+                  </mat-slide-toggle>
+                </section>
+              </ion-row>
+
+              <ion-row class="mt-2 px-2">
+                <section class="example-section w-100 d-flex">
+                  <mat-slide-toggle labelPosition="before" class="w-100" color="primary" formControlName="provEmail"
+                    name="provEmail">
+                    {{ 'provide_email_bill' | translate }}
+                  </mat-slide-toggle>
+                </section>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 px-2 align-items-center justify-content-center">
+                <button type="button" mat-raised-button color="primary" (click)="updateDelivery()"
+                  class="exclusion-create w-100" [disabled]="!getUpdateAvailable('delivery')">
+                  {{ 'update' | translate}}
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <section class="example-section w-100">
+                <mat-slide-toggle labelPosition="before" class="w-100" color="primary" formControlName="bPNSuppression"
+                  name="bPNSuppression">
+                  {{ 'b_party_number_suppression' | translate }}
+                </mat-slide-toggle>
+              </section>
+            </ion-row>
+          </ion-col> -->
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <section class="example-section w-100 d-flex">
+                  <mat-slide-toggle labelPosition="before" class="w-100 my-auto" color="primary"
+                    formControlName="provEcel" name="provEcel">
+                    {{ 'provide_excel_bill' | translate }}
+                  </mat-slide-toggle>
+                </section>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <button type="button" mat-raised-button color="primary" (click)="updateMedia()"
+                  class="m-auto exclusion-create w-100" [disabled]="!getUpdateAvailable('media')">
+                  {{ 'update' | translate}}
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <section class="example-section w-100">
+                <mat-slide-toggle labelPosition="before" class="w-100" color="primary" formControlName="useEmail"
+                  name="useEmail">
+                  {{ 'use_email_for_other' | translate }}
+                </mat-slide-toggle>
+              </section>
+            </ion-row>
+          </ion-col> -->
+
+          <!-- <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <section class="example-section w-100">
+                <mat-slide-toggle labelPosition="before" class="w-100" color="primary" formControlName="proofAccount"
+                  name="proofAccount">
+                  {{ 'proofing_account' | translate }}
+                </mat-slide-toggle>
+              </section>
+            </ion-row>
+          </ion-col> -->
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <h5 class="m-0 p-0 my-auto">
+                {{'return_bill' | translate}}: {{currentReturns?.reason}}
+              </h5>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <button type="button" mat-raised-button color="primary" (click)="showDetailForm('returns')"
+                class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <!-- <mat-form-field class="w-100">
+                <input type="text" matInput formControlName="proofAccount" name="proofAccount"
+                  placeholder="{{'proofing_account'| translate}}" />
+              </mat-form-field> -->
+              <ion-row class="h-100 mt-2 px-2">
+                <section class="example-section w-100 d-flex">
+                  <mat-slide-toggle labelPosition="before" class="w-100 my-auto" color="primary"
+                    formControlName="proofAccount" name="proofAccount" (change)="changeProof($event)">
+                    {{ 'proofing_account' | translate }}
+                  </mat-slide-toggle>
+                </section>
+              </ion-row>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <!-- <button type="button" mat-raised-button color="primary" (click)="showDetailForm('proof')"
+                class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button> -->
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="mt-3 pt-3">
+        <ion-row>
+          <h3 class="m-auto p-0 text-center">
+            {{'billing_control' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <!-- <mat-form-field class="w-100">
+                <mat-select formControlName="billCycle" placeholder="{{ 'bill_cycle' | translate }}" name="billCycle"
+                  [required]="BillData?.BLCC?.mandatory">
+                  <mat-option *ngFor="let list of billCyclesAccount; let i = index" value="{{list.cycleid}}"
+                    (click)="selectBillCycle(i)">
+                    {{list.cycle}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'bill_cycle_required' | translate }}
+                </mat-error>
+              </mat-form-field> -->
+              <h5 class="m-0 p-0 my-auto">
+                {{'bill_cycle' | translate}}: {{billCyclceValue}}
+              </h5>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <button type="button" mat-raised-button color="primary" (click)="showDetailForm('billCycle')"
+                class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <mat-form-field class="w-100">
+                <mat-select formControlName="invoiceInterval" placeholder="{{ 'invoice_interval' | translate }}"
+                  name="invoiceInterval" [required]="BillData?.BLII?.mandatory">
+                  <mat-option *ngFor="let list of invoiceIntervalsAvailable; let i = index" value="{{list.interval}}">
+                    {{list.interval}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'invoice_interval_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 mt-2 px-2">
+              <button type="button" mat-raised-button color="primary" (click)="updateInvoiceInterval()"
+                class="m-auto exclusion-create w-100" [disabled]="!getUpdateAvailable('invoiceInterval')">
+                {{ 'update' | translate }}
+              </button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <!-- <mat-form-field class="w-100">
+                  <mat-select formControlName="recentExclusion" placeholder="{{ 'exclusion' | translate }}" readonly
+                    name="recentExclusion" [required]="BillData?.BLEX?.mandatory">
+                    <mat-option *ngFor="let list of exclusions?.billrunexclusionhistory; let i = index"
+                      value="{{list.id}}" (click)="selectExclusion(i)">
+                      {{list.startperiod}} - {{list.endperiod}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'exclusion_required' | translate }}
+                  </mat-error>
+                </mat-form-field> -->
+                <h5 class="m-0 p-0 my-auto">
+                  {{'exclusion' | translate}}: {{exclustionValue}}
+                </h5>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <button type="button" mat-raised-button color="primary" (click)="showDetailForm('exclusion')"
+                  class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <!-- <mat-form-field class="w-100">
+                  <mat-select formControlName="terms" placeholder="{{ 'term' | translate }}" readonly name="terms"
+                    required>
+                    <mat-option *ngFor="let list of termsAccountData?.termsprofileshistory; let i = index"
+                      value="{{list.id}}" (click)="selectTerm(i)">
+                      {{termsAccountData?.creditlimit}} - {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'term_required' | translate }}
+                  </mat-error>
+                </mat-form-field> -->
+                <h5 class="m-0 p-0 my-auto">
+                  {{'term' | translate}}: {{termValue?.value}}
+                </h5>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <button type="button" mat-raised-button color="primary" (click)="showDetailForm('terms')"
+                  class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+      </ion-row>
+
+      <ion-row class="mt-3 pt-3">
+        <ion-row>
+          <h3 class="m-auto p-0 text-center">
+            {{'currency_taxation' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="currency" placeholder="{{ 'currency' | translate }}" name="currency"
+                    [required]="BillData?.CUCU?.mandatory">
+                    <mat-option *ngFor="let list of currenciesAvailable; let i = index" value="{{list.id}}">
+                      {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'currency_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <button type="button" mat-raised-button color="primary" (click)="updateCurrency()"
+                  class="m-auto exclusion-create w-100" [disabled]="!getUpdateAvailable('currency')">
+                  {{ 'update' | translate }}
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="taxation" placeholder="{{ 'taxation' | translate }}" name="taxation"
+                    [required]="disable">
+                    <mat-option *ngFor="let list of taxLists; let i = index" value="{{list.id}}">
+                      {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'taxation_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <button type="button" mat-raised-button color="primary" (click)="updateTax()"
+                  class="m-auto exclusion-create w-100" [disabled]="!getUpdateAvailable('tax')">
+                  {{ 'update' | translate }}
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="exemptions" placeholder="{{ 'exemptions' | translate }}"
+                    name="exemptions" [required]="BillData?.TAEX?.mandatory">
+                    <mat-option *ngFor="let list of exemptionsList; let i = index" value="{{list.id}}"
+                      (click)="selectExemption(i)">
+                      {{list.tax}} - {{list.transactiontype}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'exemptions_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2 jqx-button-row">
+                <button type="button" mat-raised-button color="primary" (click)="showDetailForm('exemption')"
+                  class="m-auto exclusion-create w-100">{{ 'update' | translate }}</button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+      </ion-row>
+    </form>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="billCycleState != ''">
+
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="billCycleState == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'bill_cycles' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'bill_cycle' | translate}}
+              </th>
+              <th>
+                {{'from' | translate}}
+              </th>
+              <th>
+                {{'to' | translate}}
+              </th>
+              <th>
+                {{'created_by' | translate}}
+              </th>
+              <th>
+                {{'created' | translate}}
+              </th>
+              <th>
+                {{'lastupdated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let list of billCyclesAccount; let i = index" class="cursor-point"
+                (click)="selectBillCycle(i)" [ngClass]="{'table-selected': list.status == true}">
+                <td>
+                  {{list.cycle}}
+                </td>
+                <td>
+                  {{list.from}}
+                </td>
+                <td>
+                  {{list.to}}
+                </td>
+                <td>
+                  {{list.createdby}}
+                </td>
+                <td>
+                  {{list.created}}
+                </td>
+                <td>
+                  {{list.lastupdated}}
+                </td>
+                <td>
+                  {{list.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row justify-content-end">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <!-- <jqxButton (onClick)="openUpdateForm('billCycle')" [theme]="globService.themeColor"
+                [disabled]="!billCyclceValue?.cycleid">
+                {{ 'update' | translate }}
+              </jqxButton> -->
+
+              <jqxButton (onClick)="showCreateForm('billCycle')" [theme]="globService.themeColor"
+                [disabled]="!billCyclceValue">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('billCycle')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="billCycleState == 'create' || billCycleState == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center" *ngIf="billCycleState == 'update'">
+            {{'update_bill_cycle' | translate}}
+          </h3>
+          <h3 class="m-auto p-0 text-center" *ngIf="billCycleState == 'create'">
+            {{'create_bill_cycle' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="billCycleForm" novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="billCycle" placeholder="{{ 'bill_cycle' | translate }}" name="billCycle"
+                    required>
+                    <mat-option *ngFor="let list of billCycles; let i = index" value="{{list.id}}"
+                      (click)="selectNewBillCycle(i)">
+                      {{list.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'bill_cycle_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <input matInput [matDatepicker]="billCycleStart" formControlName="billCycleStart"
+                    placeholder="{{ 'start_date' | translate }}" name="billCycleStart">
+                  <mat-datepicker-toggle matSuffix [for]="billCycleStart"></mat-datepicker-toggle>
+                  <mat-datepicker #billCycleStart></mat-datepicker>
+
+                  <mat-error>
+                    <span>{{ 'start_date_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="createBillCycleForm()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!billCycleForm.valid" *ngIf="billCycleStatus == 'create'">
+                {{ 'create' | translate }}
+              </jqxButton>
+
+              <jqxButton (onClick)="updateBillCycleForm()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!billCycleForm.valid" *ngIf="billCycleStatus == 'update'">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showDetailForm('billCycle')" [theme]="globService.themeColor"
+                class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="exclutionCreate != ''">
+
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="exclutionCreate == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'exclusion' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'start_period' | translate}}
+              </th>
+              <th>
+                {{'end_period' | translate}}
+              </th>
+              <th>
+                {{'created' | translate}}
+              </th>
+              <th>
+                {{'created_by' | translate}}
+              </th>
+              <th>
+                {{'updated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let list of exclusions?.billrunexclusionhistory; let i = index" class="cursor-point"
+                (click)="selectExclusion(i)" [ngClass]="{'table-selected': list.id == currentExclution?.id}">
+                <td>
+                  {{list.startperiod}}
+                </td>
+                <td>
+                  {{list.endperiod}}
+                </td>
+                <td>
+                  {{list.created}}
+                </td>
+                <td>
+                  {{list.createdby}}
+                </td>
+                <td>
+                  {{list.lastupdated}}
+                </td>
+                <td>
+                  {{list.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showCreateForm('exclusion')" [theme]="globService.themeColor">
+                {{ 'new' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="openUpdateForm('exclusion')" [theme]="globService.themeColor"
+                [disabled]="!currentExclution?.id">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="deleteExclusion()" [theme]="globService.themeColor"
+                [disabled]="!currentExclution?.id">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('exclusion')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="exclutionCreate == 'create' || exclutionCreate == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center" *ngIf="exclutionCreate == 'create'">
+            {{'new_exclusion' | translate}}
+          </h3>
+          <h3 class="m-auto p-0 text-center" *ngIf="exclutionCreate == 'update'">
+            {{'update_exclusion' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="exclusionForm" novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="exclutionStart" placeholder="{{ 'start_bill_period' | translate }}"
+                    name="exclutionStart" required>
+                    <mat-option *ngFor="let list of exStartList; let i = index" value="{{list.id}}"
+                      (click)="selectStartBillPeriod(i)">
+                      {{list.id}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'start_bill_period_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="exclutionEnd" placeholder="{{ 'end_bill_period' | translate }}"
+                    name="exclutionEnd" required>
+                    <mat-option *ngFor="let list of exEndList; let i = index" value="{{list.id}}">
+                      {{list.id}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'end_bill_period_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <button id="invoice-interval-submit" class="submitButton"></button>
+          <button id="invoice-interval-update" class="submitButton"></button>
+        </form>
+
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="triggerExclusionForm()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!exclusionForm.valid" *ngIf="exclutionCreate == 'create'">
+                {{ 'create' | translate }}
+              </jqxButton>
+
+              <jqxButton (onClick)="triggerExclusionUpdateForm()" [theme]="globService.themeColor"
+                class="jqx-button-theme" [disabled]="!exclusionForm.valid" *ngIf="exclutionCreate == 'update'">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showDetailForm('exclusion')" [theme]="globService.themeColor"
+                class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="exemptionState != ''">
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="exemptionState == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'exemptions' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'exemption_id' | translate}}
+              </th>
+              <th>
+                {{'tax' | translate}}
+              </th>
+              <th>
+                {{'item' | translate}}
+              </th>
+              <th>
+                {{'start' | translate}}
+              </th>
+              <th>
+                {{'end' | translate}}
+              </th>
+              <th>
+                {{'lastupdated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let list of exemptionsList; let i = index" class="cursor-point" (click)="selectExemption(i)"
+                [ngClass]="{'table-selected': list.id == currentExemption?.id}">
+                <td>
+                  {{list.id}}
+                </td>
+                <td>
+                  {{list.tax}}
+                </td>
+                <td>
+                  {{list.transactiontype}}
+                </td>
+                <td>
+                  {{list.from}}
+                </td>
+                <td>
+                  {{list.to}}
+                </td>
+                <td>
+                  {{list.lastupdated}}
+                </td>
+                <td>
+                  {{list.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showCreateForm('exemption')" [theme]="globService.themeColor">
+                {{ 'new' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="openUpdateForm('exemption')" [theme]="globService.themeColor"
+                [disabled]="!currentExemption?.id">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="deleteExemption()" [theme]="globService.themeColor"
+                [disabled]="!currentExemption?.id">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('exemption')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="mt-2" *ngIf="exemptionState == 'create' || exemptionState == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center">
+            {{'new_exemption' | translate}}
+          </h3>
+          <h3 class="m-auto p-0 text-center">
+            {{'update_exemption' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="exemptionForm" novalidate class="w-100">
+          <ion-row>
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 mt-2 px-2">
+                  <mat-form-field class="w-100">
+                    <mat-select formControlName="exemptionTax" placeholder="{{ 'tax' | translate }}" name="exemptionTax"
+                      required>
+                      <mat-option *ngFor="let list of taxRateList; let i = index" value="{{list.id}}">
+                        {{list.tax}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{ 'tax_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 mt-2 px-2">
+                  <mat-form-field class="w-100">
+                    <mat-select formControlName="exemptionType" placeholder="{{ 'transaction_type' | translate }}"
+                      name="exemptionType" required>
+                      <mat-option *ngFor="let list of transactionTypeList; let i = index" value="{{list.id}}">
+                        {{list.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{ 'transaction_type_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="mt-2">
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+                <ion-row class="px-2">
+                  <mat-radio-group [(ngModel)]="exemptionEndType" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="changeExemptionEndTypes()">
+                    <mat-radio-button value="on_going">{{ 'on_going' | translate }}</mat-radio-button>
+                    <mat-radio-button class="ml-3" value="end">{{'end' | translate}}</mat-radio-button>
+                  </mat-radio-group>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 mt-2 px-2">
+                  <mat-form-field class="w-100">
+
+                    <input matInput [matDatepicker]="exemptionsStart" formControlName="exemptionsStart"
+                      placeholder="{{ 'start_date' | translate }}" name="exemptionsStart" required>
+                    <mat-datepicker-toggle matSuffix [for]="exemptionsStart"></mat-datepicker-toggle>
+                    <mat-datepicker #exemptionsStart></mat-datepicker>
+
+                    <mat-error>
+                      <span>{{ 'start_date_required' | translate }}</span>
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="h-100 mt-2 px-2">
+                  <ion-row>
+                    <mat-form-field class="w-100">
+                      <input matInput [matDatepicker]="exemptionsEnd" formControlName="exemptionsEnd"
+                        placeholder="{{ 'end_date' | translate }}" name="exemptionsEnd" required>
+                      <mat-datepicker-toggle matSuffix [for]="exemptionsEnd"></mat-datepicker-toggle>
+                      <mat-datepicker #exemptionsEnd></mat-datepicker>
+
+                      <mat-error>
+                        <span>{{ 'end_date_required' | translate }}</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </form>
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="triggerExemptionCreate()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!exemptionForm.valid" *ngIf="exemptionState == 'create'">
+                {{ 'create' | translate }}
+              </jqxButton>
+
+              <jqxButton (onClick)="triggerExemptionUpdate()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!exemptionForm.valid" *ngIf="exemptionState == 'update'">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showDetailForm('exemption')" [theme]="globService.themeColor"
+                class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="termState != ''">
+
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="termState == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'terms' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'credit_limit' | translate}}
+              </th>
+              <th>
+                {{'name' | translate}}
+              </th>
+              <th>
+                {{'type' | translate}}
+              </th>
+              <th>
+                {{'term_unit' | translate}}
+              </th>
+              <th>
+                {{'term' | translate}}
+              </th>
+              <th>
+                {{'from' | translate}}
+              </th>
+              <th>
+                {{'to' | translate}}
+              </th>
+              <th>
+                {{'lastupdated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let list of termsAccountData?.termsprofileshistory; let i = index" class="cursor-point"
+                (click)="selectTerm(i)" [ngClass]="{'table-selected': list?.id == currentTerm?.termsHistory?.id}">
+                <td>
+                  {{list.creditlimit}}
+                </td>
+                <td>
+                  {{list.name}}
+                </td>
+                <td>
+                  {{list.type}}
+                </td>
+                <td>
+                  {{list.termunit}}
+                </td>
+                <td>
+                  {{list.term}}
+                </td>
+                <td>
+                  {{list.from}}
+                </td>
+                <td>
+                  {{list.to}}
+                </td>
+                <td>
+                  {{list.lastupdated}}
+                </td>
+                <td>
+                  {{list.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row justify-content-end">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="openUpdateForm('terms')" [theme]="globService.themeColor"
+                [disabled]="!currentTerm?.termsHistory?.id">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('terms')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="termState == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center">
+            {{'update_term' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="termsForm" novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <input matInput type="number" formControlName="creditLimit"
+                    placeholder="{{ 'credit_limit' | translate }}" name="creditLimit">
+
+                  <mat-error>
+                    <span>{{ 'credit_limit_required' | translate }}</span>
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="terms" placeholder="{{ 'term' | translate }}" name="terms" required>
+                    <mat-option *ngFor="let list of termList; let i = index" value="{{list.id}}">
+                      {{list.name}} - {{list.term}} {{list.termunit}} {{'on' | translate}} {{list.type}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'term_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="updateTerms()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!termsForm.valid">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showDetailForm('terms')" [theme]="globService.themeColor" class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="billReturnsState != ''">
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="billReturnsState == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'bill_returns' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'reason' | translate}}
+              </th>
+              <th>
+                {{'action' | translate}}
+              </th>
+              <th>
+                {{'from' | translate}}
+              </th>
+              <th>
+                {{'to' | translate}}
+              </th>
+              <th>
+                {{'created_by' | translate}}
+              </th>
+              <th>
+                {{'created' | translate}}
+              </th>
+              <th>
+                {{'lastupdated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let list of billReturns; let i = index" class="cursor-point"
+                [ngClass]="{'table-selected': list.id == currentReturns?.id}" (click)="selectBillReturns(i)">
+                <td>
+                  {{list.reason}}
+                </td>
+                <td>
+                  {{list.action}}
+                </td>
+                <td>
+                  {{list.from}}
+                </td>
+                <td>
+                  {{list.to}}
+                </td>
+                <td>
+                  {{list.createdby}}
+                </td>
+                <td>
+                  {{list.created}}
+                </td>
+                <td>
+                  {{list.lastupdated}}
+                </td>
+                <td>
+                  {{list.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row justify-content-end">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showCreateForm('returns')" [theme]="globService.themeColor">
+                {{ 'create' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="deleteBillReturn()" [theme]="globService.themeColor"
+                [disabled]="!currentReturns?.id">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('returns')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="billReturnsState == 'create' || billReturnsState == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center">
+            {{'new_bill_return' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="billReturnsForm" novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="mx-auto">
+              <ion-row class="h-100 mt-2 px-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="id" placeholder="{{ 'return_bill' | translate }}" name="id" required>
+                    <mat-option *ngFor="let list of billReturnsAvailable; let i = index" value="{{list.id}}">
+                      {{list.reason}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'return_bill_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="createBillReturn()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!billReturnsForm.valid">
+                {{ 'create' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showDetailForm('returns')" [theme]="globService.themeColor"
+                class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="proofAccountState != ''">
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+      <ion-row class="mt-2" *ngIf="proofAccountState == 'detail'">
+
+        <ion-row class="mb-2">
+          <h3 class="m-auto p-0 text-center">
+            {{'proofing_account' | translate}}
+          </h3>
+        </ion-row>
+
+        <ion-row class="bill-option-table">
+          <table class="w-100">
+            <thead>
+              <th>
+                {{'proof' | translate}}
+              </th>
+              <th>
+                {{'note' | translate}}
+              </th>
+              <th>
+                {{'created_by' | translate}}
+              </th>
+              <th>
+                {{'created' | translate}}
+              </th>
+              <th>
+                {{'lastupdated' | translate}}
+              </th>
+              <th>
+                {{'updatedby' | translate}}
+              </th>
+            </thead>
+
+            <tbody>
+              <tr class="cursor-point table-selected">
+                <td>
+                  {{proofAccount?.proof}}
+                </td>
+                <td>
+                  {{proofAccount?.note}}
+                </td>
+                <td>
+                  {{proofAccount?.createdby}}
+                </td>
+                <td>
+                  {{proofAccount?.created}}
+                </td>
+                <td>
+                  {{proofAccount?.lastupdated}}
+                </td>
+                <td>
+                  {{proofAccount?.updatedby}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+
+        <ion-row class="mt-3 pt-3 jqx-button-row justify-content-end">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="showCreateForm('proof')" [theme]="globService.themeColor">
+                {{ 'create' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="openUpdateForm('proof')" [theme]="globService.themeColor"
+                [disabled]="!proofAccount?.note">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="deleteProofAccount()" [theme]="globService.themeColor"
+                [disabled]="!proofAccount?.note">
+                {{ 'delete' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('proof')" [theme]="globService.themeColor">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="proofAccountState == 'create' || proofAccountState == 'update'">
+        <ion-row class="mt-3 pt-3">
+          <h3 class="m-auto p-0 text-center">
+            {{'bill_proof' | translate}}
+          </h3>
+        </ion-row>
+        <form [formGroup]="proofAccountForm" novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="10" class="mx-auto">
+              <ion-row class="h-100 mt-2 px-2 text-area proof-note">
+                <mat-form-field class="w-100">
+                  <textarea matInput formControlName="Note" name="Note" placeholder="{{'proofing_account'| translate}}">
+                  </textarea>
+                  <mat-error>
+                    {{ 'proofing_account_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <ion-row class="jqx-button-row my-3 pb-3">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row *ngIf="proofAccountState == 'create'">
+              <jqxButton (onClick)="createProofAccount()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!proofAccountForm.valid">
+                {{ 'create' | translate }}
+              </jqxButton>
+            </ion-row>
+            <ion-row *ngIf="proofAccountState == 'update'">
+              <jqxButton (onClick)="updateProofAccount()" [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="!proofAccountForm.valid">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="hideForm('proof')" [theme]="globService.themeColor" class="jqx-button-theme">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="jqx-button-row">
+  <ion-row class="total-content4 ml-auto justify-content-end">
+    <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row>
+        <jqxButton (onClick)="close()" [theme]="globService.themeColor">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

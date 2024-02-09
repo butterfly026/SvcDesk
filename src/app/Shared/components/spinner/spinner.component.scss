@@ -1,0 +1,15 @@
+::ng-deep {
+  .mat-progress-spinner {
+    width: 30px !important;
+    height: 30px !important;
+
+    svg {
+      width: 30px !important;
+      height: 30px !important;
+
+      circle {
+        stroke: gray;
+      }
+    }
+  }
+}

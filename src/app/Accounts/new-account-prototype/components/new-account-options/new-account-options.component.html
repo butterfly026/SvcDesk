@@ -1,0 +1,88 @@
+<ion-row [formGroup]="formGroup">
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>{{ 'billing_cycle' | translate }}</mat-label>
+      <mat-select formControlName="BillingCycleCode">
+        <mat-option *ngFor="let item of billingCycles" [value]="item.Id">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{ 'billing_cycle_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>{{ 'tax_rate' | translate }}</mat-label>
+      <mat-select formControlName="TaxId">
+        <mat-option *ngFor="let item of taxes" [value]="item.Id">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{ 'tax_rate_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-form-field>
+      <mat-label>{{ 'time_zone' | translate }}</mat-label>
+      <mat-select formControlName="TimeZoneId">
+        <mat-option *ngFor="let item of taxes" [value]="item.Id">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{ 'time_zone_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration.Options.ChannelPartner.Enabled">
+    <app-channel-partners-autocomplete
+      [channelPartnerIdControl]="formGroup.controls.ChannelPartnerId">
+    </app-channel-partners-autocomplete>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration.Options.DefaultCreditLimit.Enabled">
+    <mat-form-field>
+      <mat-label>{{ 'credit_limit' | translate }}</mat-label>
+      <input matInput formControlName="CreditLimit" type="text" />
+
+      <mat-error>
+        {{ 'credit_limit_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+  
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration.Options.CreditStatus.Enabled">
+    <mat-form-field>
+      <mat-label>{{ 'credit_status' | translate }}</mat-label>
+      <mat-select formControlName="CreditStatusId">
+        <mat-option *ngFor="let item of creditStatuses" [value]="item.Id">
+          {{item.Status}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{ 'credit_status' | translate }} {{ 'IsRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration.Options.PaperBill.Enabled">
+    <mat-checkbox formControlName="PaperBill">
+      {{'paper_bill' | translate}}
+    </mat-checkbox>
+  </ion-col>
+  
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12" *ngIf="accountConfiguration.Options.EmailBill.Enabled">
+    <mat-checkbox formControlName="EmailBill">
+      {{'email_bill' | translate}}
+    </mat-checkbox>
+  </ion-col>
+</ion-row>

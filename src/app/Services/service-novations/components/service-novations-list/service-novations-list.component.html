@@ -1,0 +1,15 @@
+<ion-row class="mt-5 left-right-auto">
+  <app-datatable 
+    class="w-100"
+    [data]="dataSource" 
+    [totalCount]="totalCount"
+    [columns]="columns"
+    [action]="dataTableAction"
+    [permissions]="permissions"
+    [csvFileName]="csvFileName"
+    (onView)="viewDetail($event)"
+    (onCreate)="addNew()"
+    (onReverseRecentOne)="onReverseRecentOne()"
+    (onFetchData)="fetchData($event)">
+  </app-datatable>
+</ion-row>

@@ -1,0 +1,123 @@
+<ion-row class="">
+  <ion-row class="ion-margin-top ion-padding-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'edit_contacts_identification' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+  <ion-row class="ion-margin-top">
+    <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="12">
+      <ion-row class="full-height">
+        <span class="top-bottom-auto">
+          {{'identifications' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+      <ion-row class="full-height">
+        <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-auto" (click)="addNewID()"></ion-icon> -->
+        <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewID()"></i>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <form [formGroup]="identForm" (ngSubmit)="submitIdentification()" class="full-width" novalidate>
+      <ion-row *ngFor="let list of currentIdentList; let i = index">
+        <ion-row>
+          <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="12">
+            <ion-row class="full-height">
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                      placeholder="{{ 'id_type' | translate }}" required>
+                      <mat-option *ngFor="let idList of identTypeList; let j = index" value="{{idList.Code}}"
+                        (click)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'TypeCtrl')">
+                        {{ idList.Name | translate }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{ 'id_type_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+
+                    <input matInput formControlName="{{list.ValueCtrl}}" type="text"
+                      placeholder="{{ 'identification' | translate }}" required
+                      (ngModelChange)="checkSaveState(list.TypeCtrl, list.ValueCtrl, 'ValueCtrl')" />
+
+                    <mat-error>
+                      {{ 'id_required' | translate }}
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="12" class="ion-margin-top">
+                <ion-row class="full-height">
+                  <mat-checkbox [(ngModel)]="list.Verified" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="checkSaveState('','','')">
+                    {{ 'verified' | translate }}
+                  </mat-checkbox>
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="12" class="ion-margin-top">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width textarea-field">
+                    <textarea matInput formControlName="{{list.NoteCtrl}}" name="note"
+                      placeholder="{{'notes_optional'| translate}}" (ngModelChange)="checkSaveState('','','')">
+                      </textarea>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+            <ion-row class="full-height">
+              <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteID(i)"></ion-icon>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>
+
+      </ion-row>
+      <button id="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="login-row page-bottom jqx-button-row">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+          [disabled]="!identForm.valid || !saveState">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

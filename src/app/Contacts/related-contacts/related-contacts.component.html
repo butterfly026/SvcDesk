@@ -1,0 +1,30 @@
+<ion-row>
+  <ion-row class='justify-content-center'>
+    <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="12">
+      <h3 class='text-center'>{{ 'related_contact' | translate }}</h3>
+    </ion-col>
+  </ion-row>
+</ion-row>
+
+<ion-row class="total-content4 mx-auto">
+  <ion-row >
+    <ion-row class="">
+      <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [usePagination]="false"
+        [permissions]="permissions"
+        [csvFileName]="csvFileName"
+        [searchOptions]="searchOptions"
+        [messageForRowDeletion]="deletionMsg"
+        (onCreate)="addNewRelatedContact()"
+        (onEdit)="updateRelatedContact($event)"
+        (onDelete)="deleteRelatedContact($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+    </ion-row>
+  </ion-row>
+</ion-row>

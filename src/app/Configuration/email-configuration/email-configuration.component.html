@@ -1,0 +1,165 @@
+<ion-row class="mt-3">
+
+  <ion-row>
+    <h3 class="p-0 m-auto text-center">
+      {{'email_configuration' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row class="total-content4 mx-auto">
+    <form class="w-100" [formGroup]="configurationForm" (ngSubmit)="updateConfiguration()" novalidate>
+      <ion-row class="mt-2">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'cc' | translate }}" name="cc" formControlName="cc" required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'bcc' | translate }}" name="bcc" formControlName="bcc" required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'external_attachments' | translate }}" name="externalAttachments"
+                formControlName="externalAttachments" required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'attachments' | translate }}" name="attachments" formControlName="attachments"
+                required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'templates' | translate }}" name="templates" formControlName="templates"
+                required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'due_date' | translate }}" name="dueDate" formControlName="dueDate" required>
+                <mat-option *ngFor="let list of selList" [value]="list.id" (click)="calcMaxScheduleDays()">
+                  {{list.name | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="calcMaxScheduleDays()">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="maximumScheduleDays"
+                placeholder="{{ 'max_schedule_days' | translate }}" required name="maximumScheduleDays">
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select placeholder="{{ 'delivery_confirmation' | translate }}" name="deliveryConfirmation"
+                formControlName="deliveryConfirmation" required>
+                <mat-option *ngFor="let list of selList" [value]="list.id">{{list.name | translate}}</mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="emailFormat" placeholder="{{ 'email_format' | translate }}"
+                required name="emailFormat">
+
+              <mat-error>
+                {{'field_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!configurationForm.valid"
+            (onClick)="triggerSubmit()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="cancelForm()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

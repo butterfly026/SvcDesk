@@ -1,0 +1,641 @@
+<ion-row class="mt-3 pt-3" *ngIf="showForm">
+
+  <ion-row class="mb-3">
+    <h3 class="p-0 m-auto text-center">
+      {{'account_onboarding_configuration' | translate}}
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="configForm" class="w-100" (ngSubmit)="putAccountOnboardingConfigurations()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="Type" placeholder="{{ 'type' | translate }}" required>
+              <mat-option *ngFor="let list of typeList; let j = index" value="{{list?.id}}">
+                {{ list?.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'type_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="f.Type.valid">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              {{'account_id' | translate}}
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <mat-select formControlName="Details_AccountId_Method" placeholder="{{ 'method' | translate }}" required>
+                  <mat-option *ngFor="let list of methodList; let j = index" value="{{list}}">
+                    {{ list }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'type_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Details_SubType_Enabled">
+              {{'sub_type' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Details_Aliases_Enabled">
+              {{'aliases' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Details_Key_Enabled">
+              {{'key' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Details_EnquiryPassword_Enabled">
+              {{'enquiry_password' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Details_Emails_Enabled">
+                {{'emails' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Details_Emails_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Details_Emails_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Details_ContactPhones_Enabled">
+                {{'contact_phones' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Details_ContactPhones_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Details_ContactPhones_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Details_Addresses_Enabled">
+                {{'addresses' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Details_Addresses_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Details_Addresses_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Details_Status_Enabled">
+                {{'status' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Details_Status_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Details_Status_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <!-- Options -->
+    <ion-row *ngIf="f.Type.valid">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Options_Enabled">
+                {{'options' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Options_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Options_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Options_PaperBill_Enabled">
+                {{'paper_bill' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">            
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Options_PaperBill_Default">
+                {{'default' | translate}}
+              </mat-checkbox>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+        
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Options_EmailBill_Enabled">
+                {{'email_bill' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">            
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Options_EmailBill_Default">
+                {{'default' | translate}}
+              </mat-checkbox>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Options_CreditStatus_Enabled">
+                {{'credit_status' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">            
+            <ion-row>
+              <mat-form-field class="w-100">
+                <mat-select formControlName="Options_CreditStatus_Default" placeholder="{{ 'default' | translate }}" required>
+                  <mat-option *ngFor="let list of creditStatusList; let j = index" value="{{list?.Id}}">
+                    {{ list?.Status }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'default_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Options_DefaultCreditLimit_Enabled">
+                {{'default_credit_limit' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Options_DefaultCreditLimit_CreditLimit" type="number" min="0"
+                  placeholder="{{'credit_limit' | translate}}" name="Options_DefaultCreditLimit_CreditLimit" />
+                <mat-error>
+                  {{'must_be_bigger_0' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+        
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Options_ChannelPartner_Enabled">
+              {{'channel_partner' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+        
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Options_SalesPerson_Enabled">
+              {{'sales_person' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+        
+        <ion-row>
+          <h3 class="p-0">
+            <mat-checkbox class="example-margin" formControlName="Options_BillFormat_Enabled">
+              {{'bill_format' | translate}}
+            </mat-checkbox>
+          </h3>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="f.Type.valid">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="PaymentMethods_Enabled">
+                {{'payment_method' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="PaymentMethods_Order" type="number" max="100" min="0"
+                placeholder="{{'display_order' | translate}}" name="PaymentMethods_Order" required />
+              <mat-error>
+                {{'must_between_numbers0100' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <mat-checkbox class="example-margin" formControlName="PaymentMethods_CreditCardEnabled">
+              {{'credit_card' | translate}}
+            </mat-checkbox>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <mat-checkbox class="example-margin" formControlName="PaymentMethods_BankEnabled">
+              {{'bank' | translate}}
+            </mat-checkbox>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Plans_Enabled">
+                {{'plans' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-row>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Plans_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Plans_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Plans_AllowMultiplePlans">
+                Allow Multiple Plans
+              </mat-checkbox>
+            </ion-row>
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Plans_Hardware_Enabled">
+                Hardware Option Enabled
+              </mat-checkbox>
+            </ion-row>
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Plans_Charges_Enabled">
+                Charges Option Enabled
+              </mat-checkbox>
+            </ion-row>
+            <ion-row>
+              <mat-checkbox class="example-margin" formControlName="Plans_Discounts_Enabled">
+                Discounts Option Enabled
+              </mat-checkbox>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Attributes_Enabled">
+                {{'attributes' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Attributes_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Attributes_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Contracts_Enabled">
+                {{'contracts' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Contracts_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Contracts_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+        
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="CostCenters_Enabled">
+                {{'cost_centers' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="CostCenters_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="CostCenters_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="ServiceGroups_Enabled">
+                {{'service_groups' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="ServiceGroups_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="ServiceGroups_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Sites_Enabled">
+                {{'sites' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Sites_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Sites_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Charges_Enabled">
+                {{'charges' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Charges_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Charges_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Identification_Enabled">
+                {{'identification' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Identification_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Identification_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="RelatedContacts_Enabled">
+                {{'related_accounts' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="RelatedContacts_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="RelatedContacts_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Documents_Enabled">
+                {{'documents' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Documents_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Documents_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Notifications_Enabled">
+                {{'notifications' | translate}}
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Notifications_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Notifications_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row>
+            <h3 class="p-0">
+              <mat-checkbox class="example-margin" formControlName="Authentication_Enabled">
+                Authentication
+              </mat-checkbox>
+            </h3>
+          </ion-row>
+          <ion-row style="margin-left: 10px;">
+            <ion-col>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="Authentication_Order" type="number" max="100" min="0"
+                  placeholder="{{'display_order' | translate}}" name="Authentication_Order" required />
+                <mat-error>
+                  {{'must_between_numbers0100' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+    <button class="submitButton" id="serviceAccountOnboardingConfigurationSubmitButton"></button>
+  </form>
+
+
+
+  <ion-row class="my-3 normal-button">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+          [disabled]="!configForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

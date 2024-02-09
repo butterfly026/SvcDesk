@@ -1,0 +1,23 @@
+<ion-row>
+  <ion-row *ngIf="MessageType == 'list'">
+    <app-contact-message-list class="w-100" [ContactCode]="ContactCode" (MessageListComponent)="processMessage($event)">
+    </app-contact-message-list>
+  </ion-row>
+
+  <ion-row *ngIf="MessageType == 'new'">
+    <app-contact-message-form class="w-100" [ContactCode]="ContactCode" (MessageListComponent)="processMessage($event)">
+    </app-contact-message-form>
+  </ion-row>
+
+  <ion-row *ngIf="MessageType == 'new_sms'">
+    <app-contact-message-sms class="total-content4 mx-auto" [ContactCode]="ContactCode"
+      (ContactMessageSmsComponent)="processMessage($event)">
+    </app-contact-message-sms>
+  </ion-row>
+
+  <ion-row *ngIf="MessageType == 'new_email'">
+    <app-contact-message-email class="total-content2 left-right-auto" [ContactCode]="ContactCode"
+      (ContactMessageEmailComponent)="processEmail($event)">
+    </app-contact-message-email>
+  </ion-row>
+</ion-row>

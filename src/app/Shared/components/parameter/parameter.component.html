@@ -1,0 +1,66 @@
+<ion-row class="full-height ion-margin-top" [formGroup]="formGroup">
+  <ion-row class="">
+    <mat-form-field class="w-100" *ngIf="parameter.DataType=='List'">
+      <mat-label>{{parameter.Name}}</mat-label>
+      <mat-select formControlName="Value">
+        <mat-option *ngFor="let item of parameterDataList; let j = index" [value]="item.Id">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{ 'data_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-slide-toggle color="primary" formControlName="Value" *ngIf="parameter.DataType=='Boolean'">{{ parameter.Name }}</mat-slide-toggle>
+
+    <mat-form-field class="w-100" *ngIf="parameter.DataType=='Date'">
+      <mat-label>{{parameter.Name}}</mat-label>
+      <input matInput [matDatepicker]="datePicker" formControlName="Value" />
+
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+
+      <mat-error>
+        {{ 'date_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <ion-row *ngIf="parameter.DataType === 'LazyList'" class="address-spinner2">
+      <mat-form-field class="w-100">
+        <mat-label>{{parameter.Name}}</mat-label>
+        <input matInput type="text" formControlName="Value" [matAutocomplete]="lazyListAutoComplete" />
+
+        <mat-autocomplete #lazyListAutoComplete="matAutocomplete">
+          <mat-option *ngFor="let item of parameterDataList" [value]="item.Id" (click)="selectAutoCompleteItem(item)">
+            {{item.Name}}
+          </mat-option>
+        </mat-autocomplete>
+
+        <mat-error>
+          {{ 'data_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+    </ion-row>
+
+    <mat-form-field class="w-100" *ngIf="parameter.DataType=='Integer'">
+      <mat-label>{{parameter.Name}}</mat-label>
+      <input matInput type="number" formControlName="Value" />
+
+      <mat-error>
+        {{ 'data_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" *ngIf="parameter.DataType=='Currency'">
+      <mat-label>{{parameter.Name}}</mat-label>
+      <input matInput type="number" formControlName="Value" />
+
+      <mat-error>
+        {{ 'data_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </ion-row>
+</ion-row>

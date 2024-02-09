@@ -1,0 +1,12 @@
+ion-col {
+  text-align: center;
+}
+
+.pagination-controls.goto-page,
+.pagination-controls.row-list {
+  width: auto;
+}
+
+::ng-deep div.jqx-grid-pager {
+  display: none;
+}

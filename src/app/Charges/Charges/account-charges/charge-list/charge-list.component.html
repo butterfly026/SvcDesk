@@ -1,0 +1,59 @@
+<ion-row class="position-relative" id="charge-grid">
+
+  <form [formGroup]="accountOnlyForm" class="w-100" *ngIf="showSearchOptions">
+    <ion-row class="justify-content-end">
+      <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="12">
+        <ion-row class="service-list-search mt-3 justify-content-end align-items-center">
+          <mat-checkbox formControlName="AccountOnly" name="AccountOnly" [(ngModel)]="isAccountOnly" (change)="getChargeList()">
+            {{ 'account_only' | translate }}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable class="w-100" 
+      [data]="dataSource" 
+      [totalCount]="totalCount" 
+      [columns]="columns"
+      [action]="dataTableAction" 
+      [permissions]="permissions" 
+      [csvFileName]="csvFileName" 
+      [searchOptions]="searchOptions"
+      [columnsUsedForCurrency]="columnsUsedForCurrency"
+      (onCreate)="goToNew()" 
+      (onInstances)="goToInstances($event)" 
+      (onEdit)="goToUpdate($event)"
+      (onDelete)="validateDelete($event)" 
+      (onView)="goToDetail($event)" 
+      (onEnd)="endCharge($event)"
+      (onToggleSearchOptions)="showHideSearchOption($event)" 
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ng-template #endDialog>
+    <h2 matDialogTitle>{{ 'end_charge' | translate }} [{{ selectedData?.Id}} - {{ selectedData?.Description}}]</h2>
+    <p matDialogContent>
+      <ion-row class="charge-delete-body">
+        <form class="w-100" [formGroup]="endForm" novalidate>
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="endDate" formControlName="endDate"
+                placeholder="{{ 'end_date' | translate }}" name="From" min="{{endFormMinDate}}">
+
+              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+              <mat-datepicker #endDate></mat-datepicker>
+            </mat-form-field>
+          </ion-row>
+        </form>
+      </ion-row>
+    </p>
+    <mat-dialog-actions align="end">
+      <button mat-button matDialogClose color="primary" [disabled]="!endForm.valid" (click)="confirmEnd()">{{ 'end' |
+        translate}}</button>
+      <button mat-button matDialogClose color="primary">{{'cancel' | translate}}</button>
+    </mat-dialog-actions>
+  </ng-template>
+</ion-row>

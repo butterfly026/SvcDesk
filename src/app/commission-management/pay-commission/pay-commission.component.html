@@ -1,0 +1,201 @@
+<ion-row>
+  <ion-row class="m-auto total-content4">
+    <form [formGroup]="payCommmissionForm" class="w-100" novalidate>
+      <ion-row class="m-auto">
+
+        <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+
+          <mat-accordion [style.width.%]="100" [multi]="true">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <strong>{{'transaction_to_process' | translate}}</strong>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-radio-group [disabled]="transactionField" (change)="_transactionSelection($event.value)">
+                      <mat-radio-button [checked]="transactionSelection === 'tagged_transaction'"
+                        [value]="'tagged_transaction'">
+                        {{'tagged_transaction' | translate}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-radio-group [disabled]="transactionField" (change)="_transactionSelection($event.value)">
+                      <mat-radio-button [checked]="transactionSelection === 'payable_transaction'"
+                        [value]="'payable_transaction'">
+                        {{'payable_transaction' | translate}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <strong>{{'dealer_to_process' | translate}}</strong>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-radio-group (change)="_dealerSelection($event.value)">
+                      <mat-radio-button [checked]="dealerSelection === 'one_dealer'" [value]="'one_dealer'">
+                        {{'this_dealer' | translate}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-radio-group (change)="_dealerSelection($event.value)">
+                      <mat-radio-button [checked]="dealerSelection === 'all_dealer'" [value]="'all_dealer'">
+                        {{'all_dealer' | translate}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+              <ion-row>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <mat-form-field>
+                    <input [required]="true" [formControlName]="'dealer_id'" matInput
+                      [placeholder]="'dealer_id' | translate">
+                    <mat-error *ngIf="payCommmissionForm.controls['dealer_id'].hasError('required')">
+                      {{'dealerId_is_required' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <mat-form-field>
+                    <input [required]="true" [formControlName]="'dealer_name'" matInput
+                      [placeholder]="'dealer_name' | translate">
+                    <mat-error *ngIf="payCommmissionForm.controls['dealer_name'].hasError('required')">
+                      {{'dealerName_is_required' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-row>
+                  <ion-row>
+                    <mat-radio-group [disabled]="amountTypeSelectionField"
+                      (change)="_amountTypeSelection($event.value)">
+                      <mat-radio-button [checked]="amountTypeSelection === 'default'" [value]="'default'">
+                        {{'pay_the_default_amount' | translate}} - <strong [style.color]="'blue'">($935.00)</strong>
+                      </mat-radio-button>
+                      <mat-radio-button class="ml-3" [checked]="amountTypeSelection === 'custom'" [value]="'custom'">
+                        {{'pay_this_amount' | translate}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </ion-row>
+
+                  <ion-row>
+                    <ion-col size="12">
+                      <mat-form-field>
+                        <input [required]="true" [formControlName]="'payable_amount'" matInput
+                          [placeholder]="'payable_amount' | translate">
+                        <mat-error *ngIf="payCommmissionForm.controls['payable_amount'].hasError('required')">
+                          {{'payable_amount_is_required' | translate}}
+                        </mat-error>
+                        <mat-error *ngIf="payCommmissionForm.controls['payable_amount'].hasError('pattern')">
+                          {{'invalid_number' | translate}}
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-col>
+                  </ion-row>
+                </ion-row>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row>
+                    <section class="example-section">
+                      <mat-checkbox class="example-margin" [disabled]="allDealerSectionFields"
+                        (change)="daysCheck = $event.checked">
+                        {{'only_process_dealer_not_paid_in' | translate}}
+                      </mat-checkbox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row>
+                    <mat-form-field>
+                      <input [disableControl]="!daysCheck || allDealerSectionFields" [required]="true" [min]="1"
+                        [formControlName]="'days'" matInput type="number" [placeholder]="'days' | translate">
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{'additional_details' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <ion-row>
+                <ion-col size="12">
+                  <ion-row>
+                    <mat-form-field>
+                      <input [formControlName]="'cheque_number'" matInput [placeholder]="'cheque_number' | translate">
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size="12">
+                  <ion-row>
+                    <mat-form-field>
+                      <textarea [required]="true" [formControlName]="'comment'" matInput
+                        [placeholder]="'comment' | translate"></textarea>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row class="jqx-button-row m-auto">
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton [disabled]="disableSubmitButton()" (click)="saveForm()" [theme]="globService.themeColor"
+              class="jqx-button-theme">
+              {{ 'pay' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <jqxButton (click)="closeForm()" [theme]="globService.themeColor" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+    </form>
+  </ion-row>
+</ion-row>

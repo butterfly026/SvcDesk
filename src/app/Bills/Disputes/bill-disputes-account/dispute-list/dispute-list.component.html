@@ -1,0 +1,18 @@
+  <ion-row class="left-right-auto" >
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      [messageForRowDeletion]="deletionMsg"
+      [columnsUsedForCurrency]="columnsUsedForCurrency"
+      (onCreate)="goToNewDispute()"
+      (onEdit)="goToDisputeDetail($event)"
+      (onDelete)="deleteDispute($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>

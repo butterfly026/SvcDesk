@@ -1,0 +1,373 @@
+<ion-row class="ion-padding">
+  <mat-tab-group animationDuration="500ms" class="left-right-auto full-width customer-tab customer-care2-component"
+    (selectedTabChange)="selectTabs($event)" (focusChange)="focusChange($event)" (animationDone)="animationDone()"
+    [selectedIndex]="selectedServiceDeskServiceTabIndex">
+
+    <mat-tab *ngFor="let list of tabList; let i = index; let last = last" class="customer-tab-detail" [disabled]="!list.avail">
+      <ion-row>
+        <ng-template mat-tab-label class="position-relative account-menu">
+          <h3 class="p-0 my-auto" *ngIf="list?.showMenu">
+            <i class="fa fa-bars cursor-point" [matMenuTriggerFor]="menu.childMenu"
+              [ngStyle]="{'pointer-events': selectedServiceDeskServiceTabIndex != i ? 'none' : ''}"></i>
+            <app-menu-item #menu [items]="list?.attributeMenuList?.menuitems"></app-menu-item>
+          </h3>
+          <span class="custom-tab-header ion-padding-start ion-padding-end">
+            <strong>{{list.Title | translate}}</strong>
+          </span>
+          <ion-icon name="close" (click)="closeTab(i)" *ngIf="i != 0">
+          </ion-icon>
+        </ng-template>
+      </ion-row>
+
+      <!-- *ngIf="selectedServiceDeskServiceTabIndex == i" -->
+      <ion-row>
+        <ion-row>
+          <app-service-desk-main [ContactCode]="list.ContactCode" [Title]="list.Title"
+            *ngIf="list.Type=='ServiceDeskDetail'" class="full-width"
+            (ServiceDeskMainComponent)="processMainComponent($event)">
+          </app-service-desk-main>
+        </ion-row>
+
+        <ion-row>
+          <app-service-detail ServiceId="{{list.Value}}" *ngIf="list.Type=='CustomerServiceType'"
+            class="full-width ion-margin-top ion-padding-top" ContactCode="{{list.ContactCode}}"
+            (serviceLoadEnd)="loadEnd($event)" [ServiceReferenceId]="list.Value" (getCDLabel)="getDetailLabel($event)">
+          </app-service-detail>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'ServiceEvent'">
+          <app-service-event-instance class="w-100" [ServiceReferenceId]="list.Value" [ServiceId]="curServiceId" [Mode]="'list'"
+            (EventInstanceComponent)="cancelDetailTab($event, i)">
+          </app-service-event-instance>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'AccountEvent'">
+          <app-event-instance class="w-100" [ContactCode]="list.ContactCode" [Mode]="'list'"
+            (EventInstanceComponent)="cancelDetailTab($event, i)">
+          </app-event-instance>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'AccountEventNew'">
+          <app-event-instance class="w-100" [ContactCode]="list.ContactCode" [Mode]="'new'"
+            (EventInstanceComponent)="cancelDetailTab($event, i)">
+          </app-event-instance>
+        </ion-row>
+
+        <ion-row>
+          <app-list-payment class="full-width ion-margin-top ion-padding" ContactCode="{{list.ContactCode}}"
+            (setComponentValue)="paymentMethodListProcess($event, i)" *ngIf="list.Type=='PaymentList'">
+          </app-list-payment>
+        </ion-row>
+
+        <ion-row>
+          <app-new-payment class="full-width" ContactCode="{{list.ContactCode}}" *ngIf="list.Type=='PaymentNew'"
+            (setComponentValue)="paymentMethodListProcess($event, i)">
+          </app-new-payment>
+        </ion-row>
+
+        <ion-row>
+          <app-update-payment class="full-width" ContactCode="{{list.ContactCode}}" PaymentId="{{list.Value}}"
+            (setComponentValue)="paymentMethodListProcess($event, i)" *ngIf="list.Type=='UpdatePayment'">
+          </app-update-payment>
+        </ion-row>
+
+        <ion-row>
+          <app-sms class="total-content2 left-right-auto" ContactNumber="{{list.ContactCode}}" *ngIf="list.Type=='SMS'"
+            pageTitle="{{'sms'|translate}}" (setComponentValue)="callBillFunction($event, i)">
+          </app-sms>
+        </ion-row>
+
+        <ion-row>
+          <app-financial-transaction-list ContactNumber="{{list.ContactCode}}" *ngIf="list.Type=='ShowFinancial'" [Refresh]="last"
+            (setComponentValue)="financialTransaction($event, i, list.ContactCode)">
+          </app-financial-transaction-list>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'FinancialTransactionsCreditAdjustmentNew'">
+          <app-financial-credit-adjustment [ContactCode]="list.ContactCode" class="w-100"
+            (FinancialCreditAdjustmentComponent)="financialTransaction($event, i, list.ContactCode)">
+          </app-financial-credit-adjustment>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'FinancialTransactionsDebitAdjustmentNew'">
+          <app-financial-debit-adjustment [ContactCode]="list.ContactCode" class="w-100"
+            (FinancialDebitAdjustmentComponent)="financialTransaction($event, i, list.ContactCode)">
+          </app-financial-debit-adjustment>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='FinancialTransactionsReceiptsNew'">
+          <app-receipt [ContactCode]="list.ContactCode" class="w-100"
+            (ReceiptNewComponent)="financialTransaction($event, i, list.ContactCode)">
+          </app-receipt>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='FinancialTransactionsInvoicesNew'">
+          <app-financial-invoice-form [ContactCode]="list.ContactCode" class="w-100"
+            (FinancialInvoiceFormComponent)="financialTransaction($event, i, list.ContactCode)">
+          </app-financial-invoice-form>
+        </ion-row>
+
+        <ion-row>
+          <app-financial-transaction-detail class="full-width" [FinancialId]="list.Value"
+            [ContactCode]="list.ContactCode" *ngIf="list.Type=='FinantialTransactionDetails'"
+            (setComponentValue)="financialTransaction($event, i)">
+          </app-financial-transaction-detail>
+        </ion-row>
+
+        <ion-row>
+          <app-financial-auto-allocate-all class="full-width" *ngIf="list.Type === 'FinancialTransactionsAutoAllocateAll'"
+            (FinancialAutoAllocateAllComponent)="financialTransaction($event, i, list.ContactCode)">
+          </app-financial-auto-allocate-all>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'financial-reallocate'">
+          <app-financial-transaction-reallocate class="full-width" [ContactCode]="list.ContactCode" [FinancialId]="list.Value">
+          </app-financial-transaction-reallocate>
+        </ion-row>
+
+        <ion-row>
+          <app-bill-list-uc-retail class="full-width" ContactCode="{{list.ContactCode}}"
+            *ngIf="list.Type=='BillListUCRetail'" pageTitle="{{'billListUCRetail'|translate}}"
+            (setComponentValue)="cancelDetailTab($event, i)">
+          </app-bill-list-uc-retail>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillHistory'">
+          <app-bill-history class="full-width" (invoiceDetail)="invoiceInput = $event" [ContactCode]="list.ContactCode"
+            (BillHistoryComponent)="cancelDetailTab($event, i)">
+          </app-bill-history>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ServiceGroup'">
+          <app-account-service-groups class="full-width" [ContactCode]="list.ContactCode"
+            (AccountServiceControl)="cancelDetailTab($event, i)">
+          </app-account-service-groups>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='PaymentMethod'">
+          <app-contact-payment-method-component class="full-width" ContactCode="{{list.ContactCode}}"
+            (ContactPaymentMethodComponent)="processPayment($event, i)">
+          </app-contact-payment-method-component>
+        </ion-row>
+
+        <ion-row>
+          <app-bill-now [ContactCode]="list.ContactCode" *ngIf="list.Type=='BillNow'"
+            (setComponentValue)="cancelDetailTab($event, i)" class="full-width">
+          </app-bill-now>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillDisputes'">
+          <app-bill-disputes class="w-100" [billId]="list.BillId" [billNumber]="list.BillNumber"
+            [ContactCode]="list.ContactCode" [disputeState]="'list'"
+            (BillDisputesComponent)="processAttributeMenu($event, i)">
+          </app-bill-disputes>
+        </ion-row>
+
+        <ion-row>
+          <app-invoice-details class="full-width" [invoiceData]="invoiceInput" *ngIf="list.Type=='InvoiceDetails'"
+            (setComponentValue)="cancelDetailTab($event, i)">
+          </app-invoice-details>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillTransaction'">
+          <app-bill-transactions class="w-100" [ContactCode]="list.ContactCode" [BillId]="list.BillId"
+            (BillTransactionComponent)="cancelDetailTab($event, i)">
+          </app-bill-transactions>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillService'">
+          <app-bill-services class="w-100" [ContactCode]="list.ContactCode" [BillId]="list.BillId"
+            (BillServices)="cancelDetailTab($event, i)">
+          </app-bill-services>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillCharges'">
+          <app-bill-charges class="w-100" [ContactCode]="list.ContactCode" [BillId]="list.BillId"
+            (BillCharges)="cancelDetailTab($event, i)">
+          </app-bill-charges>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='BillEmail'">
+
+          <app-email-send-new class="total-content2 mx-auto" [ContactCode]="list.ContactCode"
+            (EmailSendNewComponent)="cancelDetailTab($event, i)" [DocLists]="list.DocLists" [EmailType]="'billEmail'">
+          </app-email-send-new>
+        </ion-row>
+
+        <ion-row>
+          <app-contact-methods class="full-width" ContactNumber="{{list.ContactCode}}"
+            *ngIf="list.Type=='ContactMethod'" (componentValue)="cancelDetailTab($event, i)">
+          </app-contact-methods>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='AccountCharges'">
+          <app-charges class="w-100" [ContactCode]="list.ContactCode" [ViewMode]="'List'"
+            (ChargesComponent)="processAttributeMenu($event, i)">
+          </app-charges>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ServiceCharges'">
+          <app-service-charges class="w-100" [ServiceId]="curServiceId" [ServiceReference]="list.Value"
+            [ViewMode]="'List'" (ChargesComponent)="processAttributeMenu($event, i)">
+          </app-service-charges>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ServiceNote'">
+          <app-service-notes class="w-100" [ContactCode]="list.ContactCode" [ServiceReference]="list.Value"
+            (UsersGroupComponent)="processAttributeMenu($event, i)">
+          </app-service-notes>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='AccountsPlanChange'">
+          <app-account-plan-new class="w-100" [ContactCode]="list.ContactCode"
+            (PlanComponent)="processAttributeMenu($event, i)">
+          </app-account-plan-new>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ChargesAccountOverrides'">
+          <app-account-charge-override class="w-100" [ContactCode]="list.ContactCode" [ViewMode]="'List'"
+            (AccountChargeOverrideComponent)="processAttributeMenu($event, i)">
+          </app-account-charge-override>
+        </ion-row>
+
+
+        <ion-row *ngIf="list.Type=='ChargesServiceOverrides'">
+          <app-service class="w-100" [ServiceReference]="list.Value" [ViewMode]="'List'" [ServiceId]="curServiceId"
+            (ServiceComponent)="processAttributeMenu($event, i)">
+          </app-service>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'UsageAccount'">
+          <app-usage-account-history [ContactCode]="list.ContactCode" class="w-100"
+            (setComponentValue)="processAttributeMenu($event, i)">
+          </app-usage-account-history>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'UsageService'">
+          <app-usage-service-history [ServiceReference]="list.Value" [ServiceID]="curServiceId" class="w-100"
+            (setComponentValue)="processAttributeMenu($event, i)">
+          </app-usage-service-history>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'AccountDocuments'">
+          <app-contact-document class="w-100" [ContactCode]="list.ContactCode"
+            (ContactDocument)="processAttributeMenu($event, i)">
+          </app-contact-document>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'AccountCostCenters'">
+          <app-contacts-cost-centers-list class="w-100" [ContactCode]="list.ContactCode"
+            (CostCenterComponent)="processAttributeMenu($event, i)">
+          </app-contacts-cost-centers-list>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'ServiceDocuments'">
+          <app-service-document class="w-100" [ServiceReference]="list.Value" [ServiceID]="curServiceId"
+            (ServiceDocument)="processAttributeMenu($event, i)">
+          </app-service-document>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'ServiceCostCenters'">
+          <app-service-cost-center-list class="w-100" [ServiceReference]="list.Value"
+            (CostCentersComponent)="processAttributeMenu($event, i)">
+          </app-service-cost-center-list>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'ServiceDiscount'">
+          <app-discount-component class="w-100" [ServiceReference]="list.Value"
+            (DiscountComponents)="processAttributeMenu($event, i)">
+          </app-discount-component>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == 'ServiceAttributes'">
+          <app-service-attribute class="w-100" [ServiceReference]="list.Value" [ServiceId]="curServiceId"
+            (ServiceAttributeComponent)="processAttributeMenu($event, i)">
+          </app-service-attribute>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ServicesNew'">
+          <app-service-new-main class="w-100" [ContactCode]="list.ContactCode" [ShowAskConfirm]="list.ShowAskConfirm"
+            (ServiceNewMainComponent)="processAttributeMenu($event, i)" (ScrollServiceNewComponent)="processMainComponent($event)">
+          </app-service-new-main>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type=='ChargesConfigurationsGroups'">
+          <app-account-charge-group class="w-100" [ContactCode]="list.Value"
+            (AccountChargeGroupComponent)="processAttributeMenu($event, i)">
+          </app-account-charge-group>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Bills/Delegations/Accounts'">
+          <app-bill-delegation-account class="w-100" [ContactCode]="list.ContactCode" [delegationState]="'list'"
+            (BillDelegationComponent)="processAttributeMenu($event, i)">
+          </app-bill-delegation-account>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Bills/Disputes/Accounts'">
+          <app-bill-disputes-account class="w-100" [ContactCode]="list.ContactCode" [disputeState]="'list'"
+            (BillDisputesComponent)="processAttributeMenu($event, i)">
+          </app-bill-disputes-account>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Bills/Disputes/New'">
+          <app-bill-disputes-account class="w-100" [ContactCode]="list.ContactCode" [disputeState]="'new'"
+            (BillDisputesComponent)="processAttributeMenu($event, i)">
+          </app-bill-disputes-account>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Bills/Disputes/Update'">
+          <app-bill-disputes-account class="w-100" [ContactCode]="list.ContactCode" [disputeState]="'detail'"
+            [disputeId]="" (BillDisputesComponent)="processAttributeMenu($event, i)">
+          </app-bill-disputes-account>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Tasks/Services'">
+          <app-service-task-list class="w-100" [ServiceReference]="list.Value" [ServiceID]="curServiceId"
+            (ServiceTaskListComponent)="processAttributeMenu($event, i)">
+          </app-service-task-list>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Tasks/Contacts'">
+          <app-account-task-list class="w-100" [ContactCode]="list.ContactCode"
+            (AccountTaskListComponent)="processAttributeMenu($event, i)">
+          </app-account-task-list>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Accounts/Configurations/DepositStatusReasons'">
+          <app-deposit-status-reasons class="w-100" [ContactCode]="list.ContactCode"
+            (DepositStatusReasonsComponent)="processAttributeMenu($event, i)">
+          </app-deposit-status-reasons>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Accounts/Deposits'">
+          <app-account-deposits-lists class="w-100" [ContactCode]="list.ContactCode"
+            (AccountDepositsComponent)="processAttributeMenu($event, i)">
+          </app-account-deposits-lists>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Accounts/Installments'">
+          <app-account-installments-lists class="w-100" [ContactCode]="list.ContactCode"
+            (AccountInstallmentsListsComponent)="processAttributeMenu($event, i)">
+          </app-account-installments-lists>
+        </ion-row>
+
+        <ion-row *ngIf="list.Type == '/Contacts/AuthorisedAccounts'">
+          <app-authorised-accounts-lists class="w-100" [ContactCode]="list.ContactCode"
+            (AuthorisedAccountsListsComponent)="processAttributeMenu($event, i)">
+          </app-authorised-accounts-lists>
+        </ion-row>
+
+        <!-- <ion-row *ngIf="list.Type == 'UsageDetail'">
+          <app-usage-detail [usageDetail]="usageDetailInput" class="w-100"
+            (UsageDetailComponent)="processAttributeMenu($event, i)">
+          </app-usage-detail>
+        </ion-row> -->
+
+      </ion-row>
+
+    </mat-tab>
+
+
+
+  </mat-tab-group>
+</ion-row>

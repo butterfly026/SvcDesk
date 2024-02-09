@@ -1,0 +1,132 @@
+  <ion-row class="px-3 pt-3">
+    <ion-row>
+      <h3 class="p-0 m-auto text-center">
+        {{'EventNew' | translate}}
+      </h3>
+    </ion-row> 
+    <ion-row class="total-content4 mx-auto">
+      <form [formGroup]="newEventForm" class="w-100" (ngSubmit)="eventSubmit()" novalidate>
+        <ion-row>       
+          <ion-col [sizeXl]="selectedDefinition && reasonList?.length > 0 ? 6 : 12" [sizeLg]="selectedDefinition && reasonList?.length > 0 ? 6 : 12" [sizeMd]="selectedDefinition && reasonList?.length > 0 ? 6 : 12" [sizeSm]="selectedDefinition && reasonList?.length > 0 ? 6 : 12" [sizeXs]="12">
+  
+            <ion-row class="group-content address-spinner">
+              <mat-form-field class="example-full-width">    
+                <input type="text" placeholder="{{'Definition'| translate}}" matInput formControlName="Definition" [matAutocomplete]="auto" #definitionInput>
+               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectDefinition($event.option.value)">
+                  <mat-option *ngFor="let item of definitionList; let i = index" [value]="item.name">
+                    {{item.name}}
+                  </mat-option>
+                </mat-autocomplete>    
+                <mat-error *ngIf="f.Definition.hasError('required')">
+                  {{ 'DefinitionRequired' | translate }}
+                </mat-error>  
+              </mat-form-field>
+              <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+            </ion-row>
+          </ion-col>
+  
+          <ng-container *ngIf="selectedDefinition">          
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="reasonList?.length > 0">
+              <ion-row class="mt-2">
+                <mat-form-field class="w-100">
+                  <mat-select formControlName="Reason" placeholder="{{ 'Reason' | translate }}" name="reason">
+                    <mat-option *ngFor="let list of reasonList; let i = index" value="{{list.reason?.id}}">
+                      {{list.reason?.reason}}
+                    </mat-option>
+                  </mat-select>
+    
+                  <mat-error>
+                    {{ 'ReasonRequired' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+    
+            <ng-container *ngIf="!unschedulable">
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" >
+                <ion-row class="mt-2">        
+                  <mat-form-field  class="w-100">
+                    <input matInput #input [matDatepicker]="picker" (focus)="picker.open()" formControlName="Due" placeholder="{{ 'ScheduleDatetime' | translate }}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
+                    <mat-error>
+                      {{ 'DateRequired' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="mt-2">
+                  <mat-form-field class="w-100">
+                    <mat-select formControlName="ScheduledTo" placeholder="{{ 'ScheduledTo' | translate }}" name="ScheduledTo">
+                      <mat-option *ngFor="let list of scheduledToList; let i = index" value="{{list.Id}}">
+                        {{list.Name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{ 'ScheduledToRequired' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="teamScheduleToList.length > 0">
+                <ion-row class="mt-2">
+                  <mat-form-field class="w-100">
+                    <mat-select formControlName="DepartmentScheduledTo" placeholder="{{ 'DepartmentScheduledTo' | translate }}"
+                      name="DepartmentScheduledTo">
+                      <mat-option *ngFor="let list of teamScheduleToList; let i = index" value="{{list.Id}}">
+                        {{list.Name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{ 'DepartmentScheduledToRequired' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>          
+            </ng-container>
+          </ng-container>
+  
+        </ion-row>
+  
+        <ion-row *ngIf="selectedDefinition">
+          <ion-col [sizeXs]="12">
+            <ion-row>
+              <mat-form-field>
+                <textarea matInput formControlName="Note" [placeholder]="'Note'| translate">
+                </textarea>
+                
+                <mat-error>
+                  {{ 'NoteRequired' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+  
+        <button class="submitButton" id="submitButton"></button>
+      </form>
+    </ion-row>
+  </ion-row>
+
+
+  <ion-row class="my-3 jqx-button-row">
+    <ion-row class="total-content4 mx-auto">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!newEventForm.valid" (onClick)="submitTrigger()"
+            class="jqx-button-theme">
+            {{ 'Create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+            {{ 'Close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>

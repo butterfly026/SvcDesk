@@ -1,0 +1,297 @@
+<ion-row>
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="ticketForm" (ngSubmit)="submitForm()" class="w-100" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Category" placeholder="{{ 'category' | translate }}" name="Category"
+                required>
+                <mat-option *ngFor="let list of categoryList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'category_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Task" placeholder="{{ 'task' | translate }}" name="Task" required>
+                <mat-option *ngFor="let list of taskList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'task_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Status" placeholder="{{ 'status' | translate }}" name="Status" required>
+                <mat-option *ngFor="let list of statusList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'status_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Requester" placeholder="{{ 'requester' | translate }}" name="Requester"
+                required>
+                <mat-option *ngFor="let list of requesterList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'requester_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Priority" placeholder="{{ 'priority' | translate }}" name="Priority"
+                required>
+                <mat-option *ngFor="let list of priorityList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'priority_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="Number" placeholder="{{ 'number' | translate }}" name="Number"
+                required />
+
+              <mat-error>
+                <span>{{ 'number_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="12" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="CustomerRef" placeholder="{{ 'customer_ref' | translate }}"
+                name="CustomerRef" required />
+
+              <mat-error>
+                <span>{{ 'customer_ref_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="12" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput formControlName="EmailAddress" placeholder="{{ 'email_address' | translate }}"
+                name="EmailAddress" required />
+
+              <mat-error *ngIf="f.EmailAddress.hasError('required')">
+                <span>{{ 'email_address_required' | translate }}</span>
+              </mat-error>
+              <mat-error *ngIf="!f.EmailAddress.hasError('required') && f.EmailAddress.hasError('email')">
+                <span>{{ 'email_address_invalid' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center">
+            <section class="w-100">
+              <mat-checkbox formControlName="DisplayCustomer">
+                {{'display_customer' | translate}}
+              </mat-checkbox>
+            </section>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-end">
+            <mat-form-field class="w-100">
+
+              <input matInput [matDatepicker]="CreatedDate" formControlName="CreatedDate"
+                placeholder="{{ 'created_date' | translate }}" name="CreatedDate" required>
+              <mat-datepicker-toggle matSuffix [for]="CreatedDate"></mat-datepicker-toggle>
+              <mat-datepicker #CreatedDate></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'created_date_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+          <ion-row class="h-100 align-items-end">
+            <section class="w-100">
+              <mat-checkbox formControlName="ComplatedDateState">
+                {{'completed_date' | translate}}
+              </mat-checkbox>
+            </section>
+            <mat-form-field class="w-100">
+
+              <input matInput [matDatepicker]="CompletedDate" formControlName="CompletedDate"
+                placeholder="{{ 'completed_date' | translate }}" name="CompletedDate"
+                [required]="f.ComplatedDateState.value">
+              <mat-datepicker-toggle matSuffix [for]="CompletedDate"></mat-datepicker-toggle>
+              <mat-datepicker #CompletedDate></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'completed_date_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-end">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Resolution" placeholder="{{ 'resolution' | translate }}" name="Resolution">
+                <mat-option *ngFor="let list of resolutionList" [value]="list.id">
+                  {{list.text | translate}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                <span>{{ 'resolution_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+          <ion-row>
+            <section class="w-100">
+              <mat-checkbox formControlName="FollowupState">
+                {{'follow_up' | translate}}
+              </mat-checkbox>
+            </section>
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="Followup" formControlName="Followup"
+                placeholder="{{ 'follow_up' | translate }}" name="Followup" [required]="f.FollowupState.value">
+              <mat-datepicker-toggle matSuffix [for]="Followup"></mat-datepicker-toggle>
+              <mat-datepicker #Followup></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'follow_up_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+          <ion-row>
+            <section class="w-100">
+              <mat-checkbox formControlName="SLAState">
+                {{'sla' | translate}}
+              </mat-checkbox>
+            </section>
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="SLA" formControlName="SLA" placeholder="{{ 'sla' | translate }}"
+                name="SLA" [required]="f.SLAState.value">
+              <mat-datepicker-toggle matSuffix [for]="SLA"></mat-datepicker-toggle>
+              <mat-datepicker #SLA></mat-datepicker>
+
+              <mat-error>
+                <span>{{ 'sla_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col size="12">
+          <ion-row>
+            <mat-form-field class="w-100 textarea-field">
+
+              <textarea matInput formControlName="ShortDescription" name="ShortDescription"
+                placeholder="{{'short_description'| translate}}">
+              </textarea>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-row>
+            <mat-card class="w-100">
+              <mat-card-header>
+                <ion-row class="h-100">
+                  <mat-card-title class="my-auto">{{ 'details' | translate }}</mat-card-title>
+                </ion-row>
+              </mat-card-header>
+              <mat-card-content>
+                <ckeditor class="w-100" [data]="templateContent" (change)="change()"></ckeditor>
+              </mat-card-content>
+            </mat-card>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-row>
+            <mat-card class="w-100">
+              <mat-card-header>
+                <ion-row class="h-100">
+                  <mat-card-title class="my-auto">{{ 'threads' | translate }}</mat-card-title>
+                </ion-row>
+              </mat-card-header>
+            </mat-card>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-row>
+            <mat-card class="w-100">
+              <mat-card-header>
+                <ion-row class="h-100">
+                  <mat-card-title class="my-auto">{{ 'resources' | translate }}</mat-card-title>
+                </ion-row>
+              </mat-card-header>
+            </mat-card>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <button class="submitButton" id="ticketFormSubmitButton"></button>
+    </form>
+
+
+    <ion-row class="my-3 pt-5 jqx-button-row">
+      <ion-row class="justify-content-end">
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+          <ion-row class="h-100">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+              [disabled]="!ticketForm.valid">
+              {{ 'save' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+          <ion-row class="h-100">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

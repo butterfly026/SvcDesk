@@ -1,0 +1,219 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="mt-2">
+    <h3 class="p-0 m-auto text-center">
+      {{'new_plan' | translate}}
+    </h3>
+  </ion-row>
+
+  <ng-container *ngIf="showForm">
+    <ion-row class="flex-1" >
+      <form [formGroup]="planForm" class="w-100 mb-4" (ngSubmit)="submitPlan()" novalidate>
+        <ion-row class="ion-align-items-baseline">
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+            <ion-row class="address-spinner">
+              <mat-form-field>
+                <input matInput formControlName="plan" [placeholder]="'plan' | translate" [matAutocomplete]="planComplete" #searchBoxField/>
+                <mat-autocomplete #planComplete="matAutocomplete" (optionSelected)="selectPlan($event)">
+                  <mat-option *ngFor="let list of filterPlanList;" [value]="list.PlanId">
+                    {{list.Plan}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>
+                  {{'NoAccountPlansConfigured' | translate}}
+                </mat-error>
+              </mat-form-field>
+              <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+            <mat-form-field>
+              <mat-select formControlName="PlanOptionId" placeholder="{{'options' | translate}}" required>
+                <mat-option *ngFor="let list of optionList" [value]="list.Id">
+                  {{list.Name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>
+                {{'options_required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </ion-col>
+          <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="12">
+            <button 
+              mat-icon-button 
+              type="button"
+              [matTooltip]="'View' | translate"               
+              (click)="showDetail()"
+              *ngIf="!!currentPlan">
+              <ion-icon aria-hidden="true" name="eye-outline" size="small"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="OverridePlanChangeFee" type="text"
+                placeholder="{{ 'override_plan_change_fee' | translate }}" name="OverridePlanChangeFee"
+                currencyMask [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col 
+            class="position-relative cursor-point box-shadow-item2 px-3 py-2 m-2"  
+            [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+            (click)="selectSchedulePlan(list)"
+            *ngFor="let list of schedulePlans;">
+            <table class="pt-2">
+              <tbody>
+                <tr>
+                  <td>{{'plan_name' | translate}}:</td>
+                  <td>{{list.PlanName}}</td>
+                </tr>
+                <tr>
+                  <td>{{'option_id' | translate}}:</td>
+                  <td>{{list.OptionId}}</td>
+                </tr>
+                <tr>
+                  <td>{{'option_name' | translate}}:</td>
+                  <td>{{list.OptionName}}</td>
+                </tr>
+                <tr>
+                  <td>{{'scheduled' | translate}}:</td>
+                  <td>{{list.Scheduled}}</td>
+                </tr>
+                <tr>
+                  <td>{{'can_cancel' | translate}}:</td>
+                  <td>{{list.CanCancel}}</td>
+                </tr>
+                <tr>
+                  <td class="pr-3">{{'work_flow_event_id' | translate}}:</td>
+                  <td>{{list.WorkFlowEventId}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <i class="fa fa-check-circle-o schedule-plan-checked" aria-hidden="true" *ngIf="currentScheduledPlan?.Id == list.Id"></i>
+            <ion-row class="justify-content-end my-2" *ngIf="list.CanCancel">
+              <button mat-raised-button type="button" color="primary" (click)="showDeleteAlert(list)">
+                {{'delete' | translate}}
+              </button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <mat-form-field class="w-100">
+            <textarea formControlName="Note" matInput placeholder="{{'notes' | translate}}"></textarea>
+          </mat-form-field>
+        </ion-row>
+    
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <strong *ngIf="!currentPlan?.CycleLocked; else planStartNextPeriodTemp">
+                {{'select_date' | translate}}
+              </strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+    
+          <ng-container *ngIf="!currentPlan?.CycleLocked">
+            <mat-radio-group (change)="switchDateType($event)" [(ngModel)]="dateType" [ngModelOptions]="{ standalone: true }">
+              <ion-row>
+                <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+                  <mat-radio-button [value]="1">{{'select_date' | translate}}</mat-radio-button>
+                </ion-col>
+                <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+                  <mat-radio-button [value]="2">{{'start_next_bill_cycle' | translate}}</mat-radio-button>
+                </ion-col>
+              </ion-row>
+            </mat-radio-group>
+    
+            <ion-row *ngIf="dateType === 1">
+              <ion-col [size]="6">
+                <mat-form-field class="w-100">
+                  <input matInput #input formControlName="startDate" [matDatepicker]="startDate"
+                    (focus)="startDate.open()" placeholder="Choose a date">
+                  <mat-datepicker-toggle matSuffix [for]="startDate">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #startDate (closed)="input.blur()"></mat-datepicker>
+                  <mat-error>
+                    {{'start_date_required' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </ion-col>
+              <ion-col [size]="6" *ngIf="confirmVisibilityOfOption(['TimeOfDay'])">
+                <mat-form-field>
+                  <mat-select formControlName="endDate" placeholder="{{'time_of_day' | translate}}">
+                    <mat-option *ngFor="let list of timeList" [value]="list.value">
+                      {{list.label | translate}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{'time_of_day' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+    
+            <ion-row *ngIf="dateType === 2 && nextBillPeriodValue?.From">
+              <h4 class="p-0 m-0">
+                {{'from' | translate}} : {{nextBillPeriodValue?.From}}
+              </h4>
+            </ion-row>
+          </ng-container>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel hideToggle class="mt-2">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <strong>{{'ChargeOptions' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ion-row>
+            <ng-container *ngFor="let item of chargeOptions">
+              <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngIf="confirmVisibilityOfOption(item.configurationNames)">
+                <mat-checkbox [formControlName]="item.formControlName">
+                  {{item.label | translate}}
+                </mat-checkbox>
+              </ion-col>
+            </ng-container>            
+          </ion-row>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel hideToggle class="mt-2">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <strong>{{'cancel_future_plan_changes' | translate}}</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-radio-group formControlName="CancelFuturePlanChanges">
+            <ion-row>
+              <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" *ngFor="let item of cancelFuturePlanChangesOptions">
+                <mat-radio-button [value]="item.value">{{item.label | translate}}</mat-radio-button>
+              </ion-col>
+            </ion-row>
+          </mat-radio-group>
+        </mat-expansion-panel>
+        
+        <button class="submitButton" id="submitButton"></button>
+      </form>
+    </ion-row>
+    <ion-row class="jqx-button-row my-3 justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!planForm.valid" (onClick)="submitTrigger()"
+          class="jqx-button-theme">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+        <jqxButton [theme]="globService.themeColor" (onClick)="close()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-row>
+
+<!-- Templates -->
+<ng-template #planStartNextPeriodTemp>
+  <strong>{{'plan_start_next_period' | translate}} : {{nextBillPeriodValue?.From}}</strong>
+</ng-template>

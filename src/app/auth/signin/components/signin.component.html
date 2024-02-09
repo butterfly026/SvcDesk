@@ -1,0 +1,78 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{ 'sign_in' | translate}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-row class="full-height total-content d-flex align-items-center justify-content-center opacity-0"
+    id="loginContainer">
+    <ion-row class="">
+      <ion-row class="logo-row mb-5 pb-5">
+        <img src="{{logoImage}}" id="logoImage" (click)="switchVersionNumber()" />
+      </ion-row>
+
+      <ion-row class="mb-3" *ngIf="showVersion">
+        <span class="text-center mx-auto">
+          Dev 3.9.3
+        </span>
+      </ion-row>
+
+      <form [formGroup]="signForm" class="full-width mt-5 pb-5" *ngIf="!signedIn" (ngSubmit)="signInSubmit()" novalidate>
+        <ion-row class="username-row">
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" formControlName="username" placeholder="{{ 'username' | translate }}" required
+              name="username">
+            <mat-error>
+              {{ 'username_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="password-row">
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="password" type="password" required
+              placeholder="{{ 'password' | translate }}" name="password" autocomplete="on" />
+
+            <mat-error>
+              <span>{{ 'password_is_required' | translate }}</span>
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+
+        <ion-row class="justify-content-end align-items-center">
+          <h6 (click)="gotoForgot()" class="cursor-point">
+            <u>{{'forgot_password' | translate}}</u>
+          </h6>
+        </ion-row>
+
+
+        <ion-row class="new-login-space page-bottom normal-button">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!signForm.valid || showLoading">
+            {{ 'sign_in' | translate }}
+          </jqxButton>
+        </ion-row>
+      </form>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="full-height total-content opacity-1" id="loginLoading">
+    <app-loading class="full-width"></app-loading>
+  </ion-row>
+
+</ion-content>

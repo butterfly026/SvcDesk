@@ -1,0 +1,46 @@
+<ion-row class="full-height">
+
+  <ion-row>
+    <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #billListUCRetail [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="login-row page-bottom normal-button">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (click)="componentValue.emit('service_desk')" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+  <jqxGrid id="jqxGridOption" [height]="50" class="export-grid" #dataGrid [source]="exportDataAdapter"
+    [columns]="columnsExport">
+  </jqxGrid>
+
+
+  <form [formGroup]="downPDFForm" class="export-grid" (ngSubmit)="downloadPDF()">
+    <button id="downloadPDF" class="export-grid"></button>
+  </form>
+
+  <form [formGroup]="downExcelForm" class="export-grid" (ngSubmit)="downloadExcel()">
+    <button id="downloadExcel" class="export-grid"></button>
+  </form>
+
+</ion-row>

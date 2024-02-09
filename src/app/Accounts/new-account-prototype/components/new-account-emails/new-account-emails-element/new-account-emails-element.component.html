@@ -1,0 +1,52 @@
+<ion-row [formGroup]="formGroup">
+  <ion-col size="10">
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-form-field>
+          <mat-select formControlName="EmailTypes" [placeholder]="'email_type' | translate" multiple>
+            <mat-option *ngFor="let emailType of emailTypeList" [value]="emailType.Code">
+              {{ emailType.Name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="formGroup.controls.EmailTypes.hasError('required')">
+            {{ 'email_type_required' | translate }}
+          </mat-error>
+                                
+          <mat-error *ngIf="formGroup.controls.EmailTypes.hasError('MandatodyValidation')">
+            {{ formGroup.controls.EmailTypes.errors.MandatodyValidation }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="address-spinner">
+          <mat-form-field>
+            <input matInput formControlName="EmailAddress" [placeholder]="'email' | translate"/>
+
+            <mat-error *ngIf="formGroup.controls.EmailAddress.hasError('required')">
+              {{ 'email_is_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="formGroup.controls.EmailAddress.hasError('email')">
+              {{ 'email_invalid_label' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+    <ion-row class="ion-align-items-center">
+      <button mat-icon-button type="button" (click)="deleteFormGroup()">
+        <ion-icon aria-hidden="true" name="trash-outline" size="medium"></ion-icon>
+      </button>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>

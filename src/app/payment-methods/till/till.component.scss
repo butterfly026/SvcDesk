@@ -1,0 +1,35 @@
+.payment-input{
+    height: 55px;
+    width: 95%;    
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+     
+}
+.payment-error{
+    font-size: 75%;
+}
+
+.payment-row{
+    padding: 0.4375em 0;
+}
+
+.payment-input-label{
+    padding-left: 5px;;
+    font-size: 75%;
+    color: #8e8e8e;
+}
+.payment-input-label-focus{
+    padding-left: 5px;;
+    font-size: 75%;
+    font-weight: 300;
+    color: #8590D0;
+}
+.payment-input-label-error{
+    padding-left: 5px;;
+    font-size: 75%;
+    color: #F44336;
+}
+#number_div input::placeholder, #number_div :-ms-input-placeholder{
+    color: #F44336;
+}

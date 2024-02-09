@@ -1,0 +1,185 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto">
+
+    <form [formGroup]="NotForm" class="full-width" (ngSubmit)="notSubmit()" novalidate>
+      <ion-row class="group-row">
+        <ion-row class="group-title">
+          <span>
+            {{ 'configration_source' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="receipt-border ion-padding">
+          <ion-row>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+              [(ngModel)]="configSource" [ngModelOptions]="{standalone: true}">
+              <mat-radio-button class="example-radio-button" value="system_default">
+                {{ 'use_system_default' | translate }}
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button" value="specific_service">
+                {{ 'use_specific_service_settings' | translate }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row">
+        <ion-row class="group-title">
+          <span>
+            {{ 'enablement' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="receipt-border ion-padding">
+          <ion-row>
+            <mat-checkbox [(ngModel)]="enableAlert" [ngModelOptions]="{standalone: true}">
+              {{ 'enable_alerts' | translate }}
+            </mat-checkbox>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row">
+        <ion-row class="group-title">
+          <span>
+            {{ 'delivery_options' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="receipt-border ion-padding">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="emailState" [ngModelOptions]="{standalone: true}">
+                  {{ 'email' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+                <mat-checkbox [(ngModel)]="smsState" [ngModelOptions]="{standalone: true}">
+                  {{ 'sms' | translate }}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row">
+        <ion-row class="group-title">
+          <span>
+            {{ 'alert_levels' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="group-border ion-padding">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="full-height">
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+                    <input matInput formControlName="FirstAlert" type="number"
+                      placeholder="{{ 'first_alert' | translate }} (%)" name="FirstAlert" required />
+                    <mat-error>
+                      <span>{{ 'first_alert_required' | translate }}</span>
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+                    <input matInput formControlName="SecondAlert" type="number"
+                      placeholder="{{ 'second_alert' | translate }} (%)" name="SecondAlert" />
+                  </mat-form-field>
+                </ion-row>
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+                    <input matInput formControlName="ThirdAlert" type="number"
+                      placeholder="{{ 'third_alert' | translate }} (%)" name="ThirdAlert" />
+                  </mat-form-field>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="">
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+                    <input matInput formControlName="FourthAlert" type="number"
+                      placeholder="{{ 'fourth_alert' | translate }} (%)" name="FourthAlert" />
+                  </mat-form-field>
+                </ion-row>
+                <ion-row>
+                  <mat-form-field class="example-full-width">
+                    <input matInput formControlName="FifthAlert" type="number"
+                      placeholder="{{ 'fifth_alert' | translate }} (%)" name="FifthAlert" />
+                  </mat-form-field>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row">
+        <span>
+          {{'send_to'|translate}}:
+        </span>
+      </ion-row>
+
+      <ion-row class="ion-margin-top" *ngIf="userInfo!=null">
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+          <ion-row class="full-height">
+            <span class="full-width custom-justify-content">
+              <span>
+                {{'email' | translate}}:
+              </span>
+              <span>
+                {{userInfo.Email}}
+              </span>
+            </span>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top" *ngIf="userInfo!=null">
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+          <ion-row class="full-height">
+            <span class="full-width custom-justify-content">
+              <span>
+                {{'mobile' | translate}}:
+              </span>
+              <span>
+                {{userInfo.Mobile}}
+              </span>
+            </span>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col size="2"></ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!NotForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+</ion-content>

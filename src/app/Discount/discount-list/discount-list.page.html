@@ -1,0 +1,58 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="position-relative">
+    <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridDiscounList [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-row>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (click)="goToNew()" class="jqx-button-theme">
+              {{ 'new' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="disableUpdate" (click)="deleteDiscount()"
+              class="jqx-button-theme">
+              {{ 'delete' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (click)="goToEdit()" class="jqx-button-theme">
+              {{ 'edit' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (click)="goBack()" class="jqx-button-theme">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+</ion-content>

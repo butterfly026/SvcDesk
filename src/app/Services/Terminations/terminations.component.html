@@ -1,0 +1,10 @@
+<ion-row class="mt-3" *ngIf="terminationMode == 'terminationService'">
+  <app-termination-service [ServiceType]="ServiceType" [ServiceReference]="ServiceReference" class="w-100"
+    (TerminationServiceComponent)="processTerminations($event)">
+  </app-termination-service>
+</ion-row>
+
+<ion-row class="mt-3" *ngIf="terminationMode == 'terminationDetail'">
+  <app-termination-detail class="w-100" (TerminationDetailComponent)="processTerminations($event)">
+  </app-termination-detail>
+</ion-row>

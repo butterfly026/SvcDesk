@@ -1,0 +1,100 @@
+<ion-row id="commission-list-grid">
+  <ion-row>
+    <ion-row id="commission-paid-transaction">
+      <ion-col size="12">
+        <ion-row class="ion-margin-top left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+          <ion-row class="service-list-search mt-3 justify-content-between align-items-center export-data">
+            <ion-searchbar mode="ios" class="ion-padding-start ml-0" (keypress)="searchInputEvent($event)"
+              [placeholder]="'search' | translate" [(ngModel)]="pagingParam.SearchString">
+            </ion-searchbar>
+            <div class="d-flex align-items-center">
+              <h5 class="m-0 mr-2 p-0">
+                <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+              </h5>
+              <span class="margin-left-auto ion-text-end" (click)="exportData()">
+                {{'export_to_excel' | translate}}
+              </span>
+            </div>
+          </ion-row>
+
+          <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #commissionListGrid [columnsautoresize]="true"
+            [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+            [source]="dataAdapter" [columns]="columns" [sortable]="true" [rtl]="globService.rtlMode"
+            (onRowselect)="selectedDealer = $event.args.row">
+          </jqxGrid>
+
+        </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngIf="groupList.length > 0">
+      <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber"
+        [rowStep]="rowStep" [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+      </app-paging-component>
+    </ion-row>
+
+    <ion-row>
+      <ion-row class="ion-margin-top total-content4 mx-auto">
+
+        <ion-row class="ion-margin-top jqx-button-row justify-content-center">
+
+          <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="goToOtherPages('tag')" [theme]="globService.themeColor" [disabled]="!selectedDealer"
+                class="jqx-button-theme">
+                {{ 'tag' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="goToOtherPages('unTag')" [theme]="globService.themeColor"
+                [disabled]="!selectedDealer" class="jqx-button-theme">
+                {{ 'un_tag' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <jqxButton (onClick)="goToOtherPages('pay')" [theme]="globService.themeColor" [disabled]="!selectedDealer"
+                class="jqx-button-theme">
+                {{ 'pay' | translate }}
+              </jqxButton>
+            </ion-row>
+
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+
+            <ion-row>
+              <jqxButton [disabled]="!selectedDealer" (onClick)="goToOtherPages('details')"
+                [theme]="globService.themeColor" class="jqx-button-theme">
+                {{ 'details' | translate }}
+              </jqxButton>
+            </ion-row>
+
+          </ion-col>
+
+          <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+
+            <ion-row>
+              <jqxButton (onClick)="goToOtherPages('close')" [theme]="globService.themeColor" class="jqx-button-theme">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+
+          </ion-col>
+
+        </ion-row>
+
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+
+</ion-row>

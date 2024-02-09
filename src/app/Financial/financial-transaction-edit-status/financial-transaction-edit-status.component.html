@@ -1,0 +1,27 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center">
+      {{'UpdateStatus' | translate}} [{{data.financialTransactionData.Id}}]
+    </h3>
+  </ion-row>
+  <mat-form-field class="mt-3 mx-auto flex-1">
+    <mat-select [placeholder]="'Status' | translate" [(ngModel)]="status">
+      <mat-option *ngFor="let item of statuses" [value]="item.Code">
+        {{ item.Name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ion-row class="mt-5 jqx-button-row ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="isDisabledUpdating" (click)="updateStatus()">
+        {{ 'update' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'cancel' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,49 @@
+.gap-5 {
+  gap: 5px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+app-datatable-search-option {
+  max-height: 0;
+  overflow: hidden;
+  display: block;
+
+  &.expanded {
+    max-height: fit-content;
+  }
+}
+
+.row-action-table {
+  th:last-of-type, td:last-of-type {
+    width: 1%;
+    white-space: nowrap;
+  }
+}
+
+tr.sub-table-row {
+  height: 0;
+
+  &:hover {
+    background: unset;
+  }
+}
+
+.sub-table-detail {
+  padding: 0px !important;
+
+  div {
+    overflow: hidden;
+    display: flex;
+
+    app-datatable {
+      padding: 10px;
+    }
+  }
+}
+
+ion-icon {
+  pointer-events: none;
+}

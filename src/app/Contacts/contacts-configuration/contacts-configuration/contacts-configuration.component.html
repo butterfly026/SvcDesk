@@ -1,0 +1,49 @@
+<ion-row id="contacts-configuration" *ngIf="!configState">
+  <ion-row>
+    <ion-row class="ion-margin-top">
+      <span class="margin-auto">
+        <h3>
+          <strong>
+            {{'contacts_configuration' | translate}}
+          </strong>
+        </h3>
+      </span>
+    </ion-row>
+    <ion-row class="ion-margin-top left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-row class="left-right-auto export-data ion-margin-top" [ngStyle]="{'width':setGridWidth()}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #ContactsConfGrid [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+        [columns]="columns" [sortable]="true" (onRowdoubleclick)="Rowdoubleclick($event)" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-row class="total-content2 left-right-auto jqx-button-row ion-margin-top">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="3" [sizeXs]="6">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="3" [sizeXs]="6">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="configState">
+  <app-configration-update class="w-100" [InitialConfig]="InitialConfig"
+    (ConfigurationUpdateComponent)="processConfiguration($event)">
+  </app-configration-update>
+</ion-row>

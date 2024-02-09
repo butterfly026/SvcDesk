@@ -1,0 +1,20 @@
+export interface ServiceGroup {
+    Id: number,
+    ParentId: number,
+    Code: string,
+    Name: string,
+    ContactCode: string,
+    AdditionalInformation1: string,
+    AdditionalInformation2: string,
+    AdditionalInformation3: string,
+    CancelledDatetime: string,
+    GeneralLedgerCode: string,
+    StatusId: number,
+    Status: string,
+    StatusDateTime: string,
+    Email: string,
+    Created: string,
+    CreatedBy: string,
+    LastUpdated: string,
+    UpdatedBy: string
+}

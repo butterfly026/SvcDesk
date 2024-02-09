@@ -1,0 +1,30 @@
+<ion-row class="full-height">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable class="w-100"
+      [data]="dataSource"
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [searchOptions]="searchOptions"
+      [pageSizeOptions]="tblPageSizeOptions"
+      (onCreate)="addNew()"
+      (onView)="viewDetail($event)"
+      (onEdit)="editOne($event)"
+      (onDelete)="deleteItem($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>
+
+<ion-row class="page-bottom normal-button">
+  <ion-row class="total-content2 left-right-auto justify-content-center">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

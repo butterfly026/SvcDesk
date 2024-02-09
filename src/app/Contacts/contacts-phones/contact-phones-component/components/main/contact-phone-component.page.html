@@ -1,0 +1,104 @@
+<ion-row>
+  <ion-row class="ion-margin-top ion-padding-top">
+    <span class="margin-auto">
+      <h3>
+        <strong>
+          {{'edit_contact_phone' | translate}}
+        </strong>
+      </h3>
+    </span>
+  </ion-row>
+  <ion-row class="ion-margin-top ion-justify-content-end">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'Create' | translate" 
+      (click)="addNewPhone()"
+      [disabled]="!checkPermission(['New'])">
+      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="'History' | translate" 
+      (click)="goToHistory()"
+      [disabled]="!checkPermission(['History'])">
+      <ion-icon aria-hidden="true" name="timer-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-row>
+  <ion-row class="ion-margin-top">
+    <form [formGroup]="formGroup" (ngSubmit)="submitFormGroup()" class="full-width" *ngIf="formGroup">
+      <ng-container formArrayName="ContactPhoneUsage">
+        <ion-row *ngFor="let contactAliaseFormGroup of contactPhonesFormControl.controls; let i = index">
+          <ion-row [formGroup]="contactAliaseFormGroup">
+            <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+              <ion-row class="full-height">
+                <mat-form-field>
+                  <mat-select formControlName="PhoneTypes" placeholder="{{ 'phone_type' | translate }}" multiple>
+                    <mat-option *ngFor="let phoneType of phoneTypeList; let j = index" value="{{phoneType.Code}}">
+                      {{ phoneType.Name }}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    {{ 'phone_type_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+  
+            <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+              <ion-row class="full-height">
+                <mat-form-field>
+                  <input matInput formControlName="PhoneNumber" placeholder="{{ 'phone_number' | translate }}" (change)="checkPhoneNumberFromBackend($event, i)"/>
+  
+                  <mat-error *ngIf="contactAliaseFormGroup.get('PhoneNumber').hasError('required')">
+                    {{ 'phone_number_required' | translate }}
+                  </mat-error>
+  
+                  <mat-error
+                    *ngIf="contactAliaseFormGroup.get('PhoneNumber').hasError('pattern')">
+                    {{ 'invalid_phone_number' | translate }}
+                  </mat-error>
+
+                  <mat-error *ngIf=" contactAliaseFormGroup.get('PhoneNumber').hasError('BackendValidation')">
+                    {{ contactAliaseFormGroup.get('PhoneNumber').errors.BackendValidation }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-progress-bar mode="indeterminate" *ngIf="indexOfFormGroupValidatingPhoneNumber === i"></mat-progress-bar>
+              </ion-row>
+            </ion-col>
+  
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4">
+              <ion-row class="ion-align-items-center ion-justify-content-end">
+                <button mat-icon-button [disabled]="!checkPermission(['Delete', 'Update'])" (click)="deletePhone(i)">
+                  <ion-icon name="trash" mode="md" class="margin-auto trash-icon cursor-point">
+                  </ion-icon>
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row class="border-top ion-margin-top ion-margin-bottom"></ion-row>
+        </ion-row>
+      </ng-container>
+      <button id="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="my-5 jqx-button-row ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+        [disabled]="!formGroup?.valid || !saveState">
+        {{ 'save' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

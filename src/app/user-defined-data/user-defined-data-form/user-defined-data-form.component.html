@@ -1,0 +1,65 @@
+<ion-row class="ion-padding">
+
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="userForm" class="w-100 ion-margin-bottom" (ngSubmit)="userFormSubmit()" novalidate>
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+
+              <mat-select placeholder="{{ 'user_defined' | translate }}" name="userDefined" required
+                formControlName="userDefined">
+                <mat-option *ngFor="let list of availableDefinedList; let i = index" value="{{list.id}}">
+                  {{list.name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'user_defined_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="value" type="text" name="value" placeholder="{{ 'value' | translate }}"
+                required />
+              <mat-error>
+                {{ 'value_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button id="submitButton" class="submitButton"></button>
+    </form>
+
+    <ion-row class="ion-margin-top ion-padding-top jqx-button-row">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="triggerSubmit()"
+          [disabled]="!userForm.valid">
+          <ng-container *ngIf="UserDefinedId">
+            {{ 'update' | translate }}
+          </ng-container>
+
+          <ng-container *ngIf="!UserDefinedId">
+            {{ 'add' | translate }}
+          </ng-container>
+        </jqxButton>
+      </ion-col>
+      <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="closeAdd()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,61 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="total-content2 left-right-auto margin-top-5vh ion-padding-top">
+    <form [formGroup]="serviceForm" (ngSubmit)="serviceAddSubmit()" class="full-width" novalidate>
+      <ion-row>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="ServiceId" placeholder="{{ 'serviceid' | translate }}" required
+            name="ServiceId">
+
+          <mat-error>
+            {{ 'service_id_required' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+      </ion-row>
+
+      <ion-row>
+
+        <mat-form-field class="example-full-width">
+
+          <input matInput [matDatepicker]="picker" formControlName="StartDateTime"
+            placeholder="{{ 'startdatetime' | translate }}" name="StartDateTime" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+          <mat-error>
+            <span>{{ 'start_date_time_required' | translate }}</span>
+          </mat-error>
+
+        </mat-form-field>
+
+      </ion-row>
+
+      <button id="submitButton"></button>
+    </form>
+
+  </ion-row>
+
+
+  <ion-row class="ion-margin-top ion-padding-top page-bottom normal-button total-content2 left-right-auto">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!serviceForm.valid" class="jqx-button-theme"
+          (click)="submitTrigger()">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

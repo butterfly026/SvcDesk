@@ -1,0 +1,926 @@
+<ion-row *ngIf="billData">
+  <ion-row class="logo-des">
+    <ion-col size="6">
+      <ion-row class="h-100">
+        <ion-row>
+          <img [src]="billData.billLogo" class="mx-0 my-auto log-img" />
+        </ion-row>
+        <ion-row>
+          <h5>
+            <b>{{billData.taxInvoice.title}}</b>
+          </h5>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="h-100">
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            <b>{{billData.taxInvoice.companyName}}</b>
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            <b>ABN: </b>{{billData.taxInvoice.ABN}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            {{billData.taxInvoice.address1}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            {{billData.taxInvoice.address2}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            {{billData.taxInvoice.address3}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            <b>Ph:</b> {{billData.taxInvoice.mobileNumber}} <b>Fax:</b> {{billData.taxInvoice.fax}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            <b>Email: </b>{{billData.taxInvoice.email}}
+          </h5>
+        </ion-row>
+        <ion-row class="mt-1">
+          <h5 class="p-0 m-0 ml-auto">
+            <b>FAQ: </b>{{billData.taxInvoice.faq}}
+          </h5>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="table-row mt-2">
+    <table class="table table-fixed">
+      <tr>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Previous Balance
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.previousBalance}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Payments/Adjustments
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.paymentAdjust}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Oustanding Balance
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.outstandingBalance}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Current Charges
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.currentCharges}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <b class="m-auto text-center">
+                Total Amount Due
+              </b>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.totalAmount}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+      </tr>
+      <tr>
+        <td class="border-0" colspan="4" rowspan="4">
+          <ion-row>
+            <ion-row>
+              <span class="des-max-length">
+                {{billData.taxInvoice.paymentDescription}}
+              </span>
+            </ion-row>
+
+            <ion-row class="mt-3 pl-3">
+              <ion-row class="">
+                <h5 class="p-0 m-0">
+                  <b>{{billData.taxInvoice.payUser.userName}}</b>
+                </h5>
+              </ion-row>
+              <ion-row>
+                <h5 class="p-0 m-0">
+                  {{billData.taxInvoice.payUser.address1}}
+                </h5>
+              </ion-row>
+              <ion-row>
+                <h5 class="p-0 m-0">
+                  {{billData.taxInvoice.payUser.address2}}
+                </h5>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </td>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <b class="m-auto text-center">
+                Please pay by
+              </b>
+            </ion-row>
+            <ion-row>
+              <b class="m-auto text-center">
+                {{billData.taxInvoice.payEndDate}}
+              </b>
+            </ion-row>
+          </ion-row>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Account Number
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.accountNumber}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Tax Invoice Number
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.invoiceNumber}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-1 border-top-0">
+          <ion-row class="w-100 h-100 flex-column bill-border bill-border-radius">
+            <ion-row>
+              <span class="m-auto text-center">
+                Issue Date
+              </span>
+            </ion-row>
+            <ion-row>
+              <span class="m-auto text-center">
+                {{billData.taxInvoice.issueDate}}
+              </span>
+            </ion-row>
+          </ion-row>
+        </td>
+      </tr>
+    </table>
+  </ion-row>
+
+  <ion-row class="mt-5">
+    <ion-row class="account-summary bill-border bill-border-radius pt-3 mt-3 px-4">
+      <ion-row class="mb-3">
+        <b class="m-auto text-center">
+          ACCOUNT SUMMARY
+        </b>
+      </ion-row>
+
+      <ion-row class="my-1 justify-content-between">
+        <span>
+          RPP
+        </span>
+        <span>
+          {{billData.accountSummary.RPP}}
+        </span>
+      </ion-row>
+
+      <ion-row class="my-1 justify-content-between">
+        <span>
+          GST on Credit Card Surcharge
+        </span>
+        <span>
+          {{billData.accountSummary.GST}}
+        </span>
+      </ion-row>
+
+      <ion-row class="my-1 justify-content-between">
+        <b>
+          TOTAL (Inc. GST)
+        </b>
+        <b>
+          {{billData.accountSummary.TOTAL}}
+        </b>
+      </ion-row>
+
+      <ion-row class="my-1 justify-content-between">
+        <b>
+          This invoice includes GST on taxable supplies
+        </b>
+        <b>
+          {{billData.accountSummary.taxable}}
+        </b>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="mt-2">
+    <b class="text-center m-auto">
+      {{billData.accountSummary.callInfo}}
+    </b>
+  </ion-row>
+
+  <ion-row class="scissor-row position-relative">
+    <div class="position-absolute sccissor-icon bg-white d-flex">
+      <ion-icon name="cut" class="m-auto"></ion-icon>
+    </div>
+  </ion-row>
+
+  <ion-row class="mt-2">
+    <span class="text-center m-auto font-italic">
+      {{billData.accountSummary.paymentNotes}}
+    </span>
+  </ion-row>
+
+  <ion-row class="mt-3 pt-3">
+    <ion-row>
+      <h3 class="m-auto p-0">
+        <b>Payment Slip</b>
+      </h3>
+    </ion-row>
+
+    <ion-row class="mt-2">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row>
+          <ion-row class="">
+            <img [src]="billData.paymentSlip.logo" class="mx-0 my-auto log-img" />
+          </ion-row>
+          <ion-row class="pl-3 mt-3">
+            <ion-row class="pl-3">
+              <b>{{billData.paymentSlip.companyName}}</b>
+            </ion-row>
+            <ion-row class="pl-3">
+              <span>{{billData.paymentSlip.address1}}</span>
+            </ion-row>
+            <ion-row class="pl-3">
+              <span>{{billData.paymentSlip.address2}}</span>
+            </ion-row>
+            <ion-row class="pl-3">
+              <span>{{billData.paymentSlip.address3}}</span>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="account-detail-content ml-auto">
+          <ion-row class="account-detail bill-border-radius bill-background">
+            <ion-row class="my-1 py-1 justify-content-between">
+              <span>
+                Account Number:
+              </span>
+              <b>
+                {{billData.paymentSlip.accountNumber}}
+              </b>
+            </ion-row>
+            <ion-row class="my-1 py-1 justify-content-between">
+              <span>
+                Tax Invoice Number:
+              </span>
+              <b>
+                {{billData.paymentSlip.invoiceNumber}}
+              </b>
+            </ion-row>
+            <ion-row class="my-1 py-1 justify-content-between">
+              <span>
+                Payment Due By:
+              </span>
+              <b>
+                {{billData.paymentSlip.dueDate}}
+              </b>
+            </ion-row>
+            <ion-row class="my-1 py-1 justify-content-between">
+              <span>
+                Amount Payable:
+              </span>
+              <b>
+                {{billData.paymentSlip.amountPayable}}
+              </b>
+            </ion-row>
+          </ion-row>
+
+          <ion-row class="mt-2">
+            <b class="font-italic">
+              {{billData.paymentSlip.payNotes}}
+            </b>
+          </ion-row>
+
+          <ion-row class="mt-2">
+            <span class="">
+              {{billData.paymentSlip.payDescription}}
+            </span>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="mt-2 domain-part">
+    <span class="m-auto text-center text-light py-1">
+      corelogic.com.au
+    </span>
+  </ion-row>
+
+  <ion-row class="mt-2">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <img [src]="billData.billLogo" class="mx-0 my-auto log-img" />
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="">
+        <ion-row class="mt-1 justify-content-end">
+          <b class="text-center">
+            {{billData.taxInvoice.payUser.userName}}
+          </b>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Issue Date:
+            </b> {{billData.taxInvoice.issueDate}}
+          </span>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Account Number:
+            </b> {{billData.taxInvoice.accountNumber}}
+          </span>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Tax Invoice Number:
+            </b> {{billData.taxInvoice.invoiceNumber}}
+          </span>
+        </ion-row>
+
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="mt-3 bill-border bill-border-radius bill-background">
+    <h3 class="m-0 pl-2 py-2">
+      <b>Account Transactions since the last Bill</b>
+    </h3>
+  </ion-row>
+
+  <ion-row class="mt-3">
+    <table class="table border-0">
+      <thead>
+        <th class="border-0">
+          <ion-row>
+            <b>Date</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Trans Type/Method</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Additional Information</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>GST</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Amount Paid</b>
+          </ion-row>
+        </th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let list of billData.transactions.items">
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.date}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.type}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.additionalInformation }}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.GST}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.paid}}
+              </span>
+            </ion-row>
+          </td>
+        </tr>
+        <tr>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0" colspan="4">
+            <ion-row>
+              <b>Total</b>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <b>{{billData.transactions.total}}</b>
+            </ion-row>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-row>
+
+
+  <ion-row class="mt-3 bill-border bill-border-radius bill-background">
+    <h3 class="m-0 pl-2 py-2">
+      <b>Outstanding Items</b>
+    </h3>
+  </ion-row>
+
+  <ion-row class="mt-3">
+    <table class="table border-0">
+      <thead>
+        <th class="border-0">
+          <ion-row>
+            <b>Date</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Type</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Bill Number</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Original Amount</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Amount Paid/Offset</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Amount Outstanding</b>
+          </ion-row>
+        </th>
+      </thead>
+
+      <tbody *ngIf="billData.outstandingItems.length == 0">
+        <tr>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0" colspan="6">
+            <ion-row>
+              <span>There are no outstanding items on this account</span>
+            </ion-row>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="billData.outstandingItems.length > 0">
+        <tr *ngFor="let list of billData.outstandingItems">
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.date}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.type}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.billNumber }}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.originalAmount}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.paidAmount}}
+              </span>
+            </ion-row>
+          </td>
+          <td class="border-0">
+            <ion-row>
+              <span>
+                {{list.outstandingAmount}}
+              </span>
+            </ion-row>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-row>
+
+  <ion-row class="scissor-row position-relative">
+    <div class="position-absolute sccissor-icon bg-white d-flex">
+      <ion-icon name="cut" class="m-auto"></ion-icon>
+    </div>
+  </ion-row>
+
+  <ion-row class="mt-5 bill-border bill-border-radius p-3">
+    <ion-row class="bill-border bill-border-radius bill-background">
+      <h3 class="m-auto pl-2 py-2 text-center">
+        <b>Payment Methods</b>
+      </h3>
+    </ion-row>
+
+    <ion-row class="mt-2">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row *ngFor="let list of billData.paymentMethods.items">
+          <ion-row *ngIf="list.type != 'CC'">
+            <ion-row class="payment-logo d-block">
+              <img [src]="list.paymentLogo" class="mx-auto my-0" />
+            </ion-row>
+            <ion-row class="payment-des px-3 d-block">
+              <ion-row>
+                <b>{{list.name}}</b>
+              </ion-row>
+              <ion-row *ngIf="list.type == 'EFT'">
+                <ion-row>
+                  <span>
+                    {{list.campanyName}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <span>
+                    {{list.address}}
+                  </span>
+                </ion-row>
+                <ion-row>
+                  <b>BSB: </b>{{list.bsb}}
+                </ion-row>
+                <ion-row>
+                  <b>Account No: </b>{{list.accountNumber}}
+                </ion-row>
+                <ion-row>
+                  <span class="font-italic">
+                    {{list.accountNumberNotes}}
+                  </span>
+                </ion-row>
+              </ion-row>
+              <ion-row>
+                <span [innerHTML]="list.description">
+                </span>
+              </ion-row>
+              <ion-row *ngIf="list.type == 'DD'">
+                <ion-row>
+                  <b>Biller Code: {{list.billerCode}}</b>
+                </ion-row>
+                <ion-row>
+                  <b>Ref: {{list.ref}}</b>
+                </ion-row>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row *ngFor="let list of billData.paymentMethods.items">
+          <ion-row *ngIf="list.type == 'CC'">
+            <ion-row class="payment-logo d-block">
+              <img [src]="list.paymentLogo" class="mx-auto my-0" />
+            </ion-row>
+            <ion-row class="payment-des px-3 d-block">
+              <ion-row>
+                <b>{{list.name}}</b>
+              </ion-row>
+              <ion-row>
+                <span [innerHTML]="list.description">
+                </span>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+        <ion-row>
+          <span class="font-italic my-3">
+            {{billData.paymentMethods.information}}
+          </span>
+        </ion-row>
+        <ion-row class="mt-2 pt-2">
+          <b>
+            {{billData.paymentMethods.adviseInfo}}
+          </b>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="mt-3">
+      <ion-row class="justify-content-end">
+        <span class="text-right" [innerHTML]="billData.paymentMethods.companyInfo">
+        </span>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="mt-1">
+      <ion-row class="justify-content-center">
+        <b class="font-italic text-center">
+          {{billData.paymentMethods.feeInformation}}
+        </b>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="mt-2">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <img [src]="billData.billLogo" class="mx-0 my-auto log-img" />
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="">
+        <ion-row class="mt-1 justify-content-end">
+          <b class="text-center">
+            {{billData.taxInvoice.payUser.userName}}
+          </b>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Issue Date:
+            </b> {{billData.taxInvoice.issueDate}}
+          </span>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Account Number:
+            </b> {{billData.taxInvoice.accountNumber}}
+          </span>
+        </ion-row>
+        <ion-row class="mt-1 justify-content-end">
+          <span>
+            <b class="text-center">
+              Tax Invoice Number:
+            </b> {{billData.taxInvoice.invoiceNumber}}
+          </span>
+        </ion-row>
+
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="mt-3 bill-border bill-border-radius bill-background">
+    <h3 class="m-0 pl-2 py-2">
+      <b>{{billData.invester.name}}</b>
+    </h3>
+  </ion-row>
+
+  <ion-row class="mt-3">
+    <h3 class="m-0 pl-2">
+      <b>CHARGES</b>
+    </h3>
+  </ion-row>
+
+  <ion-row class="mt-3">
+    <table class="table border-0">
+      <thead>
+        <th class="border-0">
+          <ion-row>
+            <b>Description</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Period</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Cost (Excl GST)</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>GST</b>
+          </ion-row>
+        </th>
+        <th class="border-0">
+          <ion-row>
+            <b>Cost (Incl GST)</b>
+          </ion-row>
+        </th>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <span>{{billData.invester.description}}</span>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <span>{{billData.invester.period}}</span>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <span>{{billData.invester.extGST}}</span>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <span>{{billData.invester.GST}}</span>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0">
+            <ion-row>
+              <span>{{billData.invester.incGST}}</span>
+            </ion-row>
+          </td>
+        </tr>
+        <tr>
+          <td class="no-border">
+            <ion-row>
+            </ion-row>
+          </td>
+          <td class="no-border">
+            <ion-row class="">
+              <b class="ml-auto">Subtotal :</b>
+            </ion-row>
+          </td>
+          <td class="bill-border border-bottom-0 border-left-0 border-right-0" colspan="3">
+            <ion-row class="">
+              <b class="ml-auto">{{billData.invester.subTotal}}</b>
+            </ion-row>
+          </td>
+        </tr>
+        <tr>
+          <td class="no-border">
+            <ion-row>
+            </ion-row>
+          </td>
+          <td class="no-border">
+            <ion-row>
+            </ion-row>
+          </td>
+          <td class="border-0" colspan="3" *ngFor="let list of billData.invester.items">
+            <ion-row class="">
+              <b>{{list.name}}</b>
+            </ion-row>
+            <ion-row>
+              <table class="w-100">
+                <tr>
+                  <td class="border-0">
+                    <ion-row class="">
+                      <b>Cost (Excl GST):</b>
+                    </ion-row>
+                  </td>
+                  <td class="border-0">
+                    <ion-row class="justify-content-end">
+                      <b>{{list.extGST}}</b>
+                    </ion-row>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="border-0">
+                    <ion-row class="">
+                      <b>GST:</b>
+                    </ion-row>
+                  </td>
+                  <td class="border-0">
+                    <ion-row class="justify-content-end">
+                      <b>{{list.GST}}</b>
+                    </ion-row>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="border-0">
+                    <ion-row class="">
+                      <b>Cost (Incl GST):</b>
+                    </ion-row>
+                  </td>
+                  <td class="border-0">
+                    <ion-row class="justify-content-end">
+                      <b>{{list.incGST}}</b>
+                    </ion-row>
+                  </td>
+                </tr>
+              </table>
+            </ion-row>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-row>
+
+  <ion-row class="mt-2 domain-part">
+    <span class="m-auto text-center text-light py-1">
+      corelogic.com.au
+    </span>
+  </ion-row>
+</ion-row>
+
+
+
+
+<ion-row class="mt-3 jqx-button-row" *ngIf="componentType == 'portal'">
+  <ion-col [sizeXl]="2" [sizeLg]="3" [sizeMd]="4" [sizeSm]="5" [sizeXs]="6" class="ml-auto">
+    <jqxButton (onClick)="close()" [theme]="globService.themeColor" class="jqx-button-theme">
+      {{ 'close' | translate }}
+    </jqxButton>
+  </ion-col>
+</ion-row>

@@ -1,0 +1,133 @@
+<ion-row>
+  <form [formGroup]="contractForm" class="w-100" (ngSubmit)="submitContractForm()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="Contract" placeholder="{{ 'contract' | translate }}" required>
+              <mat-option *ngFor="let list of contractList; let j = index" value="{{list?.id}}">
+                {{ list?.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'contract_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="Number" type="text" placeholder="{{ 'number' | translate }}" />
+
+            <mat-error>
+              {{ 'number_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="TermMonths" type="number" placeholder="{{ 'term_months' | translate }}"
+              name="TermMonths" />
+
+            <mat-error>
+              {{ 'term_months_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="ETFMethod" placeholder="{{ 'etf_method' | translate }}" required>
+              <mat-option *ngFor="let list of contractList; let j = index" value="{{list?.id}}">
+                {{ list?.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'etf_method_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="my-3">
+
+
+      <ion-row class="justify-content-between mb-3 plus-icon-2">
+        <h4 class="m-0 p-0">
+          {{'commitment' | translate}}
+        </h4>
+        <h2 class="p-0 m-0">
+          <i class="fa fa-plus-circle text-success cursor-point" (click)="addNewCommitment()"></i>
+        </h2>
+      </ion-row>
+
+      <table class="w-100 border-table-1 mx-auto">
+
+        <thead>
+          <tr>
+            <th class="text-center">{{ 'type' | translate }}</th>
+            <th class="text-center">{{ 'month' | translate }}</th>
+            <th class="text-center">{{ 'threshold_value' | translate }}</th>
+            <th class="text-center">{{ 'penalty_method' | translate }}</th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of commitmentList; let i = index;">
+            <td class="text-center"> {{list?.type}} </td>
+            <td class="text-center"> {{list?.month}} </td>
+            <td class="text-center"> {{list?.thresholdvalue}} </td>
+            <td class="text-center"> {{list?.penaltymethod}} </td>
+            <td class="text-center">
+              <i class="fa fa-pencil text-primary mx-2 cursor-point" (click)="switchEdit(i)"></i>
+              <i class="fa fa-trash text-danger mx-2 cursor-point" (click)="presentAlert(i)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-row>
+
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100 align-items-center">
+          <mat-checkbox class="example-margin" formControlName="AutoRenew">
+            {{'auto_renew' | translate}}
+          </mat-checkbox>
+        </ion-row>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+            <input matInput formControlName="RenewalTerms" type="text" placeholder="{{ 'renewal_terms' | translate }}"
+              name="RenewalTerms" />
+            <mat-error>
+              {{ 'renewal_terms_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <button class="submitButton" id="contractSubmitButton">
+    </button>
+  </form>
+</ion-row>

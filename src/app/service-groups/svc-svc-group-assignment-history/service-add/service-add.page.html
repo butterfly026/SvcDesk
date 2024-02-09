@@ -1,0 +1,56 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-row class="ion-margin-top ion-margin-bottom ion-padding">
+
+    <ion-row>
+      <ion-row class="left-right-auto ion-margin-top" [ngStyle]="{'width':gridContentWidth}">
+        <ion-row>
+          <h5 class="margin-auto ion-text-center">
+            {{'available_service_list' | translate}}
+          </h5>
+        </ion-row>
+        <ion-row class="export-data">
+          <span class="margin-left-auto ion-text-end" (click)="exportData()">
+            {{'export_to_excel' | translate}}
+          </span>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <ion-row>
+      <ion-row class="left-right-auto ion-margin-top schedule-grid" [ngStyle]="{'width':gridContentWidth}">
+        <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #ServiceAddGrid [columnsautoresize]="true"
+          [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+          [columns]="columns" [sortable]="true" [editable]="true" [selectionmode]="'multiplecellsadvanced'"
+          (onCellvaluechanged)="cellChange($event)" [rtl]="globService.rtlMode">
+        </jqxGrid>
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top page-bottom normal-button total-content2 left-right-auto">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="currentSelGroup.length==0" class="jqx-button-theme"
+          (click)="addNewService()">
+          {{ 'add_selected_services' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <button class="submitButton" id="checkBox" (click)="checkedBox()"></button>
+</ion-content>

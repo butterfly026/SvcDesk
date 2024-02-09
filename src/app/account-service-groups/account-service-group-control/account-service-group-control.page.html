@@ -1,0 +1,71 @@
+<ion-row id="accountServiceGroup">
+  <ion-row>
+    <ion-row class="margin-top-5vh left-right-auto">
+
+      <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </ion-row>
+
+      <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #ServiceGroupListGrid [columnsautoresize]="true"
+        [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [source]="dataAdapter" [columns]="columns"
+        [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+      </jqxGrid>
+
+    </ion-row>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="ion-margin-top ion-padding-top normal-button total-content2 left-right-auto">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!availDeleteState || groupList.length<1" class="jqx-button-theme"
+            (click)="goToServices()">
+            {{ 'services' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!availDeleteState || groupList.length<1" class="jqx-button-theme"
+            (click)="goToBar()">
+            {{ 'bar' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!availDeleteState || groupList.length<1" class="jqx-button-theme"
+            (click)="goToUnbar()">
+            {{ 'unbar' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="gotoNew()">
+            {{ 'add' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!availDeleteState || groupList.length<1" class="jqx-button-theme"
+            (click)="update()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="delete()"
+            [disabled]="!availDeleteState || groupList.length<1">
+            {{ 'delete' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

@@ -1,0 +1,73 @@
+<ion-header>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content>
+  <ion-row class="total-content2 mx-auto mt-5">
+    <ion-row>
+      <h2 class="m-auto p-0" *ngIf="contactMode == 'email'">
+        {{contactDetail.emailregistrationlabel}}
+      </h2>
+
+      <h2 class="m-auto p-0" *ngIf="contactMode == 'phone'">
+        {{contactDetail.mobileregistrationlabel}}
+      </h2>
+    </ion-row>
+    <ion-row class="mt-5">
+      <form [formGroup]="contactForm" (ngSubmit)="addNewContract()" novalidate class="w-100">
+        <ion-row *ngIf="contactMode == 'email'">
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="email" type="email" placeholder="{{ 'email' | translate }}" required />
+
+            <mat-error *ngIf="f.email.hasError('required')">
+              {{ 'email_is_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="!f.email.hasError('required') && f.email.hasError('email')">
+              {{ 'email_invalid_label' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+        <ion-row *ngIf="contactMode == 'phone'">
+          <mat-form-field class="w-100">
+
+            <input matInput formControlName="phone" type="text" placeholder="{{ 'phone_number' | translate }}"
+              required />
+
+            <mat-error *ngIf="f.phone.hasError('required')">
+              {{ 'phone_number_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="!f.phone.hasError('required') && f.phone.hasError('pattern')">
+              {{ 'invalid_phone_number' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+
+        <button id="submitButton"></button>
+      </form>
+    </ion-row>
+
+
+    <ion-row class="my-5 jqx-button-row pt-5">
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!contactForm.valid"
+            (click)="triggerSubmit()">
+            {{ 'add' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-content>

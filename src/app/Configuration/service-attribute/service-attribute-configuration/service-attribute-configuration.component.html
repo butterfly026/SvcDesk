@@ -1,0 +1,169 @@
+<ion-row class="mt-5" *ngIf="groupState != 'edit'">
+  <ion-row class="mx-auto total-content4">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="mx-auto">
+      <ion-row class="h-100">
+        <mat-form-field class="w-100">
+
+          <mat-select placeholder="{{ 'servicetype' | translate }}" [(ngModel)]="serviceTypeId">
+            <mat-option *ngFor="let itemList of serviceTypeList; let j = index" [value]="itemList.id"
+              (click)="selectServiceType(j)">
+              {{ itemList.name | translate }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="groupState == 'view'">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ 'service_display_attribute' | translate }}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <ion-row class="mt-3 total-content4 mx-auto">
+      <ion-row class="box-shadow-item my-3 px-3 py-2" *ngFor="let list of groupList; let i = index;"
+        (click)="goToGroupDetail(i)">
+        <ion-row class="">
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'label' | translate}} : {{list.label}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'display' | translate}} : {{list.display}}
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <span>
+                {{'servicetype' | translate}} : {{list.servicetypeid}}
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="groupState == 'edit' && currentGroup">
+  <ion-row class="mt-5">
+    <h3 class="mx-auto my-0 p-0">
+      {{ serviceTypeId }} : [{{currentGroup.id}}]
+    </h3>
+  </ion-row>
+  <ion-row class="mt-3 total-content4 mx-auto">
+    <form [formGroup]="groupForm" novalidate class="w-100" (ngSubmit)="updateGroupElement()">
+      <ion-row class="">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="Display" placeholder="{{ 'display' | translate }}" required>
+                <mat-option *ngFor="let itemList of displayStrList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'display_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Label" placeholder="{{ 'label' | translate }}" required
+                name="Label">
+
+              <mat-error>
+                {{ 'label_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="DisplayOrder" placeholder="{{ 'display_order' | translate }}"
+                required name="DisplayOrder">
+
+              <mat-error>
+                {{ 'display_order_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="Editable" placeholder="{{ 'editable' | translate }}" required>
+                <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.value">
+                  {{ itemList.name | translate }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'editable_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="NavigationURL"
+                placeholder="{{ 'navigation_url' | translate }}" name="NavigationURL">
+
+              <mat-error>
+                {{ 'navigation_url_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <input matInput type="text" formControlName="Tooltip" placeholder="{{ 'tooltip' | translate }}"
+                name="Tooltip">
+
+              <mat-error>
+                {{ 'tooltip_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="mt-5 jqx-button-row">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()">
+            {{ 'update' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="backMain()">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

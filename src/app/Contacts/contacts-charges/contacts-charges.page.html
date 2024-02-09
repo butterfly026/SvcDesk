@@ -1,0 +1,10 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row>
+    <app-charges-component class="full-width" [ContactCode]="ContactCode"
+      (ChargesListComponent)="processCharges($event)"></app-charges-component>
+  </ion-row>
+</ion-content>

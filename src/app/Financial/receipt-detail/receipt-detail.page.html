@@ -1,0 +1,933 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <mat-tab-group animationDuration="500ms" class="left-right-auto full-width customer-tab"
+    (selectedTabChange)="selectTabs($event)" [selectedIndex]="selectedIndex" mat-align-tabs="center">
+    <mat-tab label="{{'receipt' | translate}}">
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="group-title">
+          <span>
+            {{'receipt' | translate}}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail">
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'number' | translate }}: 3009256
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'amount' | translate }}: $7242.12
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'date' | translate }}: 28/04/2006
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'due_date' | translate }}: 28/04/2006
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'category' | translate }}: None
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'status' | translate }}: Approved
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'source' | translate }}: Manual
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'reason' | translate }}: None
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'other_ref' | translate }}:
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'bill_number' | translate }}: 1212425
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'bill_history' | translate }}: None
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto" *ngIf="paymentList != null">
+        <ion-row class="group-title">
+          <span>
+            {{'payment_methods' | translate}}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail">
+
+          <ion-row class="ion-padding-start   left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'type' | translate }}: {{paymentList.Type}}
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'name' | translate }}: {{paymentList.Name}}
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'number' | translate }}: {{paymentList.Number}}
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'bsb_exp_date' | translate }}: {{paymentList.BSBExpDate}}
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'cheque_transaction_no' | translate }}: {{paymentList.ChequeTransaction}}
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-start left-right-auto">
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'status' | translate }}: {{paymentList.Status}}
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'gl_account' | translate }}: {{paymentList.GLAccount}}
+                </span>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+              <ion-row class="full-height">
+                <span>
+                  {{ 'type_code' | translate }}: {{paymentList.TypeCode}}
+                </span>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="group-title">
+          <span class="margin-right-auto receipt-title">
+            {{ 'receipt_detail' | translate }}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail receipt-border">
+          <ion-row
+            [ngClass]="{'each-receipt': i != receiptDetailList.length-1, 'selected-receipt':list == selectedReceipt }"
+            *ngFor="let list of receiptDetailList; let i = index" (click)="selectReceipt(i)">
+            <span class="margin-right-auto ion-padding-start">
+              {{list}}
+            </span>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="margin-top-5vh page-bottom normal-button left-right-auto">
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </mat-tab>
+
+    <mat-tab label="{{ 'allocation' | translate }}">
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="group-detail">
+
+          <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+
+              <ion-row class="username-row">
+                <section class="example-section">
+                  <jqxCheckBox class="example-margin" #autuAll [theme]="globService.themeColor">
+                    {{ 'auto_allocation' | translate }}
+                  </jqxCheckBox>
+                </section>
+              </ion-row>
+
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+
+              <ion-row class="username-row">
+                <section class="example-section">
+                  <jqxCheckBox class="example-margin" #sIZB [theme]="globService.themeColor">
+                    {{ 'show_item_zero_balance' | translate }}
+                  </jqxCheckBox>
+                </section>
+              </ion-row>
+
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row class="group-detail">
+
+          <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+
+              <ion-row class="username-row">
+                <section class="example-section">
+                  <jqxCheckBox class="example-margin" #bestMatch [theme]="globService.themeColor">
+                    {{ 'best_match' | translate }}
+                  </jqxCheckBox>
+                </section>
+              </ion-row>
+
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="left-right-auto">
+          <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+              <span>
+                {{ 'total_amount_allocate' | translate }}: $50.00
+              </span>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+            <ion-row class="full-height">
+              <span>
+                {{ 'remain_amount_allocate' | translate }}: $0.00
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row">
+        <ion-row class="group-title total-content2 left-right-auto">
+          <span>
+            {{'allocation' | translate}}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail">
+
+          <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+            <span class="margin-left-auto ion-text-end" (click)="exportData()">
+              {{'export_to_excel' | translate}}
+            </span>
+          </ion-row>
+
+          <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridAll [columnsautoresize]="true"
+            [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+            [source]="dataAdapterAll" [columns]="columnsAll" [sortable]="true" (click)="selectRowAll()"
+            [rtl]="globService.rtlMode">
+          </jqxGrid>
+
+          <ion-row class="left-right-auto total-content2 left-right-auto">
+
+            <ion-row class="ion-margin-top">
+              <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                <ion-col size="6">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="allocationHistory()">
+                      {{ 'allocation_history' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="clearAllocation()">
+                      {{ 'clear_allocation' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="margin-top-5vh page-bottom normal-button left-right-auto">
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </mat-tab>
+
+    <mat-tab label="{{ 'distribution' | translate }}">
+
+      <ion-row class="group-row">
+        <ion-row class="group-title total-content2 left-right-auto">
+          <span>
+            {{'general_ledger_distribution' | translate}}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail">
+
+          <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+            <span class="margin-left-auto ion-text-end" (click)="exportData()">
+              {{'export_to_excel' | translate}}
+            </span>
+          </ion-row>
+
+          <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridDis [columnsautoresize]="true"
+            [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+            [source]="dataAdapterDis" [columns]="columnsDis" [sortable]="true" (click)="selectRowAll()"
+            [rtl]="globService.rtlMode">
+          </jqxGrid>
+
+          <ion-row class="left-right-auto total-content2 left-right-auto">
+
+            <ion-row class="ion-margin-top">
+              <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="addDis()">
+                      {{ 'add' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="editDis()">
+                      {{ 'edit' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="removeDis()">
+                      {{ 'remove' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="margin-top-5vh page-bottom normal-button left-right-auto">
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </mat-tab>
+
+    <mat-tab label="{{ 'event_list' | translate }}">
+
+      <ion-row class="group-row">
+        <ion-row class="group-title total-content2 left-right-auto">
+          <span>
+            {{'associated_event_list' | translate}}
+          </span>
+        </ion-row>
+        <ion-row class="group-detail">
+
+          <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+            <span class="margin-left-auto ion-text-end" (click)="exportData()">
+              {{'export_to_excel' | translate}}
+            </span>
+          </ion-row>
+
+          <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridEnt [columnsautoresize]="true"
+            [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+            [source]="dataAdapterEnt" [columns]="columnsEnt" [sortable]="true" (click)="selectRowAll()"
+            [rtl]="globService.rtlMode">
+          </jqxGrid>
+
+          <ion-row class="left-right-auto total-content2 left-right-auto">
+
+            <ion-row class="ion-margin-top">
+              <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                <ion-col size="4">
+                </ion-col>
+                <ion-col size="4">
+                </ion-col>
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="rePrint()">
+                      {{ 're_print' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+
+        </ion-row>
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="margin-top-5vh page-bottom normal-button left-right-auto">
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </mat-tab>
+
+    <mat-tab label="{{ 'split' | translate }}">
+
+      <ion-row *ngIf="splitState == ''">
+
+        <ion-row class="group-row total-content2 left-right-auto">
+          <ion-row class="left-right-auto">
+            <span *ngIf="currentLng == 'en'">
+              A maximum of {{ splitAmountStr}} can be split for this receipt
+            </span>
+            <span *ngIf="currentLng == 'ru'">
+              Максимум {{ splitAmountStr}} можно разделить для этой квитанции
+            </span>
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-row">
+          <ion-row class="group-title total-content2 left-right-auto">
+            <span>
+              {{'receipt_split_list' | translate}}
+            </span>
+          </ion-row>
+          <ion-row class="group-detail">
+
+            <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+              <span class="margin-left-auto ion-text-end" (click)="exportData()">
+                {{'export_to_excel' | translate}}
+              </span>
+            </ion-row>
+
+            <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridSplit [columnsautoresize]="true"
+              [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+              [source]="dataAdapterSplit" [columns]="columnsSplit" [sortable]="true" (click)="selectRowAll()"
+              [rtl]="globService.rtlMode">
+            </jqxGrid>
+
+            <ion-row class="left-right-auto total-content2 left-right-auto">
+
+              <ion-row class="ion-margin-top">
+                <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="bulkSplit()">
+                        {{ 'bulk_split' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="addSplit()">
+                        {{ 'add_split' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="voidSplit()">
+                        {{ 'void_split' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-row>
+
+            </ion-row>
+
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+      <ion-row *ngIf="splitState == 'Bulk Split'" class="position-relative">
+
+        <ion-row class="group-row">
+          <ion-row class="group-detail">
+
+            <ion-row class="left-right-auto export-data" [ngStyle]="{'width':gridContentWidth}">
+              <span class="margin-left-auto ion-text-end" (click)="exportData()">
+                {{'export_to_excel' | translate}}
+              </span>
+            </ion-row>
+
+            <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGridBulk [columnsautoresize]="true"
+              [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+              [source]="dataAdapterBulk" [columns]="columnsBulk" [sortable]="true" (click)="selectRowAll()"
+              [rtl]="globService.rtlMode">
+            </jqxGrid>
+
+            <ion-row class="ion-padding-top ion-margin-top left-right-auto total-content2">
+              <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                      placeholder="{{ 'date' | translate }}" [(ngModel)]="bulkDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeLg]="4" [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+                <ion-row class="full-height">
+                  <ion-row class="username-row top-bottom-auto">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #autoBulk [theme]="globService.themeColor">
+                        {{ 'auto_allocation' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="left-right-auto total-content2">
+
+              <ion-row class="ion-margin-top">
+                <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="addBulk()">
+                        {{ 'add' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteBulk()">
+                        {{ 'delete' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="editBulk()">
+                        {{ 'edit' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="jqx-button-row custom-jqxbutton">
+                  <ion-col size="2">
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="processBulk()">
+                        {{ 'process' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-row class="full-height">
+                      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelBulk()">
+                        {{ 'cancel' | translate }}
+                      </jqxButton>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-row>
+
+            </ion-row>
+
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="full-height add-bulk-total position-fixed" *ngIf="bulkState == 'add'">
+          <ion-row class="add-bulk margin-top-5vh left-right-auto ion-padding">
+            <ion-row class="group-title">
+              <span>
+                {{'edit_split_receipt' | translate}}
+              </span>
+            </ion-row>
+            <form [formGroup]="addBulkForm" class="full-width ion-margin-top ion-padding-top"
+              (ngSubmit)="addBulkSubmit()" novalidate>
+              <ion-row class="username-row">
+                <mat-form-field class="example-full-width">
+
+                  <input matInput formControlName="code" type="number" required placeholder="{{ 'code' | translate }}"
+                    name="code" />
+
+                  <mat-error>
+                    <span>{{ 'code_required' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row class="username-row">
+                <mat-form-field class="example-full-width">
+
+                  <input matInput formControlName="billNumber" type="text" required
+                    placeholder="{{ 'bill_number' | translate }}" name="billNumber" />
+
+                  <mat-error>
+                    <span>{{ 'bill_number_required' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row class="username-row">
+                <mat-form-field class="example-full-width">
+
+                  <input matInput formControlName="amount" type="number" required
+                    placeholder="{{ 'amount' | translate }}" name="amount" />
+
+                  <mat-error>
+                    <span>{{ 'amount_required' | translate }}</span>
+                  </mat-error>
+
+                </mat-form-field>
+              </ion-row>
+              <button mat-button id="submitButton">Submit</button>
+            </form>
+
+            <ion-row class="left-right-auto total-content2">
+
+              <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+                <ion-col size="2">
+                </ion-col>
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" [disabled]="!addBulkForm.valid" class="jqx-button-theme"
+                      (click)="addNewBulk()">
+                      {{ 'add' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-row class="full-height">
+                    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBackBulk()">
+                      {{ 'cancel' | translate }}
+                    </jqxButton>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+
+      </ion-row>
+
+      <ion-row *ngIf="splitState == 'Add Split'">
+        <ion-row class="group-row total-content2 left-right-auto">
+          <ion-row class="group-title">
+            <span>
+              {{'original_receipt' | translate}}
+            </span>
+          </ion-row>
+          <ion-row class="group-detail">
+
+            <ion-row class="ion-padding-start left-right-auto">
+              <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <ion-row class="full-height">
+                  <span>
+                    {{ 'Date' | translate }}: 28/04/2006
+                  </span>
+                </ion-row>
+              </ion-col>
+              <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                <ion-row class="full-height">
+                  <span>
+                    {{ 'amount' | translate }}: $7242.12
+                  </span>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-padding-start left-right-auto">
+              <ion-col [sizeLg]="12" [sizeMd]="12" [sizeXs]="12" [sizeSm]="12">
+                <ion-row class="full-height">
+                  <span>
+                    {{ 'm_a_a_to_split' | translate }}: $7242.11
+                  </span>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="group-row total-content2 left-right-auto">
+          <form [formGroup]="addSplitForm" class="full-width ion-margin-top ion-padding-top"
+            (ngSubmit)="addSplitSubmit()" novalidate>
+            <ion-row class="group-title">
+              <span>
+                {{'split_details' | translate}}
+              </span>
+            </ion-row>
+            <ion-row class="group-detail">
+
+              <ion-row class="ion-padding-start left-right-auto">
+                <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput [min]="minDate" formControlName="date" [matDatepicker]="duepicker"
+                        placeholder="{{ 'date' | translate }}" required name="date">
+                      <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
+                      <mat-datepicker #duepicker></mat-datepicker>
+
+                      <mat-error>
+                        <span>{{ 'date_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="amount" type="number" required
+                        placeholder="{{ 'amount' | translate }}" name="amount" />
+
+                      <mat-error>
+                        <span>{{ 'amount_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-padding-start left-right-auto">
+                <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                  <ion-row class="full-height">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #autoSplit [theme]="globService.themeColor">
+                        {{ 'auto_allocation' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+            </ion-row>
+
+            <ion-row class="group-title ion-padding-top ion-margin-top">
+              <span>
+                {{'to_account' | translate}}
+              </span>
+            </ion-row>
+            <ion-row class="group-detail">
+
+              <ion-row class="ion-padding-start left-right-auto">
+                <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="code" type="text" required placeholder="{{ 'code' | translate }}"
+                        name="code" />
+
+                      <mat-error>
+                        <span>{{ 'code_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeLg]="6" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+                  <ion-row class="full-height">
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-padding-start left-right-auto">
+                <ion-col [sizeLg]="12" [sizeMd]="12" [sizeXs]="12" [sizeSm]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="name" type="text" required placeholder="{{ 'name' | translate }}"
+                        name="name" />
+
+                      <mat-error>
+                        <span>{{ 'name_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+            </ion-row>
+            <button mat-button id="submitButtonSplit" class="submitButton">Submit</button>
+          </form>
+
+          <ion-row class="margin-top-5vh page-bottom normal-button total-content2 left-right-auto">
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!addSplitForm.valid"
+                  (click)="saveSplit()">
+                  {{ 'save' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="full-height">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="cancelBulk()">
+                  {{ 'close' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
+
+      </ion-row>
+
+      <ion-row class="group-row total-content2 left-right-auto">
+        <ion-row class="margin-top-5vh page-bottom normal-button">
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </mat-tab>
+  </mat-tab-group>
+</ion-content>

@@ -1,0 +1,32 @@
+<ion-row class="mat-modal-body">
+  <ion-row class="report-title mb-3">
+    <h3 class="margin-auto ion-text-center">
+      {{'ReportInstances' | translate}} : [{{data.reportName}}]
+    </h3>
+  </ion-row>
+
+  <ion-row class="left-right-auto flex-1">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      (onView)="viewDetail($event)"
+      (onDownload)="downloadDocument($event)"
+      (onDelete)="deleteSelectedRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+  
+  <ion-row class="jqx-button-row mb-3 mt-2 pt-3 ion-justify-content-end">  
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

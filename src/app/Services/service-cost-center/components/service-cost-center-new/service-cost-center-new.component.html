@@ -1,0 +1,155 @@
+<ion-row>
+  <ion-row>
+    <h3 class="mx-auto my-0 p-0">{{ 'new_cost_center' | translate }}</h3>
+  </ion-row>
+  <ion-row class="mt-1 total-content4 mx-auto">
+    <form class="w-100" [formGroup]="form" (ngSubmit)="createCostCenter()">
+      <ion-row class="form-content">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <input matInput formControlName="Name" type="text" [placeholder]="'name' | translate" required>
+            <mat-error>
+              <span>{{ 'name_required' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <input matInput formControlName="CustomerReference" type="text" [placeholder]="'customer_reference' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.AdditionalInformation1 == true">
+          <mat-form-field>
+            <input matInput formControlName="AdditionalInformation1" type="text" [placeholder]="'additional_information1' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.AdditionalInformation2 == true">
+          <mat-form-field>
+            <input matInput formControlName="AdditionalInformation2" type="text" [placeholder]="'additional_information2' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.AdditionalInformation3 == true">
+          <mat-form-field>
+            <input matInput formControlName="AdditionalInformation3" type="text" [placeholder]="'additional_information3' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field class="w-100">
+            <mat-select formControlName="Status" [placeholder]="'status' | translate">
+              <mat-option *ngFor="let list of statusList" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.Email == true">
+          <mat-form-field>
+            <input matInput formControlName="Email" type="text" [placeholder]="'email' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.EFXId == true">
+          <mat-form-field>
+            <input matInput formControlName="EFXId" type="text" [placeholder]="'efx_id' | translate">
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.GeneralLedgerAccountCode == true">
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input 
+                matInput 
+                formControlName="GeneralLedgerAccountCode" 
+                [placeholder]="'general_ledger_account_code' | translate" 
+                [matAutocomplete]="ledgerComplete">
+              <mat-autocomplete #ledgerComplete="matAutocomplete" (optionSelected)="selectGLAccount($event)">
+                <mat-option *ngFor="let list of generalLedgerAccounts" [value]="list.id">
+                  {{list.id}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field class="w-100">
+            <mat-select formControlName="AllocationType" [placeholder]="'allocation_type' | translate">
+              <mat-option *ngFor="let list of allocationTypes" value="{{list}}">
+                {{list}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <mat-label>{{ 'from_date_time' | translate }}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="FromDateTime" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+              <span>{{ 'from_date_time_required' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="to-date-formfield">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <label class="to-date-label w-100">{{'to_date_time' | translate}}</label>
+              <mat-checkbox [(ngModel)]="isInfinity" [ngModelOptions]="{standalone: true}"  (ngModelChange)="onChangeInfinity()">
+                {{'on_going' | translate}}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="!isInfinity">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName="ToDateTime" [min]="minToDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  <span>{{ 'to_date_time_required' | translate }}</span>
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <mat-form-field>
+            <input matInput formControlName="Percentage" type="number" step="0.01" [placeholder]="'percentage' | translate">
+            <mat-error>
+              <span>{{ 'PercentageValidationError' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="configuration?.AggregationPoint == true" >
+          <mat-checkbox formControlName="AggregationPoint">
+            {{'aggregation_point' | translate}}
+          </mat-checkbox>
+        </ion-col>
+      </ion-row>
+
+      <button class="submitButton" id="createCostCenterButton"></button>
+    </form>
+    <ion-row class="jqx-button-row ion-justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!form.valid" (onClick)="submitCreateCostCenter()">
+          {{ 'create' | translate }}
+        </jqxButton>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

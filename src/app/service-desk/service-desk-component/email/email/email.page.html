@@ -1,0 +1,165 @@
+<ion-row class="ion-margin-top ion-padding-top ion-padding">
+
+  <ion-row class="ion-margin-bottom">
+    <h3 class="margin-auto ion-text-center">
+      <strong>
+        {{ContactNumber}}: {{pageTitle}}
+      </strong>
+    </h3>
+  </ion-row>
+
+  <form [formGroup]="emailGroup" class="full-width left-right-auto" (ngSubmit)="emailSend()" novalidate>
+    <ion-row class="username-row">
+      <mat-form-field class="example-full-width">
+        <input matInput type="email" formControlName="defaultEmail" placeholder="{{ 'email' | translate }}" required
+          name="email" [(ngModel)]="DefaultEmail">
+        <mat-error *ngIf="f.defaultEmail.hasError('required')">
+          {{ 'email_is_required' | translate }}
+        </mat-error>
+
+        <mat-error *ngIf="!f.defaultEmail.hasError('required') && f.defaultEmail.hasError('email')">
+          {{ 'email_invalid_label' | translate }}
+        </mat-error>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="password-row">
+
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipListCC>
+          <mat-chip *ngFor="let list of ccEmailArray; let i = index" [selectable]="selectable" [removable]="removable"
+            (removed)="removeCC(list)">
+            {{list.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="{{ 'cc' | translate }}" [matChipInputFor]="chipListCC"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addCC($event)">
+
+        </mat-chip-list>
+      </mat-form-field>
+
+    </ion-row>
+
+    <ion-row class="password-row">
+
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipListBCC>
+          <mat-chip *ngFor="let list of bccEmailArray; let i = index" [selectable]="selectable" [removable]="removable"
+            (removed)="removeBCC(list)">
+            {{list.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="{{ 'bcc' | translate }}" [matChipInputFor]="chipListBCC"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addBCC($event)">
+
+        </mat-chip-list>
+      </mat-form-field>
+
+    </ion-row>
+
+    <ion-row class="username-row">
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" formControlName="emailSubject" placeholder="{{ 'subject' | translate }}"
+          name="emailSubject">
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row ion-margin-top">
+      <mat-form-field class="example-full-width text-area">
+
+        <textarea matInput formControlName="emailBody" placeholder="{{ 'type_here' | translate }}" name="emailBody">
+        </textarea>
+
+      </mat-form-field>
+    </ion-row>
+
+    <ion-row class="username-row ion-margin-top">
+
+      <ion-row>
+
+        <ion-row class="inline-block drop-files">
+          <ion-row ngfDrop multiple="1" selectable="1" [(validDrag)]="validComboDrag" [(files)]="files" accept="*"
+            [maxSize]="maxSize" [(lastInvalids)]="lastInvalids" [(dragFiles)]="dragFiles" class="well my-drop-zone"
+            [class.invalid-drag]="validComboDrag===false" [class.valid-drag]="validComboDrag"
+            (filesChange)="lastFileAt=getDate()" [fileDropDisabled]="fileDropDisabled"
+            [ngClass]="{'drag-files':dragFiles}">
+            Drop / Select &nbsp; <strong>Files</strong>
+          </ion-row>
+        </ion-row>
+
+        <ion-row *ngIf="files.length > 0">
+          <ion-row class="ion-margin-top ion-padding-top">
+            <h3>{{ files.length }} Queued Files</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Size</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of files;let i=index">
+                  <td>
+                    <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                      <div class="previewIcon" [ngfBackground]="item"></div>
+                    </div>
+                    <strong>{{ item.name }}</strong>
+                  </td>
+                  <td nowrap>
+                    {{ item.type }}
+                  </td>
+                  <td nowrap>
+                    {{ item.size/1024/1024 | number:'.2' }} MB
+                  </td>
+                  <td nowrap>
+                    <button mat-flat-button class="btn btn-danger btn-xs" (click)="files.splice(i,1)">
+                      <span class="fas fa-trash-alt"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ion-row>
+        </ion-row>
+
+      </ion-row>
+
+      <!-- <ion-row>
+        <input type="file" accept="*" (change)="getFile($event)">
+      </ion-row> -->
+
+
+
+    </ion-row>
+
+    <!-- <button mat-button id="submitButton">Submit</button> -->
+  </form>
+
+  <ion-row class="login-row page-bottom normal-button">
+    <ion-row class="total-content2 left-right-auto">
+      <ion-col size="2">
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!emailGroup.valid"
+            (click)="triggerSubmit()">
+            {{ 'send_email' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" (click)="goBack()" class="jqx-button-theme">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-row>

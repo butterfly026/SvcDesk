@@ -1,0 +1,61 @@
+<ion-row class="ion-padding">
+
+  <ion-row class="justify-content-center align-items-center mb-3">
+    <h3 class="text-center p-0 m-0">
+      {{'service_list' | translate}}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <mat-tab-group class="full-width service-tab" animationDuration="500ms" [selectedIndex]="selectedIndex"
+      (selectedTabChange)="selectTabs($event)" id="serviceListTab" (focusChange)="setScrollTop()">
+      <mat-tab label="{{'list'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==0">
+          <app-service-list class="full-width" [ContactCode]="ContactCode" (ServiceListComponent)="addNewTab($event)">
+          </app-service-list>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'plans'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==1">
+          <app-service-plans class="full-width" [ContactCode]="ContactCode" (ServicePlansComponent)="addNewTab($event)">
+          </app-service-plans>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'type'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==2">
+          <app-service-type ContactCode="{{ContactCode}}" class="full-width" (ServiceTypeComponent)="addNewTab($event)">
+          </app-service-type>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'changes'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==3">
+          <app-service-changes class="full-width" [ContactCode]="ContactCode"
+            (ServiceChangesComponent)="addNewTab($event)"></app-service-changes>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'status'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==4">
+          <app-service-status class="full-width" [ContactCode]="ContactCode"
+            (ServiceStatusComponent)="addNewTab($event)"></app-service-status>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'cost_center'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==5">
+          <app-service-cost-centre class="full-width" [ContactCode]="ContactCode"
+            (ServiceCostCenterComponent)="addNewTab($event)"></app-service-cost-centre>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'service_group'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==6">
+          <app-service-group class="full-width" [ContactCode]="ContactCode" (ServiceGroupComponent)="addNewTab($event)">
+          </app-service-group>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'sites'|translate}}" [disabled]="!tabAvail">
+        <ion-row *ngIf="selectedIndex==7">
+          <app-service-sites class="full-width" [ContactCode]="ContactCode" (ServiceSitesComponent)="addNewTab($event)">
+          </app-service-sites>
+        </ion-row>
+      </mat-tab>
+    </mat-tab-group>
+  </ion-row>
+</ion-row>

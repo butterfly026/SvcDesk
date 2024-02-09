@@ -1,0 +1,68 @@
+[
+    {
+        "Id": 1,
+        "Name": "MEGA PLAN",
+        "Price": 29,
+        "Description": "No contract, post paid monthly.",
+        "Data": {
+            "Name": "Data",
+            "Value": "4 Gbytes"
+        },
+        "TalkTime": {
+            "Name": "Talktime",
+            "Value": "100 MINS"
+        },
+        "SMS": {
+            "Name": "SMS",
+            "Value": "100 FREE"
+        },
+        "CallerId": {
+            "Name": "Caller ID",
+            "Value": 3
+        }
+    },
+    {
+        "Id": 2,
+        "Name": "GIGA PLAN",
+        "Price": 49,
+        "Description": "No contract, post paid monthly.",
+        "Data": {
+            "Name": "Data",
+            "Value": "8 Gbytes"
+        },
+        "TalkTime": {
+            "Name": "Talktime",
+            "Value": "200 MINS"
+        },
+        "SMS": {
+            "Name": "SMS",
+            "Value": "200 FREE"
+        },
+        "CallerId": {
+            "Name": "Caller ID",
+            "Value": 4
+        }
+    },
+    {
+        "Id": 3,
+        "Name": "TERA PLAN",
+        "Price": 99.99,
+        "Description": "No contract, post paid monthly.",
+        "Data": {
+            "Name": "Data",
+            "Value": "18 Gbytes"
+        },
+        "TalkTime": {
+            "Name": "Talktime",
+            "Value": "400 MINS"
+        },
+        "SMS": {
+            "Name": "SMS",
+            "Value": "200 FREE"
+        },
+        "CallerId": {
+            "Name": "Caller ID",
+            "Value": 5
+        }
+    }
+]

@@ -1,0 +1,34 @@
+<mat-form-field class="w-100">
+  <mat-chip-list #chipList [formControl]="chipListAutoCompleteFormControl">
+    <mat-chip 
+      (removed)="removeOne(i)" 
+      *ngFor="let item of selectedList; let i = index;">
+      {{item}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+
+    <input 
+      #searchField 
+      matInput 
+      placeholder="{{ fieldLabel | translate }}" 
+      [formControl]="inputFormControl"
+      [matAutocomplete]="auto" 
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+      (matChipInputTokenEnd)="addOne($event)" />
+  </mat-chip-list>
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOne($event)">
+    <mat-option *ngFor="let item of filteredList;" [value]="item">
+      {{item}}
+    </mat-option>
+  </mat-autocomplete>
+
+  <mat-error *ngIf="chipListAutoCompleteFormControl.errors?.['required']">
+    {{ errorMessage | translate }}
+  </mat-error>
+
+  <mat-error *ngIf="chipListAutoCompleteFormControl.errors?.['invalid']">
+    {{ 'InvalidData' | translate }}
+  </mat-error>
+</mat-form-field>

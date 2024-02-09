@@ -1,0 +1,37 @@
+<ion-row class="h-100 p-3">
+  <ion-row class="total-content m-auto flex-column">
+    <form [formGroup]="groupForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+      <ion-row>
+        <mat-form-field class="w-100">
+          <input matInput [matDatepicker]="date" formControlName="date"
+            placeholder="{{ 'date_to_lockout' | translate }}" name="date">
+
+          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker #date></mat-datepicker>
+
+          <mat-error>
+            {{ 'date_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+
+    <ion-row class="my-3 jqx-button-row">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()">
+            {{ 'lockout' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="cancelLockOut()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

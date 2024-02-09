@@ -1,0 +1,49 @@
+<ion-row class="position-relative" id="account-list-grid">
+  <ion-row class="mt-3 mx-auto">
+
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      [columnsUsedForCurrency]="columnsUsedForCurrency"
+      [messageForRowDeletion]="deletionMsg"
+      (onCreate)="goToNew()"
+      (onDelete)="onDelete($event)"
+      (onEnd)="endCharge($event)"
+      (onView)="onDetails($event)"
+      (onFetchData)="fetchData($event)">
+  </app-datatable>
+
+  </ion-row>
+
+  <ng-template #endDialog>
+    <h2 matDialogTitle>{{ 'end_charge' | translate }} [{{ selectedData?.Id}} - {{ selectedData?.ChargeOverrideDescription}}]</h2>
+    <p matDialogContent>
+      <ion-row class="charge-delete-body">
+        <form class="w-100" [formGroup]="endForm" novalidate>
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input type="datetime-local" matInput formControlName="endDate" required
+                placeholder="{{ 'end_date' | translate }}" name="From" min="{{endFormMinDate}}">
+              <mat-error>
+                <span>{{ 'end_date_required' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </form>
+      </ion-row>
+    </p>
+    <mat-dialog-actions align="end">
+      <button mat-button matDialogClose color="primary" [disabled]="!endForm.valid" (click)="confirmEnd()">{{ 'end' |
+        translate}}</button>
+      <button mat-button matDialogClose color="primary">{{'cancel' | translate}}</button>
+    </mat-dialog-actions>
+  </ng-template>
+
+
+</ion-row>

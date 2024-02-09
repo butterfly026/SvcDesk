@@ -1,0 +1,55 @@
+<!-- <ion-row>
+  <h3 class="p-0 m-auto">
+    {{'charge_usage' | translate}}
+  </h3>
+</ion-row> -->
+
+
+<ion-row id="charge-usage-grid">
+  <ion-row class="left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data justify-content-end" [ngStyle]="{'width':setGridWidth()}">
+      <div class="d-flex align-items-center">
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </div>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #chargeUsageGrid [columnsautoresize]="true"
+      [columnsresize]="true" [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true"
+      [source]="dataAdapter" [columns]="columns" [sortable]="true" (onRowselect)="selectRow($event)"
+      [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+    <ion-row class="my-3 pb-3 jqx-button-row">
+      <ion-row class="justify-content-end">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="goToNew()" class="jqx-button-theme">
+              {{ 'new' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="!selectedData" (onClick)="goToUpdate()"
+              class="jqx-button-theme">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="!selectedData" (onClick)="delelteCharge()"
+              class="jqx-button-theme">
+              {{ 'delete' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+  </ion-row>
+</ion-row>

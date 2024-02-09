@@ -1,0 +1,247 @@
+<ion-row class="total-content4 mx-auto">
+
+  <form [formGroup]="attributeForm" class="w-100" novalidate (ngSubmit)="submitAttributeForm()">
+    <ion-row>
+      <ion-row class="ion-margin-top">
+
+        <table class="w-100 border-table-1">
+          <thead>
+            <tr>
+              <th class="text-center">
+                {{'attribute' | translate}}
+              </th>
+              <th class="text-center">
+                {{'value' | translate}}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let list of AttributeList; let i = index;">
+              <td class="text-center">
+                {{list?.name}}
+              </td>
+
+              <td>
+                <ion-row class="remove-border-form">
+                  <mat-form-field class="w-100" *ngIf="list?.datatype=='List'" appearance="standard">
+
+                    <mat-select formControlName="{{list?.id}}" [required]="!list?.optional">
+                      <mat-option *ngFor="let itemList of list?.lookupvaluelist; let j = index" [value]="itemList.code">
+                        {{itemList.value}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'data_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" *ngIf="list?.datatype=='Boolean'">
+
+                    <mat-select formControlName="{{list?.id}}" [required]="!list?.optional">
+                      <mat-option [value]="true">
+                        {{'yes' | translate}}
+                      </mat-option>
+                      <mat-option [value]="false">
+                        {{'no' | translate}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'data_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" *ngIf="list?.datatype=='Date'">
+
+                    <input matInput [matDatepicker]="i" formControlName="{{list?.id}}" [required]="!list?.optional"
+                      name="{{list?.id}}">
+
+                    <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+                    <mat-datepicker #i></mat-datepicker>
+
+                    <mat-error>
+                      {{ 'date_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <ion-row *ngIf="list?.accountNumber" class="address-spinner2">
+                    <mat-form-field class="w-100">
+
+                      <input matInput type="text" formControlName="{{list?.id}}" name="{{list?.id}}"
+                        [required]="!list?.optional" [matAutocomplete]="i">
+
+                      <mat-autocomplete #i="matAutocomplete" (optionSelected)="accountNumberSelected($event, list?.id)">
+                        <mat-option *ngFor="let account of accountList; let i = index;" [value]="account?.contactcode">
+                          {{account?.contactcode}} : {{account?.name}}
+                        </mat-option>
+                      </mat-autocomplete>
+
+                      <mat-error>
+                        {{ 'data_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-progress-bar mode="indeterminate" *ngIf="list?.showSpinner"></mat-progress-bar>
+                  </ion-row>
+
+                  <ion-row *ngIf="!list?.accountNumber">
+                    <mat-form-field class="w-100" *ngIf="list?.datatype=='String' || list?.datatype=='Undefined'">
+
+                      <input matInput type="text" formControlName="{{list?.id}}" name="{{list?.id}}"
+                        [required]="!list?.optional">
+
+                      <mat-error>
+                        {{ 'data_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+
+                  <mat-form-field class="w-100" *ngIf="list?.datatype=='Integer'">
+
+                    <input matInput type="number" formControlName="{{list?.id}}" name="{{list?.id}}"
+                      [required]="!list?.optional">
+
+                    <mat-error>
+                      {{ 'data_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" *ngIf="list?.datatype=='Currency'">
+
+                    <input matInput type="number" formControlName="{{list?.id}}" name="{{list?.id}}"
+                      [required]="!list?.optional">
+
+                    <mat-error>
+                      {{ 'data_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngFor="let list of AttributeList; let i = index;">
+          <ion-row class="full-height ion-margin-top">
+
+            <ion-row>
+              <h3 class="my-0 p-0">
+                <b>{{list?.name}}</b>
+              </h3>
+            </ion-row>
+            <ion-row>
+              <mat-form-field class="w-100" *ngIf="list?.datatype=='List'">
+
+                <mat-select formControlName="{{list?.id}}" [required]="!list?.optional">
+                  <mat-option *ngFor="let itemList of list?.lookupvaluelist; let j = index" [value]="itemList.code">
+                    {{itemList.value}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'data_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100" *ngIf="list?.datatype=='Boolean'">
+
+                <mat-select formControlName="{{list?.id}}" [required]="!list?.optional">
+                  <mat-option [value]="true">
+                    {{'yes' | translate}}
+                  </mat-option>
+                  <mat-option [value]="false">
+                    {{'no' | translate}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'data_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100" *ngIf="list?.datatype=='Date'">
+
+                <input matInput [matDatepicker]="i" formControlName="{{list?.id}}" [required]="!list?.optional"
+                  name="{{list?.id}}">
+
+                <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+                <mat-datepicker #i></mat-datepicker>
+
+                <mat-error>
+                  {{ 'date_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <ion-row *ngIf="list?.accountNumber" class="address-spinner2">
+                <mat-form-field class="w-100">
+
+                  <input matInput type="text" formControlName="{{list?.id}}" name="{{list?.id}}"
+                    [required]="!list?.optional" [matAutocomplete]="i">
+
+                  <mat-autocomplete #i="matAutocomplete" (optionSelected)="accountNumberSelected($event, list?.id)">
+                    <mat-option *ngFor="let account of accountList; let i = index;" [value]="account?.contactcode">
+                      {{account?.contactcode}} : {{account?.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  <mat-error>
+                    {{ 'data_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-progress-bar mode="indeterminate" *ngIf="list?.showSpinner"></mat-progress-bar>
+              </ion-row>
+
+              <ion-row *ngIf="!list?.accountNumber">
+                <mat-form-field class="w-100" *ngIf="list?.datatype=='String' || list?.datatype=='Undefined'">
+
+                  <input matInput type="text" formControlName="{{list?.id}}" name="{{list?.id}}"
+                    [required]="!list?.optional">
+
+                  <mat-error>
+                    {{ 'data_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <mat-form-field class="w-100" *ngIf="list?.datatype=='Integer'">
+
+                <input matInput type="number" formControlName="{{list?.id}}" name="{{list?.id}}"
+                  [required]="!list?.optional">
+
+                <mat-error>
+                  {{ 'data_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100" *ngIf="list?.datatype=='Currency'">
+
+                <input matInput type="number" formControlName="{{list?.id}}" name="{{list?.id}}"
+                  [required]="!list?.optional">
+
+                <mat-error>
+                  {{ 'data_required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-row>
+        </ion-col> -->
+      </ion-row>
+    </ion-row>
+    <button id="attributeSubmitButton" class="submitButton"></button>
+  </form>
+
+  <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm()">
+        {{ 'before' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm()">
+        {{ 'next' | translate }}
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+</ion-row>

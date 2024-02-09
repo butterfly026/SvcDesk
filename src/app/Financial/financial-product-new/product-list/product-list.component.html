@@ -1,0 +1,59 @@
+<ion-row id="financial-product-new-grid">
+  <ion-row class="group-row margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data justify-content-end" [ngStyle]="{'width':setGridWidth()}">
+      <div class="d-flex align-items-center">
+        <h5 class="m-0 mr-2 p-0">
+          <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+        </h5>
+        <span class="margin-left-auto ion-text-end" (click)="exportData()">
+          {{'export_to_excel' | translate}}
+        </span>
+      </div>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #productNewGrid [columnsautoresize]="true" [columnsresize]="true"
+      [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter"
+      (onRowselect)="selectRow($event)" [columns]="columns" [sortable]="true" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+
+  <ion-row *ngIf="groupList.length > 0">
+    <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber" [rowStep]="rowStep"
+      [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+    </app-paging-component>
+  </ion-row>
+</ion-row>
+
+
+
+<ion-row class="jqx-button-row m-3">
+  <ion-row class="total-content4 m-auto justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (click)="addNew()" class="jqx-button-theme">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (click)="updateProduct()" class="jqx-button-theme"
+          [disabled]="!selectedData">
+          {{ 'update' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" (click)="remoteItem()" class="jqx-button-theme"
+          [disabled]="!selectedData">
+          {{ 'remove' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

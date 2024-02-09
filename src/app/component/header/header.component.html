@@ -1,0 +1,138 @@
+<ion-row class="header-component header-component1">
+  <ion-col size="4">
+    <ion-row class="full-height">
+      <span class="left-item company-name full-height">
+        <!-- <i class="fa fal fa-bars"></i> -->
+        <!-- <img src="assets/imgs/old-logo.png" /> -->
+        <img src="{{smallLogoUrl}}" />
+        <!-- <span>
+          &nbsp;&nbsp;
+          {{companyName}}
+        </span> -->
+      </span>
+    </ion-row>
+  </ion-col>
+  <ion-col size="4">
+    <ion-row class="full-height">
+      <ion-row>
+        <span class="page-name margin-auto ion-text-center">
+          {{customerHeader?.headerTitle}} {{pageName}}
+        </span>
+      </ion-row>
+      <ion-row id="debitRunIdSpan" *ngIf="debitRunId!=''">
+        <span class="margin-auto small-title ion-text-center">
+          {{debitRunId}}
+        </span>
+      </ion-row>
+    </ion-row>
+  </ion-col>
+  <ion-col size="4">
+    <ion-row class="full-height justify-content-end align-items-center">
+      <span *ngIf="customerHeader?.headerType == 'customerDetail'" class="mr-2">
+        <ion-row class="notification-icon position-relative">
+          <ion-icon name="notifications" (click)="showNotification()">
+          </ion-icon>
+          <span id="notifications-badge" color="danger" *ngIf="customerHeader?.CustomerMain.notCount!=0"
+            (click)="showNotification()">{{customerHeader?.CustomerMain.notCount}}</span>
+        </ion-row>
+      </span>
+      <span class="d-flex align-items-center justify-content-center pl-2">
+        <span class="user-name-right">
+          {{userName}}&nbsp;
+        </span>
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="ss-menu-button mr-2 my-auto">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #profileMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="pressMenu('language')">
+            <span>{{'change_language' | translate}}</span>
+          </button>
+          <button mat-menu-item (click)="pressMenu('theme')">
+            <span>{{'change_theme' | translate}}</span>
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="security"><span>{{'security' | translate}}</span></button>
+          <button mat-menu-item class="menu-item-signout" (click)="signOut()">
+              <i class="fa fa-sign-out"></i> 
+              <span>{{signOutStr}}</span>
+          </button>
+        </mat-menu>
+        <mat-menu #security="matMenu">
+          <button mat-menu-item (click)="pressMenu('changePassword')">
+            <span>{{'change_password' | translate}}</span>
+          </button>
+          <button mat-menu-item (click)="pressMenu('signInHistory')">
+            <span>{{'login_history' | translate}}</span>
+          </button>
+          <button mat-menu-item (click)="pressMenu('passExWarning')">
+            <span>{{'password_expiry' | translate}}</span>
+          </button>
+          <button mat-menu-item (click)="pressMenu('registerSecurity')">
+            <span>{{'register_email_mobile' | translate}}</span>
+          </button> 
+        </mat-menu>
+      </span>
+      <ion-row class="full-height position-fixed position-start noti-content"
+        *ngIf="customerHeader?.CustomerMain.showNot">
+        <ion-row class="full-height position-relative">
+          <ion-row class="full-height position-relative notificaton-background" (click)="closeNotification()">
+          </ion-row>
+          <ion-row class="notification-detail" *ngIf="customerHeader?.CustomerMain.showNot">
+            <ion-row class="my-1">
+              <h4 class="ml-auto p-0 my-0">
+                <ion-icon name="close-outline" (click)="closeNotification()">
+                </ion-icon>
+              </h4>
+            </ion-row>
+            <ion-row>
+              <mat-accordion class="w-100">
+                <mat-expansion-panel [ngClass]="{'light-red':!notList.status}" [expanded]="notIndex==0"
+                  *ngFor="let notList of customerHeader?.CustomerMain.notDetail; let notIndex = index"
+                  (opened)="sawNot(notIndex)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-description>
+                      Notification {{ notIndex + 1 }}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>Notification {{ notIndex + 1 }} detail on here</p>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row class="header-component header-component2 row">
+  <ion-row class="header-component-2">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-row id="smallLogoHeader">
+          <img src="{{smallLogoUrl}}" class="margin-auto" />
+          <!-- [ngStyle]="{'width':getWidthHeight(), 'height':getWidthHeight()}" -->
+        </ion-row>
+        <!-- <ion-row>
+          <span class="margin-auto ion-text-center">
+            {{companyName}}
+          </span>
+        </ion-row> -->
+      </ion-row>
+    </ion-col>
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <ion-row>
+          <span class="margin-auto page-name ion-text-center">
+            {{pageName}}
+          </span>
+        </ion-row>
+        <ion-row *ngIf="debitRunId!=''">
+          <span class="margin-auto small-title ion-text-center">
+            {{debitRunId}}
+          </span>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

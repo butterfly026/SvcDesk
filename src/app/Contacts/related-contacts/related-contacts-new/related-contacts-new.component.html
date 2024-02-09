@@ -1,0 +1,135 @@
+<ion-row>
+  <ion-row class='justify-content-center'>
+    <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="12" *ngIf="EditMode=='New'">
+      <h3 class='text-center'>{{ 'related_contact' | translate }}</h3>
+    </ion-col>
+    <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="12" *ngIf="EditMode=='Update'">
+      <h3 class='text-center'>{{ 'update_related_contact' | translate }} {{ updateTitle }}</h3>
+    </ion-col>
+  </ion-row>
+
+  <form [formGroup]="contactForm" class="w-100" (ngSubmit)="submitContactForm()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="TypeCtrl" placeholder="{{ 'type' | translate }}" 
+              [(ngModel)]="selectedRelationships" multiple required>
+                <mat-option *ngFor="let type of typeList; let j = index" value="{{type?.Id}}">
+                  {{ type?.Name }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="TitleCtrl" placeholder="{{ 'title' | translate }}" required>
+                <mat-option *ngFor="let title of titleList; let j = index" value="{{title?.Name}}">
+                  {{ title?.Name }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'title_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="FirstNameCtrl" type="text"
+                placeholder="{{ 'first_name' | translate }}" name="FirstNameCtrl" />
+
+              <mat-error>
+                {{ 'first_name_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="FamilyNameCtrl" type="text"
+                placeholder="{{ 'family_name' | translate }}" name="FamilyNameCtrl" />
+
+              <mat-error>
+                {{ 'family_name_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="Email" type="text"
+                (focusout)="focusOutField('email')" placeholder="{{ 'email' | translate }}" name="Email" />
+
+                <mat-error *ngIf="f.Email.hasError('email')">
+                  {{ 'email_address_invalid' | translate }}
+                </mat-error>
+                <mat-error *ngIf="f.Email.hasError('invalid')">
+                  {{ 'invalid_email_format' | translate }}
+                </mat-error>
+                
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="spinner?.email"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="Mobile" type="text"
+                (focusout)="focusOutField('mobile')" placeholder="{{ 'mobile' | translate }}" name="Mobile" />
+              <mat-error *ngIf="f.Mobile.hasError('required')">
+                {{ 'mobile_phone_required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.Mobile.hasError('required') && f.Mobile.hasError('invalid_format')">
+                {{ 'invalid_mobile_format' | translate }}
+              </mat-error>
+              <mat-error *ngIf="!f.Mobile.hasError('required') && f.Mobile.hasError('invalid')">
+                {{ 'invalid_mobile' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="spinner?.mobile"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    <button class="submitButton" id="contactSubmitButton"></button>
+  </form>
+
+</ion-row>
+<ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-center">
+  <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="updateRelatedContact()"
+      [disabled]="getSaveBtnState">
+      {{ 'save' | translate }}
+    </jqxButton>
+  </ion-col>
+  <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+    <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="closeComponent()">
+      {{ 'close' | translate }}
+    </jqxButton>
+  </ion-col>
+</ion-row>

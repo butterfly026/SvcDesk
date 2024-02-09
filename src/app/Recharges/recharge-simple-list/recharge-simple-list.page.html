@@ -1,0 +1,86 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon">
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row>
+      <h3 class="margin-auto">
+        {{formTitle}}
+      </h3>
+    </ion-row>
+
+    <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+      <span class="margin-left-auto ion-text-end" (click)="exportData()">
+        {{'export_to_excel' | translate}}
+      </span>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGrid [columnsautoresize]="true" [columnsresize]="true"
+      [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter" [columns]="columns"
+      [sortable]="true" (click)="selectRow()" *ngIf="CategoryId == 1" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #myGrid [columnsautoresize]="true" [columnsresize]="true"
+      [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapterOffline"
+      [columns]="columnsOffline" [sortable]="true" (click)="selectRow()" *ngIf="CategoryId == 2"
+      [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+  </ion-row>
+
+  <ion-row class="total-content2 left-right-auto">
+
+    <ion-row class="ion-margin-top page-bottom">
+      <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+        <ion-col size="4" *ngIf="CategoryId == 1">
+
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNew()">
+              {{ 'new' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4" *ngIf="CategoryId != 1">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="availButton" class="jqx-button-theme"
+              (click)="goToActivation()">
+              {{ 'voucher_code' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+
+</ion-content>

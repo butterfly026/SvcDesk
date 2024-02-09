@@ -1,0 +1,114 @@
+<ion-row class="mt-5">
+  <h3 class="mx-auto my-0 p-0">
+    {{ 'service_provider_user' | translate }}
+  </h3>
+</ion-row>
+<ion-row class="mt-3 total-content4 mx-auto">
+  <form [formGroup]="formGroup" novalidate class="w-100" (ngSubmit)="sumbitForm()">
+    <ion-row class="">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="LoginDefault" placeholder="{{ 'login_id' | translate }}" required>
+              <mat-option *ngFor="let itemList of loginList; let j = index" [value]="itemList.id">
+                {{ itemList.name | translate }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'login_id_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="TemporaryPassword" placeholder="{{ 'temporary_password' | translate }}"
+              required>
+              <mat-option *ngFor="let itemList of passwordList; let j = index" [value]="itemList.id">
+                {{ itemList.name | translate }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'temporary_password_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="TemporaryPasswordAllowManual"
+              placeholder="{{ 'temporary_password_allow_manual' | translate }}" required>
+              <mat-option *ngFor="let itemList of boolList; let j = index" [value]="itemList.id">
+                {{ itemList.name | translate }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'temporary_password_allow_manual_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="MinimumPasswordStrength" placeholder="{{ 'password_strength' | translate }}"
+              required>
+              <mat-option *ngFor="let itemList of pswStrengthList; let j = index" [value]="itemList.id">
+                {{ itemList.name | translate }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'password_strength_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+            <textarea matInput formControlName="PasswordMessage" name="PasswordMessage"
+              placeholder="{{'password_message'| translate}}">
+            </textarea>
+
+            <mat-error>
+              {{ 'password_message_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <button class="submitButton" id="submitButton"></button>
+  </form>
+
+  <ion-row class="mt-5 jqx-button-row">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+          [disabled]="!checkUpdateState() || !formGroup.valid">
+          {{ 'update' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="backMain()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

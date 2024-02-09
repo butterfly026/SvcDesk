@@ -1,0 +1,60 @@
+<ion-row class="total-content2 mx-auto p-3">
+
+  <ion-row class="ion-margin-top ion-padding-top ion-margin-bottom">
+    <span class="header-title text-dark" *ngIf="ComponentType === 'language'">
+      {{ 'change_language' | translate }}
+    </span>
+    <span class="header-title text-dark" *ngIf="ComponentType === 'theme'">
+      {{ 'change_theme' | translate }}
+    </span>
+  </ion-row>
+
+  <form class="w-100" [formGroup]="lgForm" (ngSubmit)="changeLangauge()" novalidate>
+    <ion-row>
+      <mat-form-field *ngIf="ComponentType === 'language'">
+        <mat-select formControlName="language" required placeholder="{{'select_language' | translate }}">
+          <mat-option *ngFor="let list of lgList; let i = index;" [value]="list.id">
+            {{ list.name | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          {{ 'language_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="ComponentType === 'theme'">
+        <mat-select formControlName="theme" placeholder="{{'select_theme' | translate }}">
+          <mat-option *ngFor="let list of themeList; let i = index;" [value]="list.value">
+            {{ list.name | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          {{ 'theme_required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </ion-row>
+    <button class="submitButton" id="submitButton"></button>
+  </form>
+
+  <ion-row class="mt-5 jqx-button-row">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [disabled]="!lgForm.valid" [theme]="globService.themeColor" class="jqx-button-theme"
+          (onClick)="submitTrigger()">
+          {{ 'change' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

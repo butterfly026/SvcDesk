@@ -1,0 +1,17 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-template-list class="w-100" [ContactCode]="ContactCode"
+    (TemplateListComponent)="processComponent($event)">
+  </app-template-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-template-form class="w-100" [ContactCode]="ContactCode"
+    (TemplateFormComponent)="processComponent($event)">
+  </app-template-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-template-form class="w-100" [GroupId]="GroupId" [ContactCode]="ContactCode"
+    (TemplateFormComponent)="processComponent($event)">
+  </app-template-form>
+</ion-row>

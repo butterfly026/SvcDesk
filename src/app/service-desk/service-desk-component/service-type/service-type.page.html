@@ -1,0 +1,28 @@
+<ion-row id="service-list-type-grid">
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [allowDblClickRow]="true"
+      [searchOptions]="searchOptions"
+      (onDoublClickRow)="dblclickRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="!!ServiceTypeCode">
+    <app-service-type-child 
+      class="w-100"
+      [ContactCode]="ContactCode" 
+      [ServiceTypeCode]="ServiceTypeCode"
+      [SearchString]="eventParam.SearchString" 
+      (ServiceTypeServiceComponent)="processServiceType($event)">
+    </app-service-type-child>
+  </ion-row>
+</ion-row>

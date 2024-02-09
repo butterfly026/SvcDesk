@@ -1,0 +1,30 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="full-height">
+    <ion-row class="margin-auto normal-button">
+      <ion-row>
+        <span class="margin-auto ion-text-center procedure-label">
+          {{procedureBalance}}
+        </span>
+        <span class="margin-auto ion-text-center procedure-balance full-width">
+          {{'available_procedures' | translate}}
+        </span>
+      </ion-row>
+
+      <ion-row class="login-row page-bottom normal-button total-content2 left-right-auto">
+        <ion-col size="4"></ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-content>

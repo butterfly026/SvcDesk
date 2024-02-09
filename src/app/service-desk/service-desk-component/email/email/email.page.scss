@@ -1,0 +1,22 @@
+.multi-email {
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+}
+
+textarea {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.drop-files {
+    ion-row {
+        padding: 10px;
+        border: 1px dashed rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+    }
+
+    .drag-files {
+        border: 2px dashed rgba(0, 0, 0, 0.3);
+    }
+}

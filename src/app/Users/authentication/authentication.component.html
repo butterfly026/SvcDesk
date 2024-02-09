@@ -1,0 +1,178 @@
+<ion-row>
+
+  <ion-row class="total-content5 mx-auto">
+    <form [formGroup]="groupForm" novalidate class="w-100" (ngSubmit)="submitForm()">
+
+      <ion-row>
+        <ion-row class="justify-content-center align-items-center mb-3">
+          <h3 class="text-center">
+            {{'authentication_information' | translate}}
+          </h3>
+        </ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <ion-row class="login-default-content address-spinner">
+              <mat-form-field class="w-100">
+                <input matInput type="text" formControlName="Email" placeholder="{{ 'email' | translate }}" name="Email"
+                  (focusout)="focusOutField('email')">
+
+                <mat-error *ngIf="f.Email.hasError('email')">
+                  {{ 'email_address_invalid' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-progress-bar mode="indeterminate" *ngIf="spinner?.email"></mat-progress-bar>
+            </ion-row>
+
+            <ion-row class="login-check-content align-items-center justify-content-center px-3">
+              <button type="button" mat-raised-button color="primary" (click)="checkEmailValidate()"
+                class="exclusion-create w-100" [disabled]="checkAvailableCall('email')">
+                {{ 'check' | translate}}
+              </button>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <ion-row class="login-default-content address-spinner">
+              <mat-form-field class="w-100">
+                <input matInput type="text" formControlName="MobilePhone" placeholder="{{ 'mobile' | translate }}"
+                  name="MobilePhone" (focusout)="focusOutField('mobile')">
+
+                <mat-error *ngIf="f.MobilePhone.hasError('required')">
+                  {{ 'mobile_phone_required' | translate }}
+                </mat-error>
+                <mat-error *ngIf="!f.MobilePhone.hasError('required') && f.MobilePhone.hasError('pattern')">
+                  {{ 'invalid_phone_number' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-progress-bar mode="indeterminate" *ngIf="spinner?.mobile"></mat-progress-bar>
+            </ion-row>
+
+            <ion-row class="login-check-content align-items-center justify-content-center px-3">
+              <button type="button" mat-raised-button color="primary" (click)="checkMobileValidate()"
+                class="exclusion-create w-100" [disabled]="checkAvailableCall('mobile')">
+                {{ 'check' | translate}}
+              </button>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <ion-row>
+              <ion-row class="user-password-field address-spinner">
+                <mat-form-field class="w-100">
+                  <input matInput type="text" formControlName="TemporaryPassword" autocomplete="on"
+                    [placeholder]="'password' | translate" (focusout)="focusOutField('password')">
+
+                  <mat-error *ngIf="f.TemporaryPassword.hasError('required')">
+                    {{ 'password_is_required' | translate }}
+                  </mat-error>
+
+                  <mat-error class="d-flex"
+                    *ngIf="!f.TemporaryPassword.hasError('required') && f.TemporaryPassword.hasError('invalid')">
+                    <span class="w-100 text-center bg-danger p-1 text-light rounded"
+                      *ngIf="passwordStrengStr == 'password_weak'">
+                      {{'password_weak' | translate}}
+                    </span>
+                    <span class="w-100 text-center bg-danger p-1 text-light rounded"
+                      *ngIf="passwordStrengStr == 'password_medium'">
+                      {{'password_medium' | translate}}
+                    </span>
+                    <span class="w-100 text-center bg-danger p-1 text-light rounded"
+                      *ngIf="passwordStrengStr == 'password_failed'">
+                      {{reasonStr.password}}
+                    </span>
+                  </mat-error>
+
+                  <mat-hint [align]="'start'" class="d-flex w-100"
+                    *ngIf="passwordStrengStr === 'password_strong'">
+                    <span class="w-100 text-center bg-success p-1 text-light rounded">
+                      {{'password_strong' | translate}}
+                    </span>
+                  </mat-hint>
+
+                  <mat-hint [align]="'start'" class="d-flex w-100"
+                    *ngIf="passwordStrengStr === 'password_medium'">
+                    <span class="w-100 text-center bg-primary p-1 text-light rounded">
+                      {{'password_medium' | translate}}
+                    </span>
+                  </mat-hint>
+
+                </mat-form-field>
+                <mat-progress-bar mode="indeterminate" *ngIf="spinner?.password"></mat-progress-bar>
+              </ion-row>
+              <ion-row class="password-generate">
+                <ion-icon name="key-outline" class="m-auto cursor-point" (click)="generatePassword()"></ion-icon>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <ion-row class="align-items-center">
+              <mat-slide-toggle [(ngModel)]="pswLoginState" [ngModelOptions]="{standalone: true}" class="w-100"
+                color="primary" (change)="changePasswordLogin($event)">
+                {{ 'change_password_login' | translate }}
+              </mat-slide-toggle>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 flex-column">
+            <ion-row class="mt-auto">
+              <ion-row class="login-default-content address-spinner">
+                <mat-form-field class="w-100">
+                  <input matInput type="text" formControlName="LoginId" placeholder="{{ 'login' | translate }}"
+                    name="LoginId" (focusout)="focusOutField('loginId')">
+
+                  <mat-error *ngIf="f.LoginId.hasError('required')">
+                    {{ 'login_required' | translate }}
+                  </mat-error>
+
+                  <mat-error *ngIf="!f.LoginId.hasError('required') && f.LoginId.hasError('invalid')">
+                    {{ 'login_invalid' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-progress-bar mode="indeterminate" *ngIf="spinner?.loginid"></mat-progress-bar>
+              </ion-row>
+
+              <ion-row class="login-check-content align-items-center justify-content-center px-3">
+                <button type="button" mat-raised-button color="primary" (click)="checkLoginId()"
+                  class="exclusion-create w-100" [disabled]="checkAvailableCall('loginId')">
+                  {{ 'check' | translate}}
+                </button>
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" >
+          <ion-row class="h-100 align-items-center">
+            <ion-row>
+              <mat-slide-toggle [(ngModel)]="enableTwoFactor" [ngModelOptions]="{standalone: true}" class="w-100"
+                color="primary">
+                {{ 'two_factor_authentication' | translate }}
+              </mat-slide-toggle>
+            </ion-row>
+            <mat-progress-bar mode="indeterminate" *ngIf="spinner?.mfa"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <button class="submitButton" id="authenticationDetailSubmit"></button>
+    </form>
+    <ion-row class="mt-5 jqx-button-row mb-3 justify-content-center">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="getSaveBtnState()" (onClick)="saveAuth()">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

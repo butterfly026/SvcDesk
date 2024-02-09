@@ -1,0 +1,27 @@
+<ion-row class="mt-3">
+  <h3 class="my-0 p-0">
+    {{ 'IdentificationDocuments' | translate }}
+  </h3>
+</ion-row>
+<ion-row class="total-content4 mx-auto">
+  <ion-row >
+    <ion-row class="">
+      <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [usePagination]="false"
+        [permissions]="permissions"
+        [csvFileName]="csvFileName"
+        [searchOptions]="searchOptions"
+        [messageForRowDeletion]="deletionMsg"
+        (onCreate)="newIdentification()"
+        (onDelete)="deleteIdentification($event)"
+        (onEdit)="updateIdentification($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+    </ion-row>
+  </ion-row>
+</ion-row>

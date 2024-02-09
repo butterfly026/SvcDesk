@@ -1,0 +1,74 @@
+<ion-row class="total-content2 left-right-auto ion-margin-top">
+  <form [formGroup]="suspensionForm" class="full-width" (ngSubmit)="SubmitTerminate()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-form-field class="example-full-width">
+          <mat-select formControlName="SuspensionTypeId" [placeholder]="'SuspensionType' | translate" name="SuspensionTypeId" required>
+            <mat-option *ngFor="let list of suspensionTypes; let i = index" [value]="list.Id">
+              {{ list.Name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'SuspensionTypeRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-form-field class="example-full-width">
+          <mat-select formControlName="ReasonId" [placeholder]="'SuspensionReason' | translate" name="ReasonId"
+            required>
+            <mat-option *ngFor="let list of suspensionReasons; let i = index" [value]="list.Id">
+              {{ list.Name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'SuspensionReasonRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="picker" formControlName="Scheduled"
+            [placeholder]="'DateToSuspensionScheduled' | translate" name="Scheduled" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+          <mat-error>
+            <span>{{ 'DateToSuspensionScheduledRequired' | translate }}</span>
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <mat-form-field class="example-full-width">
+        <textarea matInput formControlName="Note" name="Note" [placeholder]="'NotesOptional'| translate"></textarea>
+      </mat-form-field>
+    </ion-row>
+
+    <button id="submitButton"></button>
+  </form>
+
+  <ion-row class="login-row page-bottom normal-button ion-justify-content-end">
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()" [disabled]="!suspensionForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

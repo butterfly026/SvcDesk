@@ -1,0 +1,110 @@
+<mat-stepper 
+  #stepper 
+  linear 
+  class="total-content4 mx-auto" 
+  orientation="vertical" 
+  (selectionChange)="changeStep($event)">
+  
+  <mat-step [stepControl]="accountTypeFormGroup">
+    <ng-template matStepLabel>Choose an account type</ng-template>
+    <app-new-account-type 
+      [formGroup]="accountTypeFormGroup"
+      [accountConfiguration]="accountConfiguration"
+      (onUpdateAccountConfiguration)="updateAccountConfiguration($event)">
+    </app-new-account-type>
+
+    <ion-row class="ion-justify-content-end">
+      <button mat-button matStepperNext>Next</button>
+    </ion-row>  
+  </mat-step>
+
+  <mat-step [stepControl]="accountDetailsFormGroup" *ngIf="accountConfiguration">
+    <ng-template matStepLabel>Fill out account details</ng-template>
+    <app-new-account-details
+      [formGroup]="accountDetailsFormGroup"
+      [accountConfiguration]="accountConfiguration"
+      [accountType]="accountTypeFormGroup.controls.AccountType.value">
+    </app-new-account-details>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountContactPhonesFormGroup" *ngIf="accountConfiguration?.Details.ContactPhones.Enabled">
+    <ng-template matStepLabel>Fill out contact phones</ng-template>
+    <app-new-account-contact-phones
+      [formGroup]="accountContactPhonesFormGroup"
+      [contactCode]="ContactCode">
+    </app-new-account-contact-phones>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+  
+  <mat-step [stepControl]="accountEmailsFormGroup" *ngIf="accountConfiguration?.Details.Emails.Enabled">
+    <ng-template matStepLabel>Fill out emails</ng-template>
+    <app-new-account-emails
+      [formGroup]="accountEmailsFormGroup"
+      [contactCode]="ContactCode">
+    </app-new-account-emails>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountAddressesFormGroup" *ngIf="accountConfiguration?.Details.Addresses.Enabled">
+    <ng-template matStepLabel>Fill out addresses</ng-template>
+    <app-new-account-addresses
+      [formGroup]="accountAddressesFormGroup"
+      [accountType]="accountTypeFormGroup.controls.AccountType.value">
+    </app-new-account-addresses>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountOptionsFormGroup" *ngIf="accountConfiguration?.Options.Enabled">
+    <ng-template matStepLabel>Fill out options</ng-template>
+    <app-new-account-options
+      [formGroup]="accountOptionsFormGroup"
+      [accountConfiguration]="accountConfiguration"
+      [businessUnitCode]="accountDetailsFormGroup.controls.BusinessUnitCode.value">
+    </app-new-account-options>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountIdentificationDocumentsFormGroup" *ngIf="accountConfiguration?.Identification.Enabled">
+    <ng-template matStepLabel>Fill out identification documents</ng-template>
+    <app-new-account-identification-documents
+      [formGroup]="accountIdentificationDocumentsFormGroup"
+      [accountType]="accountTypeFormGroup.controls.AccountType.value">
+    </app-new-account-identification-documents>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountSecurityQuestionsFormGroup" *ngIf="accountConfiguration?.Identification.Enabled">
+    <ng-template matStepLabel>Fill out security questions</ng-template>
+    <app-new-account-security-questions
+      [formGroup]="accountSecurityQuestionsFormGroup"
+      [accountType]="accountTypeFormGroup.controls.AccountType.value">
+    </app-new-account-security-questions>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step [stepControl]="accountAuthenticationFormGroup" *ngIf="accountConfiguration?.Identification.Enabled">
+    <ng-template matStepLabel>Fill out authentication</ng-template>
+    <app-new-account-authentication
+      [formGroup]="accountAuthenticationFormGroup">
+    </app-new-account-authentication>
+    <ng-container *ngTemplateOutlet="matStepperButtons"></ng-container>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <strong>You are now done.</strong>
+
+    <ion-row class="ion-justify-content-end mt-5">
+      <button mat-button matStepperPrevious>Previous</button>
+      <button mat-button matStepperNext (click)="stepper.reset()">Create Another One</button>
+    </ion-row> 
+  </mat-step>
+</mat-stepper>
+
+<ng-template #matStepperButtons>
+  <ion-row class="ion-justify-content-end mt-5">
+    <button mat-button (click)="goToPriviousStage()">Previous</button>
+    <button mat-button (click)="goToNextStage()">Next</button>
+  </ion-row> 
+</ng-template>

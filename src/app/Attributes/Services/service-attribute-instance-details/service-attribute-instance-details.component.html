@@ -1,0 +1,85 @@
+<form [formGroup]="detailForm">
+  <ion-row class="ion-justify-content-center">
+    <h3 class="m-auto">{{'AttributeDetails' | translate}}: {{ data.Id }}</h3>
+  </ion-row>
+
+  <ion-card class="mt-5">
+    <ion-card-content>
+        <ion-row>
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Id' | translate}}</mat-label>
+              <input matInput formControlName="Id" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'DefinitionId' | translate}}</mat-label>
+              <input matInput formControlName="DefinitionId" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Name' | translate}}</mat-label>
+              <input matInput formControlName="Name" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Value' | translate}}</mat-label>
+              <input matInput formControlName="Value" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'From' | translate}}</mat-label>
+              <input matInput formControlName="From" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'To' | translate}}</mat-label>
+              <input matInput formControlName="To" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'LastUpdated' | translate}}</mat-label>
+              <input matInput formControlName="LastUpdated" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'UpdatedBy' | translate}}</mat-label>
+              <input matInput formControlName="UpdatedBy" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Editable' | translate}}</mat-label>
+              <input matInput formControlName="Editable"/>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'EventId' | translate}}</mat-label>
+              <input matInput formControlName="EventId"/>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row class="ion-justify-content-center my-4">
+    <button mat-raised-button class="px-5 font-weight-bold" type="button" tabindex="-1" (click)="close()">{{'Close' | translate}}</button>
+  </ion-row>
+</form>

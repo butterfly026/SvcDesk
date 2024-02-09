@@ -1,0 +1,126 @@
+<form [formGroup]="discountForm">
+  <ion-row class="ion-justify-content-center">
+    <h3 class="m-auto">{{'DiscountDetails' | translate}}: {{ data.Id }}</h3>
+  </ion-row>
+  <ion-card class="mt-5 mb-4">
+    <ion-card-content>
+        <ion-row >
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Id' | translate}}</mat-label>
+              <input matInput formControlName="Id" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Discount' | translate}}</mat-label>
+              <input matInput formControlName="Discount" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'DiscountDefinitionId' | translate}}</mat-label>
+              <input matInput formControlName="DiscountDefinitionId" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'From' | translate}}</mat-label>
+              <input matInput formControlName="From" />
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'To' | translate}}</mat-label>
+              <input matInput formControlName="To"/>
+            </mat-form-field>
+          </ion-col>
+    
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'PreviousTo' | translate}}</mat-label>
+              <input matInput formControlName="PreviousTo" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'AutoApply' | translate}}</mat-label>
+              <input matInput formControlName="AutoApply" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'PlanInstanceId' | translate}}</mat-label>
+              <input matInput formControlName="PlanInstanceId" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Plan' | translate}}</mat-label>
+              <input matInput formControlName="Plan" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'PlanInstanceId' | translate}}</mat-label>
+              <input matInput formControlName="PlanInstanceId" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'AggregationId' | translate}}</mat-label>
+              <input matInput formControlName="AggregationId" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'ParentDiscountInstanceId' | translate}}</mat-label>
+              <input matInput formControlName="ParentDiscountInstanceId" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'CreatedBy' | translate}}</mat-label>
+              <input matInput formControlName="CreatedBy" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'Created' | translate}}</mat-label>
+              <input matInput formControlName="Created" />
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'LastUpdated' | translate}}</mat-label>
+              <input matInput formControlName="LastUpdated" />
+            </mat-form-field>
+          </ion-col>
+          
+          <ion-col size="6">
+            <mat-form-field>
+              <mat-label>{{'UpdatedBy' | translate}}</mat-label>
+              <input matInput formControlName="UpdatedBy" />
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row class="ion-justify-content-center my-4">
+    <button mat-raised-button class="px-5 font-weight-bold" type="button" tabindex="-1" (click)="close()">{{'Close' | translate}}</button>
+  </ion-row>
+</form>

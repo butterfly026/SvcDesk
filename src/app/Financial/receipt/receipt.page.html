@@ -1,0 +1,419 @@
+<ion-row class="mt-3 pt-3">
+
+  <ion-row>
+    <h3 class="m-auto p-0">
+      {{'receipt' | translate}}
+    </h3>
+  </ion-row>
+
+  <mat-tab-group animationDuration="500ms" class="left-right-auto full-width customer-tab"
+    (selectedTabChange)="selectTabs($event)" [selectedIndex]="selectedIndex">
+    <!-- <mat-tab label="{{'receipt' | translate}}"> Receipt 1 </mat-tab>
+      <mat-tab label="{{'allocation' | translate}}"> Allocation 1 </mat-tab> -->
+    <mat-tab label="{{'receipt' | translate}}">
+      <ion-row class="margin-auto ion-margin-top ion-padding-top">
+
+        <ion-row>
+          <ion-row class="total-content2 left-right-auto">
+            <form [formGroup]="receiptFormGroup" class="full-width ion-margin-top ion-padding-top"
+              (ngSubmit)="newReceipt()" novalidate>
+              <ion-row class="username-row">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="number" type="text" required
+                        placeholder="{{ 'number' | translate }}" name="number" />
+
+                      <mat-error *ngIf="f.number.hasError('required')">
+                        <span>{{ 'number_required' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="amount" type="text" currencyMask
+                        [options]="globService.currencyOptions" required maxlength="12" autocomplete="off"
+                        placeholder="{{ 'amount_aud' | translate }}" name="amount" />
+
+                      <mat-error *ngIf="f.amount.hasError('required')">
+                        <span>{{ 'amount_required' | translate }}</span>
+                      </mat-error>
+
+                      <mat-error *ngIf="!f.amount.hasError('required') && f.amount.hasError('invalid')">
+                        <span>{{ 'amount_invalid_type_again' | translate }}</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="username-row">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput [min]="minDate" [max]="maxDate" formControlName="date" [matDatepicker]="picker"
+                        placeholder="{{ 'date' | translate }}" required name="date">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+
+                      <mat-error *ngIf="f.date.hasError('required')">
+                        <span>{{ 'date_required' | translate }}</span>
+                      </mat-error>
+
+                      <mat-error *ngIf="!f.date.hasError('required') && !f.date.valid">
+                        <span>{{ 'date_incorrect' | translate }}</span>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="Reference" placeholder="{{ 'reference' | translate }}"
+                        name="otherRef">
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="surchargeCurrency">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="surcharge" currencyMask [options]="globService.currencyOptions"
+                        maxlength="12" autocomplete="off" placeholder="{{ 'surcharge' | translate }}" name="surcharge">
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100 justify-content-end align-items-center">
+                    <b>
+                      {{'amount_collect' | translate}} : {{getAmountCollect}}
+                    </b>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100 align-items-center">
+                    <jqxCheckBox class="example-margin" [checked]="CreateDocument"
+                      (onChange)="changeCreateDocument($event)" [theme]="globService.themeColor">
+                      {{ 'create_document' | translate }}
+                    </jqxCheckBox>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="h-100 align-items-center">
+                    <jqxCheckBox class="example-margin" [checked]="Email" (onChange)="changeEmail($event)"
+                      [theme]="globService.themeColor">
+                      {{ 'email' | translate }}
+                    </jqxCheckBox>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+              <button id="submitFinancialReceiptButton" class="submitButton">Submit</button>
+            </form>
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+          <ion-row class="mt-5 mx-auto total-content2" id="receipt-my-grid">
+            <ion-row class="receipt-detail">
+              <ion-row>
+                <span class="margin-right-auto receipt-title">
+                  {{ 'payment_method' | translate }}
+                </span>
+              </ion-row>
+            </ion-row>
+
+            <mat-tab-group animationDuration="500ms" class="w-100 payment-list">
+              <mat-tab label="{{'credit_card' | translate}}">
+                <ion-row class="mt-3">
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                    *ngFor="let list of creditCardsList; let i = index;" class="">
+                    <ion-row class="h-100 align-content-between box-shadow-item px-3 py-2" (click)="selectPayment(i)">
+                      <ion-row>
+                        <ion-row class="justify-content-center mb-2 position-relative">
+                          <img src="assets/imgs/payment/small_visa_icon.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'VI'" />
+                          <img src="assets/imgs/payment/small_two_point.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'MC'" />
+                          <img src="assets/imgs/payment/small_amex.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'AM'" />
+                          <img src="assets/imgs/payment/small_disc_ver.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'DC'" />
+                          <img src="assets/imgs/payment/direct-debit-1.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'DD'" />
+
+                          <i class="fa fa-check-circle-o schedule-plan-checked" aria-hidden="true"
+                            *ngIf="list?.select"></i>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'credit_card' | translate }} : {{list.description}} {{ 'ending_in' | translate }}
+                            {{list.cardEnd}}
+                          </span>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'name_on_card' | translate }} : {{ list.accountname }}
+                          </span>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'expires_on' | translate }} : {{ list.expirydate }}
+                          </span>
+                        </ion-row>
+                      </ion-row>
+
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-row class="ion-margin-top">
+                    <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton justify-content-center">
+                      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                        <ion-row class="h-100">
+                          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                            (onClick)="goToPayment('C')">
+                            {{ 'new_credit' | translate }}
+                          </jqxButton>
+                        </ion-row>
+                      </ion-col>
+                    </ion-row>
+                  </ion-row>
+                </ion-row>
+              </mat-tab>
+              <mat-tab label="{{'bank' | translate}}">
+                <ion-row class="mt-3">
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                    *ngFor="let list of directDevitsList; let i = index;" class="">
+                    <ion-row class="h-100 align-content-between box-shadow-item px-3 py-2" (click)="selectPayment(i)">
+                      <ion-row>
+                        <ion-row class="justify-content-center mb-2 position-relative">
+                          <img src="assets/imgs/payment/small_visa_icon.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'VI'" />
+                          <img src="assets/imgs/payment/small_two_point.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'MC'" />
+                          <img src="assets/imgs/payment/small_amex.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'AM'" />
+                          <img src="assets/imgs/payment/small_disc_ver.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'DC'" />
+                          <img src="assets/imgs/payment/direct-debit-1.svg" class="my-auto"
+                            *ngIf="list.paymentmethodcode == 'DD'" />
+
+                          <i class="fa fa-check-circle-o schedule-plan-checked" aria-hidden="true"
+                            *ngIf="list?.select"></i>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'credit_card' | translate }} : {{list.description}} {{ 'ending_in' | translate }}
+                            {{list.cardEnd}}
+                          </span>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'name_on_card' | translate }} : {{ list.accountname }}
+                          </span>
+                        </ion-row>
+
+                        <ion-row>
+                          <span>
+                            {{ 'expires_on' | translate }} : {{ list.expirydate }}
+                          </span>
+                        </ion-row>
+                      </ion-row>
+
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-row class="ion-margin-top">
+                    <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton justify-content-center">
+                      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                        <ion-row class="h-100">
+                          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                            (onClick)="goToPayment('D')">
+                            {{ 'new_bank' | translate }}
+                          </jqxButton>
+                        </ion-row>
+                      </ion-col>
+                    </ion-row>
+                  </ion-row>
+                </ion-row>
+              </mat-tab>
+              <mat-tab label="{{'cash' | translate}}">
+                <ion-row class="pt-3">
+                  <form [formGroup]="cashForm" class="w-100" novalidate>
+                    <ion-row>
+                      <ion-col size="12">
+                        <ion-row>
+                          <mat-form-field class="w-100">
+
+                            <input matInput formControlName="cash" name="cash" placeholder="{{'cash' | translate}}"
+                              currencyMask [options]="globService.currencyOptions" maxlength="12" />
+
+                            <!-- <mat-error>
+                              <span>{{ 'cash_required' | translate }}</span>
+                            </mat-error> -->
+
+                            <mat-error *ngIf="cashControls.cash.hasError('invalid')">
+                              <span>{{ 'amount_invalid_type_again' | translate }}</span>
+                            </mat-error>
+
+                          </mat-form-field>
+                        </ion-row>
+                      </ion-col>
+
+                      <ion-col size="12">
+                        <ion-row>
+                          <mat-form-field class="w-100">
+
+                            <input matInput formControlName="cheque" name="cheque" currencyMask maxlength="12"
+                              [options]="globService.currencyOptions" placeholder="{{'cheque' | translate}}" />
+
+                            <!-- <mat-error>
+                              <span>{{ 'cheque_required' | translate }}</span>
+                            </mat-error> -->
+
+                            <mat-error *ngIf="cashControls.cheque.hasError('invalid')">
+                              <span>{{ 'amount_invalid_type_again' | translate }}</span>
+                            </mat-error>
+
+                          </mat-form-field>
+                        </ion-row>
+                      </ion-col>
+
+                      <ion-col size="12" *ngIf="cashControls.cheque.value !== 0">
+                        <ion-row>
+                          <mat-form-field class="w-100">
+
+                            <input matInput formControlName="chequeNumber" name="chequeNumber"
+                              placeholder="{{'cheque_number' | translate}}" />
+
+                            <mat-error *ngIf="cashControls.chequeNumber.hasError('required')">
+                              <span>{{ 'cheque_number_required' | translate }}</span>
+                            </mat-error>
+
+                            <mat-error
+                              *ngIf="!cashControls.chequeNumber.hasError('required') && !cashControls.chequeNumber.valid">
+                              <span>{{ 'cheque_number_invalid' | translate }}</span>
+                            </mat-error>
+
+                          </mat-form-field>
+                        </ion-row>
+                      </ion-col>
+
+                      <ion-col size="12" *ngIf="cashControls.cheque.value !== 0">
+                        <ion-row>
+                          <mat-form-field class="w-100">
+
+                            <input matInput formControlName="bsb" name="bsb" placeholder="{{'b_s_b' | translate}}" />
+
+                            <mat-error *ngIf="cashControls.bsb.hasError('required')">
+                              <span>{{ 'b_s_b_required' | translate }}</span>
+                            </mat-error>
+
+                            <mat-error *ngIf="!cashControls.bsb.hasError('required') && !cashControls.bsb.valid">
+                              <span>{{ 'b_s_b_invalid' | translate }}</span>
+                            </mat-error>
+
+                          </mat-form-field>
+                        </ion-row>
+                      </ion-col>
+
+                    </ion-row>
+                  </form>
+                </ion-row>
+
+              </mat-tab>
+            </mat-tab-group>
+
+
+          </ion-row>
+        </ion-row>
+
+        <ion-row>
+
+          <ion-row class="jqx-button-row total-content2 mx-auto my-3 py-3 justify-content-end">
+            <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                  [disabled]="f.amount.value === 0 || !receiptFormGroup.valid || !cashForm.valid"
+                  (onClick)="submitTrigger()">
+                  {{ 'save' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+                  {{ 'cancel' | translate }}
+                </jqxButton>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+
+      </ion-row>
+    </mat-tab>
+    <mat-tab label="{{'allocation' | translate}}">
+
+      <ion-row class="margin-auto ion-margin-top ion-padding-top flex-col" *ngIf="selectedIndex === 1">
+
+        <ion-row class="ion-justify-content-center">
+          <ion-row class="total-content2 mx-auto">
+            <app-receipt-allocation class="w-100" [ContactCode]="ContactCode" [receiptAmount]="receiptAmountStr"
+              [totalPrice]="receiptFormGroup.get('amount').value" [autoAllocation]="autoAllocation"
+              (onUpdateAllocations)="updateAllocations($event)" (onToggleAutoAllocation)="toggleAutoAllocation($event)">
+            </app-receipt-allocation>
+          </ion-row>
+        </ion-row>
+
+        <ion-row class="total-content2 jqx-button-row mx-auto my-3 py-3 justify-content-end">
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                [disabled]="f.amount.value === 0 || !receiptFormGroup.valid || !cashForm.valid"
+                (onClick)="newReceipt()">
+                {{ 'save' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+    </mat-tab>
+  </mat-tab-group>
+
+</ion-row>

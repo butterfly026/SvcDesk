@@ -1,0 +1,173 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon" >
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content class="bill-content ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top total-content2 left-right-auto">
+
+    <ion-row [ngClass]="{'main-row':i == 0, 'other-row':i != 0}" *ngFor="let list of methodList; let i = index">
+      <ion-row class="first-row">
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4" text-left>
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'id' | translate }}
+            </span>
+            <span class="detail-span">
+              {{list.data.id}}
+            </span>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'account_name' | translate }}
+            </span>
+            <span class="detail-span">
+              {{list.data.AccountName}}
+            </span>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'account_number' | translate }}
+            </span>
+            <span class="detail-span">
+              {{list.data.AccountNumber}}
+            </span>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="bill-second-row">
+
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4" text-left>
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'description' | translate }}
+            </span>
+            <span class="detail-span">
+              {{ list.data.Description }}
+            </span>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'status' | translate }}
+            </span>
+            <span class="detail-span">
+              {{ list.data.Status }}
+            </span>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'expiry_date' | translate }}
+            </span>
+            <span class="detail-span">
+              {{list.data.ExpiryDate}}
+            </span>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row class="bill-second-row">
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4" text-left>
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'gl_account_code' | translate }}
+            </span>
+            <span class="detail-span">
+              {{list.data.GLAccountCode}}
+            </span>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeMd]="4" [sizeXs]="12" [sizeSm]="4">
+          <ion-row class="full-height">
+            <span class="name-span">
+              {{ 'gl_account' | translate }}
+            </span>
+            <span class="detail-span">
+              {{ list.data.GLAccount }}
+            </span>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="ion-margin-top" [sizeMd]="6" [sizeXs]="12" [sizeSm]="6">
+          <ion-row class="full-height">
+            <mat-slide-toggle class="top-bottom-auto" [(ngModel)]="list.toggleValue" (change)="onChange(i)">
+              <span class="detail-span">
+                {{ 'default_payment_method' | translate }}
+              </span>
+            </mat-slide-toggle>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeMd]="6" [sizeXs]="6" [sizeSm]="6"
+          class="left-right-auto ion-margin-top jqx-button-row custom-jqxbutton">
+          <ion-row class="full-height">
+            <ion-row>
+              <!-- <button mat-button class="down-button-class" color="danger" (click)="deleteItem(i)">
+                {{ 'cancel' | translate }}
+              </button> -->
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="deleteItem(i)">
+                {{ 'cancel' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-row>
+
+    <ion-row class="ion-margin-top page-bottom">
+      <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+        <ion-col size="4">
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToAdd()">
+              {{ 'add' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col size="4">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'close' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+
+  </ion-row>
+</ion-content>

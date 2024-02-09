@@ -1,0 +1,25 @@
+<ion-row class="address-spinner">
+  <mat-form-field>
+    <mat-label>{{'channel_partner' | translate}}</mat-label>
+    <input matInput [formControl]="channelPartnerIdControl" [matAutocomplete]="channelPartnerComplete">
+
+    <mat-autocomplete #channelPartnerComplete="matAutocomplete" (optionSelected)="selectChannelPartner($event)">
+      <mat-option *ngFor="let list of channelPartners; let i= index;" [value]="list.name">
+        {{list.name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <button type="button" matSuffix mat-icon-button (click)="clearField()" *ngIf="channelPartnerIdControl.value" >
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+
+    <mat-error *ngIf="channelPartnerIdControl.hasError('required')">
+      {{ 'channel_partner' | translate }} {{ 'IsRequired' | translate }}
+    </mat-error>
+
+    <mat-error *ngIf="channelPartnerIdControl.hasError('invalid')">
+      {{ channelPartnerIdControl.errors.invalid }}
+    </mat-error>
+  </mat-form-field>          
+  <mat-progress-bar mode="indeterminate" *ngIf="showSpinner"></mat-progress-bar>
+</ion-row>

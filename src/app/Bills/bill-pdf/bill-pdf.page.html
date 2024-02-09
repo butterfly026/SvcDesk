@@ -1,0 +1,10 @@
+<ion-header mode='ios'>
+  <app-header pageName="{{'bill_pdf' | translate}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="w-100">
+    <app-bill-pdf-component class="w-100">
+    </app-bill-pdf-component>
+  </ion-row>
+</ion-content>

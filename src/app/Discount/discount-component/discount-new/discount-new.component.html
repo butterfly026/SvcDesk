@@ -1,0 +1,141 @@
+<ion-row class="px-3 pt-3">
+  <ion-row>
+    <h3 class="p-0 m-auto text-center">
+      {{'DiscountNew' | translate}}
+    </h3>
+  </ion-row> 
+  <ion-row class="total-content4 mx-auto">
+    <form [formGroup]="discountForm" class="w-100" (ngSubmit)="eventSubmit()">
+      <ion-row class="ion-align-items-baseline">
+        <ion-col [size]="12">
+          <ion-row class="group-content address-spinner">
+            <mat-form-field class="example-full-width">    
+              <input type="text" placeholder="{{'DiscountDefinition'| translate}}" matInput formControlName="DiscountDefinition" [matAutocomplete]="discountDefinition">
+              <button *ngIf="eventParamForDefinition.SearchString" matSuffix mat-icon-button aria-label="Clear" (click)="clearDefinitionSearchString()">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+              <mat-autocomplete autoActiveFirstOption #discountDefinition="matAutocomplete">
+                <mat-option *ngFor="let item of discountDefinitions" [value]="item.Discount" (click)="selectDisountDefinition(item)">
+                  {{item.Discount}}
+                </mat-option>
+              </mat-autocomplete>    
+              <mat-error>
+                {{ 'ParentServiceDiscountRequired' | translate }}
+              </mat-error>  
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinnerForDefinition"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [size]="12">
+          <ion-row class="group-content address-spinner">
+            <mat-form-field class="example-full-width">    
+              <input type="text" placeholder="{{'ParentServiceDiscountInstance'| translate}}" matInput formControlName="ParentServiceDiscountInstance" [matAutocomplete]="auto">
+              <button *ngIf="eventParamForDiscount.SearchString" matSuffix mat-icon-button aria-label="Clear" (click)="clearDiscountSearchString()">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let item of discounts" [value]="item.Discount" (click)="selectParentDiscount(item)">
+                  {{item.Discount}}
+                </mat-option>
+              </mat-autocomplete>    
+              <mat-error>
+                {{ 'ParentServiceDiscountRequired' | translate }}
+              </mat-error>  
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="showSpinnerForDiscount"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-checkbox formControlName="AutoApply">{{'AutoApply' | translate}}</mat-checkbox>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-checkbox formControlName="ChildAccounts">{{'ChildAccounts' | translate}}</mat-checkbox>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-checkbox formControlName="SkipChecks">{{'SkipChecks' | translate}}</mat-checkbox>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-checkbox formControlName="AdjustDates">{{'AdjustDates' | translate}}</mat-checkbox>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-form-field>
+            <mat-select formControlName="SkipExistCheck" placeholder="{{ 'SkipExistCheck' | translate }}" name="SkipExistCheck">
+              <mat-option *ngFor="let item of skipExistCheckOptions" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'skipExistCheckOptionsRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-form-field>
+            <mat-select formControlName="BulkApply" placeholder="{{ 'BulkApply' | translate }}" name="BulkApply">
+              <mat-option *ngFor="let item of bulkApplyOptions" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'BulkApplyRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-form-field  class="w-100">
+            <input matInput #fromInput [matDatepicker]="fromPicker" (focus)="fromPicker.open()" formControlName="From" placeholder="{{ 'From' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker (closed)="fromInput.blur()"></mat-datepicker>
+            
+            <mat-error>
+              {{ 'FromRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col [size]="6">
+          <mat-form-field  class="w-100">
+            <input matInput #toInput [matDatepicker]="toPicker" (focus)="toPicker.open()" formControlName="To" placeholder="{{ 'To' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker (closed)="toInput.blur()"></mat-datepicker>
+            
+            <mat-error>
+              {{ 'ToRequired' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ion-col>       
+      </ion-row>
+      <button class="submitButton" id="submitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="my-3 jqx-button-row">
+    <ion-row class="total-content4 mx-auto">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12"></ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" type="submit" [disabled]="discountForm.invalid" (onClick)="submitTrigger()" class="jqx-button-theme">
+            {{ 'Create' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" type="button" (onClick)="goBack()" class="jqx-button-theme">
+            {{ 'Close' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

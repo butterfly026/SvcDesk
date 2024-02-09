@@ -1,0 +1,46 @@
+<ion-row>
+  <ion-row class="margin-top-5vh left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <ion-row class="left-right-auto export-data" [ngStyle]="{'width':setGridWidth()}">
+      <span class="margin-left-auto ion-text-end" (click)="exportData()">
+        {{'export_to_excel' | translate}}
+      </span>
+    </ion-row>
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #PaymentList [columnsautoresize]="true" [columnsresize]="true"
+      [theme]="globService.themeColor" [columnsmenu]="false" [autoheight]="true" [source]="dataAdapter" [columns]="columns"
+      [sortable]="true" (click)="selectRow()" [rtl]="globService.rtlMode">
+    </jqxGrid>
+
+    <ion-row class="total-content2 left-right-auto">
+
+      <ion-row class="ion-margin-top page-bottom">
+        <ion-row class="ion-margin-top jqx-button-row custom-jqxbutton">
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToNew()">
+                {{ 'new' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goToUpdate()">
+                {{ 'update' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+          <ion-col size="4">
+            <ion-row class="full-height">
+              <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                {{ 'close' | translate }}
+              </jqxButton>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+
+    </ion-row>
+
+  </ion-row>
+</ion-row>

@@ -1,0 +1,40 @@
+<ion-row *ngIf="docState == 'view' && showForm">
+
+<ion-row >
+  <ion-row>
+    <ion-row class="justify-content-center align-items-center total-content4 mx-auto">      
+        <ion-row id="file-list-grid">
+          <app-datatable class="w-100" 
+            [data]="documents" 
+            [totalCount]="totalCount" 
+            [columns]="columns"
+            [action]="dataTableAction" 
+            [permissions]="permissions" 
+            [csvFileName]="csvFileName"
+            [searchOptions]="searchOptions"
+            [messageForRowDeletion]="deletionMsg"
+            (onCreate)="switchCreateDoc()"
+            (onDownload)="getDocument($event)"
+            (onDelete)="performDelete($event)"
+            (onFetchData)="fetchData($event)" >
+          </app-datatable>
+        </ion-row>
+    </ion-row>   
+  </ion-row>
+  <ion-row class="">
+  </ion-row>
+  <ion-row class="mt-5 jqx-button-row total-content4 mx-auto" *ngIf="showClose">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>
+</ion-row>
+<ion-row class="" *ngIf="docState == 'create'">
+  <app-contact-document-child class="w-100" [ContactCode]="ContactCode" (DocumentComponent)="processDocuments($event)">
+  </app-contact-document-child>
+</ion-row>

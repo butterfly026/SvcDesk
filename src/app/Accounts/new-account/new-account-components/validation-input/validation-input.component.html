@@ -1,0 +1,26 @@
+<mat-form-field class="w-100">
+  <input matInput 
+    [formControl]="inputFormControl" 
+    [type]="inputType" 
+    [placeholder]="placeHolder"/>
+
+    <mat-error *ngIf="inputFormControl?.errors?.['required']">
+      {{ requiredErrorMessage }}
+    </mat-error>
+    <mat-error *ngIf="inputFormControl?.errors?.['invalid_network']">
+      {{ 'InvalidData' | translate }}
+    </mat-error>
+    <mat-error *ngFor="let list of errorMsgs;">
+      <span *ngIf="list.Result == 'Error'">{{list.Message}}</span>
+    </mat-error>
+    <mat-error *ngIf="!inputFormControl?.hasError('required') && inputFormControl?.hasError('email')">
+      {{ 'email_invalid_label' | translate }}
+    </mat-error>
+    <mat-error *ngIf="!inputFormControl?.hasError('required') && inputFormControl?.hasError('phone')">
+      {{ 'phone_invalid_label' | translate }}
+    </mat-error>
+</mat-form-field>
+<ion-row class="warning-message" *ngFor="let list of warningMsgs;">
+  <span *ngIf="list.Result == 'Warning'">{{list.Message}}</span>
+</ion-row>
+<mat-progress-bar mode="indeterminate" *ngIf="inProgress"></mat-progress-bar>

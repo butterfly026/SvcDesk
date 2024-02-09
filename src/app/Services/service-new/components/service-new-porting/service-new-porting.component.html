@@ -1,0 +1,101 @@
+<ion-row>
+  <form [formGroup]="formGroup" class="w-100">
+    <ion-row>      
+      <ion-col size="12">
+        <mat-checkbox formControlName="isPorting">
+          <strong>{{'porting' | translate}}</strong>
+        </mat-checkbox>
+      </ion-col>
+
+      <ion-row class="ion-align-items-baseline">
+        <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+          <ion-row  class="address-spinner">
+            <mat-form-field class="w-100">
+              <input matInput formControlName="ServiceId" [placeholder]="'service_id' | translate">
+              <mat-error *ngIf="formGroup.controls.ServiceId.getError('required')">
+                {{'service_id_required' | translate}}
+              </mat-error>
+              <mat-error *ngIf="formGroup.controls.ServiceId.getError('invalid')">
+                {{ formGroup.controls.Value.errors['invalid'] }}
+              </mat-error>
+            </mat-form-field>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoadingServiceId"></mat-progress-bar>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field>
+          <mat-select formControlName="LosingServiceProvider" [placeholder]="'LosingServiceProvider' | translate" >
+            <mat-option *ngFor="let item of serviceProviders" [value]="item.Id">
+              {{item.Name}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{ 'LosingServiceProviderRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field>
+          <input matInput formControlName="AccountNumber" type="text" [placeholder]="'account_number' | translate"/>
+
+          <mat-error>
+            {{ 'account_number_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field>
+          <input matInput [matDatepicker]="DOBPicker" [placeholder]="'d_o_b' | translate" formControlName="DOB">
+          <mat-datepicker-toggle matSuffix [for]="DOBPicker"></mat-datepicker-toggle>
+          <mat-datepicker #DOBPicker></mat-datepicker>
+  
+          <mat-error>
+            {{ 'd_o_b_required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field>
+          <input matInput [matDatepicker]="portAuthorityDate" [placeholder]="'PortAuthorityDate' | translate" formControlName="PortAuthorityDate">
+          <mat-datepicker-toggle matSuffix [for]="portAuthorityDate"></mat-datepicker-toggle>
+          <mat-datepicker #portAuthorityDate></mat-datepicker>
+  
+          <mat-error>
+            {{ 'PortAuthorityDateRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field class="w-100">
+          <mat-select formControlName="PortingIdentificationType" [placeholder]="'IdentificationType' | translate">
+            <mat-option *ngFor="let item of IdentificationTypes" [value]="item.Id">
+              {{item.Name}}
+            </mat-option>
+          </mat-select>
+  
+          <mat-error>
+            {{ 'porting_identification_required' | translate }}
+          </mat-error>
+  
+        </mat-form-field>
+      </ion-col>
+
+      <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+        <mat-form-field>
+          <input matInput type="number" formControlName="PortingIdentificationValue" [placeholder]="'IdentificationValue' | translate"/>
+
+          <mat-error>
+            {{ 'IdentificationValueRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-row>

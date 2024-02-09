@@ -1,0 +1,329 @@
+<ion-row class="plan-now total-content2 left-right-auto" *ngIf="planDetail">
+  <ion-row class="ion-margin-top ion-padding-top ion-margin-bottom">
+    <h2 class="margin-auto ion-text-center">
+      <strong>{{'t_m_p_t_k_u_w_you' | translate}}</strong>
+    </h2>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h3 class="top-bottom-auto ion-text-center">
+          <strong>{{planDetail.Name}}</strong>
+        </h3>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h3 class="top-bottom-auto margin-left-auto ion-text-center">
+          <strong>{{planDetail.Price}} / {{'month' | translate}}</strong>
+        </h3>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h3 class="top-bottom-auto ion-text-center">
+          {{planDetail.Data.Value}} {{planDetail.Data.Name}}
+        </h3>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="12" class="ion-margin-top">
+      <ion-row class="full-height">
+        <h3 class="top-bottom-auto ion-text-center">
+          {{planDetail.TalkTime.Value}} {{'voice' | translate}}
+        </h3>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="12" class="ion-margin-top">
+      <ion-row class="full-height">
+        <ion-row>
+          <h3 class="top-bottom-auto ion-text-center">
+            {{planDetail.SMS.Value}} {{planDetail.SMS.Name}} ({{'outgoing_limit' | translate}})
+          </h3>
+        </ion-row>
+        <ion-row>
+          <h6 class="top-bottom-auto ion-text-center">
+            {{'unlimited_incoming' | translate}}
+          </h6>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="12" class="ion-margin-top">
+      <ion-row class="full-height">
+        <ion-row>
+          <h3 class="top-bottom-auto ion-text-center">
+            {{planDetail.CallerId.Value}} {{planDetail.CallerId.Name}}
+          </h3>
+        </ion-row>
+        <ion-row>
+          <h6 class="top-bottom-auto ion-text-center">
+            {{'unlimited_incoming' | translate}}
+          </h6>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <ion-row>
+          <h6 class="ion-no-margin">
+            {{'registration' | translate}}
+          </h6>
+        </ion-row>
+        <ion-row>
+          <h6 class="ion-no-margin">
+            {{'sim_card_fee_waived' | translate}}
+          </h6>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-border-bottom">
+
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h3 class="top-bottom-auto ion-text-centre">
+          {{'v_a_s_add_ons' | translate}}
+        </h3>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto">
+          <mat-checkbox [(ngModel)]="PlanItem.CallerID">
+            {{'caller_id' | translate}}
+          </mat-checkbox>
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="margin-left-auto top-bottom-auto">
+          {{planDetail.CallerId.Value}}
+        </h5>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto">
+          <mat-checkbox [(ngModel)]="PlanItem.CallingNumber">
+            {{'c_n_n_d_p_n' | translate}}
+          </mat-checkbox>
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto top-bottom-auto">
+          {{'registration_fee' | translate}}
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="margin-left-auto top-bottom-auto">
+          {{regFee}}
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto top-bottom-auto">
+          {{'pay_as_you_use' | translate}}
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="margin-left-auto top-bottom-auto">
+          {{payRegUse}}
+        </h5>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto">
+          <mat-checkbox [(ngModel)]="PlanItem.IddPlan">
+            {{'idd_plan' | translate}}
+          </mat-checkbox>
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="top-bottom-auto top-bottom-auto">
+          {{'pay_as_you_use' | translate}}
+        </h5>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-row class="full-height">
+        <h5 class="margin-left-auto top-bottom-auto">
+          {{iDDRegUse}}
+        </h5>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="{{'parental_control_filter' | translate}}" [(ngModel)]="PlanItem.ParentalCtrl"
+            required>
+            <mat-option *ngFor="let list of parentalList; let i = index" [value]="list">
+              {{list}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error>
+            {{'please_choose_an_option' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h4 class="top-bottom-auto ion-text-center">
+          {{'phone_number' | translate}}
+        </h4>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="normal-button">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <!-- <jqxButton class="margin-auto" (click)="getExistingNumber()">
+          {{'port_in_existing_number' | translate}}
+        </jqxButton> -->
+        <ion-row class="port-number-span margin-auto ion-text-center" *ngIf="PlanItem.SelButton != 'ExistNumber'"
+          (click)="getExistingNumber()">
+          <span class="margin-auto">
+            {{'port_in_existing_number' | translate}}
+          </span>
+        </ion-row>
+
+        <ion-row class="selected-port-number-span margin-auto ion-text-center"
+          *ngIf="PlanItem.SelButton == 'ExistNumber'" (click)="getExistingNumber()">
+          <ion-col size="2">
+            <ion-row class="full-height">
+              <img src="assets/OE/white-check.png" class="margin-auto" />
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="8">
+            <ion-row class="full-height">
+              <span class="margin-auto">
+                {{'port_in_existing_number' | translate}}
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <!-- <jqxButton class="margin-auto" (click)="getNewNumber()">
+          {{'give_me_a_new_number' | translate}}
+        </jqxButton> -->
+        <ion-row class="port-number-span margin-auto ion-text-center" *ngIf="PlanItem.SelButton!='NewNumber'"
+          (click)="getNewNumber()">
+          <span class="margin-auto">
+            {{'give_me_a_new_number' | translate}}
+          </span>
+        </ion-row>
+
+        <ion-row class="selected-port-number-span margin-auto ion-text-center" *ngIf="PlanItem.SelButton=='NewNumber'"
+          (click)="getNewNumber()">
+          <ion-col size="2">
+            <ion-row class="full-height">
+              <img src="assets/OE/white-check.png" class="margin-auto" />
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="8">
+            <ion-row class="full-height">
+              <span class="margin-auto">
+                {{'give_me_a_new_number' | translate}}
+              </span>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top" *ngIf="PlanItem.PhoneNumber == ''">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <h6 class="margin-auto ion-text-center">
+          {{'p_s_y_p_n_type' | translate}}
+        </h6>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-padding-top" *ngIf="PlanItem.PhoneNumber != ''">
+    <ion-col size="12">
+      <ion-row class="full-height">
+        <ion-row>
+          <h6 class="margin-auto ion-text-center">
+            {{'you_have_selected' | translate}}
+          </h6>
+        </ion-row>
+
+        <ion-row class="ion-margin-top ion-padding-top">
+          <h3 class="margin-auto ion-text-center">
+            <strong>{{PlanItem.PhoneNumber}}</strong>
+          </h3>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top ion-margin-bottom ion-padding-bottom normal-button">
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="margin-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="margin-auto" [disabled]="PlanItem.PhoneNumber == ''"
+          (click)="goToSubmit()">
+          {{'let_go' | translate}}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+
+</ion-row>

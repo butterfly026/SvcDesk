@@ -1,0 +1,39 @@
+<ion-row id="service-changes-grid">
+
+  <ion-row class="service-list-search align-items-center justify-content-end ion-margin-top ion-padding-top" *ngIf="showSearchOptions">
+    <mat-form-field class="service-change-from">
+      <mat-select placeholder="{{ 'from' | translate }}">
+        <mat-option *ngFor="let list of fromList;" [value]="list.value" (click)="setFromValue(list.text)">
+          {{list.tranText}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ion-row>
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [allowDblClickRow]="true"
+      [searchOptions]="searchOptions"
+      (onToggleSearchOptions)="toggleSearchOptions()"
+      (onDoublClickRow)="dblclickRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="!!ChangeId">
+    <app-service-changes-service 
+      class="w-100"
+      [ContactCode]="ContactCode" 
+      [ChangeId]="ChangeId" 
+      [From]="From"
+      [SearchString]="eventParam.SearchString" 
+      (ServiceChangesServiceComponent)="processChanges($event)">
+    </app-service-changes-service>
+  </ion-row>
+</ion-row>

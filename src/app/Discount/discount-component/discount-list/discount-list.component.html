@@ -1,0 +1,19 @@
+<ion-row class="position-relative">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      (onCreate)="addNew()"
+      (onView)="viewDetail($event)"
+      (onEdit)="editOne($event)"
+      (onDelete)="deleteSelectedRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>

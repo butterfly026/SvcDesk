@@ -1,0 +1,106 @@
+<form [formGroup]="docForm" class="w-100" novalidate>
+  <ion-row>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="h-100 align-items-end">
+        <mat-form-field class="w-100">
+          <input matInput formControlName="Author" placeholder="{{ 'author' | translate }}"
+            name="Author" />
+          <mat-error>
+            <span>{{ 'author_required' | translate }}</span>
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="h-100 align-items-end">
+        <mat-form-field class="example-full-width">
+
+          <input matInput type="date" formControlName="DateAuthored" [(ngModel)]="dateAuthor"
+            placeholder="{{ 'date_authored' | translate }}" name="dateAuthored" required>
+
+          <mat-error>
+            <span>{{ 'date_authored_required' | translate }}</span>
+          </mat-error>
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="h-100 align-items-end">
+        
+          <mat-checkbox formControlName="UserEditable">
+            {{'user_editable' | translate}}
+          </mat-checkbox>
+        
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="h-100 align-items-end">
+        
+          <mat-checkbox class="example-margin" formControlName="ContactEditable">
+              {{'contact_editable' | translate}}
+          </mat-checkbox>
+        
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+      <ion-row class="h-100 align-items-end">
+        
+          <mat-checkbox class="example-margin" formControlName="ContactVisible">
+              {{'contact_visible' | translate}}
+          </mat-checkbox>
+        
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row>
+        <mat-form-field class="example-full-width">
+
+          <input matInput formControlName="Note" type="text" placeholder="{{ 'note' | translate }}" 
+            name="note" />
+
+        </mat-form-field>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100 align-items-center">
+        <ion-row align-items-center>
+          <span class="document-name file-name my-auto pl-3">{{taskDoc.name}}</span>
+          <span class="choose-file" (click)="openCreateFile()">
+            {{'select_file' | translate}}
+          </span>
+          <input type="file" #createFile id="createFile" (change)="createFileEvent($event)" class="d-none" />
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</form>
+
+<ion-row class="pt-2 jqx-button-row">
+  <ion-row class="justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="saveDocument()"
+          [disabled]="!docForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

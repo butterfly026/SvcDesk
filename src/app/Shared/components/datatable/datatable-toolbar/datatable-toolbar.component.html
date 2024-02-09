@@ -1,0 +1,43 @@
+<ion-row>  
+  <ion-fab-button
+    size="small" 
+    [color]="searchOptionsExpanded ? 'medium' : 'light'"
+    [matTooltip]="'SearchOption' | translate"  
+    (click)="toggleSearchOptions()" 
+    *ngIf="showSearchOptions">
+    <ion-icon name="options-outline" [style.color]="searchOptionColor" ></ion-icon>
+  </ion-fab-button> 
+  <ng-container *ngFor="let item of actionButtons; let i = index;">
+    <ion-fab-button 
+      size="small" 
+      color="light"
+      [matTooltip]="item.toolTiop | translate" 
+      [disabled]="!checkPermission(item.permissions)" 
+      (click)="clickButton(item.actionName)" 
+      *ngIf="actions?.includes(item.actionName) && i <= countOfToolBarActionButtonsToShow - 1">
+      <ion-icon aria-hidden="true" [name]="item.icon"></ion-icon>
+    </ion-fab-button>
+  </ng-container>
+
+  <ion-fab-button 
+    size="small" 
+    color="light"
+    [matTooltip]="'MoreOptions' | translate" 
+    [matMenuTriggerFor]="menu"
+    *ngIf="actionButtons.length > countOfToolBarActionButtonsToShow">
+    <ion-icon aria-hidden="true" name="ellipsis-vertical-outline"></ion-icon>
+  </ion-fab-button>
+</ion-row>
+
+<mat-menu #menu="matMenu">
+  <ng-container *ngFor="let item of actionButtons; let i = index;">
+    <button
+      mat-menu-item
+      [disabled]="!checkPermission(item.permissions)" 
+      (click)="clickButton(item.actionName)"
+      *ngIf="actions?.includes(item.actionName) && i > countOfToolBarActionButtonsToShow - 1">
+      {{item.toolTiop | translate}}
+    </button>
+  </ng-container>
+</mat-menu>
+  

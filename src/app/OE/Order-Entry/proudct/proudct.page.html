@@ -1,0 +1,86 @@
+<ion-row class="ss-component-title">
+  <span class="top-bottom-auto margin-right-auto">
+    {{'product' | translate}}
+  </span>
+</ion-row>
+
+<ion-row *ngIf="productMode==''">
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#3e65ff'"
+      (click)="goToProduct('sigfox')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/phone.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'sigfox_service' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#a0f'"
+      (click)="goToProduct('sim')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/sim.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'sim_cards' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#3f7d44'"
+      (click)="goToProduct('water')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/water.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'water_meters' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#222c6f'"
+      (click)="goToProduct('security')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/security.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'security_and_alarms' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#ca7132'"
+      (click)="goToProduct('truck')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/truck.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'truck_trackers' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#633e23'"
+      (click)="goToProduct('services')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/services.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'consulting' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="3" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="6" class="animated flipInY">
+    <ion-row class="full-height position-relative ion-padding cursor-point" [style.background-color]="'#af8d75'"
+      (click)="goToProduct('gas')">
+      <img class="margin-auto ion-padding-top ion-padding-bottom" src="assets/OE/gas.png" />
+      <span class="position-absolute bottom-right text-white ion-padding-end">
+        {{'gas_meters' | translate}}
+      </span>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row *ngIf="productMode!=''">
+  <app-product-category class="full-width" (ProductCategoryComponent)="processProduct($event)"
+    *ngIf="productMode=='category'">
+  </app-product-category>
+  <app-product-service class="full-width" (ProductServiceComponent)="processProduct($event)"
+    *ngIf="productMode=='service'">
+  </app-product-service>
+</ion-row>

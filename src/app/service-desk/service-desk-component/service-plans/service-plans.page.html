@@ -1,0 +1,28 @@
+<ion-row id="service-plans-grid">
+
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [action]="dataTableAction"
+      [permissions]="permissions"
+      [csvFileName]="csvFileName"
+      [allowDblClickRow]="true"
+      [searchOptions]="searchOptions"
+      (onDoublClickRow)="dblclickRow($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="selectedPlanId !== null">
+    <app-service-plans-service 
+      class="w-100"
+      [ContactCode]="ContactCode" 
+      [PlanId]="selectedPlanId" 
+      [SearchString]="eventParam.SearchString" 
+      (ServicePlansServiceComponent)="processChanges($event)">
+    </app-service-plans-service>
+  </ion-row>
+</ion-row>

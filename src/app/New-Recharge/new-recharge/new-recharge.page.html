@@ -1,0 +1,107 @@
+<ion-header>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-row class="d-flex align-items-center justify-content-end">
+    <img src="assets/Lykus/lykus.png" />
+  </ion-row>
+
+  <ion-row class="recharge-body">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="recharge-each-card">
+      <ion-row class="recharge-content ion-padding">
+        <ion-row class="recharge-content-body ion-padding">
+          <ion-row class="recharge-item-title">
+            <span>
+              1 GB TopUp
+            </span>
+          </ion-row>
+
+          <ion-row class="recharge-item-description d-block">
+            <ion-row>
+              <span>
+                1 Gigabyte of data
+              </span>
+            </ion-row>
+
+            <ion-row>
+              <span>
+                30 Days expiry
+              </span>
+            </ion-row>
+          </ion-row>
+
+          <ion-row class="recharge-item-order normal-button">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="orderRecharge('1')">
+              $25 {{ 'buy_now' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="recharge-each-card">
+      <ion-row class="recharge-content ion-padding">
+        <ion-row class="recharge-content-body ion-padding">
+          <ion-row class="recharge-item-title">
+            <span>
+              3 GB TopUp
+            </span>
+          </ion-row>
+
+          <ion-row class="recharge-item-description d-block">
+            <ion-row>
+              <span>
+                3 Gigabyte of data
+              </span>
+            </ion-row>
+
+            <ion-row>
+              <span>
+                30 Days expiry
+              </span>
+            </ion-row>
+          </ion-row>
+
+          <ion-row class="recharge-item-order normal-button">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="orderRecharge('2')">
+              $35 {{ 'buy_now' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="recharge-each-card">
+      <ion-row class="recharge-content ion-padding">
+        <ion-row class="recharge-content-body ion-padding">
+          <ion-row class="recharge-item-title">
+            <span>
+              5 GB Monthly
+            </span>
+          </ion-row>
+
+          <ion-row class="recharge-item-description d-block">
+            <ion-row>
+              <span>
+                5 Gigabyte of data per Month
+              </span>
+            </ion-row>
+
+            <ion-row>
+              <span>
+                Automatically toped up each Month
+              </span>
+            </ion-row>
+          </ion-row>
+
+          <ion-row class="recharge-item-order normal-button">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="orderRecharge('3')">
+              $35 {{ 'buy_now' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

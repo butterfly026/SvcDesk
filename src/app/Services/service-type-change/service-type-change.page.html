@@ -1,0 +1,66 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}" debitRunId="{{debitRunId}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="total-content2 left-right-auto">
+
+    <form [formGroup]="serviceForm" class="full-width" (ngSubmit)="changeServiceType()" novalidate>
+
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width">
+
+              <mat-select formControlName="ServiceType" placeholder="{{ 'service_types' | translate }}"
+                name="ServiceType" required>
+                <mat-option *ngFor="let list of serviceTypeList; let i = index" value="{{list.text}}">
+                  {{list.value}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'service_types_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+          <ion-row class="full-height">
+            <mat-form-field class="example-full-width textarea-field">
+              <textarea matInput formControlName="Note" name="Note" placeholder="{{'note'| translate}}">
+                  </textarea>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+
+      <button id="submitButton">button</button>
+    </form>
+
+    <ion-row class="ion-margin-top page-bottom normal-button">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!serviceForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+
+</ion-content>

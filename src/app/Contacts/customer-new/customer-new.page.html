@@ -1,0 +1,1427 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="total-content2 left-right-auto">
+    <form [formGroup]="CustomerNewForm" class="full-width" (ngSubmit)="submitCustomer()" novalidate>
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <mat-card-title class="margin-auto">{{ 'details' | translate }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <ion-row class="group-row">
+
+            <ion-row class="ion-padding">
+              <ion-row>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="ContactCode" type="text"
+                        placeholder="{{ 'contact_code' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'contact_code_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="SubType" placeholder="{{ 'type' | translate }}" required>
+                        <mat-option *ngFor="let list of SubTypeList; let i = index" value="{{list.Text}}"
+                          (click)="SubTypeClick()">
+                          {{ list.Value | translate }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error>
+                        {{ 'type_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubKey" type="text" placeholder="{{ 'key' | translate }}"
+                        required />
+
+                      <mat-error>
+                        {{ 'key_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="f.SubType.value !== 'corporation'">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubFirstName" type="text"
+                        placeholder="{{ 'first_name' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'first_name_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="SubTitle" placeholder="{{ 'title' | translate }}" required>
+                        <mat-option *ngFor="let list of SubTitleList; let j = index" value="{{list.Text}}">
+                          {{ list.Value | translate }}
+                        </mat-option>
+                      </mat-select>
+
+
+                      <mat-error>
+                        {{ 'title_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubInitial" type="text"
+                        placeholder="{{ 'initials' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'initials_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubLastName" type="text"
+                        placeholder="{{ 'last_name' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'last_name_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="f.SubType.value === 'corporation'">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="12" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="SubUnit" placeholder="{{ 'business_unit' | translate }}" required>
+                        <mat-option *ngFor="let list of businessList; let i = index" value="{{list.Text}}">
+                          {{ list.Value | translate }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error>
+                        {{ 'business_unit_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubName" type="text" placeholder="{{ 'name' | translate }}"
+                        required />
+
+                      <mat-error>
+                        {{ 'name_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+
+                <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubTradingName" type="text"
+                        placeholder="{{ 'trading_name' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'trading_name_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value !== 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="SubGender" placeholder="{{ 'gender' | translate }}" required>
+                        <mat-option *ngFor="let list of genderList; let j = index" value="{{list.Text}}">
+                          {{ list.Value | translate }}
+                        </mat-option>
+                      </mat-select>
+
+                      <mat-error>
+                        {{ 'gender_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value !== 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput [matDatepicker]="picker" formControlName="SubDoB"
+                        placeholder="{{ 'd_o_b' | translate }}">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+
+                      <mat-error>
+                        {{ 'd_o_b_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value !== 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubSalutation" type="text"
+                        placeholder="{{ 'salutation' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'salutation_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value !== 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubEmNo" type="text"
+                        placeholder="{{ 'employee_no' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'employee_no_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value === 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubACN" type="text" placeholder="{{ 'a_c_n' | translate }}"
+                        required />
+
+                      <mat-error>
+                        {{ 'a_c_n_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+                  *ngIf="f.SubType.value === 'corporation'">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <input matInput formControlName="SubABN" type="text" placeholder="{{ 'abn' | translate }}"
+                        required />
+
+                      <mat-error>
+                        {{ 'abn_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <ion-row>
+            <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="8">
+              <ion-row class="full-height">
+                <mat-card-title class="top-bottom-auto">{{ 'emails' | translate }}</mat-card-title>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="full-height">
+                <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-left-auto top-bottom-auto"
+                  (click)="addNewEmail()"></ion-icon> -->
+                <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewEmail()"></i>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-card-header>
+
+        <mat-card-content>
+          <ion-row class="group-row">
+
+            <ion-row class="ion-padding">
+              <ion-row *ngFor="let list of currentEmailList; let i = index">
+
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                        placeholder="{{ 'email_type' | translate }}" required>
+                        <mat-option *ngFor="let emailList of emailTypeList; let j = index" value="{{emailList.Text}}">
+                          {{ emailList.Text | translate }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error>
+                        {{ 'email_type_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="{{list.ValueCtrl}}" type="email"
+                        placeholder="{{ 'email' | translate }}" required />
+
+                      <mat-error *ngIf="f[list.ValueCtrl].hasError('required')">
+                        {{ 'email_is_required' | translate }}
+                      </mat-error>
+
+                      <mat-error *ngIf="!f[list.ValueCtrl].hasError('required') && f[list.ValueCtrl].hasError('email')">
+                        {{ 'email_invalid_label' | translate }}
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+                  <ion-row class="full-height">
+                    <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteEmail(i)"></ion-icon>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <ion-row>
+            <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="8">
+              <ion-row class="full-height">
+                <mat-card-title class="top-bottom-auto">{{ 'address' | translate }}</mat-card-title>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="full-height">
+                <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-left-auto top-bottom-auto"
+                  (click)="addNewAddress()"></ion-icon> -->
+                  <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewAddress()"></i>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-card-header>
+        <mat-card-content>
+          <ion-row class="group-row">
+            <ion-row class="ion-padding">
+              <ion-row *ngFor="let list of currentAddressList; let i = index"
+                [ngClass]="{'ion-margin-top ion-padding-top':i > 0}">
+
+                <ion-row>
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                          placeholder="{{ 'address_type' | translate }}" multiple required>
+                          <mat-option *ngFor="let addressList of addressTypeList" value="{{addressList}}">
+                            {{addressList}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'address_type_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput formControlName="{{list.Address1Ctrl}}" type="text" required
+                          placeholder="{{ 'address1' | translate }}" name="{{list.Address1Ctrl}}"
+                          id="{{list.Address1Ctrl}}" />
+
+                        <mat-error>
+                          <span>{{ 'address_is_required' | translate }}</span>
+                        </mat-error>
+
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput formControlName="{{list.Address2Ctrl}}" type="text" required
+                          placeholder="{{ 'address2' | translate }}" name="{{list.Address2Ctrl}}"
+                          id="{{list.Address2Ctrl}}" />
+
+                        <mat-error>
+                          <span>{{ 'address_is_required' | translate }}</span>
+                        </mat-error>
+
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput formControlName="{{list.PostCodeCtrl}}" type="text" required
+                          placeholder="{{ 'postcode' | translate }}" name="{{list.PostCodeCtrl}}"
+                          (keyup)="checkPostCode(i)" id="{{list.PostCodeCtrl}}" />
+
+                        <mat-error *ngIf="f[list.PostCodeCtrl].hasError('required')">
+                          <span>{{ 'postcode_required' | translate }}</span>
+                        </mat-error>
+
+                        <mat-error
+                          *ngIf="!f[list.PostCodeCtrl].hasError('required') && f[list.PostCodeCtrl].hasError('pattern')">
+                          <span>{{ 'invalid_postcode' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12" *ngIf="list.postState">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="{{list.SuburbCtrl}}" placeholder="{{ 'suburb' | translate }}"
+                          required id="{{list.SuburbCtrl}}">
+                          <mat-option *ngFor="let listSuburb of list.Suburb" value="{{listSuburb}}">
+                            {{listSuburb}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'suburb_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12" *ngIf="list.postState">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput formControlName="{{list.StateCtrl}}" type="text" required
+                          placeholder="{{ 'state' | translate }}" name="{{list.StateCtrl}}" id="{{list.StateCtrl}}" />
+
+                        <mat-error>
+                          <span>{{ 'state_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput formControlName="{{list.CityCtrl}}" type="text" required
+                          placeholder="{{ 'city' | translate }}" name="{{list.CityCtrl}}" id="{{list.CityCtrl}}" />
+
+                        <mat-error>
+                          <span>{{ 'ciry_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="{{list.CountryCtrl}}" id="{{list.CountryCtrl}}"
+                          placeholder="{{ 'country' | translate }}" required>
+                          <mat-option *ngFor="let list of countryList" value="{{list.Code}}">
+                            {{list.Name}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'country_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+
+                  <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+                    <ion-row class="full-height">
+                      <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteAddress(i)">
+                      </ion-icon>
+                    </ion-row>
+                  </ion-col>
+
+                </ion-row>
+
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <ion-row>
+            <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="8">
+              <ion-row class="full-height">
+                <mat-card-title class="top-bottom-auto">{{ 'associate_contact' | translate }}</mat-card-title>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="full-height">
+                <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-left-auto top-bottom-auto"
+                  (click)="addAssContact()"></ion-icon> -->
+                  <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addAssContact()"></i>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-card-header>
+        <mat-card-content>
+          <ion-row class="group-row">
+            <ion-row class="ion-padding">
+              <ion-row *ngFor="let list of currentAssContactList; let i = index"
+                [ngClass]="{'ion-margin-top ion-padding-top':i > 0}">
+
+                <ion-row>
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="{{list.Type}}" id="{{list.Type}}"
+                          placeholder="{{ 'relationship_type' | translate }}" multiple required>
+                          <mat-option *ngFor="let typeList of RelationShipList" value="{{typeList.Text}}">
+                            {{typeList.Value}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'relationship_type_required' | translate }}</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="{{list.Title}}" placeholder="{{ 'title' | translate }}" required>
+                          <mat-option *ngFor="let titleList of SubTitleList; let i = index" value="{{titleList.Text}}">
+                            {{titleList.Value}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error>
+                          {{ 'title_required' | translate }}
+                        </mat-error>
+
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" formControlName="{{list.FirstName}}"
+                          placeholder="{{'first_name'|translate}}" required />
+
+                        <mat-error>
+                          {{ 'first_name_required' | translate}}
+                        </mat-error>
+
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" formControlName="{{list.LastName}}"
+                          placeholder="{{'last_name'|translate}}" required />
+
+                        <mat-error>
+                          {{'last_name_required' | translate}}
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="email" formControlName="{{list.Email}}"
+                          placeholder="{{'email'|translate}}" required />
+
+                        <mat-error *ngIf="f[list.Email].hasError('required')">
+                          {{ 'email_is_required' | translate }}
+                        </mat-error>
+
+                        <mat-error *ngIf="!f[list.Email].hasError('required') && f[list.Email].hasError('email')">
+                          {{ 'email_invalid_label' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" formControlName="{{list.ContactPhone}}"
+                          placeholder="{{'contact_phone'|translate}}" required />
+
+                        <mat-error *ngIf="f[list.ContactPhone].hasError('required')">
+                          {{ 'contact_phone_required' | translate }}
+                        </mat-error>
+                        <mat-error
+                          *ngIf="!f[list.ContactPhone].hasError('required') && f[list.ContactPhone].hasError('pattern')">
+                          {{ 'invalid_contact_phone' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+                    <ion-row class="full-height">
+                      <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteAssContact(i)">
+                      </ion-icon>
+                    </ion-row>
+                  </ion-col>
+
+                </ion-row>
+
+              </ion-row>
+            </ion-row>
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'billing' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <ion-row class="ion-padding">
+
+            <ion-row>
+              <ion-row class="group-detail-title">
+                <span>
+                  {{ 'payment_options' | translate }}
+                </span>
+              </ion-row>
+
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="BillFormat" placeholder="{{ 'bill_format' | translate }}" required>
+                    <mat-option *ngFor="let list of FormatList; let i = index" value="{{list.Text}}">
+                      {{ list.Value | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'bill_format_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="BillCycle" placeholder="{{ 'bill_cycle' | translate }}" required>
+                    <mat-option *ngFor="let list of CycleList; let i = index" value="{{list.Text}}">
+                      {{ list.Value | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'bill_cycle_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="BillDebitCycle" placeholder="{{ 'debit_cycle' | translate }}" required>
+                    <mat-option *ngFor="let list of DebitCycleList; let i = index" value="{{list.Text}}">
+                      {{ list.Value | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'debit_cycle_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="BillCurrency" placeholder="{{ 'currency' | translate }}" required>
+                    <mat-option *ngFor="let list of CurrencyList; let i = index" value="{{list.Text}}">
+                      {{ list.Value | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'currency_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row>
+                <mat-form-field class="example-full-width">
+                  <mat-select formControlName="BillTax" placeholder="{{ 'tax' | translate }}" required>
+                    <mat-option *ngFor="let list of TaxList; let i = index" value="{{list.Text}}">
+                      {{ list.Value | translate }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{ 'tax_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+
+              <ion-row class="">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height ion-margin-top">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #provideEmillBill [theme]="globService.themeColor">
+                        {{ 'provide_email_bill' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height ion-margin-top">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #providePaperBill [theme]="globService.themeColor">
+                        {{ 'provide_paper_bill' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="">
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height ion-margin-top">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #provideSMSBill [theme]="globService.themeColor">
+                        {{ 'provide_sms_bill' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+                <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                  <ion-row class="full-height ion-margin-top">
+                    <section class="example-section">
+                      <jqxCheckBox class="example-margin" #provideExcelBill [theme]="globService.themeColor">
+                        {{ 'provide_excel_bill' | translate }}
+                      </jqxCheckBox>
+                    </section>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+
+            </ion-row>
+
+          </ion-row>
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'payments' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <ion-row class="ion-padding">
+            <ion-row>
+              <ion-row class="group-detail-title">
+                <span>
+                  {{ 'payment_details' | translate }}
+                </span>
+              </ion-row>
+              <ion-row class="">
+
+                <ion-row>
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+                        <mat-select formControlName="BillPaymentType" placeholder="{{ 'payment_type' | translate }}"
+                          required>
+                          <mat-option *ngFor="let list of PeymentTypeList; let i = index" value="{{list.Text}}"
+                            (click)="PaymentTypeClick()">
+                            {{ list.Value | translate }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error>
+                          {{ 'payment_type_required' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="f.BillPaymentType.value == 'credit_card'">
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <input matInput formControlName="BillCCNum" type="text" required
+                          placeholder="{{ '16_digit_credit_num' | translate }}" name="BillCCNum" />
+
+                        <mat-error *ngIf="f.BillCCNum.hasError('required')">
+                          <span>{{ 'credit_card_num_required' | translate }}</span>
+                        </mat-error>
+
+                        <mat-error *ngIf="f.BillCCNum.hasError('pattern') && !f.BillCCNum.hasError('required')">
+                          {{ 'invalid_card_number' | translate }}
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <input matInput formControlName="BillCHName" type="text" required
+                          placeholder="{{ 'card_holder_name' | translate }}" name="BillCHName" />
+
+                        <mat-error>
+                          {{ 'card_holder_name_required' | translate }}
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <mat-select formControlName="BillExpireMonth" placeholder="{{ 'month' | translate }}"
+                          name="BillExpireMonth" required>
+                          <mat-option *ngFor="let list of expireMonth" value="{{list}}">
+                            {{list}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'month_require' | translate }}</span>
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <mat-select formControlName="BillExpireYear" (ngModelChange)="selectExpireYear()"
+                          placeholder="{{ 'year' | translate }}" name="BillExpireYear" required>
+                          <mat-option *ngFor="let list of expireYear" value="{{list}}">
+                            {{list}}
+                          </mat-option>
+                        </mat-select>
+
+                        <mat-error>
+                          <span>{{ 'year_require' | translate }}</span>
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                </ion-row>
+
+                <ion-row *ngIf="f.BillPaymentType.value == 'direct_debit'">
+
+                  <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <input matInput formControlName="BillDirectName" type="text" required
+                          placeholder="{{ 'account_name' | translate }}" name="BillDirectName" />
+
+                        <mat-error>
+                          <span>{{ 'account_name_required' | translate }}</span>
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <input matInput formControlName="BillDirectAccount" type="text" required
+                          placeholder="{{ 'account' | translate }}" name="BillDirectAccount" />
+
+                        <mat-error>
+                          {{ 'account_required' | translate }}
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <mat-form-field class="example-full-width">
+
+                        <input matInput formControlName="BillDirectBSB" type="text" required
+                          placeholder="{{ 'b_s_b' | translate }}" name="BillDirectBSB" />
+
+                        <mat-error>
+                          {{ 'b_s_b_required' | translate }}
+                        </mat-error>
+
+                      </mat-form-field>
+
+                    </ion-row>
+                  </ion-col>
+
+                </ion-row>
+
+              </ion-row>
+            </ion-row>
+
+            <ion-row>
+              <ion-col [sizeXl]="12" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+
+                <ion-row class="group-detail-title">
+                  <span>
+                    {{ 'account_payment_method' | translate }}
+                  </span>
+                </ion-row>
+
+                <ion-row class="">
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <ion-row class="username-row">
+                        <section class="example-section">
+                          <jqxCheckBox class="example-margin" #defaultMethod [theme]="globService.themeColor">
+                            {{ 'use_default_method' | translate }}
+                          </jqxCheckBox>
+                        </section>
+                      </ion-row>
+
+                      <ion-row class="ion-margin-top">
+                        <section class="example-section">
+                          <jqxCheckBox class="example-margin" (onChange)="onChangeFuture()" #futureStart
+                            [theme]="globService.themeColor">
+                            {{ 'future_start_date' | translate }}
+                          </jqxCheckBox>
+                        </section>
+                      </ion-row>
+
+                      <ion-row class="ion-margin-top">
+                        <mat-form-field class="example-full-width">
+
+                          <input matInput placeholder="{{'future_start_date' | translate}}"
+                            formControlName="BillFitureDate" [matDatepicker]="pickerFuture">
+                          <mat-datepicker-toggle matSuffix [for]="pickerFuture"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerFuture></mat-datepicker>
+
+                          <mat-error>
+                            {{'future_start_date_required' | translate}}
+                          </mat-error>
+
+                        </mat-form-field>
+                      </ion-row>
+
+                    </ion-row>
+                  </ion-col>
+
+                  <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                    <ion-row class="full-height">
+
+                      <ion-row class="username-row">
+                        <section class="example-section">
+                          <jqxCheckBox class="example-margin" #proPaymentMethod [theme]="globService.themeColor">
+                            {{ 'protect_payment_method' | translate }}
+                          </jqxCheckBox>
+                        </section>
+                      </ion-row>
+
+                      <ion-row class="ion-margin-top">
+                        <section class="example-section">
+                          <jqxCheckBox class="example-margin" #markExport [theme]="globService.themeColor">
+                            {{ 'mark_exported' | translate }}
+                          </jqxCheckBox>
+                        </section>
+                      </ion-row>
+
+                      <ion-row class="ion-margin-top">
+                        <mat-form-field class="example-full-width">
+
+                          <input matInput formControlName="BillExtId" type="text" required
+                            placeholder="{{ 'ext_id' | translate }}" name="BillExtId" />
+
+                          <mat-error>
+                            {{'ext_id_required' | translate}}
+                          </mat-error>
+
+                        </mat-form-field>
+                      </ion-row>
+
+                    </ion-row>
+                  </ion-col>
+
+                </ion-row>
+
+              </ion-col>
+            </ion-row>
+
+          </ion-row>
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <ion-row>
+            <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="8">
+              <ion-row class="full-height">
+                <mat-card-title class="top-bottom-auto">{{ 'phones' | translate }}</mat-card-title>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="full-height">
+                <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-left-auto top-bottom-auto"
+                  (click)="addNewPhone()"></ion-icon> -->
+                  <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewPhone()"></i>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-card-header>
+        <mat-card-content>
+          <ion-row class="group-row">
+
+            <ion-row class="ion-padding">
+              <ion-row *ngFor="let list of currentPhoneList; let i = index">
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                        placeholder="{{ 'phone_type' | translate }}" required>
+                        <mat-option *ngFor="let phoneList of phoneTypeList; let j = index" value="{{phoneList.Code}}">
+                          {{ phoneList.Name }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error>
+                        {{ 'phone_type_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="{{list.PhoneCtrl}}" type="text"
+                        placeholder="{{ 'phone_number' | translate }}" required />
+
+                      <mat-error *ngIf="f[list.PhoneCtrl].hasError('required')">
+                        {{ 'phone_number_required' | translate }}
+                      </mat-error>
+
+                      <mat-error
+                        *ngIf="!f[list.PhoneCtrl].hasError('required') && f[list.PhoneCtrl].hasError('pattern')">
+                        {{ 'invalid_phone_number' | translate }}
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+                  <ion-row class="full-height">
+                    <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deletePhone(i)"></ion-icon>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <ion-row>
+            <ion-col [sizeXl]="10" [sizeLg]="10" [sizeMd]="10" [sizeSm]="10" [sizeXs]="8">
+              <ion-row class="full-height">
+                <mat-card-title class="top-bottom-auto">{{ 'security_question' | translate }}</mat-card-title>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+              <ion-row class="full-height">
+                <!-- <ion-icon name="add-circle-outline" class="plus-icon margin-left-auto top-bottom-auto"
+                  (click)="addNewQuestion()"></ion-icon> -->
+                  <i class="fa fa-plus-circle create-document ml-auto mr-3" (click)="addNewQuestion()"></i>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-card-header>
+        <mat-card-content>
+          <ion-row class="group-row">
+
+            <ion-row class="ion-padding">
+              <ion-row *ngFor="let list of currentQueList; let i = index">
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+
+                    <mat-form-field class="example-full-width">
+                      <mat-select formControlName="{{list.TypeCtrl}}" id="{{list.TypeCtrl}}"
+                        placeholder="{{ 'select_question' | translate }}" required>
+                        <mat-option *ngFor="let queList of queTypeList; let j = index" value="{{queList.Text}}"
+                          [disabled]="queList.Status" (click)="checkState()">
+                          {{ queList.Value }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error>
+                        {{ 'question_required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+                  <ion-row class="full-height">
+                    <mat-form-field class="example-full-width">
+
+                      <input matInput formControlName="{{list.QueCtrl}}" type="text"
+                        placeholder="{{ 'insert_answer' | translate }}" required />
+
+                      <mat-error>
+                        {{ 'answer_queston_required' | translate }}
+                      </mat-error>
+
+                    </mat-form-field>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col [sizeXl]="2" [sizeLg]="2" [sizeMd]="2" [sizeSm]="2" [sizeXs]="4" class="margin-auto">
+                  <ion-row class="full-height">
+                    <ion-icon name="trash" mode="md" class="margin-auto trash-icon" (click)="deleteAnswer(i)">
+                    </ion-icon>
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+            </ion-row>
+
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="full-width ion-margin-top customer-card">
+        <mat-card-header>
+          <mat-card-title class="top-bottom-auto">{{ 'add_info' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ion-row class="group-row">
+
+            <ion-row class="ion-padding">
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactCodeInfo" placeholder="{{ 'contact_code' | translate }}">
+                      <mat-option *ngFor="let list of ContactCodeList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactPriority" placeholder="{{ 'contact_priority' | translate }}">
+                      <mat-option *ngFor="let list of ContactPriorityList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="Dealer" placeholder="{{ 'dealer' | translate }}">
+                      <mat-option *ngFor="let list of DealerList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="SalesPerson" placeholder="{{ 'sales_person' | translate }}">
+                      <mat-option *ngFor="let list of SalesPersonList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactCategory" placeholder="{{ 'contact_category' | translate }}">
+                      <mat-option *ngFor="let list of ContactCategoryList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactIndustry" placeholder="{{ 'contact_industry' | translate }}">
+                      <mat-option *ngFor="let list of ContactIndustryList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactClass" placeholder="{{ 'contact_class' | translate }}">
+                      <mat-option *ngFor="let list of ContactClassList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ContactMedia" placeholder="{{ 'contact_media' | translate }}">
+                      <mat-option *ngFor="let list of ContactMediaList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="ReportPlan" placeholder="{{ 'report_plan' | translate }}">
+                      <mat-option *ngFor="let list of ReportPlanList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="DataSummary" placeholder="{{ 'data_summary' | translate }}">
+                      <mat-option *ngFor="let list of DataSummaryList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="BlockLogon" placeholder="{{ 'block_logon' | translate }}">
+                      <mat-option *ngFor="let list of BlockLogonList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="GLAccount" placeholder="{{ 'gl_account' | translate }}">
+                      <mat-option *ngFor="let list of GLAccountList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="CreditLimit" placeholder="{{ 'credit_limit' | translate }}">
+                      <mat-option *ngFor="let list of CreditLimitList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="PaymentTerms" placeholder="{{ 'payment_terms' | translate }}">
+                      <mat-option *ngFor="let list of PaymentTermsList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="full-height">
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="CreditStatus" placeholder="{{ 'credit_status' | translate }}">
+                      <mat-option *ngFor="let list of CreditStatusList; let j = index" value="{{list.Text}}">
+                        {{ list.Value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+
+            </ion-row>
+
+          </ion-row>
+        </mat-card-content>
+      </mat-card>
+
+      <button id="submitButton"></button>
+    </form>
+
+    <ion-row class="login-row page-bottom normal-button">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="12"></ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+            [disabled]="!CustomerNewForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+  </ion-row>
+
+</ion-content>

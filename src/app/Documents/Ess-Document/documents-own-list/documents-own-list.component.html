@@ -1,0 +1,146 @@
+<ion-row class="ion-margin-top">
+  <ion-row class="total-content4 mx-auto justify-content-between align-items-center service-list-search"
+    *ngIf="showType=='box'">
+    <ion-searchbar mode="ios" class="ion-padding-start ml-0" (keypress)="searchInputEvent($event)"
+      [placeholder]="'search' | translate" [(ngModel)]="docsParam.SearchString">
+    </ion-searchbar>
+    <i class="fa fa-list cursor-point" aria-hidden="true" (click)="switchType()"></i>
+  </ion-row>
+</ion-row>
+
+<ion-row id="document-own-list-grid" *ngIf="showType=='grid'">
+
+  <ion-row>
+    <ion-row class="left-right-auto export-data justify-content-sm-between justify-content-center service-list-search"
+      [ngStyle]="{'width':gridContentWidth}">
+
+      <ion-searchbar mode="ios" class="ion-padding-start ml-0" (keypress)="searchInputEvent($event)"
+        [placeholder]="'search' | translate" [(ngModel)]="docsParam.SearchString">
+      </ion-searchbar>
+
+      <div class="d-flex align-items-center">
+        <h5 class="m-0 mr-2 p-0">
+          <i class="fa fa-refresh cursor-point" (click)="refreshGrid()"></i>
+        </h5>
+        <span class="ion-text-end d-flex align-items-center">
+          <div class="ion-margin-end d-flex align-items-center justify-content-center" (click)="exportExcel()">
+            <span>
+              {{'export_excel' | translate}}
+            </span>
+          </div>
+          <div class=" d-flex align-items-center justify-content-center" (click)="exportPdf()">
+            <span>
+              {{'export_pdf' | translate}}
+            </span>
+          </div>
+          <i class="fa fa-th-large cursor-point ion-margin-start" aria-hidden="true" (click)="switchType()"
+            *ngIf="showType=='grid'"></i>
+        </span>
+      </div>
+    </ion-row>
+  </ion-row>
+
+  <ion-row class="left-right-auto" [ngStyle]="{'width':gridContentWidth}">
+
+    <jqxGrid id="jqxGridOption" [width]="setGridWidth()" #docOwnGrid [theme]="globService.themeColor" [columnsmenu]="false"
+      [columnsresize]="true" [columnsautoresize]="true" [autoheight]="true" [source]="dataAdapter" [columns]="columns"
+      [sortable]="true" (onRowclick)="selectRow($event)" [rtl]="globService.rtlMode">
+      <!-- [cellhover]="cellhovertooltiprenderer" -->
+    </jqxGrid>
+  </ion-row>
+
+  <ion-row *ngIf="groupList.length>0">
+    <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber" [rowStep]="rowStep"
+      [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+    </app-paging-component>
+  </ion-row>
+
+  <ion-row>
+    <ion-row class="ion-margin-top ion-padding-top jqx-button-row total-content2 left-right-auto">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="gotoNew()">
+            {{ 'add' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" [disabled]="!availProcess || groupList.length==0" class="jqx-button-theme"
+            (onClick)="download()">
+            {{ 'download' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="full-height">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="remove()"
+            [disabled]="!availProcess || groupList.length==0">
+            {{ 'remove' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>
+
+<ion-row class="ion-margin-top total-content4 mx-auto" *ngIf="showType=='box'">
+  <ion-row>
+    <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="10" [sizeXs]="12"
+      *ngFor="let list of groupList; let i = index">
+      <ion-row class="user-content ion-padding box-shadow-item">
+        <!-- <div class="ion-padding-right">
+          <div style="background-image: url('{{list.img}}')" class="users-photo"></div>
+        </div> -->
+        <div class="pl-3">
+          <!-- <ion-row>
+            <h5 class="m-0"><b>{{list.roles}}</b></h5>
+          </ion-row> -->
+          <ion-row>
+            <h5 class="m-0"> <b>{{list.name}}</b> </h5>
+          </ion-row>
+          <ion-row>
+            <h5 class="m-0"> {{list.label}} </h5>
+          </ion-row>
+          <ion-row>
+            <img src="{{list.typeImage}}" class="list-view-image pt-3" />
+          </ion-row>
+          <!-- <ion-row>
+            <h5 class="m-0"> {{list.address}} </h5>
+          </ion-row> -->
+        </div>
+        <ion-row class="mt-2 justify-content-center">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme px-3 mr-2" (onClick)="downloadItem(i)">
+            {{ 'download' | translate }}
+          </jqxButton>
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme px-3" (onClick)="removeItem(i)">
+            {{ 'remove' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="groupList.length>0">
+    <app-paging-component class="w-100" [totalLength]="totalLength" [pageRowNumber]="pageRowNumber" [rowStep]="rowStep"
+      [SkipRecords]="SkipRecords" (PagingComponent)="outPagingComponent($event)">
+    </app-paging-component>
+  </ion-row>
+
+  <ion-row class="jqx-button-row ion-margin-top">
+    <!-- <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="mx-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme px-3 mr-2" (onClick)="goToService()">
+          {{ 'service' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col> -->
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="mx-auto">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="gotoNew()">
+          {{ 'add' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

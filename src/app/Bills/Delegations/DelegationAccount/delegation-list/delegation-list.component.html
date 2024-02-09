@@ -1,0 +1,18 @@
+  <ion-row class="mt-3 mx-auto" >
+    <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [usePagination]="false"
+        [permissions]="permissions"
+        [csvFileName]="csvFileName"
+        [searchOptions]="searchOptions"
+        [messageForRowDeletion]="deletionMsg"
+        (onCreate)="onNewDelegation()"
+        (onEdit)="goToDelegationDetail($event)"
+        (onDelete)="deleteDelegation($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>

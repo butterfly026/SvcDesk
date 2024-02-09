@@ -1,0 +1,139 @@
+<ion-row class="ion-margin-top">
+  <form class="full-width" [formGroup]="notForm" (ngSubmit)="notSubmit()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+        <ion-row class="full-height">
+
+          <section class="example-section full-width">
+            <mat-slide-toggle labelPosition="before" class="full-width" color="primary">
+              {{ 'enable_notifications' | translate }}
+            </mat-slide-toggle>
+          </section>
+
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+        <ion-row class="full-height">
+
+          <mat-form-field class="example-full-width">
+
+            <mat-select formControlName="device" placeholder="{{ 'device' | translate }}" name="device" required>
+              <mat-option *ngFor="let list of deviceList; let i = index" value="{{list}}" (click)="checkSaveState()">
+                {{list}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'device_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+        <ion-row class="full-height">
+
+          <mat-form-field class="example-full-width">
+            <input matInput type="number" min="0" formControlName="proThre"
+              placeholder="{{ 'procedure_threshold' | translate }}" required (ngModelChange)="checkSaveState()" />
+
+            <mat-error *ngIf="f.proThre.hasError('required')">
+              {{ 'procedure_threshold_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="!f.proThre.hasError('required') && f.proThre.hasError('min')">
+              {{ 'invalid_procedure_threshold' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+        <ion-row class="full-height">
+          <!-- <span class="full-width custom-justify-content">
+                <span>
+                  {{'email' | translate}}:
+                </span>
+                <span>
+                  {{userInfo.Email}}
+                </span>
+              </span> -->
+
+          <mat-form-field class="example-full-width">
+            <input matInput type="email" formControlName="email" placeholder="{{ 'email' | translate }}" required
+              (ngModelChange)="checkSaveState()" />
+
+            <mat-error *ngIf="f.email.hasError('required')">
+              {{ 'email_is_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="!f.email.hasError('required') && f.email.hasError('email')">
+              {{ 'email_invalid_label' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12" class="left-right-auto">
+        <ion-row class="full-height">
+          <!-- <span class="full-width custom-justify-content">
+                <span>
+                  {{'mobile' | translate}}:
+                </span>
+                <span>
+                  {{userInfo.Mobile}}
+                </span>
+              </span> -->
+
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" formControlName="mobile" placeholder="{{ 'mobile' | translate }}" required
+              (ngModelChange)="checkSaveState()" />
+
+            <mat-error *ngIf="f.mobile.hasError('required')">
+              {{ 'mobile_required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="!f.mobile.hasError('required') && f.mobile.hasError('pattern')">
+              {{ 'invalid_mobile' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row class="login-row page-bottom normal-button">
+    <ion-col size="2"></ion-col>
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="submitTrigger()"
+          [disabled]="!notForm.valid || !enableNotification">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+          {{ 'cancel' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

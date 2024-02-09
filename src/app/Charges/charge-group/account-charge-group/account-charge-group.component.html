@@ -1,0 +1,17 @@
+<ion-row *ngIf="componentType === 'list'">
+  <app-charge-group-list class="w-100" [ContactCode]="ContactCode"
+    (ChargeGroupListComponent)="processComponent($event)">
+  </app-charge-group-list>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'add'">
+  <app-charge-group-form class="w-100" [ContactCode]="ContactCode"
+    (ChargeGroupFormComponent)="processComponent($event)">
+  </app-charge-group-form>
+</ion-row>
+
+<ion-row *ngIf="componentType === 'update'">
+  <app-charge-group-form class="w-100" [GroupId]="GroupId" [ContactCode]="ContactCode"
+    (ChargeGroupFormComponent)="processComponent($event)">
+  </app-charge-group-form>
+</ion-row>

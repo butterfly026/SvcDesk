@@ -1,0 +1,97 @@
+<ion-row class="mt-3">
+  <form [formGroup]="idForm" (ngSubmit)="submitIdForm()" class="w-100" novalidate>
+
+    <ion-row class="" *ngFor="let list of groupList; let i = index;">
+      <ion-row class="question-value">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="{{list.TypeCtrl}}" placeholder="{{ 'identification' | translate }}" required>
+                <mat-option *ngFor="let itemList of idTypeList; let j = index" [value]="itemList.id"
+                  [disabled]="itemList?.disabled">
+                  {{itemList.name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'identification_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" formControlName="{{list.ValueCtrl}}" placeholder="{{ 'value' | translate }}"
+                name="{{list.ValueCtrl}}" required>
+
+              <mat-error>
+                {{ 'value_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="list?.idType?.hasissuedate">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="newIssueDate_i" formControlName="{{list.IssueDateCtrl}}"
+                placeholder="{{ 'issue_date' | translate }}" name="list.IssueDateCtrl" required>
+
+              <mat-datepicker-toggle matSuffix [for]="newIssueDate_i"></mat-datepicker-toggle>
+              <mat-datepicker #newIssueDate_i></mat-datepicker>
+
+              <mat-error>
+                {{ 'issue_date_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" *ngIf="list?.idType?.hasexpirydate">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+              <input matInput [matDatepicker]="newExpireDate_i" [min]="list?.issueDate"
+                formControlName="{{list.ExpireDateCtrl}}" placeholder="{{ 'expire_date' | translate }}"
+                name="{{list.ExpireDateCtrl}}" required>
+
+              <mat-datepicker-toggle matSuffix [for]="newExpireDate_i"></mat-datepicker-toggle>
+              <mat-datepicker #newExpireDate_i></mat-datepicker>
+
+              <mat-error *ngIf="f[list.ExpireDateCtrl].hasError(required)">
+                {{ 'expire_date_required' | translate }}
+              </mat-error>
+
+              <mat-error *ngIf="!f[list.ExpireDateCtrl].hasError('required') && !f[list.ExpireDateCtrl].valid">
+                {{ 'expire_issue_date_invalid' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="question-action">
+        <ion-row class="pl-3">
+          <ion-row class="align-items-center justify-content-around">
+            <i class="fa fa-trash text-danger" (click)="removeNewIdentification(list)"></i>
+          </ion-row>
+        </ion-row>
+      </ion-row>
+    </ion-row>
+
+    <button class="submitButton" id="submitIdentificationButton"></button>
+  </form>
+</ion-row>
+
+<ion-row class="jqx-button-row" *ngIf="groupList.length < idTypeList.length">
+  <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12" class="ml-auto">
+    <ion-row class="full-height">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="addIdentification()">
+        {{ 'add_identification' | translate }}
+      </jqxButton>
+    </ion-row>
+  </ion-col>
+</ion-row>

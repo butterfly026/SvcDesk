@@ -1,0 +1,50 @@
+<ion-app [dir]="dirMode">
+    <ion-menu side="start" menuId="left-menu" contentId="content">
+        <ion-header class="menu-header">
+            <ion-toolbar mode="ios" color="header">
+                <ion-title>{{menuTitle}}</ion-title>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="menu-content" mode="ios" color="charcoal">
+
+            <ion-row class="px-2 pt-3 mt-3 app-left-menu">
+                <!-- <jqxNavigationBar #myNavigationBar class="w-100" [theme]="globService.themeColor" [width]="'100%'"
+                    [expandMode]="'multiple'">
+                    <jqxNavigationBar class="w-100" [theme]="globService.themeColor" [width]="'100%'"
+                    [expandMode]="'multiple'" *ngFor="let list of menuList?.menuitems">
+                    <div>
+                        {{list?.caption | translate}}
+                    </div>
+
+                    <div>
+                        <ul>
+                            <li class="cursor-point" (click)="goToNavigation(childList?.navigationurl)"
+                                *ngFor="let childList of list?.menuitems">
+                                {{childList?.caption | translate}}
+                            </li>
+                        </ul>
+                    </div>
+
+                </jqxNavigationBar> -->
+                <jqxExpander class="w-100" [theme]="globService.themeColor" [width]="'100%'" [expanded]="false"
+                    *ngFor="let list of menuList?.menuitems let i = index;">
+                    <div>
+                        {{list?.caption | translate}}
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="cursor-point my-2" (click)="goToNavigation(i, j)"
+                                *ngFor="let childList of list?.menuitems; let j = index;">
+                                {{childList?.caption | translate}}
+                            </li>
+                        </ul>
+                    </div>
+                </jqxExpander>
+
+            </ion-row>
+        </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="content"></ion-router-outlet>
+</ion-app>

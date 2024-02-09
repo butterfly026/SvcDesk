@@ -1,0 +1,44 @@
+.receipt-detail {
+    .margin-right-auto {
+        font-size: 15px;
+    }
+
+    .receipt-title {
+        font-size: 20px;
+    }
+
+    .receipt-border {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background-color: white;
+        max-height: 150px;
+        overflow-y: auto;
+
+        .ion-padding-start {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .selected-receipt {
+            background-color: #08246b;
+            color: white;
+        }
+
+        ion-row {
+            cursor: pointer;
+        }
+
+        .each-receipt {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+.username-row {
+    padding: 5px 0px;
+}
+
+.payment-list {
+    img {
+        width: 40px;
+    }
+}

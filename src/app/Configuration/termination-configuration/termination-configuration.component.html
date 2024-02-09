@@ -1,0 +1,274 @@
+<ion-row class="mt-3 pt-3" *ngIf="showForm">
+
+  <ion-row class="mb-3">
+    <h5 class="p-0 m-auto text-center">
+      {{'terminations_configuration' | translate}}
+    </h5>
+  </ion-row>
+
+  <form [formGroup]="configForm" class="w-100" (ngSubmit)="putPlanChangesConfigurations()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="ServiceType" placeholder="{{ 'ServiceType' | translate }}" required>
+              <mat-option *ngFor="let list of serviceTypeList; let j = index" value="{{list?.id}}">
+                {{ list?.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'service_type_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="f.ServiceType.valid">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'payout_override' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.PayOutOverride.Enabled" 
+                formControlName="PayOutOverride_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-form-field class="w-100">
+                <input matInput formControlName="PayOutOverride_Minimum" type="number" min="0"
+                 [(ngModel)]="termConfig.PayOutOverride.Minimum" 
+                  placeholder="{{'minimum' | translate}}" name="PayOutOverride_Minimum" />
+              </mat-form-field>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-form-field class="w-100">
+                <input matInput formControlName="PayOutOverride_Maximum" type="number" min="0"
+                [(ngModel)]="termConfig.PayOutOverride.Maximum" 
+                  placeholder="{{'maximum' | translate}}" name="PayOutOverride_Maximum" />
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'bulk_apply_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row class="">
+            <h5>{{ 'apply_all' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplyAll.Enabled" 
+                formControlName="ApplyAll_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplyAll.Default" 
+                formControlName="ApplyAll_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_same_service_type' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplySameServiceType.Enabled" 
+                formControlName="ApplySameServiceType_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplySameServiceType.Default" 
+                formControlName="ApplySameServiceType_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_children' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplyChildren.Enabled" 
+                formControlName="ApplyChildren_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplyChildren.Default" 
+                formControlName="ApplyChildren_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_siblings' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplySiblings.Enabled" 
+                formControlName="ApplySiblings_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.BulkApplyOptions.ApplySiblings.Default" 
+                formControlName="ApplySiblings_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+      </ion-col>
+      
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'network_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row class="">
+            <h5>{{ 'close_network_event' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.NetworkOptions.CloseNetworkEvent.Enabled" 
+                formControlName="CloseNetworkEvent_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.NetworkOptions.CloseNetworkEvent.Default" 
+                formControlName="CloseNetworkEvent_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'cancel_open_events' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.NetworkOptions.CancelOpenEvents.Enabled" 
+                formControlName="CancelOpenEvents_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.NetworkOptions.CancelOpenEvents.Default" 
+                formControlName="CancelOpenEvents_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'charge_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row class="">
+            <h5>{{ 'credit_back_future_charges' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.CreditBackFutureCharges.Enabled" 
+                formControlName="CreditBackFutureCharges_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.CreditBackFutureCharges.Default" 
+                formControlName="CreditBackFutureCharges_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'bill_future_charges' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.BillFutureCharges.Enabled" 
+                formControlName="BillFutureCharges_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.BillFutureCharges.Default" 
+                formControlName="BillFutureCharges_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'unload_future_usage' | translate }}</h5>
+          </ion-row>
+          <ion-row class="">
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.UnloadFutureUsage.Enabled" 
+                formControlName="UnloadFutureUsage_Enabled">
+                {{ 'enabled' | translate }}
+              </mat-checkbox>
+            </ion-col>
+            <ion-col [size]="4">
+              <mat-checkbox [(ngModel)]="termConfig.ChargeOptions.UnloadFutureUsage.Default" 
+                formControlName="UnloadFutureUsage_Default">
+                {{ 'default' | translate }}
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+      </ion-col>
+
+    </ion-row>
+    <button class="submitButton" id="serviceTerminationsConfigurationSubmitButton"></button>
+  </form>
+
+  <ion-row class="my-3 normal-button">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+          [disabled]="!configForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

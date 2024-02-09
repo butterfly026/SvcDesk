@@ -1,0 +1,8 @@
+<ion-row class="mt-3" *ngIf="ViewMode == 'List'">
+  <app-charge-list class="w-100" [ServiceReference]="ServiceReference" [ServiceId]="ServiceId"
+    (ChargeList)="processCharge($event)"></app-charge-list>
+</ion-row>
+<ion-row class="mt-3" *ngIf="ViewMode == 'New'">
+  <app-charge-form class="w-100" [ServiceReference]="ServiceReference" [Type]="Type"
+    (ChargeFormComponent)="processCharge($event)"></app-charge-form>
+</ion-row>

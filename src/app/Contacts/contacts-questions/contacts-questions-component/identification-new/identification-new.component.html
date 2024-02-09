@@ -1,0 +1,103 @@
+<ion-row class="mt-3">
+  <h3 class="my-0 p-0">
+    {{ 'IdentificationDocument' | translate }}
+  </h3>
+</ion-row>
+
+<ion-row class="mt-3">
+  <form [formGroup]="idForm" class="w-100" novalidate>
+    <ion-row class="mt-3">
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="newIdentification" placeholder="{{ 'identification' | translate }}" required>
+                <mat-option *ngFor="let itemList of availIdList; let j = index" [value]="itemList.id"
+                  (click)="selectIdentification(j)">
+                  {{itemList.name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'identification_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" formControlName="newIdValue" placeholder="{{ 'value' | translate }}"
+                name="newIdValue" required>
+
+              <mat-error>
+                {{ 'value_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="newSelectIdType && newSelectIdType.hasissuedate">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+
+              <input matInput [matDatepicker]="newIssueDate" formControlName="newIssueDate"
+                (dateChange)="changeCrateIssueDate()" placeholder="{{ 'issue_date' | translate }}" name="newIssueDate"
+                required>
+
+              <mat-datepicker-toggle matSuffix [for]="newIssueDate"></mat-datepicker-toggle>
+              <mat-datepicker #newIssueDate></mat-datepicker>
+
+              <mat-error>
+                {{ 'issue_date_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+          *ngIf="newSelectIdType && newSelectIdType.hasexpirydate">
+          <ion-row class="h-100">
+            <mat-form-field class="example-full-width">
+              <input matInput [matDatepicker]="newExpireDate" [min]="createIssueDate" formControlName="newExpireDate"
+                placeholder="{{ 'expire_date' | translate }}" name="newExpireDate" required>
+
+              <mat-datepicker-toggle matSuffix [for]="newExpireDate"></mat-datepicker-toggle>
+              <mat-datepicker #newExpireDate></mat-datepicker>
+
+              <mat-error *ngIf="f.newExpireDate.hasError(required)">
+                {{ 'expire_date_required' | translate }}
+              </mat-error>
+
+              <mat-error *ngIf="!f.newExpireDate.hasError('required') && !f.newExpireDate.valid">
+                {{ 'expire_issue_date_invalid' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </form>
+</ion-row>
+<ion-row>
+  <ion-row class="my-3 jqx-button-row total-content4 justify-content-center">    
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" [disabled]="!idForm.valid" class="jqx-button-theme"
+          (onClick)="saveIdentification()">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="close()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

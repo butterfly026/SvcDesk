@@ -1,0 +1,16 @@
+<ion-row class="mt-2" *ngIf="delegationState == 'list'">
+  <app-delegation-list class="w-100" [ContactCode]="ContactCode"
+    (DelegationListComponent)="processEvent($event)">
+  </app-delegation-list>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="delegationState == 'new'">
+  <app-delegation-form class="w-100" [ContactCode]="ContactCode" (DelegationFormComponent)="processEvent($event)">
+  </app-delegation-form>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="delegationState == 'detail'">
+  <app-delegation-form class="w-100" [DelegationId]="DelegationId" [ContactCode]="ContactCode"
+    (DelegationFormComponent)="processEvent($event)">
+  </app-delegation-form>
+</ion-row>

@@ -1,0 +1,616 @@
+<ion-row class="p-3">
+
+  <ion-row class="total-content4 mx-auto mt-3">
+
+    <ion-row *ngIf="projectValues?.formStep == 'first'">
+
+      <ion-row class="ion-margin-bottom">
+        <h3 class="mx-auto p-0">
+          {{'service_new' | translate}}
+        </h3>
+      </ion-row>
+
+      <form [formGroup]="firstForm" class="w-100" (ngSubmit)="submitFirstForm()" novalidate>
+        <ion-row class="justify-content-center">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <mat-form-field class="w-100">
+
+                <mat-select placeholder="{{ 'service_type_id' | translate }}" name="ServiceTypeId"
+                  formControlName="ServiceTypeId">
+                  <mat-option *ngFor="let list of serviceTypeList; let i = index" value="{{list.id}}">
+                    {{list.name}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'service_type_id_required' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100 address-spinner">
+              <mat-form-field class="w-100">
+
+                <input type="text" [placeholder]="'sales_person' | translate" matInput formControlName="SalesPerson"
+                  [matAutocomplete]="SalesPerson" name="SalesPerson">
+
+                <mat-autocomplete #SalesPerson="matAutocomplete"
+                  (optionSelected)="selectAutocompleteField('SalesPerson')">
+                  <mat-option *ngFor="let option of filteredLists?.SalesPerson; let i = index;" [value]="option"
+                    class="autocomplete-detail">
+                    <span>{{option}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+
+                <button type="button" mat-button *ngIf="fFirst.SalesPerson.value" matSuffix mat-icon-button
+                  aria-label="Clear" (click)="clearField('SalesPerson')">
+                  <i class="fa fa-times"></i>
+                </button>
+
+                <mat-error>
+                  {{ 'sales_person_required' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+              <mat-progress-bar mode="indeterminate" *ngIf="showSpinner?.SalesPerson"></mat-progress-bar>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="justify-content-center" *ngIf="fFirst.ServiceTypeId.value != ''">
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="h-100">
+              <mat-form-field class="w-100">
+
+                <mat-select placeholder="{{ 'choose' | translate }}" name="ServiceTypeWorkflow"
+                  formControlName="ServiceTypeWorkflow">
+                  <mat-option *ngFor="let list of serviceTypeWorkflow; let i = index" value="{{list.id}}">
+                    {{list.name}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  {{ 'work_flow_required' | translate }}
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+
+          <ion-row class="justify-content-center" *ngIf="fFirst.ServiceTypeWorkflow.value != ''">
+            <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12"
+              *ngIf="fFirst.ServiceTypeWorkflow.value == 'New'">
+              <ion-row class="justify-content-between">
+                <mat-form-field class="service-new-search">
+                  <input matInput formControlName="ServiceNumber" type="text" name="ServiceNumber"
+                    placeholder="{{ 'service_number' | translate }}"
+                    *ngIf="selectedWorkflow.servicenumberstate != 'Mandatory'" />
+
+                  <input matInput formControlName="ServiceNumber" type="text" name="ServiceNumber"
+                    placeholder="{{ 'service_number' | translate }}" required
+                    *ngIf="selectedWorkflow.servicenumberstate == 'Mandatory'" />
+
+                  <mat-error>
+                    {{ 'service_number_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <button type="button" mat-raised-button color="primary" (click)="searchServiceNumber()"
+                  class="my-auto exclusion-create px-5">
+                  {{ 'search' | translate }}
+                </button>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12"
+              *ngIf="fFirst.ServiceTypeWorkflow.value != 'New'">
+              <ion-row class="">
+                <mat-form-field class="w-100">
+                  <input matInput formControlName="ServiceNumber" type="text" name="ServiceNumber"
+                    placeholder="{{ 'service_number' | translate }}"
+                    *ngIf="selectedWorkflow.servicenumberstate != 'Mandatory'" />
+
+                  <input matInput formControlName="ServiceNumber" type="text" name="ServiceNumber"
+                    placeholder="{{ 'service_number' | translate }}" required
+                    *ngIf="selectedWorkflow.servicenumberstate == 'Mandatory'" />
+
+                  <mat-error>
+                    {{ 'service_number_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+
+            <ion-row *ngIf="fFirst.ServiceTypeWorkflow.value == 'Port'" class="justify-content-center">
+              <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+                <ion-row class="">
+                  <mat-form-field class="w-100">
+
+                    <mat-select placeholder="{{ 'service_provider' | translate }}" name="ServiceProvider"
+                      formControlName="ServiceProvider">
+                      <mat-option *ngFor="let list of ServiceProviderList; let i = index" value="{{list}}">
+                        {{list}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'service_provider_required' | translate }}
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-form-field class="w-100">
+                    <input matInput formControlName="AccountNumber" type="text" name="AccountNumber"
+                      placeholder="{{ 'account_number' | translate }}" />
+
+                    <mat-error>
+                      {{ 'account_number_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-form-field class="w-100">
+                    <input matInput [matDatepicker]="DOBPicker" formControlName="DOB"
+                      placeholder="{{ 'd_o_b' | translate }}" name="DOB">
+                    <mat-datepicker-toggle matSuffix [for]="DOBPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #DOBPicker></mat-datepicker>
+
+                    <mat-error>
+                      {{ 'd_o_b_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="">
+                  <mat-form-field class="w-100">
+
+                    <mat-select placeholder="{{ 'porting_identification' | translate }}" name="PortingIdentification"
+                      formControlName="PortingIdentification">
+                      <mat-option *ngFor="let list of PortingIdentificationList; let i = index" value="{{list.id}}">
+                        {{list.name}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{ 'porting_identification_required' | translate }}
+                    </mat-error>
+
+                  </mat-form-field>
+                </ion-row>
+
+                <ion-row class="" *ngIf="fFirst.PortingIdentification.value && selectedWorkflow?.hasnumber">
+                  <mat-form-field class="w-100">
+                    <input matInput formControlName="IdNumber" type="text" name="IdNumber"
+                      placeholder="{{ 'id_number' | translate }}" />
+
+                    <mat-error>
+                      {{ 'id_number_required' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </ion-row>
+
+
+
+
+
+        <button class="submitButton" id="serviceAddFirstButton"></button>
+      </form>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-end">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [disabled]="!firstForm.valid" [theme]="globService.themeColor" class="jqx-button-theme"
+            (click)="nextForm('second')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row class="ion-margin-bottom" *ngIf="projectValues?.formStep != 'first'">
+      <h3 class="mx-auto p-0">
+        {{'new' | translate}} {{fFirst.ServiceTypeId?.value}} {{'service' | translate}} -
+        {{fFirst.ServiceNumber?.value}} : {{fFirst.ServiceTypeWorkflow?.value}}
+      </h3>
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'second'">
+
+      <ion-row>
+        <app-identification-new class="w-100" [ContactCode]="ContactCode"></app-identification-new>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('first')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('third')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'third'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'plans' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <form [formGroup]="thirdForm" class="w-100" (ngSubmit)="submitThirdForm()" novalidate>
+          <ion-row class="justify-content-center">
+            <ion-row class="justify-content-center">
+              <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+
+                <ion-row class="h-100 address-spinner justify-content-between">
+                  <mat-form-field class="service-new-search">
+                    <input type="text" [placeholder]="'plans' | translate" matInput formControlName="Plan"
+                      [matAutocomplete]="autoPlan" name="Plan">
+
+                    <mat-autocomplete #autoPlan="matAutocomplete" (optionSelected)="selectAutocompleteField('Plan')">
+                      <mat-option *ngFor="let option of filteredLists?.Plan; let i = index;" [value]="option.id"
+                        class="autocomplete-detail">
+                        <span>{{option.value}}</span>
+                      </mat-option>
+                    </mat-autocomplete>
+
+                    <button type="button" mat-button *ngIf="fThird.Plan.value" matSuffix mat-icon-button
+                      aria-label="Clear" (click)="clearField('Plan')">
+                      <i class="fa fa-times"></i>
+                    </button>
+
+                    <mat-error>
+                      {{'plan_required' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <button type="button" mat-raised-button color="primary" (click)="goToDetails('plan')"
+                    class="my-auto exclusion-create px-3">
+                    {{ 'plan_details' | translate }}
+                  </button>
+
+                  <mat-progress-bar mode="indeterminate" *ngIf="showSpinner?.Plan"></mat-progress-bar>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <mat-form-field>
+                  <mat-select formControlName="Option" placeholder="{{'options' | translate}}">
+                    <mat-option *ngFor="let list of optionList; let i = index" [value]="list.id">
+                      {{list.value}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    {{'options_required' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="justify-content-center">
+            <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+              <ion-row class="justify-content-between">
+                <mat-form-field class="service-new-search">
+                  <mat-select formControlName="Contract" placeholder="{{'contract' | translate}}">
+                    <mat-option *ngFor="let list of contractList; let i = index" [value]="list.id">
+                      {{list.value}}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-error>
+                    {{ 'contract_required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <button type="button" mat-raised-button color="primary" (click)="goToDetails('contract')"
+                  class="my-auto exclusion-create px-3">
+                  {{ 'contract_details' | translate }}
+                </button>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="justify-content-center">
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <mat-form-field>
+                  <input type="text" [placeholder]="'contract_number' | translate" matInput
+                    formControlName="ContractNumber" name="ContractNumber">
+
+                  <mat-error>
+                    {{'contract_number_required' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="justify-content-center">
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="ContractEndDate" formControlName="ContractEndDate"
+                    placeholder="{{ 'contract_end_date' | translate }}" name="ContractEndDate">
+                  <mat-datepicker-toggle matSuffix [for]="ContractEndDate"></mat-datepicker-toggle>
+                  <mat-datepicker #ContractEndDate></mat-datepicker>
+
+                  <mat-error>
+                    {{'contract_end_date_required' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <button class="submitButton" id="thirdFormSubmitButton"></button>
+        </form>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('second')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('fourth')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'fourth'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'attributes' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-service-add-attribute class="w-100" [AttributeList]="attributeList"
+          (ServiceAddAttributeComponent)="processComponents('attribute', $event)">
+
+        </app-service-add-attribute>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'fifth'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'hardware' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-service-add-hardware class="w-100" [HardwareList]="hardwareList"></app-service-add-hardware>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('fourth')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('sixth')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'sixth'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'charges' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-service-add-charge class="w-100" [ChargeList]="chargeList"></app-service-add-charge>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('fifth')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('seventh')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'seventh'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'sites' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <form [formGroup]="seventhForm" class="w-100" (ngSubmit)="submitSeventhForm()" novalidate>
+          <ion-row>
+            <ion-row class="justify-content-center">
+              <ion-col [sizeXl]="9" [sizeLg]="9" [sizeMd]="9" [sizeSm]="9" [sizeXs]="12">
+                <ion-row class="h-100 justify-content-between">
+                  <mat-form-field class="service-new-search">
+                    <mat-select formControlName="Site" placeholder="{{'site' | translate}}">
+                      <mat-option *ngFor="let list of siteList; let i = index" [value]="list.id">
+                        {{list.name}}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error>
+                      {{'site_required' | translate}}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <button type="button" mat-raised-button color="primary" (click)="goToDetails('new_site')"
+                    class="my-auto exclusion-create px-3">
+                    {{ 'new' | translate }}
+                  </button>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </form>
+      </ion-row>
+
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'addresses' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-addressify class="w-100" [AddressType]="'Component'"
+          (AddressOutput)="processComponents('address', $event)">
+        </app-addressify>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('sixth')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('eighth')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'eighth'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'cost_center' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-service-add-cost-center class="w-100" [CostCenterList]="costCenterList"></app-service-add-cost-center>
+      </ion-row>
+
+      <ion-row class="ion-margin-top ion-padding-top jqx-button-row justify-content-between">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="prevForm('seventh')">
+            {{ 'before' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="nextForm('nineth')">
+            {{ 'next' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row *ngIf="projectValues?.formStep == 'nineth'">
+      <ion-row class="mt-3">
+        <h3 class="mx-auto my-0 p-0 text-center">
+          {{ 'contacts' | translate }}
+        </h3>
+      </ion-row>
+
+      <ion-row>
+        <app-service-add-related-contact class="w-100"
+          (ServiceAddRelatedContactComponent)="processComponents('related_contact', $event)">
+        </app-service-add-related-contact>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+
+</ion-row>
+
+<ion-row *ngIf="state?.search">
+  <ion-row class="exclusion-form p-3">
+    <ion-row class="exclusion-create-form bg-light m-auto p-3">
+
+
+      <ion-row class="my-2">
+        <h3 class="m-auto p-0 text-center">
+          {{'available_service_number' | translate}}
+        </h3>
+      </ion-row>
+
+
+      <ion-row class="address-spinner">
+        <mat-form-field class="w-100">
+
+          <input type="text" [placeholder]="'available_service_number' | translate" matInput
+            [matAutocomplete]="availServiceNumber" [(ngModel)]="projectValues.availServiceNumber"
+            (ngModelChange)="filterLists('availServiceNumber', projectValues?.availServiceNumber)">
+
+          <mat-autocomplete #availServiceNumber="matAutocomplete"
+            (optionSelected)="selectAutocompleteField('availServiceNumber')">
+            <mat-option *ngFor="let option of filteredLists?.availServiceNumber; let i = index;" [value]="option"
+              class="autocomplete-detail">
+              <span>{{option}}</span>
+            </mat-option>
+          </mat-autocomplete>
+
+          <button type="button" mat-button *ngIf="projectValues?.availServiceNumber" matSuffix mat-icon-button
+            aria-label="Clear" (click)="clearField('availServiceNumber')">
+            <i class="fa fa-times"></i>
+          </button>
+
+          <mat-error>
+            {{ 'sales_person_required' | translate }}
+          </mat-error>
+
+        </mat-form-field>
+        <mat-progress-bar mode="indeterminate" *ngIf="showSpinner?.SalesPerson"></mat-progress-bar>
+      </ion-row>
+
+      <ion-row class="jqx-button-row my-3 justify-content-end">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="selectSearchResult('availServiceNumber')"
+            [disabled]="!projectValues?.availServiceNumber">
+            {{ 'select' | translate }}
+          </jqxButton>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="closeSearchField('availServiceNumber')">
+            {{ 'close' | translate }}
+          </jqxButton>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

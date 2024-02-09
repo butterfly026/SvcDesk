@@ -1,0 +1,102 @@
+
+.button-style {
+  width: 90%;
+  margin: auto !important;
+  text-transform: initial;
+  border-radius: 25px !important;
+  font-weight: bold;
+  color: white;
+  height: 45px;
+  font-size: 20px;
+}
+
+.button-style[disabled] {
+  opacity: 0.5;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.btn-blue {
+  background-color: #3a83a4;
+}
+
+.btn-red {
+  background-color: #CC0000;
+}
+
+.btn-green {
+  background-color: #3ba464;
+}
+
+ion-content.sales_lead mat-accordion {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.checkbox-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.checkbox-section mat-checkbox {
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1200px) {
+
+  ion-row.action-btn-row {
+    width: 80%;
+    margin: 1% auto;
+
+  }
+
+  @media screen and (min-width: 1500px) {
+
+    ion-row.action-btn-row {
+      width: 80%;
+      margin: 1% auto;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+
+    ion-row.action-btn-row {
+      width: 80%;
+      margin: 1% auto;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+
+    ion-row.action-btn-row {
+      width: 80%;
+      margin: 1% auto;
+    }
+  }
+
+  @media screen and (max-width: 756px) {
+
+    ion-row.action-btn-row {
+      width: 100%;
+      margin: 1% auto;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+
+    ion-row.action-btn-row {
+      width: 100%;
+      margin: 1% auto;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+
+    ion-row.action-btn-row {
+      width: 100%;
+      margin: 1% auto;
+    }
+  }
+}

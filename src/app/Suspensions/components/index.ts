@@ -1,0 +1,1 @@
+export * from './suspensions-new/suspensions-new.component';

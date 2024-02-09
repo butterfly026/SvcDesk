@@ -1,0 +1,9 @@
+<ion-row class="vodafon-font">
+  <app-service-group-detail class="full-width" ContactCode="{{ContactCode}}" [ServiceId]="ServiceId"
+    (ServiceGroupComponentValue)="processService($event)" *ngIf="serviceGroupStr == 'ServiceGroup'">
+  </app-service-group-detail>
+
+  <app-assigned-service-add class="full-width" ContactCode="{{ContactCode}}" [ServiceId]="ServiceId"
+    (AssignedServiceAddComponent)="processService($event)" *ngIf="serviceGroupStr == 'AddService'">
+  </app-assigned-service-add>
+</ion-row>

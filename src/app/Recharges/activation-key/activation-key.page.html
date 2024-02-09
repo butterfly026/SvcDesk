@@ -1,0 +1,54 @@
+<ion-header mode='ios'>
+  <ion-row class="header1-row" color="secondary">
+    <ion-col size="2">
+      <ion-row class="full-height">
+        <ion-icon name="menu" class="header-icon" >
+        </ion-icon>
+      </ion-row>
+    </ion-col>
+
+    <ion-col size="8">
+      <ion-row class="full-height">
+        <span class="header-title">
+          {{pageTitle}}
+        </span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+
+  <ion-row class="full-height total-content">
+    <ion-row class="margin-auto">
+
+      <ion-row class="username-row">
+        <span>
+          {{ 'voucher_code' | translate }}
+        </span>
+      </ion-row>
+
+      <ion-row class="username-row">
+        <span>
+          {{actKey}}
+        </span>
+      </ion-row>
+
+      <ion-row class="login-row page-bottom normal-button">
+        <ion-col size="6">
+        </ion-col>
+        <ion-col size="6">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+  </ion-row>
+</ion-content>

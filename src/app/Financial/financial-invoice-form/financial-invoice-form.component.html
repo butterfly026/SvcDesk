@@ -1,0 +1,195 @@
+<ion-row>
+  <ion-row class="my-3 total-content4 mx-auto">
+    <ion-row>
+      <h3 class="m-auto p-0">
+        {{'invoice' | translate}}
+      </h3>
+    </ion-row>
+
+    <ion-row class="mt-3">
+      <form [formGroup]="groupForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+        <ion-row>
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field class="w-100">
+                <input matInput [placeholder]="'number'|translate" required formControlName="Number" name="Name" />
+
+                <mat-error>
+                  {{'numnber_required' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field class="w-100">
+
+                <input matInput formControlName="Amount" type="text" placeholder="{{ 'amount' | translate }}"
+                  name="Amount" currencyMask [options]="globService.currencyOptions" required maxlength="13"
+                  autocomplete="off" />
+
+                <mat-error>
+                  <span>{{ 'amount_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row>
+              <mat-form-field class="w-100">
+
+                <input matInput formControlName="Tax" type="text" placeholder="{{ 'tax' | translate }}" name="Tax"
+                  currencyMask [options]="globService.currencyOptions" maxlength="13" autocomplete="off" />
+
+                <mat-error>
+                  <span>{{ 'tax_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="">
+              <mat-form-field class="w-100">
+
+                <input matInput [matDatepicker]="picker" formControlName="Date" placeholder="{{ 'date' | translate }}"
+                  [min]="minDate" name="Date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+                <mat-error>
+                  <span>{{ 'date_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="">
+              <mat-form-field class="w-100">
+
+                <input matInput [matDatepicker]="DueDate" formControlName="DueDate" [min]="f.Date.value"
+                  placeholder="{{ 'due_date' | translate }}" name="DueDate" required>
+                <mat-datepicker-toggle matSuffix [for]="DueDate"></mat-datepicker-toggle>
+                <mat-datepicker #DueDate></mat-datepicker>
+
+                <mat-error>
+                  <span>{{ 'due_date_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="">
+              <mat-form-field class="w-100">
+
+                <mat-select formControlName="Category" name="Category" placeholder="{{'category' | translate}}">
+                  <mat-option *ngFor="let list of categoryList; let i = index;" [value]="list.code">
+                    {{list.name | translate}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  <span>{{ 'category_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="">
+              <mat-form-field class="w-100">
+
+                <mat-select formControlName="Reason" name="Reason" placeholder="{{'reason' | translate}}">
+                  <mat-option *ngFor="let list of reasonList; let i = index;" [value]="list.code">
+                    {{list.name}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error>
+                  <span>{{ 'reason_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+          <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+            <ion-row class="">
+              <mat-form-field class="w-100">
+
+                <input matInput formControlName="OtherRef" name="OtherRef" placeholder="{{'other_ref' | translate}}" />
+
+                <!-- <mat-error>
+                  <span>{{ 'reason_required' | translate }}</span>
+                </mat-error> -->
+
+              </mat-form-field>
+            </ion-row>
+          </ion-col>
+
+        </ion-row>
+        <button class="submitButton" id="submitButton"></button>
+      </form>
+    </ion-row>
+
+
+    <mat-tab-group animationDuration="500ms" class="w-100 payment-list">
+      <mat-tab label="{{'charges' | translate}}">
+        <ion-row>
+          <app-financial-charges-invoice-new [ComponentType]="'new'" class="w-100" [ContactCode]="ContactCode"
+            [FinancialId]="FinancialId" (FinancialChargesComponent)="processCharge($event)">
+          </app-financial-charges-invoice-new>
+        </ion-row>
+      </mat-tab>
+      <mat-tab label="{{'product' | translate}}">
+        <ion-row class="pt-3">
+          <app-financial-product 
+            class=" w-100" 
+            [FinancialId]="FinancialId" 
+            [ContactCode]="ContactCode"
+            (FinancialProductComponent)="processProduct($event)">
+          </app-financial-product>
+        </ion-row>
+      </mat-tab>
+
+      <mat-tab label="{{'note' | translate}}">
+        <ion-row class="mt-3">
+          <form [formGroup]="noteForm" class="w-100" novalidate>
+            <mat-form-field>
+              <mat-label>{{'Note' | translate}}</mat-label>
+              <textarea matInput formControlName="note" placeholder="{{'note'| translate}}" maxlength="2000"></textarea>
+            </mat-form-field>
+          </form>
+        </ion-row>
+      </mat-tab>
+    </mat-tab-group>
+
+
+    <ion-row class="jqx-button-row mb-3 mt-5 pt-3 justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+            [disabled]="!groupForm.valid">
+            {{ 'save' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="">
+          <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+            {{ 'cancel' | translate }}
+          </jqxButton>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+</ion-row>

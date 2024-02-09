@@ -1,0 +1,8 @@
+<ion-header mode='ios'>
+  <app-header menuItem="" pageName="{{pageTitle}}"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <app-service-group-assigned-list [serviceId]="serviceId" (AssignedListComponentValue)="processServiceGroup($event)"></app-service-group-assigned-list>
+  <app-service-group-unassigned-list [serviceId]="serviceId"></app-service-group-unassigned-list>
+</ion-content>

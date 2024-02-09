@@ -1,0 +1,99 @@
+<ion-row class="position-relative h-100">
+
+  <ion-row class="my-3 mfa-title">
+    <h3 class="p-0 m-auto text-center">
+      {{'one_time_pin' | translate}}
+    </h3>
+  </ion-row>
+
+  <ion-row *ngIf="pinState === 'first'" class="mfa-content">
+    <ion-row>
+      <ion-row *ngFor="let list of pinOptList" class="mt-3">
+        <mat-checkbox [(ngModel)]="list.value">
+          {{ list.id }} : {{ list.text }}
+        </mat-checkbox>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="my-3 jqx-button-row">
+      <ion-row class="justify-content-end mt-3">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="sendPinRequest()" class="jqx-button-theme">
+              {{ 'send_pin' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="cancelPin()" class="jqx-button-theme">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+
+  <ion-row *ngIf="pinState === 'second'" class="mfa-content">
+    <ion-row>
+      <ion-row>
+        <form [formGroup]="pinForm" class="w-100" (ngSubmit)="confirmPinValue()" novalidate>
+          <ion-row>
+            <mat-form-field class="w-100">
+              <input matInput [formControl]="pinCtrl" type="text" placeholder="{{ 'p_i_n' | translate }}" required
+                name="pinCtrl" />
+
+              <mat-error>
+                {{ 'p_i_n_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ion-row>
+        </form>
+      </ion-row>
+
+      <ion-row>
+        <span class="text-danger">
+          {{'pin_expire' | translate}} &nbsp;
+        </span>
+
+        <span>
+          {{'pin_expire_des' | translate}} {{currentTime | date:'h:mm a'}}
+        </span>
+      </ion-row>
+
+      <ion-row class="mt-3" *ngIf="showError">
+        <mat-error>
+          {{'invalid_pin_des' | translate}}
+        </mat-error>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="my-3 jqx-button-row">
+      <ion-row class="justify-content-end mt-3">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="!pinCtrl.value" (onClick)="confirmPinValue()"
+              class="jqx-button-theme">
+              {{ 'confirm' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="sendPinRequest()" class="jqx-button-theme">
+              {{ 'resend' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="backPinRequest()" class="jqx-button-theme">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

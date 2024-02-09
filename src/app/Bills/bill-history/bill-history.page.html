@@ -1,0 +1,84 @@
+<ion-row class="full-height" id="event-list-grid">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+      class="w-100"
+      [data]="dataSource" 
+      [totalCount]="totalCount"
+      [columns]="columns"
+      [subTableColumns]="subTableColumns"
+      [columnsUsedForCurrency]="columnsUsedForCurrency"
+      [subTableColumnsUsedForCurrency]="subTableColumnsUsedForCurrency"
+      [subTableAction]="subTableAction"
+      [action]="dataTableAction"
+      [csvFileName]="csvFileName"
+      [searchOptions]="searchOptions"
+      [permissions]="permissions"
+      [propertyNameToShowInSubTable]="propertyNameToShowInSubTable"
+      [columnsUsedForDate]="columnsUsedForDate"
+      (onView)="viewDetail($event)"
+      (onDelete)="deleteSelectedRow($event)"
+      (onCreate)="goToAddNew()"
+      (onDisputes)="goToDisputes($event)"
+      (onCharges)="goToCharges($event)"
+      (onUsageTransactions)="goToUsageTransactions($event)"
+      (onServices)="goToServices($event)"
+      (onRowEmail)="goToEmail($event)"
+      (onExcel)="downloadBillExcel($event)"
+      (onPDF)="downloadBillPdf($event)"
+      (onViewForSubTable)="viewDetailForSubData($event)"
+      (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="billState == 'email'">
+  <ion-row class="my-3">
+    <h3 class="p-0 mx-auto my-0">
+      {{'bill_email' | translate}}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <app-bill-email class="total-content2 left-right-auto" [ContactCode]="ContactCode"
+      (EmailSendNewComponent)="processBillHistory($event)" [DocLists]="docLists">
+    </app-bill-email>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="billState == 'trransaction'">
+  <ion-row class="my-3">
+    <h3 class="p-0 mx-auto my-0">
+      {{'transactions' | translate}}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <app-bill-transactions class="w-100" [ContactCode]="ContactCode" [BillId]="billId"
+      (BillTransactionComponent)="processBillHistory($event)">
+    </app-bill-transactions>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="billState == 'charges'">
+  <ion-row class="my-3">
+    <h3 class="p-0 mx-auto my-0">
+      {{'charges' | translate}}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <app-bill-charges class="w-100" (BillCharges)="processBillHistory($event)" [ContactCode]="ContactCode"
+      [BillId]="billId">
+    </app-bill-charges>
+  </ion-row>
+</ion-row>
+
+<ion-row *ngIf="billState == 'service'">
+  <ion-row class="my-3">
+    <h3 class="p-0 mx-auto my-0">
+      {{'services' | translate}}
+    </h3>
+  </ion-row>
+  <ion-row>
+    <app-bill-services class="w-100" (BillServices)="processBillHistory($event)" [ContactCode]="ContactCode"
+      [BillId]="billId">
+    </app-bill-services>
+  </ion-row>
+</ion-row>

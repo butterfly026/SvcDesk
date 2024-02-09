@@ -1,0 +1,17 @@
+<ion-row class="mt-3 left-right-auto">
+  <app-datatable 
+    class="w-100"
+    [data]="dataSource" 
+    [totalCount]="totalCount"
+    [columns]="columns"
+    [columnsUsedForCurrency]="columnsUsedForCurrency"
+    [subTableColumns]="subTableColumns"
+    [subTableColumnsUsedForCurrency]="subTableColumnsUsedForCurrency"
+    [propertyNameToShowInSubTable]="propertyNameToShowInSubTable"
+    [action]="dataTableAction"
+    [subTableAction]="subTableAction"
+    [csvFileName]="csvFileName"
+    [searchOptions]="searchOptions"
+    (onFetchData)="fetchData($event)">
+  </app-datatable>
+</ion-row>

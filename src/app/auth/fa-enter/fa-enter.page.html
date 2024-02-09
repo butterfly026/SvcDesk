@@ -1,0 +1,58 @@
+<ion-header mode='ios'>
+    <ion-row class="header1-row" color="secondary">
+        <ion-col size="2">
+            <ion-row class="full-height">
+                <ion-icon name="menu" class="header-icon">
+                </ion-icon>
+            </ion-row>
+        </ion-col>
+
+        <ion-col size="8">
+            <ion-row class="full-height">
+                <span class="header-title">
+                    {{ 'two_factor_account' | translate }}
+                </span>
+            </ion-row>
+        </ion-col>
+    </ion-row>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+    <ion-row class="full-height total-content">
+        <ion-row class="margin-auto">
+            <form [formGroup]="formData" class="full-width" (ngSubmit)="pinSubmit()" novalidate>
+                <ion-row class="username-row">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="facode" type="text"
+                            placeholder="{{ 'two_factor_account' | translate }}" required name="facode">
+                        <mat-error *ngIf="f.facode.hasError('required')">
+                            {{ 'code_required' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="!f.facode.hasError('required') && !f.facode.valid">
+                            {{ 'code_valid_required' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </ion-row>
+                <button mat-button id="submitButton">Submit</button>
+            </form>
+
+            <ion-row class="login-row">
+                <ion-col size="6">
+                    <ion-row class="full-height">
+                        <button mat-button [disabled]="!formData.valid" class="button-style1" (click)="triggerSubmit()">
+                            {{ 'ok' | translate }}
+                        </button>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-row class="full-height">
+                        <button mat-button class="button-style2" (click)="goBack()">
+                            {{ 'cancel' | translate }}
+                        </button>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-row>
+
+    </ion-row>
+</ion-content>

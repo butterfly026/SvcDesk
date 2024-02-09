@@ -1,0 +1,17 @@
+<ion-row class="ion-margin-top">
+  <app-i-otbilling-plans class="full-width" [ContactCode]="ContactCode" (iOTBillingPlansComponent)="processHome($event)"
+    *ngIf="switchMode=='main'">
+  </app-i-otbilling-plans>
+
+  <app-i-otbilling-plan-now class="full-width" [ContactCode]="ContactCode" [PlanItem]="PlanItem" [PlanId]="planId"
+    (iOTBillingPlanNowComponent)="processHome($event)" *ngIf="switchMode=='plan-now'">
+  </app-i-otbilling-plan-now>
+
+  <app-i-otbilling-exit-number class="full-width" [ContactCode]="ContactCode" [PlanItem]="PlanItem"
+    (PlanExistingNumberComponent)="processHome($event)" *ngIf="switchMode=='ExistNumber'">
+  </app-i-otbilling-exit-number>
+
+  <app-i-otbilling-new-number class="full-width" [ContactCode]="ContactCode" [PlanItem]="PlanItem"
+    (PlanNewNumberComponent)="processHome($event)" *ngIf="switchMode=='NewNumber'">
+  </app-i-otbilling-new-number>
+</ion-row>

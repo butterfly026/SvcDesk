@@ -1,0 +1,144 @@
+<ion-row>
+
+  <ion-col [sizeXl]="6" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+    <ion-row>
+      <table class="customer-detail">
+        <tbody
+          class="custom-table-body jqx-grid-content jqx-widget-content jqx-grid-content-{{globService.themeColor}} jqx-widget-content-{{globService.themeColor}}">
+          <tr *ngFor=" let detaiList of serviceDetail; let i=index" class="ion-margin-top full-height" #jqxWidget
+            (click)="gotoDetail(i)" id="customeTableBodyServiceDetail{{i}}" (mouseenter)="overTable(i)"
+            (mouseleave)="leaveTable(i)">
+            <!-- <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              <i class="fa fa-id-card top-bottom-auto" *ngIf="detaiList.IconURL==null"></i>
+              <i class="top-bottom-auto" [ngClass]="detaiList.IconURL" *ngIf="detaiList.IconURL!=null"></i>
+            </td> -->
+            <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              <span class="top-bottom-auto" *ngIf="detaiList.Label!=null">
+                <strong>{{detaiList.Label}}</strong>
+              </span>
+            </td>
+            <td class="custom-table-body-td jqx-item jqx-item-{{globService.themeColor}}">
+              <span class="top-bottom-auto" *ngIf="detaiList.displayed">
+                {{detaiList.Value}}
+              </span>
+              <span class="top-bottom-auto" *ngIf="!detaiList.displayed">
+                ********
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-row>
+  </ion-col>
+
+  <ion-col [sizeXl]="6" [sizeLg]="12" [sizeMd]="12" [sizeSm]="12" [sizeXs]="12">
+    <ion-row>
+
+      <ion-row class="justify-content-end right-desk-close ion-padding-top" *ngIf="ServiceType!='ServiceNotes'">
+        <ion-fab-button 
+          size="small" 
+          color="light"
+          class="mat-modal-close-button"
+          [matTooltip]="'close' | translate" 
+          (click)="closeComponent()">
+          <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-row>
+
+      <ion-row class="ion-margin-top" *ngIf="ServiceType!='' && ServiceType !== 'Services/Plans/PlanHistory'">
+        <span class="margin-auto">
+          <h3 class="m-0 p-0">
+            <strong>
+              {{componentTitle | translate}}
+            </strong>
+          </h3>
+        </span>
+      </ion-row>
+      <ion-row *ngIf="ServiceType == 'ServiceNotes'">
+        <app-service-notes class="w-100" [ContactCode]="ContactCode" [ServiceReference]="ServiceReferenceId"
+          (UsersGroupComponent)="processAttributeMenu($event)">
+        </app-service-notes>
+      </ion-row>
+      <ion-row class="service-desk-right-content" *ngIf="ServiceType=='service-termination'">
+        <app-terminations [ServiceType]="serviceDetailType" [ServiceReference]="ServiceReferenceId" class="w-100"
+          [ContactCode]="ContactCode" (TerminationsComponent)="processAttributeMenu($event)">
+        </app-terminations>
+      </ion-row>
+      <ion-row class="service-desk-right-content" *ngIf="ServiceType=='Services/EnquiryPassword'">
+        <app-service-enquiry-password [ServiceReference]="ServiceReferenceId" class="w-100" [ContactCode]="ContactCode"
+          (EnquiryPassword)="processAttributeMenu($event)">
+        </app-service-enquiry-password>
+      </ion-row>
+
+      <ion-row class="service-desk-right-content" *ngIf="ServiceType=='/Services/Events/New'">
+        <app-service-event-instance class="w-100" [ServiceReferenceId]="ServiceReferenceId" 
+          [Mode]="'new'" (EventInstanceComponent)="processAttributeMenu($event)">
+        </app-service-event-instance>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType=='Services/Plans/PlanHistory'">
+        <app-service-plan class="w-100" [planMode]="'planHistory'" [ServiceReference]="ServiceReferenceId"
+          (ServicePlanComponent)="processAttributeMenu($event)">
+        </app-service-plan>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType=='Services/Plans/New'">
+        <app-service-plan class="w-100" [planMode]="'planNew'" [ServiceReference]="ServiceReferenceId"
+          (ServicePlanComponent)="processAttributeMenu($event)">
+        </app-service-plan>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType=='Services/Plans/PlanChange'">
+        <app-service-plan class="w-100" [planMode]="'planUpdate'" [ServiceReference]="ServiceReferenceId"
+          (ServicePlanComponent)="processAttributeMenu($event)">
+        </app-service-plan>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType=='/Services/Suspensions/New'">
+        <app-suspensions-new class="w-100" [ServiceReference]="ServiceReferenceId"
+          (SuspensionsNewComponent)="processAttributeMenu($event)">
+        </app-suspensions-new>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType == '/Services/Addresses'">
+        <app-service-address-management 
+          class="w-100" 
+          [ServiceReference]="ServiceReferenceId" 
+          (AddressManagementComponent)="processAttributeMenu($event)">
+        </app-service-address-management>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType === '/Services/Novations'">
+        <app-service-novations-list 
+          class="w-100" 
+          [ServiceReference]="ServiceReferenceId" 
+          (ServiceNovationsListComponent)="processAttributeMenu($event)">
+        </app-service-novations-list>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType === '/Charges/ServiceCharges/New'">
+        <app-service-charges class="w-100" [ServiceId]="ServiceId" [ServiceReference]="ServiceReferenceId"
+          [ViewMode]="'New'" [Type]="true" (ChargesComponent)="processAttributeMenu($event)">
+        </app-service-charges>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType === '/Charges/ServiceOverrides/New'">
+        <app-service class="w-100" [ServiceReference]="ServiceReferenceId" [ViewMode]="'New'"
+          (ServiceComponent)="processAttributeMenu($event)">
+        </app-service>
+      </ion-row>
+
+      <!-- <ion-row *ngIf="ServiceType=='Services/Configurations/PlanChanges'">
+        <app-service-plan-change-configuration class="w-100" [ServiceType]="serviceDetailType"
+          (PlanChangeConfigurationComponent)="processAttributeMenu($event)">
+        </app-service-plan-change-configuration>
+      </ion-row>
+
+      <ion-row *ngIf="ServiceType=='Services/Configurations/Terminations'">
+        <app-service-termination-configuration class="w-100" [ServiceType]="serviceDetailType"
+          (TerminationConfigurationComponent)="processAttributeMenu($event)">
+        </app-service-termination-configuration>
+      </ion-row> -->
+    </ion-row>
+  </ion-col>
+</ion-row>

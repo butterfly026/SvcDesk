@@ -1,0 +1,16 @@
+<ion-row class="mt-2" *ngIf="Mode == 'list'">
+  <app-service-event-instance-list 
+    class="w-100" 
+    [ServiceId]="ServiceId"
+    [ServiceReferenceId]="ServiceReferenceId" 
+    (contactEventInstancesList)="processEvent($event)">
+  </app-service-event-instance-list>
+</ion-row>
+
+<ion-row class="mt-2" *ngIf="Mode == 'new'">
+  <app-service-event-instance-new
+    class="w-100" 
+    [ServiceReferenceId]="ServiceReferenceId" 
+    (serviceEventInstanceCreate)="processEvent($event)">
+  </app-service-event-instance-new>
+</ion-row>

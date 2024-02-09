@@ -1,0 +1,91 @@
+<ion-row class='justify-content-right'>
+  <ion-col  [size]="12">
+    <ion-row class="jqx-button-row justify-content-end">
+      <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="addDocument()">
+          + {{ 'add_document' | translate }}
+        </jqxButton>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>
+
+<ion-row *ngFor="let doc of documentList; let docIdx = index;" class="justify-content-center">
+  <ion-row class="dynamic-list-form">
+    <form [formGroup]="docForm" novalidate class="w-100" (ngSubmit)="createDocument()">
+      <ion-row class="">  
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100 align-items-center">
+            <ion-row align-items-center>
+              <span class="document-name file-name my-auto pl-3">{{doc.name}}</span>
+              <span class="choose-file" (click)="openCreateFile(doc.createFileCtrl)">
+                {{'select_file' | translate}}
+              </span>
+              <input type="file" #createFile [id]="doc.createFileCtrl" (change)="createFileEvent($event)" class="d-none" />
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+
+              <input matInput formControlName="Note" type="text" placeholder="{{ 'note' | translate }}" 
+                name="note" />
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="example-full-width">
+
+              <input matInput formControlName="Author" type="text"
+                placeholder="{{ 'author' | translate }}" 
+                name="author" required />
+
+              <mat-error>
+                <span>{{ 'author_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <ion-row class="mt-auto">
+              <mat-form-field class="example-full-width">
+
+                <input matInput type="date" formControlName="DateAuthored" [(ngModel)]="dateAuthor"
+                  placeholder="{{ 'date_authored' | translate }}" name="dateAuthored" required>
+
+                <!-- <input matInput [ngxMatDatetimePicker]="picker" formControlName="DateAuthored" [value]="getToday()"
+                  placeholder="{{ 'date_authored' | translate }}" name="dateAuthored" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker [enableMeridian]="true"></ngx-mat-datetime-picker> -->
+
+                <mat-error>
+                  <span>{{ 'date_authored_required' | translate }}</span>
+                </mat-error>
+
+              </mat-form-field>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+      
+        
+      <button class="submitButton" id="createDocumentButton"></button>
+    </form>
+    
+  </ion-row>
+  <ion-row class="dynamic-list-delete justify-content-center align-items-center">
+    <ion-icon name="trash" mode="md" class="trash-icon" (click)="deleteEmail(emailIdx)"></ion-icon>
+  </ion-row>
+</ion-row>

@@ -1,0 +1,23 @@
+<ion-row>
+    <mat-form-field class="mt-3">
+        <mat-select [placeholder]="'effectivity_date' | translate" [(ngModel)]="selectedTransactionPlanVersionId">
+            <mat-option 
+                *ngFor="let list of transactionPlanVersions; let i = index" 
+                [value]="list.Id" 
+                (click)="selectTransactionPlanVersion(i)">
+                {{list.From | stringOrDate:'YYYY-MM-DD hh:mm:ss'}} - {{list.To | stringOrDate:'YYYY-MM-DD hh:mm:ss'}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <app-datatable 
+        class="w-100 mt-3"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [csvFileName]="csvFileName"
+        [searchOptions]="searchOptions"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+</ion-row>

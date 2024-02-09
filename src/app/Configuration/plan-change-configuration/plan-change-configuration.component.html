@@ -1,0 +1,273 @@
+<ion-row class="mt-3 pt-3" *ngIf="showForm">
+
+  <ion-row class="mb-3">
+    <h5 class="p-0 m-auto text-center">
+      {{'plan_change_configuration' | translate}}
+    </h5>
+  </ion-row>
+
+  <form [formGroup]="configForm" class="w-100" (ngSubmit)="putPlanChangesConfigurations()" novalidate>
+    <ion-row>
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <ion-row class="h-100">
+          <mat-form-field class="w-100">
+
+            <mat-select formControlName="ServiceType" placeholder="{{ 'ServiceType' | translate }}" required>
+              <mat-option *ngFor="let list of serviceTypeList; let j = index" value="{{list?.id}}">
+                {{ list?.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error>
+              {{ 'service_type_required' | translate }}
+            </mat-error>
+
+          </mat-form-field>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="f.ServiceType.valid">
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'time_of_day' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="TimeOfDay_Enabled">
+                  {{'time_of_day' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="TimeOfDay_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'network_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row class="">
+            <h5>{{ 'set_plan_change' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="NetworkOptions_SetPlanChange_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="NetworkOptions_SetPlanChange_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'force_change' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="NetworkOptions_ForceChange_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="NetworkOptions_ForceChange_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'charge_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="ChargeOptions_ReprocessUsage_Enabled">
+                  {{'reprocess_usage' | translate}}
+                </mat-checkbox>  
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="ChargeOptions_ReprocessSAE_Enabled">
+                  {{'reprocess_SAE' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="ChargeOptions_ApplyOneOffCharges_Enabled">
+                  {{'apply_one_off_charges' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+        </mat-expansion-panel>
+      </ion-col>
+
+      <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-weight-bold">
+              {{ 'bulk_apply_options' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <ion-row class="">
+            <h5>{{ 'apply_account' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyAccount_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyAccount_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row class="">
+            <h5>{{ 'apply_same_service_type' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplySameServiceType_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplySameServiceType_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_children' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyChildren_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyChildren_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_siblings' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplySiblings_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplySiblings_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <h5>{{ 'apply_group' | translate }}</h5>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyGroup_Enabled">
+                  {{'enabled' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="h-100 align-items-center">
+                <mat-checkbox class="example-margin" formControlName="BulkApplyOptions_ApplyGroup_Default">
+                  {{'default' | translate}}
+                </mat-checkbox>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </mat-expansion-panel>
+      </ion-col>
+
+    </ion-row>
+    <button class="submitButton" id="servicePlanChangeConfigurationSubmitButton"></button>
+  </form>
+
+  <ion-row class="my-3 normal-button">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="12" [sizeXs]="12">
+    </ion-col>
+
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="submitTrigger()"
+          [disabled]="!configForm.valid">
+          {{ 'save' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="goBack()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

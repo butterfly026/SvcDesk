@@ -1,0 +1,28 @@
+<ion-row id="service-group-grid">
+  <ion-row class="mt-3 left-right-auto">
+    <app-datatable 
+        class="w-100"
+        [data]="dataSource" 
+        [totalCount]="totalCount"
+        [columns]="columns"
+        [action]="dataTableAction"
+        [permissions]="permissions"
+        [csvFileName]="csvFileName"
+        [allowDblClickRow]="true"
+        [searchOptions]="searchOptions"
+        (onDoublClickRow)="dblclickRow($event)"
+        (onFetchData)="fetchData($event)">
+    </app-datatable>
+  </ion-row>
+
+  <ion-row *ngIf="!!GroupId">
+    <app-service-group-service 
+      class="full-width" 
+      [ContactCode]="ContactCode" 
+      [GroupId]="GroupId"      
+      [SearchString]="eventParam.SearchString"
+      (ServiceGroupServiceComponent)="processServiceGroup($event)">
+    </app-service-group-service>
+  </ion-row>
+
+</ion-row>

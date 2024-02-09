@@ -1,0 +1,62 @@
+<ion-header mode='ios'>
+    <ion-row class="header1-row" color="secondary">
+        <ion-col size="2">
+            <ion-row class="full-height">
+                <ion-icon name="menu" class="header-icon">
+                </ion-icon>
+            </ion-row>
+        </ion-col>
+
+        <ion-col size="8">
+            <ion-row class="full-height">
+                <span class="header-title">
+                    {{ 'business_unit_select' | translate }}
+                </span>
+            </ion-row>
+        </ion-col>
+    </ion-row>
+    <app-header [pageName]="'business_unit_select' | translate"></app-header>
+</ion-header>
+
+<ion-content class="ion-padding" (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+    <ion-row class="full-height total-content">
+        <ion-row class="margin-auto">
+            <form [formGroup]="formData" class="full-width" (ngSubmit)="unitSubmit()" novalidate>
+                <ion-row class="username-row">
+                    <mat-form-field class="example-full-width">
+
+                        <mat-select formControlName="unitSelect" placeholder="{{ 'business_unit_select' | translate }}"
+                            name="businessUnitSelect" required>
+                            <mat-option *ngFor="let list of unitList" value="{{list.BusinessUnitId}}">
+                                {{list.BusinessUnitName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            {{ 'business_unit_select_required' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </ion-row>
+                <button mat-button id="submitButton">Submit</button>
+            </form>
+
+            <ion-row class="login-row normal-button">
+                <ion-col size="6">
+                    <ion-row class="full-height">
+                        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" [disabled]="!formData.valid"
+                            (click)="triggerSubmit()">
+                            {{ 'change' | translate }}
+                        </jqxButton>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-row class="full-height">
+                        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (click)="goBack()">
+                            {{ 'cancel' | translate }}
+                        </jqxButton>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-row>
+
+    </ion-row>
+</ion-content>

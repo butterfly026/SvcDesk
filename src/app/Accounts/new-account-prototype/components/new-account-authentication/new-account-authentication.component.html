@@ -1,0 +1,23 @@
+<ion-row [formGroup]="formGroup" class="ion-align-items-center">
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <app-new-account-authentication-email [emailFormControl]="formGroup.controls.Email"></app-new-account-authentication-email>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <app-new-account-authentication-mobile [mobileFormControl]="formGroup.controls.Mobile"></app-new-account-authentication-mobile>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <app-new-account-authentication-password [passwordFormControl]="formGroup.controls.Password"></app-new-account-authentication-password>
+  </ion-col>
+
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <mat-slide-toggle formControlName="ChangePasswordOnFirstLogin" color="primary">
+      {{ 'change_password_login' | translate }}
+    </mat-slide-toggle>
+  </ion-col>
+  
+  <ion-col [sizeXl]="5" [sizeLg]="5" [sizeMd]="5" [sizeSm]="5" [sizeXs]="12">
+    <app-new-account-authentication-login-id [LoginIdFormControl]="formGroup.controls.LoginId"></app-new-account-authentication-login-id>
+  </ion-col>
+</ion-row>

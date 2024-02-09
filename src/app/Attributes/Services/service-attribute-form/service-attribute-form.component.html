@@ -1,0 +1,124 @@
+<ion-row class="px-3 pt-3">
+  <ion-row>
+    <h3 class="p-0 m-auto text-center" *ngIf="EditMode=='New'">
+      {{'AttributeNew' | translate}} {{ ServiceId ? '[' + ServiceId + ']' : '' }}
+    </h3>
+    <h3 class="p-0 m-auto text-center" *ngIf="EditMode=='Update'">
+      {{'AttributeEdit' | translate}} {{ updateData ? '[' + updateData.Id + '-' + updateData.Name + ']' : '' }}
+    </h3>
+  </ion-row>
+  <ion-row class="total-content4 mx-auto mt-3">
+    <form [formGroup]="groupForm" class="w-100" (ngSubmit)="submitForm()" novalidate>
+      <ion-row>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+
+              <!-- this is for normal list -->
+              <mat-select formControlName="Definition" name="Definition" placeholder="{{ 'definition' | translate }}" (selectionChange)="selectDefinition($event.value)" required>
+                <mat-option *ngFor="let item of definitionList; let i = index" [value]="item.id">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+
+              <!-- this is for autocomplete list -->
+              <!-- <input matInput formControlName="Definition" placeholder="{{ 'definition' | translate }}"
+                name="Definition" [matAutocomplete]="auto" required>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectDefinition($event.option.value)">
+                  <mat-option *ngFor="let item of definitionList; let i = index" [value]="item.name">
+                    {{item.name}}
+                  </mat-option>
+                </mat-autocomplete> -->
+
+              <mat-error>
+                <span>{{ 'DefinitionRequired' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+
+              <input matInput [type]="secondInputType" formControlName="Value" placeholder="{{ 'value' | translate }}" name="Value" required>
+
+              <mat-error *ngIf="groupForm.get('Value').hasError('required')">
+                <span>{{ 'value_required' | translate }}</span>
+              </mat-error>
+
+              <mat-error *ngIf="groupForm.get('Value').hasError('invalid')">{{ invalidValue.results[0].message }}</mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12" class="d-flex">
+          <ion-row class="align-content-end mt-auto">
+            <mat-form-field class="w-100">
+              <input matInput [matDatepicker]="From" formControlName="From" placeholder="{{ 'from' | translate }}"
+                name="From" required>
+
+              <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+              <mat-datepicker #From></mat-datepicker>
+
+              <mat-error *ngIf="groupForm.get('From').hasError('required')">
+                <span>{{ 'date_required' | translate }}</span>
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            
+            <ion-row>
+              <mat-radio-group formControlName="ToDateType" (change)="switchDateType()" [disabled]="EditMode == 'View'">
+                <mat-radio-button [value]="1" class="mr-3" >{{'end_date' | translate}}</mat-radio-button>
+                <mat-radio-button [value]="2">{{'on_going' | translate}}</mat-radio-button>
+              </mat-radio-group>
+            </ion-row>
+            <ion-row>
+              <mat-form-field class="w-100">
+                <input matInput [readonly]="true" formControlName="To" [matDatepicker]="To" [readonly]="EditMode == 'View'"
+                  placeholder="{{'to' | translate}}">
+                <mat-datepicker-toggle matSuffix [for]="To">
+                </mat-datepicker-toggle>
+                <mat-datepicker #To></mat-datepicker>
+  
+                <mat-error>
+                  {{'date_required' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </ion-row>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <button class="submitButton" id="serviceAttributeSubmitButton"></button>
+    </form>
+
+    <ion-row class="my-3 pb-3 jqx-button-row ">
+      <ion-row class="justify-content-end">
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" [disabled]="!groupForm.valid" (onClick)="submitTrigger()"
+              class="jqx-button-theme" *ngIf="EditMode=='New'">
+              {{ 'create' | translate }}
+            </jqxButton>
+            <jqxButton [theme]="globService.themeColor" [disabled]="!groupForm.valid" (onClick)="submitTrigger()"
+              class="jqx-button-theme" *ngIf="EditMode=='Update'">
+              {{ 'update' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+        <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="full-height">
+            <jqxButton [theme]="globService.themeColor" (onClick)="goBack()" class="jqx-button-theme">
+              {{ 'cancel' | translate }}
+            </jqxButton>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>

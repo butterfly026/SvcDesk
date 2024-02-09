@@ -1,0 +1,104 @@
+<ion-row class="p-3 h-100 align-content-between">
+
+  <ion-row>
+    <ion-row class="my-3 align-items-center justify-content-center">
+      <h3 class="p-0 m-0">
+        {{'add_commitment' | translate}}
+      </h3>
+    </ion-row>
+
+    <form [formGroup]="commitmentForm" class="w-100" (ngSubmit)="submitCommitmentForm()" novalidate>
+      <ion-row class="justify-content-center">
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="Type" placeholder="{{ 'type' | translate }}" required>
+                <mat-option *ngFor="let list of typeList; let j = index" value="{{list?.id}}">
+                  {{ list?.name }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'type_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="Month" type="number" placeholder="{{ 'month' | translate }}"
+                name="Month" />
+
+              <mat-error>
+                {{ 'month_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row class="h-100">
+            <mat-form-field class="w-100">
+
+              <input matInput formControlName="ThresholdValue" type="text" currencyMask
+                [options]="globService.currencyOptions" placeholder="{{ 'threshold_value' | translate }}"
+                name="ThresholdValue" />
+
+              <mat-error>
+                {{ 'threshold_value_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+        <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+          <ion-row>
+            <mat-form-field class="w-100">
+
+              <mat-select formControlName="PenaltyMethod" placeholder="{{ 'penalty_method' | translate }}" required>
+                <mat-option *ngFor="let list of penaltyList; let j = index" value="{{list?.id}}">
+                  {{ list?.name }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error>
+                {{ 'penalty_method_required' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+
+      <button class="submitButton" id="commitmentSubmitButton"></button>
+    </form>
+  </ion-row>
+
+  <ion-row class="my-3 jqx-button-row justify-content-between">
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="close()">
+        {{ 'close' | translate }}
+      </jqxButton>
+    </ion-col>
+    <ion-col [sizeXl]="3" [sizeLg]="3" [sizeMd]="3" [sizeSm]="6" [sizeXs]="12">
+      <jqxButton [disabled]="!commitmentForm.valid" [theme]="globService.themeColor" class="jqx-button-theme"
+        (onClick)="addCommitment()">
+        <ng-container *ngIf="ContractData">
+          {{'update' | translate}}
+        </ng-container>
+        <ng-container *ngIf="!ContractData">
+          {{ 'add' | translate }}
+        </ng-container>
+      </jqxButton>
+    </ion-col>
+  </ion-row>
+
+</ion-row>

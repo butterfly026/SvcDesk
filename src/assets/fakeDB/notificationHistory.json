@@ -1,0 +1,19 @@
+[
+    {
+        "Id": "1234",
+        "BillPeriod": "BillPeriod",
+        "CreatedDate": "CreatedDate",
+        "DiscountId": "DiscountId",
+        "DiscountNarrative": "DiscountNarrative",
+        "AlertType": "AlertType",
+        "AlertLevel": "AlertLevel",
+        "UsageLevel": "UsageLevel",
+        "UsageAmount": "UsageAmount",
+        "BundleAmount": "BundleAmount",
+        "Narrative": "Narrative",
+        "Created": "Created",
+        "CreatedBy": "CreatedBy",
+        "LastUpdated": "LastUpdated",
+        "UpdatedBy": "UpdatedBy"
+    }
+]

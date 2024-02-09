@@ -1,0 +1,19 @@
+<ion-row class="pt-2 mat-modal-body">
+  <ion-row class="my-3">
+    <h3 class="p-0 m-auto text-center">
+      {{'NoteDetails' | translate}} [{{data.note.Id}}]
+    </h3>
+  </ion-row>
+  <ion-row class="flex-1">
+    <ion-row class="height-fit" [innerHTML]="(data.note.Body | formatString) | safeHtml:'html'"></ion-row>
+  </ion-row>
+  <ion-row class="mt-5 jqx-button-row ion-justify-content-end">
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="4" [sizeXs]="6">
+      <ion-row class="full-height">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" mat-dialog-close>
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

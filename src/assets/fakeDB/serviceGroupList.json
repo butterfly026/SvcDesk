@@ -1,0 +1,42 @@
+[
+    {
+        "Name": "Name 1",
+        "Code": "Code 1",
+        "AdditionalInfomation1": "AdditionalInfomation1 1",
+        "AdditionalInfomation2": "AdditionalInfomation2 1",
+        "AdditionalInfomation3": "AdditionalInfomation3 1",
+        "Email": "Email 1"
+    },
+    {
+        "Name": "Name 2",
+        "Code": "Code 2",
+        "AdditionalInfomation1": "AdditionalInfomation1 2",
+        "AdditionalInfomation2": "AdditionalInfomation2 2",
+        "AdditionalInfomation3": "AdditionalInfomation3 2",
+        "Email": "Email 2"
+    },
+    {
+        "Name": "Name 3",
+        "Code": "Code 3",
+        "AdditionalInfomation1": "AdditionalInfomation1 3",
+        "AdditionalInfomation2": "AdditionalInfomation2 3",
+        "AdditionalInfomation3": "AdditionalInfomation3 3",
+        "Email": "Email 3"
+    },
+    {
+        "Name": "Name 4",
+        "Code": "Code 4",
+        "AdditionalInfomation1": "AdditionalInfomation1 4",
+        "AdditionalInfomation2": "AdditionalInfomation2 4",
+        "AdditionalInfomation3": "AdditionalInfomation3 4",
+        "Email": "Email 4"
+    },
+    {
+        "Name": "Name 5",
+        "Code": "Code 5",
+        "AdditionalInfomation1": "AdditionalInfomation1 5",
+        "AdditionalInfomation2": "AdditionalInfomation2 5",
+        "AdditionalInfomation3": "AdditionalInfomation3 5",
+        "Email": "Email 5"
+    }
+]

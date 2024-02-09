@@ -1,0 +1,89 @@
+<ion-row class="top-content">
+  <ion-row>
+    <ion-row class="my-3">
+      <h3 class="p-0 m-auto text-center">
+        {{'reg_security_details' | translate}}
+      </h3>
+    </ion-row>
+    <ion-row class="px-3">
+      <ion-row>
+      <form [formGroup]="groupForm"  novalidate class="w-100">
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field style="margin-bottom: -1.25em">
+                  <input matInput formControlName="regEmail" placeholder="{{'email_address' | translate }}"
+                    name="regEmail" (focusout)="focusOutField('email')" />
+                </mat-form-field>
+                <mat-progress-bar mode="indeterminate" *ngIf="spinner?.email"></mat-progress-bar>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="jqx-button-row">
+                <ion-col size="6">
+                  <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                    (onClick)="registerEmail('register')" [disabled]="registerEmailDisabled">
+                    {{ 'register' | translate }}
+                  </jqxButton>
+                </ion-col>
+                <ion-col size="6">
+                  <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                    (onClick)="registerEmail('remove')" [disabled]="removeEmailDisabled">
+                    {{ 'remove' | translate }}
+                  </jqxButton>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row>
+                <mat-form-field style="margin-bottom: -1.25em">
+                  <input matInput formControlName="regMobile" placeholder="{{'mobile_number' | translate }}"
+                    name="regMobile" (focusout)="focusOutField('mobile')"/>
+                </mat-form-field>
+                <mat-progress-bar mode="indeterminate" *ngIf="spinner?.mobile"></mat-progress-bar>
+              </ion-row>
+            </ion-col>
+
+            <ion-col [sizeXl]="6" [sizeLg]="6" [sizeMd]="6" [sizeSm]="6" [sizeXs]="12">
+              <ion-row class="jqx-button-row">
+                <ion-col size="6">
+                  <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                    (onClick)="registerMobile('register')" [disabled]="registerMobileDisabled">
+                    {{ 'register' | translate }}
+                  </jqxButton>
+                </ion-col>
+                <ion-col size="6">
+                  <jqxButton [theme]="globService.themeColor" class="jqx-button-theme"
+                    (onClick)="registerMobile('remove')" [disabled]="removeMobileDisabled">
+                    {{ 'remove' | translate }}
+                  </jqxButton>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-row>
+    </ion-row>
+  </ion-row>
+</ion-row>
+<ion-row>
+  <ion-row class="my-3 jqx-button-row justify-content-end">
+    <ion-col [sizeXl]="8" [sizeLg]="8" [sizeMd]="8" [sizeSm]="8" [sizeXs]="12">
+      <ion-row class="ml-3 h-100">
+        <mat-checkbox [checked]="isDontShowAgain" (change)="onChange($event)">
+          {{'dont_display_again'|translate}}
+        </mat-checkbox>
+      </ion-row>
+    </ion-col>
+    <ion-col [sizeXl]="4" [sizeLg]="4" [sizeMd]="4" [sizeSm]="6" [sizeXs]="12">
+      <ion-row class="h-100">
+        <jqxButton [theme]="globService.themeColor" class="jqx-button-theme" (onClick)="closeModal()">
+          {{ 'close' | translate }}
+        </jqxButton>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-row>

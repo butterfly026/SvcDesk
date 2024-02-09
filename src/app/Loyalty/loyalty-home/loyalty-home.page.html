@@ -1,0 +1,10 @@
+<ion-header mode='ios'>
+  <app-header pageName="{{'loyalty' | translate}}"></app-header>
+</ion-header>
+
+<ion-content (ionScrollStart)="scrollContent($event)" [scrollEvents]="true">
+  <ion-row class="ion-margin-top">
+    <app-loyalty class="full-width" [ContactCode]="ContactCode" (LoyaltyComponent)="processLoyalty($event)">
+    </app-loyalty>
+  </ion-row>
+</ion-content>

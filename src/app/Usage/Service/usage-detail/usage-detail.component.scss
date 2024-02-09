@@ -1,0 +1,42 @@
+.network_row {
+    padding: 1%;
+    height: 405px;
+  }
+  
+  
+  ion-row.pager ion-col {
+    text-align: center;
+  }
+  
+  .pagination-controls.goto-page,
+  .pagination-controls.row-list {
+    width: auto;
+  }
+  
+  ::ng-deep div.jqx-grid-pager {
+    display: none;
+  }
+  #alertDialog{
+    max-width: 280px;
+    min-width: 250px;
+  }
+  #spinnerDialog{
+    max-width: 280px;
+    min-width: 250px;
+  }
+  
+  ion-row.content{
+    height: calc(100% - 100px);
+  }
+
+  mat-tab-group{
+    height: 100%;
+  }
+
+  mat-tab{
+    height: 100%;
+  }
+  
+  .network_row{
+    height: 520px;
+  }
